@@ -19,7 +19,7 @@ npm run dev
 Name the branch as follows: ```featureName/yourname```, e.g codeEditorView/Yusuf. 
 - You can create this using the following command in your terminal: 
 ```
-git checkout -b featureName/yourname.
+git checkout -b featureName/yourname
 ```
 - Do all your work on this branch
 When you are ready to push your changes, make sure you are on your branch and run the following commands:
