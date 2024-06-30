@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { test, registerUser } from '../controllers/authController.js';
+import { test, registerUser, loginUser } from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -14,8 +14,9 @@ router.use(
 
 // This endpoint is used to test if the server is running
 router.get('/', test);
-
 // This endpoint is used to register a new user
 router.post('/register', registerUser);
+// This endpoint is used to login a user
+router.post('/login', loginUser);
 
 export default router;
