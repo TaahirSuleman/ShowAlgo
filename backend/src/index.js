@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 const app = express();
 dotenv.config();
@@ -19,6 +20,9 @@ mongoose
 
 // middleware
 app.use(express.json());
+// required for json web tokens
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 // all routes go to '/', authRoutes defines the actual routes
 app.use("/", authRoutes);

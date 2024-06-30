@@ -1,5 +1,6 @@
 import User from "../models/user.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
+import jwt from "jsonwebtoken";
 
 // export to be used in authRoutes.js
 export const test = (req, res) => {
@@ -65,13 +66,36 @@ export const loginUser = async (req, res) => {
     // compare password
     const match = await comparePassword(password, user.password);
     if (match) {
-      return res.json({ message: "Login successful"});
+      // create a token
+      jwt.sign(
+        { email: user.email, id: user._id, username: user.username },
+        process.env.JWT_SECRET,
+        {},
+        (err, token) => {
+          if (err) throw err;
+          res.cookie("token", token).json(user);
+        }
+      );
     } else {
       return res.json({ error: "Invalid password" });
     }
-
-    return res.json(user);
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+// Get profile endpoint
+export const getProfile = (req, res) => {
+  // get the token from the cookie
+  const { token } = req.cookies;
+  if (token) {
+    // verify the token
+    jwt.verify(token, process.env.JWT_SECRET, {}, (err, user) => {
+      if (err) throw err;
+      // return the user
+      res.json(user);
+    });
+  } else {
+    res.json(null);
+  }
+};

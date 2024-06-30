@@ -29,10 +29,12 @@ function Login() {
           isClosable: true,
         });
       } else {
+        // save the user data in local storage
+        localStorage.setItem("user", JSON.stringify(data));
         // clear the form
         setData({})
         // redirect to login page
-        navigate("/");
+        navigate("/dashboard");
         toast({
           title: "Success",
           description: "Login Successful! Welcome back!",
