@@ -4,7 +4,11 @@ import NavBar from "./components/NavBar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import axios from "axios";
 
+// set the base URL of the backend server
+axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

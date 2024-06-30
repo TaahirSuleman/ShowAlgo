@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+
 
 function Login() {
   const [data, setData] = useState({
@@ -9,6 +11,7 @@ function Login() {
   const loginUser = (e) => {
     e.preventDefault(); // such that page does not auto-reload
     console.log("logging in user...");
+    axios.get('/')
   };
 
   return (
