@@ -1,5 +1,5 @@
 import User from "../models/user.js";
-
+import { hashPassword, comparePassword } from "../helpers/auth.js";
 
 // export to be used in authRoutes.js
 export const test = (req, res) => {
@@ -29,12 +29,13 @@ export const registerUser = async (req, res) => {
       return res.json({ error: "An account with that email already exists" });
     }
 
+    const hashedPassword = await hashPassword(password);
+
     // create a new user
-    // TODO: need to hash password
     const user = await User.create({
       username,
       email,
-      password,
+      password: hashedPassword,
     });
 
     return res.json(user)
