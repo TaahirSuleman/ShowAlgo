@@ -1,14 +1,28 @@
 import { useState } from "react";
 import axios from "axios";
-import { useToast } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  FormControl,
+  FormErrorMessage,
+  FormHelperText,
+  FormLabel,
+  Heading,
+  Input,
+  Stack,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom" 
+
 
 function Login() {
   const navigate = useNavigate();
   const toast = useToast();
   const [data, setData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const loginUser = async (e) => {
@@ -32,7 +46,7 @@ function Login() {
         // save the user data in local storage
         localStorage.setItem("user", JSON.stringify(data));
         // clear the form
-        setData({})
+        setData({});
         // redirect to login page
         navigate("/dashboard");
         toast({
@@ -50,7 +64,7 @@ function Login() {
 
   return (
     <div>
-      <form onSubmit={loginUser}>
+      {/* <form onSubmit={loginUser}>
         <label>Email</label>
         <input
           type="email"
@@ -66,7 +80,67 @@ function Login() {
           onChange={(e) => setData({...data, password: e.target.value})}
         />
         <button type="submit">Login</button>
-      </form>
+      </form> */}
+      <Center
+        p="10"
+        bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
+        flexDirection="column"
+      >
+        <Stack boxShadow="md" bg="blackAlpha.900" p="20" rounded="md">
+          <Heading>Log in.</Heading>
+          <Text fontSize="lg" color="gray.400">
+            Please log in with the credentials you entered during registration.
+          </Text>
+          <Stack>
+            <FormControl>
+              <FormLabel color="gray">Email</FormLabel>
+              <Input
+                type="email"
+                placeholder="enter email..."
+                value={data.email}
+                onChange={(e) => setData({ ...data, email: e.target.value })}
+                border="1px solid gray"
+                textColor="gray.100"
+                mb="4"
+              />
+
+              <FormLabel color="gray">Password</FormLabel>
+              <Input
+                type="password"
+                placeholder="Enter password..."
+                border="1px solid gray"
+                textColor="gray.800"
+                color="gray.100"
+                value={data.password}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
+                mb="4"
+              />
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Button type="submit" colorScheme="purple" size="lg" onClick={loginUser}>
+                  Login
+                </Button>
+              </div>
+            </FormControl>
+          </Stack>
+
+          <Stack justify="center" color="gray.600" spacing="3">
+            <Text as="div" textAlign="center">
+              <span>Don&lsquo;t have an account?</span>
+              <Button colorScheme="purple" variant="link" ml="1">
+                <Link to="/register">
+                Sign up
+                </Link>
+              </Button>
+            </Text>
+          </Stack>
+        </Stack>
+      </Center>
     </div>
   );
 }
