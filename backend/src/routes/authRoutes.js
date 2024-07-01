@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { test, registerUser, loginUser, getProfile } from '../controllers/authController.js';
+import { test, registerUser, loginUser, getProfile, logoutUser } from '../controllers/authController.js';
 
 const router = express.Router();
 
@@ -20,5 +20,7 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 // This endpoint is used to get the user profile
 router.get('/profile', getProfile)
+// This endpoint is used to logout a user
+router.post('/logout', logoutUser);
 
 export default router;

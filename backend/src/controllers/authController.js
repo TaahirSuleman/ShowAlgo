@@ -99,3 +99,14 @@ export const getProfile = (req, res) => {
     res.json(null);
   }
 };
+
+// Logout endpoint
+export const logoutUser = (req, res) => {
+  try {
+    // Clear the token cookie
+    res.clearCookie("token").json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "Failed to log out" });
+  }
+};

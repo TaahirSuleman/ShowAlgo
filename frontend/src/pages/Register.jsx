@@ -131,7 +131,7 @@ function Register() {
                 }}
               >
                 <Button type="submit" colorScheme="purple" size="lg" onClick={registerUser}>
-                  Sign up
+                  Create Account
                 </Button>
               </div>
             </FormControl>

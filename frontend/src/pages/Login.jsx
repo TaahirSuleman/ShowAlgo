@@ -14,8 +14,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom" 
-
+import { Link } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
@@ -96,6 +95,7 @@ function Login() {
               <FormLabel color="gray">Email</FormLabel>
               <Input
                 type="email"
+                id="email"
                 placeholder="enter email..."
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
@@ -106,6 +106,7 @@ function Login() {
 
               <FormLabel color="gray">Password</FormLabel>
               <Input
+                id="password"
                 type="password"
                 placeholder="Enter password..."
                 border="1px solid gray"
@@ -122,7 +123,12 @@ function Login() {
                   alignItems: "center",
                 }}
               >
-                <Button type="submit" colorScheme="purple" size="lg" onClick={loginUser}>
+                <Button
+                  type="submit"
+                  colorScheme="purple"
+                  size="lg"
+                  onClick={loginUser}
+                >
                   Login
                 </Button>
               </div>
@@ -133,9 +139,7 @@ function Login() {
             <Text as="div" textAlign="center">
               <span>Don&lsquo;t have an account?</span>
               <Button colorScheme="purple" variant="link" ml="1">
-                <Link to="/register">
-                Sign up
-                </Link>
+                <Link to="/register">Sign up</Link>
               </Button>
             </Text>
           </Stack>

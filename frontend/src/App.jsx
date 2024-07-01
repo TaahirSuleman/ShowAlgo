@@ -24,6 +24,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          {/* <Route path="/logout" element={<Home />}></Route> */}
         </Routes>
       </UserContextProvider>
     </ChakraProvider>
