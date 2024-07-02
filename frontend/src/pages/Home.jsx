@@ -13,11 +13,7 @@ function Home() {
         bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
         flexDirection="column"
       >
-        <Heading>Welcome to ShowAlgo.</Heading>
-        <Text>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae
-          praesentium eius pariatur.
-        </Text>
+        <Heading mb="6">Welcome to ShowAlgo.</Heading>
         <Stack direction="row">
           <Button colorScheme="purple" onClick={() => navigate("/login")}>Log In</Button>
           <Button colorScheme="purple" onClick={() => navigate("/register")}>Create Account</Button>

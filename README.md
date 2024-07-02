@@ -11,7 +11,7 @@
 
 ```
 npm install
-npm run dev
+npm start
 ```
 
 ## Notes for Version Control
