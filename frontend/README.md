@@ -27,7 +27,7 @@ When you are ready to push your changes, make sure you are on your branch and ru
 ```
 git add <files>
 git commit -m "your commit message"
-git push origin stage<2,3,4>/yourname
+git push origin featureName/yourname
 ```
 
 *Notes on the above:
