@@ -4,10 +4,9 @@ import {
   Button,
   Center,
   FormControl,
-  FormErrorMessage,
-  FormHelperText,
   FormLabel,
   Heading,
+  IconButton,
   Input,
   Stack,
   Text,
@@ -15,21 +14,22 @@ import {
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { IoMdHome } from "react-icons/io";
 
 function Login() {
   const navigate = useNavigate();
   const toast = useToast();
   const [data, setData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
   const loginUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
-    const { email, password } = data;
+    const { username, password } = data;
     try {
       const { data } = await axios.post("/login", {
-        email,
+        username,
         password,
       });
 
@@ -63,42 +63,37 @@ function Login() {
 
   return (
     <div>
-      {/* <form onSubmit={loginUser}>
-        <label>Email</label>
-        <input
-          type="email"
-          placeholder="enter email..."
-          value={data.email}
-          onChange={(e) => setData({...data, email: e.target.value})}
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          placeholder="enter password..."
-          value={data.password}
-          onChange={(e) => setData({...data, password: e.target.value})}
-        />
-        <button type="submit">Login</button>
-      </form> */}
       <Center
         p="10"
         bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
         flexDirection="column"
       >
         <Stack boxShadow="md" bg="blackAlpha.900" p="20" rounded="md">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <IconButton
+              icon={<IoMdHome />}
+              w="5vh"
+              onClick={() => navigate("/")}
+            />
+          </div>
           <Heading>Log in.</Heading>
           <Text fontSize="lg" color="gray.400">
-            Please log in with the credentials you entered during registration.
+            Please log in using your username and password.
           </Text>
           <Stack>
             <FormControl>
-              <FormLabel color="gray">Email</FormLabel>
+              <FormLabel color="gray">Username</FormLabel>
               <Input
-                type="email"
-                id="email"
-                placeholder="enter email..."
-                value={data.email}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
+                type="text"
+                id="username"
+                placeholder="enter username..."
+                value={data.username}
+                onChange={(e) => setData({ ...data, username: e.target.value })}
                 border="1px solid gray"
                 textColor="gray.100"
                 mb="4"

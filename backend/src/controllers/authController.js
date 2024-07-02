@@ -10,23 +10,20 @@ export const test = (req, res) => {
 // Regsiter endpoint
 export const registerUser = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    // check if name is entered
-    // TODO: check if username is already taken
-    // !: do we want to use just username and password for registration?
-    if (!username) {
-      return res.json({ error: "Username is required" });
+    const { username, password } = req.body;
+    // check if name is entered and length greater than 6 characters
+    if (!username || username.length < 6) {
+      return res.json({ error: "Username is required and should be at least 6 characters long" });
     }
-    // check if email is entered and length greater than 6 characters
+    const usernameExist = await User.findOne({ username })
+    if (usernameExist) {
+      return res.json({ error: "Username is already taken" });
+    }
+    // check if password is entered and length greater than 6 characters
     if (!password || password.length < 6) {
       return res.json({
         error: "Password is required and should be at least 6 characters long",
       });
-    }
-    // check if email is entered
-    const exist = await User.findOne({ email });
-    if (exist) {
-      return res.json({ error: "An account with that email already exists" });
     }
 
     const hashedPassword = await hashPassword(password);
@@ -34,7 +31,6 @@ export const registerUser = async (req, res) => {
     // create a new user
     const user = await User.create({
       username,
-      email,
       password: hashedPassword,
     });
 
@@ -47,10 +43,10 @@ export const registerUser = async (req, res) => {
 // Login endpoint
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
-    // check if email is entered
-    if (!email) {
-      return res.json({ error: "Email is required" });
+    const { username, password } = req.body;
+    // check if username is entered
+    if (!username) {
+      return res.json({ error: "Username is required" });
     }
     // check if password is entered
     if (!password) {
@@ -58,9 +54,9 @@ export const loginUser = async (req, res) => {
     }
 
     // check if user exists
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
     if (!user) {
-      return res.json({ error: "No user found with the entered email" });
+      return res.json({ error: "No user found with the entered username" });
     }
 
     // compare password
@@ -68,7 +64,7 @@ export const loginUser = async (req, res) => {
     if (match) {
       // create a token
       jwt.sign(
-        { email: user.email, id: user._id, username: user.username },
+        { id: user._id, username: user.username },
         process.env.JWT_SECRET,
         {},
         (err, token) => {
@@ -77,7 +73,7 @@ export const loginUser = async (req, res) => {
         }
       );
     } else {
-      return res.json({ error: "Invalid password" });
+      return res.json({ error: "Incorrect password" });
     }
   } catch (error) {
     console.log(error);
