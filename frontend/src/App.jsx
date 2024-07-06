@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
 import axios from "axios";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./theme";
@@ -24,7 +24,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/about" element={<About />} />
           <Route path="/ide" element={<IDE />}></Route>
           <Route path="/learning-mode" element={<LearningMode />}></Route>
           <Route path="/documentation" element={<Documentation />}></Route>
