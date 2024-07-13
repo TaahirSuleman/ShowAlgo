@@ -1,181 +1,196 @@
 // helpers/tokenizer.js
 
-class Token {
-  constructor(type, value, line) {
-    this.type = type;
-    this.value = value;
-    this.line = line;
-  }
-}
-
 class Tokenizer {
-  constructor(code) {
-    this.code = code;
-    this.currentIndex = 0;
-    this.line = 1;
-    this.tokens = [];
-    this.keywords = [
-      "SET",
-      "CREATE",
-      "IF",
-      "ELSE",
-      "LOOP",
-      "PRINT",
-      "END",
-      "SWITCH",
-      "CASE",
-      "OTHERWISE",
-      "BREAK",
-    ];
-    this.operators = [
-      "=",
-      "+",
-      "-",
-      "*",
-      "/",
-      ">",
-      "<",
-      "==",
-      "!=",
-      ">=",
-      "<=",
-    ];
-    this.delimiters = ["(", ")", "{", "}", "[", "]", ",", ":"];
-    this.whitespace = [" ", "\t"];
-  }
+     constructor(pseudocode) {
+          this.pseudocode = pseudocode;
+          this.currentIndex = 0;
+          this.line = 1;
+     }
 
-  tokenize() {
-    while (this.currentIndex < this.code.length) {
-      const char = this.code[this.currentIndex];
+     tokenize() {
+          const tokens = [];
+          while (this.currentIndex < this.pseudocode.length) {
+               const char = this.pseudocode[this.currentIndex];
 
-      if (this.whitespace.includes(char)) {
-        this.currentIndex++;
-        continue;
-      }
+               if (this.isWhitespace(char)) {
+                    this.consumeWhitespace();
+               } else if (this.isLetter(char)) {
+                    tokens.push(this.consumeIdentifierOrKeyword());
+               } else if (this.isDigit(char)) {
+                    tokens.push(this.consumeNumber());
+               } else if (char === '"') {
+                    tokens.push(this.consumeString());
+               } else if (this.isDelimiter(char)) {
+                    tokens.push(this.consumeDelimiter());
+               } else if (this.isOperator(char)) {
+                    tokens.push(this.consumeOperator());
+               } else if (this.isComparisonOperator(char)) {
+                    tokens.push(this.consumeComparisonOperator());
+               } else if (char === "\n") {
+                    this.line++;
+                    this.currentIndex++;
+               } else {
+                    throw new Error(
+                         `Unexpected character: ${char} at line ${this.line}`
+                    );
+               }
+          }
+          return tokens;
+     }
 
-      if (char === "\n") {
-        this.line++;
-        this.currentIndex++;
-        continue;
-      }
+     isWhitespace(char) {
+          return /\s/.test(char);
+     }
 
-      if (char === "/" && this.code[this.currentIndex + 1] === "/") {
-        this.skipComment();
-        continue;
-      }
+     consumeWhitespace() {
+          while (
+               this.currentIndex < this.pseudocode.length &&
+               this.isWhitespace(this.pseudocode[this.currentIndex])
+          ) {
+               if (this.pseudocode[this.currentIndex] === "\n") {
+                    this.line++;
+               }
+               this.currentIndex++;
+          }
+     }
 
-      if (char === "#") {
-        this.skipComment();
-        continue;
-      }
+     isLetter(char) {
+          return /[a-zA-Z_]/.test(char);
+     }
 
-      if (this.isDigit(char)) {
-        this.tokens.push(this.tokenizeNumber());
-        continue;
-      }
+     isDigit(char) {
+          return /\d/.test(char);
+     }
 
-      if (this.isLetter(char)) {
-        this.tokens.push(this.tokenizeIdentifier());
-        continue;
-      }
+     isDelimiter(char) {
+          return ["[", "]", "(", ")", ","].includes(char);
+     }
 
-      if (this.operators.includes(char)) {
-        this.tokens.push(this.tokenizeOperator());
-        continue;
-      }
+     isOperator(char) {
+          return ["+", "-", "*", "/"].includes(char);
+     }
 
-      if (this.delimiters.includes(char)) {
-        this.tokens.push(new Token("Delimiter", char, this.line));
-        this.currentIndex++;
-        continue;
-      }
+     isComparisonOperator(char) {
+          return (
+               [">", "<", "="].includes(char) ||
+               (char === ">" &&
+                    this.pseudocode[this.currentIndex + 1] === "=") ||
+               (char === "<" && this.pseudocode[this.currentIndex + 1] === "=")
+          );
+     }
 
-      if (char === '"' || char === "'") {
-        this.tokens.push(this.tokenizeString(char));
-        continue;
-      }
+     consumeIdentifierOrKeyword() {
+          let value = "";
+          while (
+               this.currentIndex < this.pseudocode.length &&
+               (this.isLetter(this.pseudocode[this.currentIndex]) ||
+                    this.isDigit(this.pseudocode[this.currentIndex]))
+          ) {
+               value += this.pseudocode[this.currentIndex];
+               this.currentIndex++;
+          }
 
-      throw new Error(`Unexpected character: ${char} at line ${this.line}`);
-    }
-    return this.tokens;
-  }
+          const keywords = [
+               "set",
+               "to",
+               "number",
+               "string",
+               "create",
+               "array",
+               "as",
+               "with",
+               "insert",
+               "at",
+               "position",
+               "print",
+               "if",
+               "then",
+               "otherwise",
+               "end",
+               "define",
+               "with",
+               "parameters",
+               "call",
+               "for",
+               "each",
+               "in",
+               "while",
+               "return",
+               "function",
+               "is",
+               "greater",
+               "less",
+               "equal",
+               "than",
+          ];
+          if (keywords.includes(value.toLowerCase())) {
+               return {
+                    type: "Keyword",
+                    value: value.toLowerCase(),
+                    line: this.line,
+               };
+          } else {
+               return { type: "Identifier", value, line: this.line };
+          }
+     }
 
-  skipComment() {
-    while (
-      this.currentIndex < this.code.length &&
-      this.code[this.currentIndex] !== "\n"
-    ) {
-      this.currentIndex++;
-    }
-  }
+     consumeNumber() {
+          let value = "";
+          while (
+               this.currentIndex < this.pseudocode.length &&
+               this.isDigit(this.pseudocode[this.currentIndex])
+          ) {
+               value += this.pseudocode[this.currentIndex];
+               this.currentIndex++;
+          }
+          return { type: "Number", value, line: this.line };
+     }
 
-  isDigit(char) {
-    return /\d/.test(char);
-  }
+     consumeString() {
+          let str = "";
+          this.currentIndex++; // Skip the initial quote
+          while (this.currentIndex < this.pseudocode.length) {
+               const char = this.pseudocode[this.currentIndex];
+               if (char === '"') {
+                    this.currentIndex++;
+                    return { type: "String", value: str, line: this.line };
+               } else if (char === "\n" || char === "\r") {
+                    throw new Error(
+                         `Unexpected character: ${char} at line ${this.line}`
+                    );
+               } else {
+                    str += char;
+               }
+               this.currentIndex++;
+          }
+          throw new Error(`Unexpected end of string at line ${this.line}`);
+     }
 
-  isLetter(char) {
-    return /[a-zA-Z]/.test(char);
-  }
+     consumeDelimiter() {
+          const char = this.pseudocode[this.currentIndex];
+          this.currentIndex++;
+          return { type: "Delimiter", value: char, line: this.line };
+     }
 
-  tokenizeNumber() {
-    let numStr = "";
-    while (
-      this.currentIndex < this.code.length &&
-      this.isDigit(this.code[this.currentIndex])
-    ) {
-      numStr += this.code[this.currentIndex];
-      this.currentIndex++;
-    }
-    return new Token("Number", numStr, this.line);
-  }
+     consumeOperator() {
+          const char = this.pseudocode[this.currentIndex];
+          this.currentIndex++;
+          return { type: "Operator", value: char, line: this.line };
+     }
 
-  tokenizeIdentifier() {
-    let idStr = "";
-    while (
-      this.currentIndex < this.code.length &&
-      (this.isLetter(this.code[this.currentIndex]) ||
-        this.isDigit(this.code[this.currentIndex]))
-    ) {
-      idStr += this.code[this.currentIndex];
-      this.currentIndex++;
-    }
-    if (this.keywords.includes(idStr.toUpperCase())) {
-      return new Token("Keyword", idStr.toUpperCase(), this.line);
-    }
-    return new Token("Identifier", idStr, this.line);
-  }
-
-  tokenizeOperator() {
-    let opStr = "";
-    while (
-      this.currentIndex < this.code.length &&
-      this.operators.includes(this.code[this.currentIndex])
-    ) {
-      opStr += this.code[this.currentIndex];
-      this.currentIndex++;
-    }
-    if (this.operators.includes(opStr)) {
-      return new Token("Operator", opStr, this.line);
-    }
-    throw new Error(`Unknown operator: ${opStr} at line ${this.line}`);
-  }
-
-  tokenizeString(quoteType) {
-    let str = "";
-    this.currentIndex++; // Skip the opening quote
-    while (
-      this.currentIndex < this.code.length &&
-      this.code[this.currentIndex] !== quoteType
-    ) {
-      str += this.code[this.currentIndex];
-      this.currentIndex++;
-    }
-    if (this.code[this.currentIndex] !== quoteType) {
-      throw new Error(`Unterminated string at line ${this.line}`);
-    }
-    this.currentIndex++; // Skip the closing quote
-    return new Token("String", str, this.line);
-  }
+     consumeComparisonOperator() {
+          const char = this.pseudocode[this.currentIndex];
+          let value = char;
+          this.currentIndex++;
+          if (
+               (char === ">" || char === "<") &&
+               this.pseudocode[this.currentIndex] === "="
+          ) {
+               value += "=";
+               this.currentIndex++;
+          }
+          return { type: "ComparisonOperator", value, line: this.line };
+     }
 }
 
 export default Tokenizer;
