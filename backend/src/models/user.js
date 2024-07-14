@@ -8,6 +8,10 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
+    },
+    progress: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Progresses",
     }
 })
 

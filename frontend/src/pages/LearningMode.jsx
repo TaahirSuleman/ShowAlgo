@@ -13,12 +13,18 @@ import NavBar from "../components/NavBar";
 import Card from "../components/Card";
 import { useNavigate } from "react-router-dom";
 import ProgressChart from "../components/ProgressChart";
-
+import SectionCard from "../components/SectionCard";
+import axios from "axios";
 
 function LearningMode() {
   const navigate = useNavigate();
   // access the user state from the UserContext
   const [user, setUser] = useState(null);
+  const [sections, setSections] = useState([]);
+  const [levels, setLevels] = useState([]);
+  const [progress, setProgress] = useState([]);
+  const [selectedSectionId, setSelectedSectionId] = useState(null);
+  const [selectedLevelId, setSelectedLevelId] = useState(null);
 
   useEffect(() => {
     // Retrieve user data from localStorage
@@ -28,29 +34,84 @@ function LearningMode() {
     }
   }, []); // Empty dependency array means this runs once on mount
 
-  const courses = [
-    {
-      title: "Data Structures and Algorithms",
-      chapters: 13,
-      items: 149,
-      progress: 0,
-      color: "purple",
-    },
-    {
-      title: "System Design for Interviews",
-      chapters: 16,
-      items: 81,
-      progress: 0,
-      color: "green",
-    },
-    {
-      title: "The LeetCode Beginner's Guide",
-      chapters: 4,
-      items: 17,
-      progress: 0,
-      color: "orange",
-    },
-  ];
+  useEffect(() => {
+    // Fetch all sections
+    const fetchSections = async () => {
+      try {
+        const response = await axios.get("/sections");
+        setSections(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSections();
+  }, []);
+
+  //TODO: Fix get user progress and logic behind it
+  // useEffect(() => {
+  //   // Fetch user progress
+  //   const fetchProgress = async () => {
+  //     try {
+  //       const response = await axios.get(`/users/${user._id}/progress`);
+  //       setProgress(response.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   if (user) {
+  //     fetchProgress();
+  //   }
+  // }, [user]);
+
+  useEffect(() => {
+    // Fetch levels for the selected section
+    const fetchLevels = async () => {
+      try {
+        const response = await axios.get(
+          `/sections/${selectedSectionId}/levels`
+        );
+        setLevels(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (selectedSectionId) {
+      fetchLevels();
+    }
+  }, [selectedSectionId]);
+
+  // update progress
+  useEffect(() => {
+    const updateProgress = async () => {
+      try {
+        await axios.put("/progress", {
+          userId: user._id,
+          sectionId: selectedSectionId,
+          levelId: selectedLevelId,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (selectedSectionId && selectedLevelId) {
+      updateProgress();
+    }
+  }, [selectedSectionId, selectedLevelId]);
+
+  const colors = [
+    "red.500",
+    "orange.400",
+
+    "blue.400",
+
+    "teal.500",
+    "green.500",
+    "cyan.500",
+    "purple.500",
+    "pink.500",
+    "yellow.500",
+    "gray.500"
+  ]
 
   return (
     <div>
@@ -60,41 +121,36 @@ function LearningMode() {
         bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
         flexDirection="column"
       >
-        {/* <Stack boxShadow="md" bg="blackAlpha.900" p="20" rounded="md">
-          <Heading>Welcome back</Heading>
-          {user && <Heading as="h3">Hi {user.username}!</Heading>}
-        </Stack> */}
+        {user ? (
+          <Heading mb={6}>Welcome back {user.username}! </Heading>
+        ) : (
+          <Heading mb={6}> Welcome Guest!</Heading>
+        )}
 
-        {/* <Stack spacing={4} maxW="600px" w="full" align="center">
-          <Card boxShadow="md" p="6" rounded="md" bg="blackAlpha.900">
-            <Heading size="md">Your Progress</Heading>
-            <Text>75% completed</Text>
-              <Progress value={75} size="sm" colorScheme="green" mt="4" />
-          </Card>
-
-          <Card boxShadow="md" p="6" rounded="md" bg="blackAlpha.900">
-            <Heading size="md">Levels Completed</Heading>
-            <Text>5 out of 10</Text>
-          </Card>
-
-          <Card boxShadow="md" p="6" rounded="md" bg="blackAlpha.900">
-            <Heading size="md">Select Level</Heading>
-            <Select placeholder="Select level" mt="4">
-              <option value="level1">Level 1</option>
-              <option value="level2">Level 2</option>
-              <option value="level3">Level 3</option>
-            </Select>
-          </Card>
-        </Stack> */}
-          <Heading mb={6}>Main Dashboard</Heading>
-          <SimpleGrid columns={{ sm: 1, md: 3 }} spacing={10} mb={6}>
-            {courses.map((course, index) => (
-              <Card key={index} course={course} />
-            ))}
-          </SimpleGrid>
-          <Box bg="white" borderRadius="lg" p={6} boxShadow="md">
-            <ProgressChart />
-          </Box>
+        <SimpleGrid columns={sections.length} spacing={2}>
+          {sections.map((section, index) => (
+            <SectionCard
+              key={section._id}
+              bgColor={colors[index % colors.length]}
+              heading={section.heading}
+              subheading={section.subheading}
+              totalLevels={section.levels.length}
+              // completedLevels={
+              //   progress.filter((p) => p.section_id === section._id).length
+              // }
+              // completedPercentage={
+              //   (
+              //     (progress.filter((p) => p.section_id === section._id).length /
+              //       section.levels.length) *
+              //     100
+              //   ).toFixed(0)
+              // }
+              completedLevels={1}
+              completedPercentage={76}
+              onClick={() => setSelectedSectionId(section._id)}
+            />
+          ))}
+        </SimpleGrid>
       </Center>
     </div>
   );
