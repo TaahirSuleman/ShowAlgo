@@ -35,7 +35,6 @@ export const registerUser = async (req, res) => {
     const user = await User.create({
       username,
       password: hashedPassword,
-      progress: [],
     });
 
     return res.json(user);
@@ -166,8 +165,6 @@ export const getLevels = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 }
-
-//TODO: Route to get a level
 
 
 // Route to update progress
