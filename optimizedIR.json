@@ -1,0 +1,81 @@
+{
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": "10"
+    },
+    {
+      "type": "FunctionDeclaration",
+      "name": "add_numbers",
+      "params": [
+        "a",
+        "b"
+      ],
+      "body": [
+        {
+          "type": "ReturnStatement",
+          "value": {
+            "left": "a",
+            "operator": "+",
+            "right": "b"
+          }
+        }
+      ]
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": [
+        {
+          "type": "PrintStatement",
+          "value": "x is not greater than 5"
+        }
+      ]
+    },
+    {
+      "type": "ForLoop",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "num"
+        }
+      ]
+    },
+    {
+      "type": "WhileLoop",
+      "condition": {
+        "left": "x",
+        "operator": ">",
+        "right": "0"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "x"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "x",
+          "value": {
+            "left": "x",
+            "operator": "-",
+            "right": "1"
+          }
+        }
+      ]
+    }
+  ]
+}
