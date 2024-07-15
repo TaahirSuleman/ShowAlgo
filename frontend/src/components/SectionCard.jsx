@@ -54,7 +54,7 @@ const SectionCard = ({
       mb={7}
     >
       <VStack spacing={4}>
-        <Box bg={bgColor} bgGradient="linear(to-r, cyan.400, blue.500)" p={4} boxShadow="md" height="30dvh" width="50vh">
+        <Box bg={bgColor} p={4} boxShadow="md" height="30dvh" width="50vh">
           <Text fontSize={subheadingFontSize} fontWeight="bold" color="whiteAlpha.700">{subheading}</Text>
           <Text fontSize={titleFontSize} fontWeight="bold">
             {heading}
