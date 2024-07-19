@@ -56,7 +56,7 @@ export default function NavBar() {
 
       <ul className={menuOpen ? "open" : ""}>
         <li>
-          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/about">About</NavLink>
         </li>
         <li>
           <NavLink to="/ide">IDE</NavLink>

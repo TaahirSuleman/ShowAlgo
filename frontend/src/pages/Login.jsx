@@ -47,7 +47,7 @@ function Login() {
         // clear the form
         setData({});
         // redirect to login page
-        navigate("/dashboard");
+        navigate("/about");
         toast({
           title: "Success",
           description: "Login Successful! Welcome back!",
