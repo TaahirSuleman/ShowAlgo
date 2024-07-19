@@ -19,6 +19,7 @@ const SectionCard = ({
   completedLevels,
   completedPercentage,
   bgColor,
+  onClick,
 }) => {
   // Responsive font sizes
   const titleFontSize = useBreakpointValue({ base: "2xl", md: "2xl" });
@@ -94,6 +95,7 @@ const SectionCard = ({
                   color="gray.800"
                   bg="white"
                   _hover={{ bg: "white", color: "rgba(191, 0, 255, 0.5)"}}
+                  onClick={onClick}
                 />
               </CircularProgressLabel>
             </CircularProgress>

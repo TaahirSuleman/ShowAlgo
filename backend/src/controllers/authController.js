@@ -154,12 +154,40 @@ export const getSections = async (req, res) => {
   }
 }
 
+// Route to get a section by id
+export const getSingleSection = async (req, res) => {
+  try {
+    const { sectionRoute } = req.params;
+    const section = await Sections.findOne({ route: sectionRoute });
+    console.log("HERE section: ", section);
+    res.json(section);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
 // Route to get levels for a section
 export const getLevels = async (req, res) => {
   try {
-    const { sectionId } = req.params.id;
-    const levels = await Level.find({ section_id: sectionId }).sort('order');
+    const { sectionRoute } = req.params;
+    const section = await Sections.findOne({ route: sectionRoute });
+    console.log("HERE section: ", section);
+    const levels = await Levels.find({ section_id: section._id });
     res.json(levels);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+}
+
+// Route to get a level by route
+export const getSingleLevel = async (req, res) => {
+  try {
+    const { sectionRoute, levelRoute } = req.params;
+    const section = await Sections.findOne({ route: sectionRoute });
+    const level = await Levels.findOne({ route: levelRoute, section_id: section._id });
+    res.json(level);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });

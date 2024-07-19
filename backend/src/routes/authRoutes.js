@@ -8,7 +8,9 @@ import {
   logoutUser,
   getUserProgress,
   getLevels,
+  getSingleLevel,
   getSections,
+  getSingleSection,
   updateProgress,
   createLevel,
 } from "../controllers/authController.js";
@@ -44,9 +46,15 @@ router.post("/logout", logoutUser);
 // --------------------
 
 // This endpoint is used to get user progress
-router.get("/users/${userId}/progress", getUserProgress);
+router.get("/users/:userId/progress", getUserProgress);
+
 // This endpoint is used to get levels for a section
-router.get("/sections/${sectionId}/levels", getLevels);
+router.get("/sections/:sectionRoute/levels", getLevels);
+// This endpoint is used to get a single level
+router.get("/sections/:sectionRoute/levels/:levelRoute", getSingleLevel);
+
+// This endpoint is to get a single section by route name
+router.get("/sections/:sectionRoute", getSingleSection);
 // This endpoint is used to get all sections
 router.get("/sections", getSections);
 // This endpoint is used to update user progress

@@ -7,16 +7,9 @@ import NavBar from "../components/NavBar";
 function About() {
   return (
     <div>
-      <NavBar/>
-      <Center
-        h="100vh"
-        bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
-        flexDirection="column"
-      >
         <Heading>
           About page goes here
         </Heading>
-      </Center>
     </div>
   );
 }

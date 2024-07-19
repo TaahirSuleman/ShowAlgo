@@ -13,7 +13,11 @@ const sectionSchema = new mongoose.Schema({
     levels: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Level'
-    }]
+    }],
+    route: {
+        type: String,
+        required: true
+    }
 });
 
 const SectionModel = mongoose.model("Section", sectionSchema);

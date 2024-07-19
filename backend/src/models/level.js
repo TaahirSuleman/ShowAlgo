@@ -29,6 +29,10 @@ const levelSchema = new mongoose.Schema({
         enum: ['easy', 'medium', 'hard'],
         required: true
     },
+    route: {
+        type: String,
+        required: true
+    }
 });
 
 const LevelModel = mongoose.model("Level", levelSchema);
