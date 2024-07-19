@@ -1,27 +1,30 @@
 import {
   Box,
-  Center,
   Heading,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { Link, NavLink, useParams } from "react-router-dom";
-import NavBar from "../components/NavBar";
+import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
 import { CheckIcon, MinusIcon } from "@chakra-ui/icons";
 
 function LevelSelection() {
   const { sectionHeading } = useParams();
   const [levels, setLevels] = React.useState([]);
-  const [section, setSection] = React.useState({});
+  const [section, setSection] = React.useState({
+    _id: '',
+    heading: '',
+    subheading: '',
+    levels: [],
+    __v: 0,
+    route: ''
+  });
 
   useEffect(() => {
     // Fetch levels for the selected section

@@ -5,9 +5,20 @@ import { useParams } from "react-router-dom";
 
 function Level() {
   const { sectionRoute, levelRoute } = useParams();
-  const [level, setLevel] = React.useState({});
+  const [level, setLevel] = React.useState({
+    _id: '',
+    section_id: '',
+    title: '',
+    order: 0,
+    question: '',
+    test_cases: [],
+    hints: [],
+    difficulty: '',
+    __v: 0,
+    route: '',
+  });
 
-  //! get level
+  // get level
   useEffect(() => {
     const fetchLevel = async () => {
       try {
@@ -31,7 +42,7 @@ function Level() {
 
         <Text>{level.question}</Text>
 
-        <Text mt={4}>Hints:</Text>
+        <Text mt={4} fontWeight="bold">Hints:</Text>
         {level.hints.map((hint, index) => (
           <Text key={index}>{hint}</Text>
         ))}

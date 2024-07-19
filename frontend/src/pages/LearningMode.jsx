@@ -1,43 +1,17 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  CardFooter,
-  Center,
-  Container,
-  Divider,
-  Heading,
-  HStack,
-  Image,
-  Progress,
-  Select,
-  SimpleGrid,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import NavBar from "../components/NavBar";
 import { useNavigate } from "react-router-dom";
-import ProgressChart from "../components/ProgressChart";
 import SectionCard from "../components/SectionCard";
 import axios from "axios";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import {
-  LineChart,
-  Line,
   Bar,
   ResponsiveContainer,
   AreaChart,
   Area,
   BarChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
   Tooltip,
-  Legend,
   Pie,
   PieChart,
 } from "recharts";
@@ -47,7 +21,7 @@ function LearningMode() {
   // access the user state from the UserContext
   const [user, setUser] = useState(null);
   const [sections, setSections] = useState([]);
-  const [progress, setProgress] = useState([]);
+  //TODO: const [progress, setProgress] = useState([]);
 
   useEffect(() => {
     // Retrieve user data from localStorage
@@ -184,9 +158,19 @@ function LearningMode() {
       justifyContent="center"
     >
       {user ? (
-        <Heading mb={10} fontSize="6xl" pt={10} textAlign="center" color="whiteAlpha.800">
-        Welcome back, <Text as="span" color="whiteAlpha.900">{user.username}!</Text>
-      </Heading>
+        <Heading
+          mb={10}
+          fontSize="6xl"
+          mt={10}
+          p={2}
+          textAlign="center"
+          color="whiteAlpha.700"
+        >
+          Welcome back,{" "}
+          <Text as="span" color="whiteAlpha.900">
+            {user.username}!
+          </Text>
+        </Heading>
       ) : (
         <Heading mb={10} fontSize="6xl" textAlign="center">
           Welcome Guest!
@@ -199,6 +183,7 @@ function LearningMode() {
         p={4}
         width="90%"
         height="40vh"
+        mb={4}
       >
         <Box
           bg="blackAlpha.800"
@@ -302,12 +287,7 @@ function LearningMode() {
                   fill="#ffc658"
                   radius={1}
                 />
-                <Bar
-                  dataKey="Total"
-                  stackId="a"
-                  fill="#8884d8"
-                  radius={1}
-                />
+                <Bar dataKey="Total" stackId="a" fill="#8884d8" radius={1} />
                 <Bar dataKey="uv" fill="#ffc658" />
               </BarChart>
             </ResponsiveContainer>
@@ -315,13 +295,17 @@ function LearningMode() {
         </Box>
       </SimpleGrid>
 
-      <Heading mb={10} mt={20}>
+      {/* <Heading mb={10} mt={20}> */}
+      <Heading
+        mb={{ base: "20px", md: "40px" }}
+        mt={{ base: "200px", md: "40px" }}
+      >
         Select a Module
       </Heading>
 
       <Box
         height="60vh"
-        width={{md: "79%", base: "50%"}}
+        width={{ md: "79%", base: "90%" }}
         alignContent="center"
         justifyContent="center"
         borderRadius={10}
