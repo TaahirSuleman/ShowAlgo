@@ -159,7 +159,6 @@ export const getSingleSection = async (req, res) => {
   try {
     const { sectionRoute } = req.params;
     const section = await Sections.findOne({ route: sectionRoute });
-    console.log("HERE section: ", section);
     res.json(section);
   } catch (error) {
     console.log(error);
@@ -172,7 +171,6 @@ export const getLevels = async (req, res) => {
   try {
     const { sectionRoute } = req.params;
     const section = await Sections.findOne({ route: sectionRoute });
-    console.log("HERE section: ", section);
     const levels = await Levels.find({ section_id: section._id });
     res.json(levels);
   } catch (error) {
