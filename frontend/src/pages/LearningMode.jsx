@@ -21,6 +21,9 @@ function LearningMode() {
   // access the user state from the UserContext
   const [user, setUser] = useState(null);
   const [sections, setSections] = useState([]);
+  const [chartKey, setChartKey] = useState(0); // key to force re-render
+  const [loading, setLoading] = useState(true); // state to manage loading
+
   //TODO: const [progress, setProgress] = useState([]);
 
   useEffect(() => {
@@ -43,6 +46,17 @@ function LearningMode() {
     };
     fetchSections();
   }, []);
+
+  // Force re-render of charts on component mount
+  useEffect(() => {
+    if (sections.length > 0) {
+      setLoading(true);
+      setTimeout(() => {
+        setChartKey((prevKey) => prevKey + 1);
+        setLoading(false);
+      }, 100); // Delay to ensure charts are rendered with animation
+    }
+  }, [sections]);
 
   //TODO: Fix get user progress and logic behind it
   // useEffect(() => {
@@ -185,6 +199,7 @@ function LearningMode() {
         height="40vh"
         mb={4}
       >
+        
         <Box
           bg="blackAlpha.800"
           borderRadius={8}
@@ -205,7 +220,8 @@ function LearningMode() {
             </Text>
           </Box>
           <Box ml={2} width="70dvh">
-            <ResponsiveContainer width="100%" height="100%">
+          {!loading && (
+            <ResponsiveContainer key={`area-${chartKey}`} width="100%" height="100%">
               <AreaChart width={300} height={100} data={data}>
                 <defs>
                   <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="0.9">
@@ -221,8 +237,9 @@ function LearningMode() {
                   fillOpacity={1}
                   fill="url(#colorPv)"
                 />
-              </AreaChart>
+              </AreaChart> 
             </ResponsiveContainer>
+            )}
           </Box>
         </Box>
 
@@ -244,7 +261,8 @@ function LearningMode() {
             <Text fontSize="lg" color="green.400"></Text>
           </Box>
           <Box ml={2} width="70dvh">
-            <ResponsiveContainer width="100%" height="100%">
+            {!loading && (
+            <ResponsiveContainer key={`pie-${chartKey}`} width="100%" height="100%">
               <PieChart width="100%" height="100%">
                 <Pie
                   dataKey="value"
@@ -258,6 +276,7 @@ function LearningMode() {
                 <Tooltip />
               </PieChart>
             </ResponsiveContainer>
+            )}
           </Box>
         </Box>
 
@@ -278,7 +297,8 @@ function LearningMode() {
             </Text>
           </Box>
           <Box ml={2} width="70dvh" height="100%">
-            <ResponsiveContainer width="100%" height="100%">
+            {!loading && (
+            <ResponsiveContainer key={`bar-${chartKey}`} width="100%" height="100%">
               <BarChart width="100%" height="100%" data={data}>
                 <Tooltip />
                 <Bar
@@ -291,6 +311,7 @@ function LearningMode() {
                 <Bar dataKey="uv" fill="#ffc658" />
               </BarChart>
             </ResponsiveContainer>
+            )}
           </Box>
         </Box>
       </SimpleGrid>
