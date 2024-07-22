@@ -1,9 +1,13 @@
-import { Box, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Heading,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SectionCard from "../components/SectionCard";
 import axios from "axios";
-import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import {
   Bar,
@@ -15,11 +19,11 @@ import {
   Pie,
   PieChart,
 } from "recharts";
+import ModuleCard from "../components/ModuleCard";
 
 function LearningMode() {
   const navigate = useNavigate();
-  // access the user state from the UserContext
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); 
   const [sections, setSections] = useState([]);
   const [chartKey, setChartKey] = useState(0); // key to force re-render
   const [loading, setLoading] = useState(true); // state to manage loading
@@ -97,19 +101,21 @@ function LearningMode() {
     navigate(`/learning-mode/${sectionHeading}`);
   };
 
-  const colors = [
-    "red.500",
-    "orange.400",
-    "blue.400",
-    "teal.500",
-    "green.500",
-    "cyan.500",
-    "purple.500",
-    "pink.500",
-    "yellow.500",
-    "gray.500",
+  const gradients = [
+    "linear(to-br, #ec0958, #f573b2)", // pink
+    "linear(to-br, #1203fa, #00e1fd)", // blue
+    "linear(to-br, #ffe33f, #ff9933, #f22920)", // orange
+    "linear(to-br, #fbe240, #8ff090, #0a8b75)", // green
+    "linear(to-br, #f92edc, #811fee, #001af5)", // purple
+    "linear(to-br, #3c4487, #8935ca, #d5359e)", // purple
+    "linear(to-br, #afe35b, #31b68b, #1ba797)", // green
+    "linear(to-br, #1ba797, #8ff090, #fbe240)", // green
+    "linear(to-br, #0de7fa, #079ba5, #1203fa)", // cyan
+    "linear(to-br, #ecb315, #ff9933, #f22920)", // orange
+    "linear(to-br, #5a136e, #a90b84, #ff009c)", // pink
   ];
 
+  // dummy data for charts
   const data = [
     {
       name: "1",
@@ -148,21 +154,11 @@ function LearningMode() {
     },
   ];
 
+  // dummy data for pie chart
   const data01 = [
     { name: "Group A", value: 400, fill: "#8884d8" },
     { name: "Group B", value: 300, fill: "#FFBB28" },
   ];
-
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 4000, min: 1024 },
-      items: 3,
-    },
-    mobile: {
-      breakpoint: { max: 1024, min: 0 },
-      items: 1,
-    },
-  };
 
   return (
     <Box
@@ -191,6 +187,8 @@ function LearningMode() {
         </Heading>
       )}
 
+      <Divider width="80%" />
+
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3 }}
         spacing={4}
@@ -199,7 +197,6 @@ function LearningMode() {
         height="40vh"
         mb={4}
       >
-        
         <Box
           bg="blackAlpha.800"
           borderRadius={8}
@@ -220,25 +217,29 @@ function LearningMode() {
             </Text>
           </Box>
           <Box ml={2} width="70dvh">
-          {!loading && (
-            <ResponsiveContainer key={`area-${chartKey}`} width="100%" height="100%">
-              <AreaChart width={300} height={100} data={data}>
-                <defs>
-                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="0.9">
-                    <stop offset="0%" stopColor="#8884d8" stopOpacity={1} />
-                    <stop offset="100%" stopColor="#8884d8" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <Area
-                  type="monotone"
-                  dataKey="Completed"
-                  stroke="#8884d8"
-                  strokeWidth={2}
-                  fillOpacity={1}
-                  fill="url(#colorPv)"
-                />
-              </AreaChart> 
-            </ResponsiveContainer>
+            {!loading && (
+              <ResponsiveContainer
+                key={`area-${chartKey}`}
+                width="100%"
+                height="100%"
+              >
+                <AreaChart width={300} height={100} data={data}>
+                  <defs>
+                    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="0.9">
+                      <stop offset="0%" stopColor="#8884d8" stopOpacity={1} />
+                      <stop offset="100%" stopColor="#8884d8" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <Area
+                    type="monotone"
+                    dataKey="Completed"
+                    stroke="#8884d8"
+                    strokeWidth={2}
+                    fillOpacity={1}
+                    fill="url(#colorPv)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
             )}
           </Box>
         </Box>
@@ -262,20 +263,24 @@ function LearningMode() {
           </Box>
           <Box ml={2} width="70dvh">
             {!loading && (
-            <ResponsiveContainer key={`pie-${chartKey}`} width="100%" height="100%">
-              <PieChart width="100%" height="100%">
-                <Pie
-                  dataKey="value"
-                  data={data01}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius="60%"
-                  outerRadius="100%"
-                  stroke="none"
-                />
-                <Tooltip />
-              </PieChart>
-            </ResponsiveContainer>
+              <ResponsiveContainer
+                key={`pie-${chartKey}`}
+                width="100%"
+                height="100%"
+              >
+                <PieChart width="100%" height="100%">
+                  <Pie
+                    dataKey="value"
+                    data={data01}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius="60%"
+                    outerRadius="100%"
+                    stroke="none"
+                  />
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
             )}
           </Box>
         </Box>
@@ -298,68 +303,48 @@ function LearningMode() {
           </Box>
           <Box ml={2} width="70dvh" height="100%">
             {!loading && (
-            <ResponsiveContainer key={`bar-${chartKey}`} width="100%" height="100%">
-              <BarChart width="100%" height="100%" data={data}>
-                <Tooltip />
-                <Bar
-                  dataKey="Completed"
-                  stackId="a"
-                  fill="#ffc658"
-                  radius={1}
-                />
-                <Bar dataKey="Total" stackId="a" fill="#8884d8" radius={1} />
-                <Bar dataKey="uv" fill="#ffc658" />
-              </BarChart>
-            </ResponsiveContainer>
+              <ResponsiveContainer
+                key={`bar-${chartKey}`}
+                width="100%"
+                height="100%"
+              >
+                <BarChart width="100%" height="100%" data={data}>
+                  <Tooltip />
+                  <Bar
+                    dataKey="Completed"
+                    stackId="a"
+                    fill="#ffc658"
+                    radius={1}
+                  />
+                  <Bar dataKey="Total" stackId="a" fill="#8884d8" radius={1} />
+                  <Bar dataKey="uv" fill="#ffc658" />
+                </BarChart>
+              </ResponsiveContainer>
             )}
           </Box>
         </Box>
       </SimpleGrid>
 
-      {/* <Heading mb={10} mt={20}> */}
-      <Heading
-        mb={{ base: "20px", md: "40px" }}
-        mt={{ base: "200px", md: "40px" }}
-      >
-        Select a Module
+      <Divider width="80%" />
+
+      <Heading fontSize="5xl" mb={10} mt={10} color="whiteAlpha.800">
+        Modules
       </Heading>
 
-      <Box
-        height="60vh"
-        width={{ md: "79%", base: "90%" }}
-        alignContent="center"
-        justifyContent="center"
-        borderRadius={10}
-        pb={5}
-        pt={5}
-        pl={5}
-        bg="blackAlpha.800"
-      >
-        <Carousel responsive={responsive} showDots>
-          {sections.map((section, index) => (
-            <SectionCard
-              key={section._id}
-              bgColor={colors[index % colors.length]}
-              heading={section.heading}
-              subheading={section.subheading}
-              Total={section.levels.length}
-              // completedLevels={
-              //   progress.filter((p) => p.section_id === section._id).length
-              // }
-              // completedPercentage={
-              //   (
-              //     (progress.filter((p) => p.section_id === section._id).length /
-              //       section.levels.length) *
-              //     100
-              //   ).toFixed(0)
-              // }
-              completedLevels={1}
-              completedPercentage={25}
-              onClick={() => handleSectionSelect(section.route)}
-            />
-          ))}
-        </Carousel>
-      </Box>
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+        {sections.map((section, index) => (
+          <ModuleCard
+            key={section._id}
+            color={gradients[index % gradients.length]}
+            heading={section.heading}
+            subheading={section.subheading}
+            totalLevels={section.levels.length}
+            completedLevels={2}
+            completedPercentage={76}
+            onClick={() => handleSectionSelect(section.route)}
+          />
+        ))}
+      </SimpleGrid>
     </Box>
   );
 }
