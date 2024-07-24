@@ -48,7 +48,7 @@ const CodeEditorView = ({
   }, []);
 
   const loadingComponent = (
-    <Box display="flex" bg="blackAlpha.700" width="50dvw" height="50dvh" justifyContent="center" alignItems="center">
+    <Box display="flex" bg="blackAlpha.700" height={height} justifyContent="center" alignItems="center">
       <Spinner
         thickness="6px"
         speed="0.50s"
@@ -60,7 +60,7 @@ const CodeEditorView = ({
   );
 
   return (
-    <Box borderRadius={4} overflow="hidden">
+    <Box borderBottomRadius={4} overflow="hidden">
       {isLoading ? (
         loadingComponent
       ) : (
