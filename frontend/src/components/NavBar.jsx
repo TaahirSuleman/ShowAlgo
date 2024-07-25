@@ -1,16 +1,28 @@
-import { Button, Tab, TabList, Tabs, IconButton } from "@chakra-ui/react";
+import {
+  Button,
+  Tab,
+  TabList,
+  Tabs,
+  IconButton,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogContent,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "../styles/NavBar.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
-  // access the user state from the UserContext
-  const [user, setUser] = useState(null);
-
+  const [user, setUser] = useState(null); // access the user state from the UserContext
+  const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState(false);
+  const cancelRef = useRef();
 
   const handleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -41,6 +53,19 @@ export default function NavBar() {
     }
   };
 
+  const handleLogoutClick = () => {
+    setIsLogoutDialogOpen(true);
+  };
+
+  const handleLogoutConfirm = () => {
+    setIsLogoutDialogOpen(false);
+    logout();
+  };
+
+  const handleLogoutCancel = () => {
+    setIsLogoutDialogOpen(false);
+  };
+
   return (
     <nav>
       <Link to="/" className="title">
@@ -52,7 +77,6 @@ export default function NavBar() {
         onClick={handleMenu}
         className="menu"
       />
-
 
       <ul className={menuOpen ? "open" : ""}>
         <li>
@@ -68,7 +92,43 @@ export default function NavBar() {
           <NavLink to="/documentation">Documentation</NavLink>
         </li>
       </ul>
-      <Button className={menuOpen ? "" : "logout"} onClick={logout} colorScheme="red">Logout</Button>
+      <Button
+        className={menuOpen ? "" : "logout"}
+        onClick={handleLogoutClick}
+        bg="gray.800"
+        sx={{
+          _hover: {
+            bg: "red.400",
+          },
+        }}
+      >
+        Logout
+      </Button>
+
+      <AlertDialog
+        isOpen={isLogoutDialogOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={handleLogoutCancel}
+      >
+        <AlertDialogOverlay>
+          <AlertDialogContent>
+            <AlertDialogHeader fontSize="lg" fontWeight="bold">
+              Confirm Logout
+            </AlertDialogHeader>
+
+            <AlertDialogBody>Are you sure you want to logout?</AlertDialogBody>
+
+            <AlertDialogFooter>
+              <Button ref={cancelRef} onClick={handleLogoutCancel}>
+                Cancel
+              </Button>
+              <Button colorScheme="red" onClick={handleLogoutConfirm} ml={3}>
+                Logout
+              </Button>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialogOverlay>
+      </AlertDialog>
     </nav>
   );
 }

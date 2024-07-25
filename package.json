@@ -7,6 +7,7 @@
         "test": "npm test --prefix backend"
     },
     "dependencies": {
+        "@monaco-editor/react": "^4.6.0",
         "concurrently": "^8.2.2"
     }
 }
