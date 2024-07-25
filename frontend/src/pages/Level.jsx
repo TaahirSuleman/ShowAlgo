@@ -10,9 +10,12 @@ import {
   Grid,
   GridItem,
   Heading,
+  ListItem,
   Text,
+  UnorderedList,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import { CheckIcon, CloseIcon, WarningIcon, InfoIcon } from "@chakra-ui/icons";
 import { FaPlay, FaCloudUploadAlt } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
@@ -24,13 +27,15 @@ import OutputView from "../components/OutputView";
 function Level() {
   const [value, setValue] = useState("");
   const editorRef = useRef();
-  const [output, setOutput] = useState([]);
+  const [output, setOutput] = useState("Hello, World!");
   const [isError, setIsError] = useState(false);
   const [isRunLoading, setIsRunLoading] = useState(false);
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
+  const [submitClicked, setSubmitClicked] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
   const [showHints, setShowHints] = useState(false);
+  const [showTestCaseStatus, setShowTestCaseStatus] = useState(false);
   const cancelClearRef = useRef();
   const { sectionRoute, levelRoute } = useParams();
   const [level, setLevel] = React.useState({
@@ -39,7 +44,15 @@ function Level() {
     title: "",
     order: 0,
     question: "",
-    test_cases: [],
+    test_cases: [
+      {
+        input: "",
+        output: "",
+        passed: false,
+      },
+    ],
+    examples: [],
+    solution: "",
     hints: [],
     difficulty: "",
     __v: 0,
@@ -65,19 +78,43 @@ function Level() {
     setShowHints(!showHints);
   };
 
+  const toggleTestCaseStatus = () => {
+    setShowTestCaseStatus(!showTestCaseStatus);
+  };
+
+  const checkTestCases = () => {
+    const testCases = level.test_cases.map((testCase) => {
+      console.log(testCase.output);
+      const result = output === testCase.output;
+      return { ...testCase, passed: result };
+    });
+    setLevel({ ...level, test_cases: testCases });
+  };
+
+  const getStatusIcon = () => {
+    if (!submitClicked) return <InfoIcon color="gray.500" boxSize={6} />;
+    if (level.test_cases.every((tc) => tc.passed))
+      return <CheckIcon color="green.500" boxSize={6} />;
+    if (level.test_cases.every((tc) => !tc.passed))
+      return <CloseIcon color="red.500" boxSize={6} />;
+    return <WarningIcon color="yellow.500" boxSize={6} />;
+  };
+
   const runCode = () => {
     setIsRunLoading(true);
     setTimeout(() => {
       setIsRunLoading(false);
-      setOutput(["Hello, World!"]);
+      setOutput("Hello, World!");
     }, 2000);
   };
 
   const submitCode = () => {
     setIsSubmitLoading(true);
+    setSubmitClicked(true);
     setTimeout(() => {
       setIsSubmitLoading(false);
-      setOutput(["Hello, World!"]);
+      setOutput("Hello, World!");
+      checkTestCases();
     }, 2000);
   };
 
@@ -99,7 +136,7 @@ function Level() {
     setTimeout(() => {
       setValue("");
       setIsClearLoading(false);
-      setOutput([]);
+      setOutput("");
     }, 1000);
   };
 
@@ -126,25 +163,71 @@ function Level() {
             {level.order}. {level.title}
           </Heading>
 
-          <Text fontWeight="bold" fontSize="xl">
+          <Text fontWeight="bold" fontSize="xl" mt={2}>
             Problem:{" "}
             <Text as="span" fontWeight="normal">
               {level.question}
+
+              <Button
+                onClick={toggleHints}
+                mt={4}
+                colorScheme="gray"
+                size="xs"
+                as="span"
+                m={2}
+              >
+                {showHints ? "Hide Hints" : "Show Hints"}
+              </Button>
+              {showHints && (
+                <UnorderedList mt={2} color="gray">
+                  {level.hints.map((hint, index) => (
+                    <ListItem key={index} fontWeight="normal">
+                      {hint}
+                    </ListItem>
+                  ))}
+                </UnorderedList>
+              )}
             </Text>
           </Text>
 
-          <Button onClick={toggleHints} mt={4} colorScheme="gray" size="sm">
-            {showHints ? "Hide Hints" : "Show Hints"}
-          </Button>
-          {showHints && (
-            <>
-              <Text mt={2} fontWeight="bold">
-                Hints:
-              </Text>
-              {level.hints.map((hint, index) => (
-                <Text key={index}>{hint}</Text>
+          <Text fontWeight="bold" fontSize="xl" mt={2}>
+            Example(s):{" "}
+            <UnorderedList listStyleType="none">
+              {level.examples.map((example, index) => (
+                <ListItem key={index} fontWeight="normal">
+                  {example}
+                </ListItem>
               ))}
-            </>
+            </UnorderedList>
+          </Text>
+
+          <Text fontWeight="bold" fontSize="xl" mt={2}>
+            Status: {getStatusIcon()}
+          </Text>
+
+          <Button
+            onClick={toggleTestCaseStatus}
+            mt={4}
+            colorScheme="gray"
+            size="sm"
+          >
+            {showTestCaseStatus
+              ? "Hide Test Case Status"
+              : "Show Test Case Status"}
+          </Button>
+          {showTestCaseStatus && (
+            <UnorderedList mt={2} color="gray" listStyleType="none">
+              {level.test_cases.map((testCase, index) => (
+                <ListItem key={index} fontWeight="normal">
+                  Test Case {index + 1}: {testCase.output}
+                  {testCase.passed ? (
+                    <CheckIcon color="green.500" boxSize={4} ml={2} />
+                  ) : (
+                    <CloseIcon color="red.500" boxSize={4} ml={2} />
+                  )}
+                </ListItem>
+              ))}
+            </UnorderedList>
           )}
         </Box>
       </GridItem>
@@ -211,7 +294,7 @@ function Level() {
                 m={2}
                 width="115px"
               >
-                <FaCloudUploadAlt size="1.6em"/>
+                <FaCloudUploadAlt size="1.6em" />
                 <Box as="span" ml={2}>
                   Submit
                 </Box>
@@ -289,12 +372,16 @@ function Level() {
       </GridItem>
 
       <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-        <Box bg="blackAlpha.900" borderTopRadius={10} p={2} display="flex" alignItems="center" justifyContent="center" height="12dvh">
-          <Heading
-            fontWeight="normal"
-            color="whiteAlpha.900"
-            fontSize="2xl"
-          >
+        <Box
+          bg="blackAlpha.900"
+          borderTopRadius={10}
+          p={2}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="12dvh"
+        >
+          <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="2xl">
             Visualisation View
           </Heading>
         </Box>
