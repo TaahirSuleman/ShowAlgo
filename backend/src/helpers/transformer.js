@@ -31,7 +31,7 @@ class Transformer {
             case "PrintStatement":
                 return {
                     type: "PrintStatement",
-                    value: this.transformExpression(node.value),
+                    value: this.transformExpression(node.value).value,
                 };
             case "IfStatement":
                 return {
@@ -58,7 +58,7 @@ class Transformer {
             case "ReturnStatement":
                 return {
                     type: "ReturnStatement",
-                    value: this.transformExpression(node.value),
+                    value: this.transformReturnValue(node.value),
                 };
             default:
                 throw new Error(`Unknown node type: ${node.type}`);
@@ -69,19 +69,38 @@ class Transformer {
         return {
             left: condition.left,
             operator: condition.operator,
-            right: this.transformExpression(condition.right),
+            right: this.transformExpression(condition.right).value,
         };
     }
 
     transformExpression(expression) {
         if (expression.type === "Expression") {
             return {
-                left: expression.left.value,
+                type: "Expression",
+                left: this.transformExpression(expression.left).value,
                 operator: expression.operator,
-                right: expression.right.value,
+                right: this.transformExpression(expression.right).value,
+            };
+        } else if (
+            expression.type === "Identifier" ||
+            expression.type === "Literal"
+        ) {
+            return { value: expression.value };
+        } else {
+            return expression;
+        }
+    }
+
+    transformReturnValue(expression) {
+        if (expression.type === "Expression") {
+            return {
+                type: "Expression",
+                left: { value: expression.left.value },
+                operator: expression.operator,
+                right: { value: expression.right.value },
             };
         } else {
-            return expression.value;
+            return this.transformExpression(expression);
         }
     }
 }

@@ -19,7 +19,10 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                     {
                         type: "VariableDeclaration",
                         name: "x",
-                        value: "10",
+                        value: {
+                            type: "NumberLiteral",
+                            value: "10",
+                        },
                     },
                 ],
             },
@@ -39,9 +42,14 @@ END FUNCTION`,
                             {
                                 type: "ReturnStatement",
                                 value: {
-                                    left: "a",
+                                    type: "Expression",
+                                    left: {
+                                        value: "a",
+                                    },
                                     operator: "+",
-                                    right: "b",
+                                    right: {
+                                        value: "b",
+                                    },
                                 },
                             },
                         ],
@@ -126,6 +134,7 @@ END WHILE`,
                                 type: "VariableDeclaration",
                                 name: "x",
                                 value: {
+                                    type: "Expression",
                                     left: "x",
                                     operator: "-",
                                     right: "1",
@@ -159,7 +168,10 @@ END WHILE`,
                     {
                         type: "VariableDeclaration",
                         name: "x",
-                        value: "10",
+                        value: {
+                            type: "NumberLiteral",
+                            value: "10",
+                        },
                     },
                     {
                         type: "FunctionDeclaration",
@@ -169,9 +181,14 @@ END WHILE`,
                             {
                                 type: "ReturnStatement",
                                 value: {
-                                    left: "a",
+                                    type: "Expression",
+                                    left: {
+                                        value: "a",
+                                    },
                                     operator: "+",
-                                    right: "b",
+                                    right: {
+                                        value: "b",
+                                    },
                                 },
                             },
                         ],
@@ -223,6 +240,7 @@ END WHILE`,
                                 type: "VariableDeclaration",
                                 name: "x",
                                 value: {
+                                    type: "Expression",
                                     left: "x",
                                     operator: "-",
                                     right: "1",
