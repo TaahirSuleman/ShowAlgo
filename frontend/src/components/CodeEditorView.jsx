@@ -5,13 +5,11 @@ import { useEffect, useRef, useState } from "react";
 const CodeEditorView = ({
   language,
   value,
-  onMount,
   setValue,
   defaultValue,
   height,
   width,
 }) => {
-  const editorRef = useRef();
   const [isLoading, setIsLoading] = useState(true);
   const monaco = useMonaco();
 

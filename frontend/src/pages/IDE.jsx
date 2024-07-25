@@ -1,26 +1,30 @@
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Box,
   Button,
-  Divider,
   Grid,
   GridItem,
   Heading,
-  HStack,
-  Spacer,
-  Text,
   useBreakpointValue,
-  VStack,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import CodeEditorView from "../components/CodeEditorView";
 import OutputView from "../components/OutputView";
 
 function IDE() {
   const [value, setValue] = useState("");
+  const editorRef = useRef();
   const [output, setOutput] = useState([]);
   const [isError, setIsError] = useState(false);
   const [isRunLoading, setIsRunLoading] = useState(false);
+  const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
+  const cancelClearRef = useRef();
 
   // very long sample text
   const sampleText =
@@ -39,13 +43,26 @@ function IDE() {
     }, 2000);
   };
 
+  const handleClearClick = () => {
+    setIsClearDialogOpen(true);
+  };
+
+  const handleClearConfirm = () => {
+    setIsClearDialogOpen(false);
+    clearCode();
+  };
+
+  const handleClearCancel = () => {
+    setIsClearDialogOpen(false);
+  };
+
   const clearCode = () => {
     setIsClearLoading(true);
     setTimeout(() => {
       setValue("");
       setIsClearLoading(false);
       setOutput([]);
-    }, 2000);
+    }, 1000);
   };
 
   const gridTemplateColumns = useBreakpointValue({
@@ -59,130 +76,6 @@ function IDE() {
   });
 
   return (
-    // <Box>
-    //   <HStack height="50%" p={4}>
-    //     <VStack>
-    //       <Heading fontSize="2xl" fontWeight="normal" color="whiteAlpha.700">
-    //         Code Editor
-    //       </Heading>
-
-    //       <Box bg="red.400">
-    //         <Box bg="yellow.400">
-    //           <Button
-    //             variant="solid"
-    //             colorScheme="green"
-    //             onClick={runCode}
-    //             isLoading={isLoading}
-    //             m={2}
-    //           >
-    //             Run Code
-    //           </Button>
-    //         </Box>
-    //         <CodeEditorView
-    //           height="45dvh"
-    //           width="50dvw"
-    //           theme="vs-dark"
-    //           defaultValue={sampleCode}
-    //         />
-    //       </Box>
-    //       <Heading fontSize="2xl" fontWeight="normal" color="whiteAlpha.700">
-    //         Output View
-    //       </Heading>
-    //       <OutputView height="50dvh" width="50dvw" output={output} />
-    //     </VStack>
-
-    //     <VStack width="100%">
-    //       <Heading
-    //         fontSize="2xl"
-    //         fontWeight="normal"
-    //         color="whiteAlpha.700"
-    //         pb={2}
-    //       >
-    //         Visualisation View
-    //       </Heading>
-    //       <Box
-    //         width="100%"
-    //         height="108dvh"
-    //         bg="blackAlpha.600"
-    //         borderRadius={4}
-    //       >
-    //         {/* //! For demo purposes, must be removed */}
-    //         <HStack justifyContent="center" mt={10}>
-    //           <Box
-    //             bg="purple.400"
-    //             color="white"
-    //             borderRadius={4}
-    //             p={2}
-    //             m={1}
-    //             w="80px"
-    //             h="80px"
-    //             display="flex"
-    //             justifyContent="center"
-    //             alignItems="center"
-    //           >
-    //             <Text>10</Text>
-    //           </Box>
-    //           <Box
-    //             bg="purple.400"
-    //             color="white"
-    //             borderRadius={4}
-    //             p={2}
-    //             m={1}
-    //             w="80px"
-    //             h="80px"
-    //             display="flex"
-    //             justifyContent="center"
-    //             alignItems="center"
-    //           >
-    //             <Text>17</Text>
-    //           </Box>
-    //           <Box
-    //             bg="purple.400"
-    //             color="white"
-    //             borderRadius={4}
-    //             p={2}
-    //             m={1}
-    //             w="80px"
-    //             h="80px"
-    //             display="flex"
-    //             justifyContent="center"
-    //             alignItems="center"
-    //           >
-    //             <Text>43</Text>
-    //           </Box>
-    //           <Box
-    //             bg="purple.400"
-    //             color="white"
-    //             borderRadius={4}
-    //             p={2}
-    //             m={1}
-    //             w="80px"
-    //             h="80px"
-    //             display="flex"
-    //             justifyContent="center"
-    //             alignItems="center"
-    //           >
-    //             <Text>18</Text>
-    //           </Box>
-    //           <Box
-    //             bg="purple.400"
-    //             color="white"
-    //             borderRadius={4}
-    //             p={2}
-    //             m={1}
-    //             w="80px"
-    //             h="80px"
-    //             display="flex"
-    //             justifyContent="center"
-    //             alignItems="center"
-    //           >
-    //             <Text>9</Text>
-    //           </Box>
-    //         </HStack>
-    //       </Box>
-    //     </VStack>
-    //   </HStack>
-    // </Box>
     <Grid
       templateColumns={gridTemplateColumns}
       templateRows={gridTemplateRows}
@@ -211,6 +104,7 @@ function IDE() {
             <Button
               variant="solid"
               colorScheme="green"
+              isDisabled={value === ""}
               onClick={runCode}
               isLoading={isRunLoading}
               m={2}
@@ -220,19 +114,53 @@ function IDE() {
             <Button
               variant="solid"
               colorScheme="gray"
-              onClick={clearCode}
+              isDisabled={value === ""}
+              onClick={handleClearClick}
               isLoading={isClearLoading}
               m={2}
             >
               Clear
             </Button>
+
+            <AlertDialog
+              isOpen={isClearDialogOpen}
+              leastDestructiveRef={cancelClearRef}
+              onClose={handleClearCancel}
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                    Confirm Clear
+                  </AlertDialogHeader>
+
+                  <AlertDialogBody>
+                    Are you sure you want to clear the code?
+                  </AlertDialogBody>
+
+                  <AlertDialogFooter>
+                    <Button ref={cancelClearRef} onClick={handleClearCancel}>
+                      Cancel
+                    </Button>
+                    <Button
+                      colorScheme="red"
+                      onClick={handleClearConfirm}
+                      ml={3}
+                    >
+                      Clear
+                    </Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
           </Box>
           <CodeEditorView
             height="50dvh"
             width={{ base: "100%", md: "50vw" }}
             theme="vs-dark"
-            defaultValue={sampleCode}
+            //! remove default value
+            // defaultValue={sampleCode}
             value={value}
+            setValue={setValue}
           />
         </Box>
 
@@ -278,7 +206,81 @@ function IDE() {
           boxShadow="md"
           height={{ base: "75vh", md: "120vh" }}
           p={4}
-        ></Box>
+        >
+          {/* //! For demo purposes, must be removed */}
+          {/* <HStack justifyContent="center" mt={10}>
+            <Box
+              bg="purple.400"
+              color="white"
+              borderRadius={4}
+              p={2}
+              m={1}
+              w="80px"
+              h="80px"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text>10</Text>
+            </Box>
+            <Box
+              bg="purple.400"
+              color="white"
+              borderRadius={4}
+              p={2}
+              m={1}
+              w="80px"
+              h="80px"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text>17</Text>
+            </Box>
+            <Box
+              bg="purple.400"
+              color="white"
+              borderRadius={4}
+              p={2}
+              m={1}
+              w="80px"
+              h="80px"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text>43</Text>
+            </Box>
+            <Box
+              bg="purple.400"
+              color="white"
+              borderRadius={4}
+              p={2}
+              m={1}
+              w="80px"
+              h="80px"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text>18</Text>
+            </Box>
+            <Box
+              bg="purple.400"
+              color="white"
+              borderRadius={4}
+              p={2}
+              m={1}
+              w="80px"
+              h="80px"
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+            >
+              <Text>9</Text>
+            </Box>
+          </HStack> */}
+        </Box>
       </GridItem>
     </Grid>
   );
