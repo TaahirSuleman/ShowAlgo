@@ -126,8 +126,8 @@ function Level() {
             {level.order}. {level.title}
           </Heading>
 
-          <Text fontWeight="bold">
-            Question:{" "}
+          <Text fontWeight="bold" fontSize="xl">
+            Problem:{" "}
             <Text as="span" fontWeight="normal">
               {level.question}
             </Text>
