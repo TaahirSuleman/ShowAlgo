@@ -15,6 +15,8 @@ import {
 import React, { useRef, useState } from "react";
 import CodeEditorView from "../components/CodeEditorView";
 import OutputView from "../components/OutputView";
+import { FaPlay } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
 
 function IDE() {
   const [value, setValue] = useState("");
@@ -83,44 +85,55 @@ function IDE() {
       p={4}
     >
       <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-        <Heading
-          fontWeight="normal"
-          color="whiteAlpha.700"
-          textAlign="center"
-          fontSize="2xl"
-          mb={2}
-        >
-          Code Editor
-        </Heading>
-        <Box width={{ base: "94vw", md: "50vw" }} boxShadow="md">
+        <Box width={{ base: "94vw", md: "50vw" }} boxShadow="md" borderBottomRadius={10} overflow="hidden">
           <Box
-            bg="blackAlpha.800"
-            borderTopRadius={4}
+            bg="blackAlpha.900"
+            borderTopRadius={10}
             display="flex"
-            justifyContent="end"
-            pb={2}
-            pt={2}
+            justifyContent="space-between"
+            p={2}
+            alignItems="center"
           >
             <Button
               variant="solid"
-              colorScheme="green"
-              isDisabled={value === ""}
-              onClick={runCode}
-              isLoading={isRunLoading}
-              m={2}
-            >
-              Run
-            </Button>
-            <Button
-              variant="solid"
-              colorScheme="gray"
+              colorScheme="red"
               isDisabled={value === ""}
               onClick={handleClearClick}
               isLoading={isClearLoading}
               m={2}
+              pl={1}
+              width="85px"
+
             >
-              Clear
+              <IoClose size="1.6em" />
+              <Box as="span">Clear</Box>
             </Button>
+
+            <Heading
+              fontWeight="normal"
+              color="whiteAlpha.900"
+              textAlign="center"
+              fontSize="2xl"
+            >
+              Code Editor
+            </Heading>
+
+            <Box>
+              <Button
+                variant="solid"
+                colorScheme="green"
+                isDisabled={value === ""}
+                onClick={runCode}
+                isLoading={isRunLoading}
+                m={2}
+                width="85px"
+              >
+                <FaPlay />
+                <Box as="span" ml={2}>
+                  Run
+                </Box>
+              </Button>
+            </Box>
 
             <AlertDialog
               isOpen={isClearDialogOpen}
@@ -164,19 +177,26 @@ function IDE() {
           />
         </Box>
 
-        <Box>
-          <Heading
-            fontWeight="normal"
-            color="whiteAlpha.700"
-            textAlign="center"
-            fontSize="2xl"
-            mb={2}
-            mt={3}
-          >
-            Output View
-          </Heading>
+        <Box mt={4} borderBottomRadius={10} overflow="hidden">
           <Box
-            borderRadius={4}
+            bg="blackAlpha.900"
+            borderTopRadius={10}
+            p={2}
+            display="flex"
+            alignItems="center"
+            height="12dvh"
+            justifyContent="center"
+          >
+            <Heading
+              fontWeight="normal"
+              color="whiteAlpha.900"
+              fontSize="2xl"
+            >
+              Output View
+            </Heading>
+          </Box>
+          <Box
+            borderBottomRadius={4}
             height={{ base: "auto", md: "50vh" }}
             boxShadow="md"
           >
@@ -190,21 +210,21 @@ function IDE() {
       </GridItem>
 
       <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-        <Heading
-          fontWeight="normal"
-          color="whiteAlpha.700"
-          textAlign="center"
-          fontSize="2xl"
-          mb={2}
-        >
-          Visualisation View
-        </Heading>
+        <Box bg="blackAlpha.900" borderTopRadius={10} p={2} display="flex" alignItems="center" justifyContent="center" height="12dvh">
+          <Heading
+            fontWeight="normal"
+            color="whiteAlpha.900"
+            fontSize="2xl"
+          >
+            Visualisation View
+          </Heading>
+        </Box>
 
         <Box
           bg="blackAlpha.600"
-          borderRadius={4}
+          borderBottomRadius={10}
           boxShadow="md"
-          height={{ base: "75vh", md: "120vh" }}
+          height={{ base: "75vh", md: "115vh" }}
           p={4}
         >
           {/* //! For demo purposes, must be removed */}

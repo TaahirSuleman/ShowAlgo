@@ -11,7 +11,6 @@ const OutputView = ({ output, isError, isLoading, className, height, width }) =>
       p={4}
       color={isError ? "red.400" : ""}
       border="1px solid"
-      borderRadius={4}
       borderColor={isError ? "red.500" : "transparent"}
       overflow="auto"
     >

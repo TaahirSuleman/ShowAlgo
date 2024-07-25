@@ -58,7 +58,7 @@ const CodeEditorView = ({
   );
 
   return (
-    <Box borderBottomRadius={4} overflow="hidden">
+    <Box overflow="hidden">
       {isLoading ? (
         loadingComponent
       ) : (
