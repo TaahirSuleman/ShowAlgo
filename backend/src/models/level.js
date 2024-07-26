@@ -32,6 +32,14 @@ const levelSchema = new mongoose.Schema({
     route: {
         type: String,
         required: true
+    },
+    examples: {
+        type: [String],
+        required: true,
+    },
+    solution: {
+        type: String,
+        required: true
     }
 });
 
