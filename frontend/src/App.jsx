@@ -14,6 +14,7 @@ import Documentation from "./pages/Documentation";
 import LevelSelection from "./pages/LevelSelection";
 import Layout from "./components/Layout";
 import Level from "./pages/Level";
+import GuestIDE from "./pages/GuestIDE";
 
 // set the base URL of the backend server
 axios.defaults.baseURL = "http://localhost:8000";
@@ -28,6 +29,10 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
 
+          <Route element={<Layout navBar="guest"/>}>
+            <Route path="/guest-ide" element={<GuestIDE />} />
+          </Route>
+
           <Route element={<Layout />}>
             <Route path="/about" element={<About />} />
             <Route path="/ide" element={<IDE />}></Route>
@@ -36,7 +41,10 @@ function App() {
               path="/learning-mode/:sectionHeading"
               Component={LevelSelection}
             ></Route>
-            <Route path="learning-mode/:sectionRoute/:levelRoute" element={<Level />}></Route>
+            <Route
+              path="learning-mode/:sectionRoute/:levelRoute"
+              element={<Level />}
+            ></Route>
             <Route path="/documentation" element={<Documentation />}></Route>
           </Route>
         </Routes>

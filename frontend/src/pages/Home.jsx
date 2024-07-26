@@ -17,6 +17,7 @@ function Home() {
         <Stack direction="row">
           <Button colorScheme="purple" onClick={() => navigate("/login")}>Log In</Button>
           <Button colorScheme="purple" onClick={() => navigate("/register")}>Create Account</Button>
+          <Button colorScheme="purple" onClick={() => navigate("/guest-ide")}>Guest</Button>
         </Stack>
       </Center>
     </div>

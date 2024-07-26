@@ -10,13 +10,30 @@ import {
   Grid,
   GridItem,
   Heading,
+  HStack,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
   useBreakpointValue,
+  useDisclosure,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import CodeEditorView from "../components/CodeEditorView";
 import OutputView from "../components/OutputView";
 import { FaPlay } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
+import { InfoIcon } from "@chakra-ui/icons";
 
 function IDE() {
   const [value, setValue] = useState("");
@@ -27,6 +44,9 @@ function IDE() {
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
   const cancelClearRef = useRef();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef(null);
+
 
   // very long sample text
   const sampleText =
@@ -85,7 +105,12 @@ function IDE() {
       p={4}
     >
       <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-        <Box width={{ base: "94vw", md: "50vw" }} boxShadow="md" borderBottomRadius={10} overflow="hidden">
+        <Box
+          width={{ base: "94vw", md: "50vw" }}
+          boxShadow="md"
+          borderBottomRadius={10}
+          overflow="hidden"
+        >
           <Box
             bg="blackAlpha.900"
             borderTopRadius={10}
@@ -103,7 +128,6 @@ function IDE() {
               m={2}
               pl={1}
               width="85px"
-
             >
               <IoClose size="1.6em" />
               <Box as="span">Clear</Box>
@@ -116,6 +140,79 @@ function IDE() {
               fontSize="2xl"
             >
               Code Editor
+              <Popover trigger="hover">
+                <PopoverTrigger>
+                  <IconButton
+                    ref={btnRef}
+                    onClick={onOpen}
+                    icon={
+                      <InfoIcon
+                        color="blackAlpha.900"
+                        p={0.5}
+                        bg="blue.300"
+                        borderRadius="50%"
+                        borderColor="white"
+                        boxSize="0.8em"
+                      />
+                    }
+                    size="auto"
+                    bg="transparent"
+                    ml={2}
+                  />
+                </PopoverTrigger>
+
+                <PopoverContent bg="blue.400" width="auto" border="none">
+                  <PopoverArrow bg="blue.400" />
+                  <PopoverBody color="white" fontSize="sm">
+                    Show Documentation
+                  </PopoverBody>
+                </PopoverContent>
+              </Popover>
+              <Modal
+                onClose={onClose}
+                finalFocusRef={btnRef}
+                isOpen={isOpen}
+                scrollBehavior="inside"
+              >
+                <ModalOverlay />
+                <ModalContent bg="gray.900">
+                  <ModalHeader>Documentation</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <Text>
+                      Documentation goes here... <br />
+                      <br />
+                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                      sed do eiusmod tempor incididunt ut labore et dolore magna
+                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Duis aute irure dolor in reprehenderit in voluptate velit
+                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
+                      sint occaecat cupidatat non proident, sunt in culpa qui
+                      officia deserunt mollit anim id est laborum. Lorem ipsum
+                      dolor sit amet, consectetur adipiscing elit sed do eiusmod
+                      tempor incididunt ut labore et dolore magna aliqua. Ut
+                      enim ad minim veniam, quis nostrud exercitation ullamco
+                      laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                      irure dolor in reprehenderit in voluptate velit esse
+                      cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                      occaecat cupidatat non proident, sunt in culpa qui officia
+                      deserunt mollit anim id est laborum. Lorem ipsum dolor sit
+                      amet, consectetur adipiscing elit sed do eiusmod tempor
+                      incididunt ut labore et dolore magna aliqua. Ut enim ad
+                      minim veniam, quis nostrud exercitation ullamco laboris
+                      nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                      dolor in reprehenderit in voluptate velit esse cillum
+                      dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                      cupidatat non proident, sunt in culpa qui officia deserunt
+                      mollit anim id est laborum."
+                    </Text>
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onClick={onClose}>Close</Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </Heading>
 
             <Box>
@@ -170,8 +267,6 @@ function IDE() {
             height="50dvh"
             width={{ base: "100%", md: "50vw" }}
             theme="vs-dark"
-            //! remove default value
-            // defaultValue={sampleCode}
             value={value}
             setValue={setValue}
           />
@@ -187,11 +282,7 @@ function IDE() {
             height="12dvh"
             justifyContent="center"
           >
-            <Heading
-              fontWeight="normal"
-              color="whiteAlpha.900"
-              fontSize="2xl"
-            >
+            <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="2xl">
               Output View
             </Heading>
           </Box>
@@ -210,12 +301,16 @@ function IDE() {
       </GridItem>
 
       <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-        <Box bg="blackAlpha.900" borderTopRadius={10} p={2} display="flex" alignItems="center" justifyContent="center" height="12dvh">
-          <Heading
-            fontWeight="normal"
-            color="whiteAlpha.900"
-            fontSize="2xl"
-          >
+        <Box
+          bg="blackAlpha.900"
+          borderTopRadius={10}
+          p={2}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          height="12dvh"
+        >
+          <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="2xl">
             Visualisation View
           </Heading>
         </Box>
@@ -226,81 +321,7 @@ function IDE() {
           boxShadow="md"
           height={{ base: "75vh", md: "115vh" }}
           p={4}
-        >
-          {/* //! For demo purposes, must be removed */}
-          {/* <HStack justifyContent="center" mt={10}>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>10</Text>
-            </Box>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>17</Text>
-            </Box>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>43</Text>
-            </Box>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>18</Text>
-            </Box>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>9</Text>
-            </Box>
-          </HStack> */}
-        </Box>
+        ></Box>
       </GridItem>
     </Grid>
   );
