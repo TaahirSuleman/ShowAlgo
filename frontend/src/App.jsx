@@ -15,8 +15,9 @@ import LevelSelection from "./pages/LevelSelection";
 import Layout from "./components/Layout";
 import Level from "./pages/Level";
 import GuestIDE from "./pages/GuestIDE";
+import PrivateRoute from "./components/PrivateRoute";
 
-// set the base URL of the backend server
+// base URL of the backend server
 axios.defaults.baseURL = "http://localhost:8000";
 axios.defaults.withCredentials = true;
 
@@ -29,23 +30,32 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
 
-          <Route element={<Layout navBar="guest"/>}>
+          <Route element={<Layout navBar="guest" />}>
             <Route path="/guest-ide" element={<GuestIDE />} />
           </Route>
 
           <Route element={<Layout />}>
-            <Route path="/about" element={<About />} />
-            <Route path="/ide" element={<IDE />}></Route>
-            <Route path="/learning-mode" element={<LearningMode />}></Route>
+            <Route
+              path="/about"
+              element={<PrivateRoute element={About} />}
+            />
+            <Route path="/ide" element={<PrivateRoute element={IDE} />} />
+            <Route
+              path="/learning-mode"
+              element={<PrivateRoute element={LearningMode} />}
+            />
             <Route
               path="/learning-mode/:sectionHeading"
-              Component={LevelSelection}
-            ></Route>
+              element={<PrivateRoute element={LevelSelection} />}
+            />
             <Route
-              path="learning-mode/:sectionRoute/:levelRoute"
-              element={<Level />}
-            ></Route>
-            <Route path="/documentation" element={<Documentation />}></Route>
+              path="/learning-mode/:sectionRoute/:levelRoute"
+              element={<PrivateRoute element={Level} />}
+            />
+            <Route
+              path="/documentation"
+              element={<PrivateRoute element={Documentation} />}
+            />
           </Route>
         </Routes>
       </UserContextProvider>

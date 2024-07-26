@@ -14,6 +14,7 @@ import {
   updateProgress,
   createLevel,
 } from "../controllers/authController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -36,9 +37,9 @@ router.post("/register", registerUser);
 // This endpoint is used to login a user
 router.post("/login", loginUser);
 // This endpoint is used to get the user profile
-router.get("/profile", getProfile);
+router.get("/profile", authMiddleware, getProfile);
 // This endpoint is used to logout a user
-router.post("/logout", logoutUser);
+router.post("/logout", authMiddleware, logoutUser);
 
 // --------------------
 
@@ -46,23 +47,23 @@ router.post("/logout", logoutUser);
 // --------------------
 
 // This endpoint is used to get user progress
-router.get("/users/:userId/progress", getUserProgress);
+router.get("/users/:userId/progress", authMiddleware, getUserProgress);
 
 // This endpoint is used to get levels for a section
-router.get("/sections/:sectionRoute/levels", getLevels);
+router.get("/sections/:sectionRoute/levels", authMiddleware, getLevels);
 // This endpoint is used to get a single level
-router.get("/sections/:sectionRoute/levels/:levelRoute", getSingleLevel);
+router.get("/sections/:sectionRoute/levels/:levelRoute", authMiddleware, getSingleLevel);
 
 // This endpoint is to get a single section by route name
-router.get("/sections/:sectionRoute", getSingleSection);
+router.get("/sections/:sectionRoute", authMiddleware, getSingleSection);
 // This endpoint is used to get all sections
-router.get("/sections", getSections);
+router.get("/sections", authMiddleware, getSections);
 // This endpoint is used to update user progress
-router.put("/progress", updateProgress);
+router.put("/progress", authMiddleware, updateProgress);
 
 // --------------------
 
 // This endpoint is used to create a new level
-router.post("/levels", createLevel);
+router.post("/levels", authMiddleware, createLevel);
 
 export default router;

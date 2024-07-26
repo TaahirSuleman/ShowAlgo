@@ -91,7 +91,7 @@ function Register() {
               <Input
                 type="text"
                 id="username"
-                placeholder="enter username..."
+                placeholder="Enter username..."
                 value={data.username}
                 onChange={(e) => setData({ ...data, username: e.target.value })}
                 border="1px solid gray"

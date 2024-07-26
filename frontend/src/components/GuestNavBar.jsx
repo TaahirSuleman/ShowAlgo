@@ -22,20 +22,13 @@ export default function GuestNavBar() {
 
   // Exit function
   const Exit = async () => {
-    try {
-      // Send a POST request to the logout endpoint
-      await axios.post("/logout").then(() => {
-        // Clear user data from localStorage
-        localStorage.removeItem("user");
-        // Reset user state
-        setUser(null);
+      try {
         // Redirect to home page
         navigate("/");
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   const handleExitClick = () => {
     setIsExitDialogOpen(true);
