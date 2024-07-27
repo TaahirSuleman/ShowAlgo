@@ -19,14 +19,14 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverContent,
-  PopoverTrigger,
   Text,
   useBreakpointValue,
   useDisclosure,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverBody,
 } from "@chakra-ui/react";
 import React, { useRef, useState } from "react";
 import CodeEditorView from "../components/CodeEditorView";
@@ -35,8 +35,10 @@ import { FaPlay } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { InfoIcon } from "@chakra-ui/icons";
 
-function IDE() {
+function GuestIDE() {
   const [value, setValue] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef(null);
   const editorRef = useRef();
   const [output, setOutput] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -44,18 +46,15 @@ function IDE() {
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
   const cancelClearRef = useRef();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef(null);
-
 
   // very long sample text
   const sampleText =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
   const sampleCode = `def hello():
-  array = [10, 17, 43, 18, 9]
-  print("Hello, World!")
-  return array`;
+    array = [10, 17, 43, 18, 9]
+    print("Hello, World!")
+    return array`;
 
   const runCode = () => {
     setIsRunLoading(true);
@@ -162,10 +161,8 @@ function IDE() {
                 </PopoverTrigger>
 
                 <PopoverContent bg="blue.400" width="auto" border="none">
-                  <PopoverArrow bg="blue.400" />
-                  <PopoverBody color="white" fontSize="sm">
-                    Show Documentation
-                  </PopoverBody>
+                  <PopoverArrow bg="blue.400"/>
+                  <PopoverBody color="white" fontSize="sm">Show Documentation</PopoverBody>
                 </PopoverContent>
               </Popover>
               <Modal
@@ -327,4 +324,4 @@ function IDE() {
   );
 }
 
-export default IDE;
+export default GuestIDE;

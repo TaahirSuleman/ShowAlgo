@@ -47,7 +47,7 @@ function Login() {
         // clear the form
         setData({});
         // redirect to login page
-        navigate("/dashboard");
+        navigate("/about");
         toast({
           title: "Success",
           description: "Login Successful! Welcome back!",
@@ -91,7 +91,7 @@ function Login() {
               <Input
                 type="text"
                 id="username"
-                placeholder="enter username..."
+                placeholder="Enter username..."
                 value={data.username}
                 onChange={(e) => setData({ ...data, username: e.target.value })}
                 border="1px solid gray"
