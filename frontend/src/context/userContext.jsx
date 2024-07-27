@@ -12,12 +12,13 @@ export function UserContextProvider({children}) {
 
     // Fetch user data on mount
     useEffect(() => {
-        if(!user && location.pathname !== '/guest-ide') {
+        const excludedPaths = ['/guest-ide', '/login', '/register'];
+        if(!user && !excludedPaths.includes(location.pathname)) {
             axios.get('/profile').then(({data}) => {
                 setUser(data);
             })
         }
-    }, [])
+    }, [location.pathname, user]);
     return (
         <UserContext.Provider value={{user, setUser}}>
             {children}

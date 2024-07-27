@@ -13,7 +13,7 @@ export const test = (req, res) => {
 // Regsiter endpoint
 export const registerUser = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, role } = req.body;
     // check if name is entered and length greater than 6 characters
     if (!username || username.length < 6) {
       return res.json({ error: "Username is required and should be at least 6 characters long" });
@@ -35,6 +35,7 @@ export const registerUser = async (req, res) => {
     const user = await User.create({
       username,
       password: hashedPassword,
+      role,
     });
 
     return res.json(user);
@@ -67,7 +68,7 @@ export const loginUser = async (req, res) => {
     if (match) {
       // create a token
       jwt.sign(
-        { id: user._id, username: user.username },
+        { id: user._id, username: user.username, role: user.role },
         process.env.JWT_SECRET,
         {},
         (err, token) => {
@@ -110,12 +111,11 @@ export const logoutUser = (req, res) => {
   }
 };
 
-// Endpoint to create a new level
+// Endpoint to create a new level (admin only) //! check thae level schema
 export const createLevel = async (req, res) => {
   try {
-    const { section_id, title, order, question, test_cases, hints, difficulty } = req.body;
+    const { title, order, question, test_cases, hints, difficulty } = req.body;
     const level = await Levels.create({
-      section_id,
       title,
       order,
       question,

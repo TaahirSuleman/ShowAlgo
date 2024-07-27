@@ -22,16 +22,18 @@ function Register() {
   const [data, setData] = useState({
     username: "",
     password: "",
+    role: "user",
   });
 
   const registerUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
     // destructure data
-    const { username, password } = data;
+    const { username, password, role } = data;
     try {
       const { data } = await axios.post("/register", {
         username,
         password,
+        role,
       });
 
       if (data.error) {

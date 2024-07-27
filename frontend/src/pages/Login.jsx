@@ -26,11 +26,12 @@ function Login() {
 
   const loginUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
-    const { username, password } = data;
+    const { username, password, role } = data;
     try {
       const { data } = await axios.post("/login", {
         username,
         password,
+        role,
       });
 
       if (data.error) {
@@ -46,8 +47,12 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(data));
         // clear the form
         setData({});
-        // redirect to login page
-        navigate("/about");
+        // redirect based on user role
+        if (data.role === "admin") {
+          navigate("/admin-dashboard");
+        } else {
+          navigate("/about");
+        }
         toast({
           title: "Success",
           description: "Login Successful! Welcome back!",

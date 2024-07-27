@@ -15,6 +15,7 @@ import {
   createLevel,
 } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import adminMiddleware from "../middleware/adminMiddleware.js";
 
 const router = express.Router();
 
@@ -37,9 +38,9 @@ router.post("/register", registerUser);
 // This endpoint is used to login a user
 router.post("/login", loginUser);
 // This endpoint is used to get the user profile
-router.get("/profile", authMiddleware, getProfile);
+router.get("/profile", getProfile);
 // This endpoint is used to logout a user
-router.post("/logout", authMiddleware, logoutUser);
+router.post("/logout", logoutUser);
 
 // --------------------
 
@@ -64,6 +65,6 @@ router.put("/progress", authMiddleware, updateProgress);
 // --------------------
 
 // This endpoint is used to create a new level
-router.post("/levels", authMiddleware, createLevel);
+router.post("/levels", adminMiddleware, createLevel);
 
 export default router;
