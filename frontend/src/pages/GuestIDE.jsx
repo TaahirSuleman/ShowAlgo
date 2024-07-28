@@ -34,6 +34,7 @@ import OutputView from "../components/OutputView";
 import { FaPlay } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import { InfoIcon } from "@chakra-ui/icons";
+import MainVisualisationWindow from "../components/MainVisualisationWindow"
 
 function GuestIDE() {
   const [value, setValue] = useState("");
@@ -318,7 +319,12 @@ function GuestIDE() {
           boxShadow="md"
           height={{ base: "75vh", md: "115vh" }}
           p={4}
-        ></Box>
+        >
+          <MainVisualisationWindow
+          output= {output}
+          setOutput = {setOutput}
+          ></MainVisualisationWindow>
+        </Box>
       </GridItem>
     </Grid>
   );
