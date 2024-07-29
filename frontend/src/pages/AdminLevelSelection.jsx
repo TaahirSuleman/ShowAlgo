@@ -1,5 +1,7 @@
 import {
   Box,
+  Button,
+  ButtonGroup,
   Heading,
   IconButton,
   Table,
@@ -11,27 +13,35 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import { ArrowBackIcon, CheckIcon, MinusIcon } from "@chakra-ui/icons";
+import {
+  ArrowBackIcon,
+  CheckIcon,
+  DeleteIcon,
+  EditIcon,
+  MinusIcon,
+  ViewIcon,
+} from "@chakra-ui/icons";
+import { IoMdHome } from "react-icons/io";
 
-function LevelSelection() {
+function AdminLevelSelection() {
   const { sectionHeading } = useParams();
+  const sectionRoute = sectionHeading.toLowerCase().replace(/\s/g, "-");
   const [levels, setLevels] = React.useState([]);
+  const navigate = useNavigate();
   const [section, setSection] = React.useState({
-    _id: '',
-    heading: '',
-    subheading: '',
+    heading: "",
+    subheading: "",
     levels: [],
-    __v: 0,
-    route: ''
+    route: "",
   });
 
   useEffect(() => {
     // Fetch levels for the selected section
     const fetchLevels = async () => {
       try {
-        const response = await axios.get(`/sections/${sectionHeading}/levels`);
+        const response = await axios.get(`/sections/${sectionRoute}/levels`);
         setLevels(response.data);
       } catch (error) {
         console.log(error);
@@ -46,7 +56,7 @@ function LevelSelection() {
     // Fetch section details
     const fetchSection = async () => {
       try {
-        const response = await axios.get(`/sections/${sectionHeading}`);
+        const response = await axios.get(`/sections/${sectionRoute}`);
         setSection(response.data);
       } catch (error) {
         console.log(error);
@@ -57,7 +67,22 @@ function LevelSelection() {
     }
   }, [sectionHeading]);
 
-  console.log(levels);
+  const handleOnHomeClick = () => {
+    navigate("/admin-dashboard");
+  };
+
+  const onViewClick = () => {
+    console.log("View clicked");
+  }
+
+  const onEditClick = () => {
+    console.log("Edit clicked");
+  }
+
+  const onDeleteClick = () => {
+    console.log("Delete clicked");
+  }
+
 
   return (
     <Box
@@ -66,21 +91,29 @@ function LevelSelection() {
       alignItems="center"
       justifyContent="center"
     >
-      <Heading fontSize="6xl" textAlign="center" pt={10}>
+      <IconButton
+        icon={<IoMdHome />}
+        mt={10}
+        color="white"
+        bg="black"
+        onClick={handleOnHomeClick}
+      />
+
+      <Heading fontSize="6xl" textAlign="center">
         {section.heading}
       </Heading>
       <Heading fontSize="2xl" color="whiteAlpha.700" textAlign="center" pt={3}>
         {section.subheading}
       </Heading>
 
-      <TableContainer bg="blackAlpha.800" borderRadius={10} width="75%" mt={10}>
+      <TableContainer bg="blackAlpha.800" borderRadius={10} width="85%" mt={10}>
         <Table variant="simple" size="lg">
           <Thead>
             <Tr>
               <Th>Level</Th>
               <Th>Title</Th>
               <Th>Difficulty</Th>
-              <Th>Status</Th>
+              <Th>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -111,17 +144,27 @@ function LevelSelection() {
                 >
                   {level.difficulty}
                 </Td>
-                  <Td>
-                    {/* //TODO: Change this to a checkmark or minus icon based on the user's progress */}
-                    {(() => {
-                      const randomNum = Math.floor(Math.random() * 2);
-                      return randomNum ? (
-                        <CheckIcon color="green.400" />
-                      ) : (
-                        <MinusIcon color="gray.400" />
-                      );
-                    })()}
-                  </Td>
+                <Td>
+                  <ButtonGroup width="100%">
+                    <IconButton
+                      icon={<ViewIcon />}
+                      colorScheme="green"
+                      onClick={onViewClick}
+                      width="67%"
+                    />
+                    <IconButton
+                      icon={<EditIcon />}
+                      colorScheme="blue"
+                      onClick={onEditClick}
+                      width="17%"
+                    />
+                    <IconButton
+                      icon={<DeleteIcon />}
+                      colorScheme="red"
+                      onClick={onDeleteClick}
+                    />
+                  </ButtonGroup>
+                </Td>
               </Tr>
             ))}
           </Tbody>
@@ -131,4 +174,4 @@ function LevelSelection() {
   );
 }
 
-export default LevelSelection;
+export default AdminLevelSelection;

@@ -1,353 +1,398 @@
 import {
-    Box,
-    Divider,
-    Heading,
-    SimpleGrid,
-    Text,
-  } from "@chakra-ui/react";
-  import React, { useEffect, useState } from "react";
-  import { useNavigate } from "react-router-dom";
-  import axios from "axios";
-  import "react-multi-carousel/lib/styles.css";
-  import {
-    Bar,
-    ResponsiveContainer,
-    AreaChart,
-    Area,
-    BarChart,
-    Tooltip,
-    Pie,
-    PieChart,
-  } from "recharts";
-  import ModuleCard from "../components/ModuleCard";
-  
-  function AdminDashboard() {
-    const navigate = useNavigate();
-    const [user, setUser] = useState(null); 
-    const [sections, setSections] = useState([]);
-    const [chartKey, setChartKey] = useState(0); // key to force re-render
-    const [loading, setLoading] = useState(true); // state to manage loading
-  
-    //TODO: const [progress, setProgress] = useState([]);
-  
-    useEffect(() => {
-      // Retrieve user data from localStorage
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  CardBody,
+  Divider,
+  FormControl,
+  FormLabel,
+  GridItem,
+  Heading,
+  HStack,
+  Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  SimpleGrid,
+  Stack,
+  Text,
+  useDisclosure,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "react-multi-carousel/lib/styles.css";
+import ModuleCard from "../components/ModuleCard";
+import { AddIcon } from "@chakra-ui/icons";
+import EditModuleModal from "../components/EditModuleModal";
+
+function AdminDashboard() {
+  const navigate = useNavigate();
+  const { isOpen: isAddModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
+  const { isOpen: isEditModalOpen, onOpen: onEditModalOpen, onClose: onEditModalClose } = useDisclosure();
+  const btnRef = React.useRef(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
+  const [newModule, setNewModule] = useState({
+    heading: "",
+    subheading: "",
+    route: "",
+  });
+  const [user, setUser] = useState({
+    username: "",
+  });
+  const [sections, setSections] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [moduleBeingEdited, setModuleBeingEdited] = useState(null);
+
+  useEffect(() => {
+    // Retrieve user data from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []); // Empty dependency array means this runs once on mount
+
+  useEffect(() => {
+    // Fetch all sections
+    const fetchSections = async () => {
+      try {
+        const response = await axios.get("/sections");
+        setSections(response.data);
+      } catch (error) {
+        console.log(error);
       }
-    }, []); // Empty dependency array means this runs once on mount
-  
-    useEffect(() => {
-      // Fetch all sections
-      const fetchSections = async () => {
-        try {
-          const response = await axios.get("/sections");
-          setSections(response.data);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchSections();
-    }, []);
-  
-    // Force re-render of charts on component mount
-    useEffect(() => {
-      if (sections.length > 0) {
-        setLoading(true);
-        setTimeout(() => {
-          setChartKey((prevKey) => prevKey + 1);
-          setLoading(false);
-        }, 100); // Delay to ensure charts are rendered with animation
-      }
-    }, [sections]);
-  
-    //TODO: Fix get user progress and logic behind it
-    // useEffect(() => {
-    //   // Fetch user progress
-    //   const fetchProgress = async () => {
-    //     try {
-    //       const response = await axios.get(`/users/${user._id}/progress`);
-    //       setProgress(response.data);
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
-    //   if (user) {
-    //     fetchProgress();
-    //   }
-    // }, [user]);
-  
-    // TODO
-    // update progress
-    // useEffect(() => {
-    //   const updateProgress = async () => {
-    //     try {
-    //       await axios.put("/progress", {
-    //         userId: user._id,
-    //         sectionId: selectedSection._id,
-    //         levelId: selectedLevelId,
-    //       });
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   };
-    //   if (selectedSection._id && selectedLevelId) {
-    //     updateProgress();
-    //   }
-    // }, [selectedSection._id, selectedLevelId]);
-  
-    const handleSectionSelect = (sectionHeading) => {
-      navigate(`/learning-mode/${sectionHeading}`);
     };
-  
-    const gradients = [
-      "linear(to-br, #ec0958, #f573b2)", // pink
-      "linear(to-br, #1203fa, #00e1fd)", // blue
-      "linear(to-br, #ffe33f, #ff9933, #f22920)", // orange
-      "linear(to-br, #fbe240, #8ff090, #0a8b75)", // green
-      "linear(to-br, #f92edc, #811fee, #001af5)", // purple
-      "linear(to-br, #3c4487, #8935ca, #d5359e)", // purple
-      "linear(to-br, #afe35b, #31b68b, #1ba797)", // green
-      "linear(to-br, #1ba797, #8ff090, #fbe240)", // green
-      "linear(to-br, #0de7fa, #079ba5, #1203fa)", // cyan
-      "linear(to-br, #ecb315, #ff9933, #f22920)", // orange
-      "linear(to-br, #5a136e, #a90b84, #ff009c)", // pink
-    ];
-  
-    // dummy data for charts
-    const data = [
-      {
-        name: "1",
-        Completed: 3,
-        Total: 3,
-      },
-      {
-        name: "2",
-        Completed: 4,
-        Total: 5,
-      },
-      {
-        name: "3",
-        Completed: 1,
-        Total: 3,
-      },
-      {
-        name: "4",
-        Completed: 6,
-        Total: 7,
-      },
-      {
-        name: "5",
-        Completed: 3,
-        Total: 4,
-      },
-      {
-        name: "6",
-        Completed: 4,
-        Total: 8,
-      },
-      {
-        name: "7",
-        Completed: 2,
-        Total: 8,
-      },
-    ];
-  
-    // dummy data for pie chart
-    const data01 = [
-      { name: "Group A", value: 400, fill: "#8884d8" },
-      { name: "Group B", value: 300, fill: "#FFBB28" },
-    ];
-  
-    return (
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
+    fetchSections();
+  }, []);
+
+  const handleSectionSelect = (sectionHeading) => {
+    navigate(`/admin-dashboard/${sectionHeading}`);
+  };
+
+  const handleNewSectionSubmit = async () => {
+    if (!newModule.heading || !newModule.subheading) {
+      toast({
+        title: "Error",
+        description: "Heading and Subheading cannot be empty.",
+        status: "error",
+        duration: 2500,
+        isClosable: true,
+      });
+      return;
+    }
+
+    setIsLoading(true);
+
+    setTimeout(async () => {
+      try {
+        const moduleToSubmit = {
+          heading: newModule.heading,
+          subheading: newModule.subheading,
+          route: newModule.heading.toLowerCase().replace(/\s/g, "-"),
+        };
+        const response = await axios.post("/create-section", moduleToSubmit);
+
+        if (response.data.error) {
+          toast({
+            title: "Error",
+            description: response.data.error,
+            status: "error",
+            duration: 2500,
+            isClosable: true,
+          });
+        } else {
+          setSections([...sections, response.data]);
+          toast({
+            title: "Success",
+            description: "New section created successfully.",
+            status: "success",
+            duration: 2500,
+            isClosable: true,
+          });
+          onAddModalClose();
+        }
+      } catch (error) {
+        console.log(error);
+        toast({
+          title: "Error",
+          description: "Failed to create new section.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } finally {
+        setNewModule({
+          heading: "",
+          subheading: "",
+          route: "",
+        });
+        setIsLoading(false);
+      }
+    }, 1000);
+  };
+
+  const handleDeleteSection = async (sectionId) => {
+    try {
+      const response = await axios.delete(`/delete-section/${sectionId}`);
+      if (response.data.error) {
+        toast({
+          title: "Error",
+          description: response.data.error,
+          status: "error",
+          duration: 2500,
+          isClosable: true,
+        });
+      } else {
+        setSections(sections.filter((section) => section._id !== sectionId));
+        toast({
+          title: "Success",
+          description: "Module deleted successfully.",
+          status: "success",
+          duration: 2500,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Failed to delete module.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const handleEditClick = (section) => {
+    setModuleBeingEdited(section);
+    setIsEditing(true);
+    onEditModalOpen(); // Open the modal for editing
+  };
+
+  const handleEditSave = async (updatedModule) => {
+    try {
+      const response = await axios.put(
+        `/update-section/${moduleBeingEdited._id}`,
+        updatedModule
+      );
+      if (response.data.error) {
+        toast({
+          title: "Error",
+          description: response.data.error,
+          status: "error",
+          duration: 2500,
+          isClosable: true,
+        });
+      } else {
+        setSections(
+          sections.map((section) =>
+            section._id === moduleBeingEdited._id ? updatedModule : section
+          )
+        );
+        toast({
+          title: "Success",
+          description: "Module updated successfully.",
+          status: "success",
+          duration: 2500,
+          isClosable: true,
+        });
+        onEditModalClose();
+      }
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error",
+        description: "Failed to update module.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      setIsEditing(false);
+      setModuleBeingEdited(null);
+    }
+  };
+
+  const handleEditCancel = () => {
+    setIsEditing(false);
+    setModuleBeingEdited(null);
+    onEditModalClose();
+  };
+
+  const gradients = [
+    "linear(to-br, #ec0958, #f573b2)", // pink
+    "linear(to-br, #1203fa, #00e1fd)", // blue
+    "linear(to-br, #ffe33f, #ff9933, #f22920)", // orange
+    "linear(to-br, #fbe240, #8ff090, #0a8b75)", // green
+    "linear(to-br, #f92edc, #811fee, #001af5)", // purple
+    "linear(to-br, #3c4487, #8935ca, #d5359e)", // purple
+    "linear(to-br, #afe35b, #31b68b, #1ba797)", // green
+    "linear(to-br, #1ba797, #8ff090, #fbe240)", // green
+    "linear(to-br, #0de7fa, #079ba5, #1203fa)", // cyan
+    "linear(to-br, #ecb315, #ff9933, #f22920)", // orange
+    "linear(to-br, #5a136e, #a90b84, #ff009c)", // pink
+  ];
+
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+    >
+      <Heading
+        mb={10}
+        fontSize="6xl"
+        mt={10}
+        p={2}
+        textAlign="center"
+        color="whiteAlpha.700"
       >
-        {user ? (
-          <Heading
-            mb={10}
-            fontSize="6xl"
-            mt={10}
-            p={2}
-            textAlign="center"
-            color="whiteAlpha.700"
-          >
-            Welcome back,{" "}
-            <Text as="span" color="whiteAlpha.900">
-              {user.username}!
-            </Text>
-          </Heading>
-        ) : (
-          <Heading mb={10} fontSize="6xl" textAlign="center">
-            Welcome Guest!
-          </Heading>
-        )}
-  
-        <Divider width="80%" />
-  
-        <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3 }}
-          spacing={4}
-          p={4}
-          width="90%"
-          height="40vh"
-          mb={4}
-        >
-          <Box
-            bg="blackAlpha.800"
-            borderRadius={8}
-            p={4}
-            display="flex"
-            flexDirection="row"
-            width="100%"
-          >
-            <Box>
-              <Text fontSize="lg" color="whiteAlpha.700">
-                Points
-              </Text>
-              <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-                200
-              </Text>
-              <Text fontSize="lg" color="green.400">
-                +50%
-              </Text>
-            </Box>
-            <Box ml={2} width="70dvh">
-              {!loading && (
-                <ResponsiveContainer
-                  key={`area-${chartKey}`}
-                  width="100%"
-                  height="100%"
-                >
-                  <AreaChart width={300} height={100} data={data}>
-                    <defs>
-                      <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="0.9">
-                        <stop offset="0%" stopColor="#8884d8" stopOpacity={1} />
-                        <stop offset="100%" stopColor="#8884d8" stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <Area
-                      type="monotone"
-                      dataKey="Completed"
-                      stroke="#8884d8"
-                      strokeWidth={2}
-                      fillOpacity={1}
-                      fill="url(#colorPv)"
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              )}
-            </Box>
-          </Box>
-  
-          <Box
-            bg="blackAlpha.800"
-            borderRadius={8}
-            p={4}
-            display="flex"
-            flexDirection="row"
-            width="100%"
-          >
-            <Box>
-              <Text fontSize="lg" color="whiteAlpha.700">
-                Progress
-              </Text>
-              <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-                76%
-              </Text>
-              <Text fontSize="lg" color="green.400"></Text>
-            </Box>
-            <Box ml={2} width="70dvh">
-              {!loading && (
-                <ResponsiveContainer
-                  key={`pie-${chartKey}`}
-                  width="100%"
-                  height="100%"
-                >
-                  <PieChart width="100%" height="100%">
-                    <Pie
-                      dataKey="value"
-                      data={data01}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius="60%"
-                      outerRadius="100%"
-                      stroke="none"
-                    />
-                    <Tooltip />
-                  </PieChart>
-                </ResponsiveContainer>
-              )}
-            </Box>
-          </Box>
-  
-          <Box
-            bg="blackAlpha.800"
-            borderRadius={8}
-            p={4}
-            display="flex"
-            flexDirection="row"
-            width="100%"
-          >
-            <Box>
-              <Text fontSize="lg" color="whiteAlpha.700">
-                Levels Completed
-              </Text>
-              <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-                10
-              </Text>
-            </Box>
-            <Box ml={2} width="70dvh" height="100%">
-              {!loading && (
-                <ResponsiveContainer
-                  key={`bar-${chartKey}`}
-                  width="100%"
-                  height="100%"
-                >
-                  <BarChart width="100%" height="100%" data={data}>
-                    <Tooltip />
-                    <Bar
-                      dataKey="Completed"
-                      stackId="a"
-                      fill="#ffc658"
-                      radius={1}
-                    />
-                    <Bar dataKey="Total" stackId="a" fill="#8884d8" radius={1} />
-                    <Bar dataKey="uv" fill="#ffc658" />
-                  </BarChart>
-                </ResponsiveContainer>
-              )}
-            </Box>
-          </Box>
-        </SimpleGrid>
-  
-        <Divider width="80%" />
-  
-        <Heading fontSize="5xl" mb={10} mt={10} color="whiteAlpha.800">
-          Modules
-        </Heading>
-  
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
-          {sections.map((section, index) => (
+        Welcome back,{" "}
+        <Text as="span" color="whiteAlpha.900">
+          {user.username}!
+        </Text>
+      </Heading>
+
+      <Divider width="80%" />
+
+      <Heading
+        fontSize="5xl"
+        mb={10}
+        mt={10}
+        color="whiteAlpha.800"
+        textAlign="center"
+      >
+        Modules:
+      </Heading>
+
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+        {sections.map((section, index) => (
+          <GridItem p={2} key={section._id}>
             <ModuleCard
-              key={section._id}
               color={gradients[index % gradients.length]}
               heading={section.heading}
               subheading={section.subheading}
-              totalLevels={section.levels.length}
-              completedLevels={3}
-              completedPercentage={Math.floor((2 / section.levels.length) * 100)}
-              onClick={() => handleSectionSelect(section.route)}
+              totalLevels={section.levels ? section.levels.length : 0}
+              onViewClick={() => handleSectionSelect(section.route)}
+              onDeleteClick={() => handleDeleteSection(section._id)}
+              onEditClick={() => handleEditClick(section)}
+              type="admin"
             />
-          ))}
-        </SimpleGrid>
-      </Box>
-    );
-  }
-  
-  export default AdminDashboard;
-  
+          </GridItem>
+        ))}
+        {isEditing && (
+          <EditModuleModal
+            isOpen={isEditModalOpen}
+            onClose={handleEditCancel}
+            module={moduleBeingEdited}
+            onSave={handleEditSave}
+          />
+        )}
+        <GridItem p={2}>
+          <Card
+            borderRadius={10}
+            bg="whiteAlpha.300"
+            border="2px dashed"
+            boxShadow="lg"
+          >
+            <CardBody>
+              <Box
+                bg="transparent"
+                borderRadius={6}
+                height="30dvh"
+                p={4}
+                border="2px dashed"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <AddIcon
+                  boxSize="5em"
+                  border="2px dashed"
+                  p={2}
+                  borderRadius="50%"
+                />
+              </Box>
+
+              <Divider bg="white" mt={5} />
+
+              <Box height="7dvh" />
+
+              <Stack mt="6" spacing="5">
+                <Button border="1px solid" onClick={onAddModalOpen}>
+                  Add New Section
+                </Button>
+
+                <Modal
+                  onClose={onAddModalClose}
+                  finalFocusRef={btnRef}
+                  isOpen={isAddModalOpen}
+                  scrollBehavior="inside"
+                >
+                  <ModalOverlay />
+                  <ModalContent bg="gray.900">
+                    <ModalHeader>Add New Section</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <FormControl id="heading" mb={4}>
+                        <FormLabel>Heading</FormLabel>
+                        <Input
+                          type="text"
+                          value={newModule.heading}
+                          onChange={(e) => {
+                            setNewModule({
+                              ...newModule,
+                              heading: e.target.value,
+                            });
+                          }}
+                          placeholder="Enter heading"
+                        />
+                      </FormControl>
+                      <FormControl id="subheading">
+                        <FormLabel>Subheading</FormLabel>
+                        <Input
+                          type="text"
+                          value={newModule.subheading}
+                          onChange={(e) => {
+                            setNewModule({
+                              ...newModule,
+                              subheading: e.target.value,
+                            });
+                          }}
+                          placeholder="Enter subheading"
+                        />
+                      </FormControl>
+                    </ModalBody>
+                    <ModalFooter>
+                      <ButtonGroup>
+                        <Button
+                          colorScheme="blue"
+                          onClick={handleNewSectionSubmit}
+                          isLoading={isLoading}
+                        >
+                          Save
+                        </Button>
+                        <Button onClick={onAddModalClose}>Cancel</Button>
+                      </ButtonGroup>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+              </Stack>
+            </CardBody>
+          </Card>
+        </GridItem>
+      </SimpleGrid>
+    </Box>
+  );
+}
+
+export default AdminDashboard;

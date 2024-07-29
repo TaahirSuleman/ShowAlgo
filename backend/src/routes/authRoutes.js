@@ -13,6 +13,9 @@ import {
   getSingleSection,
   updateProgress,
   createLevel,
+  createSection,
+  deleteSection,
+  updateSection,
 } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
@@ -50,6 +53,8 @@ router.post("/logout", logoutUser);
 // This endpoint is used to get user progress
 router.get("/users/:userId/progress", authMiddleware, getUserProgress);
 
+// --------------------
+
 // This endpoint is used to get levels for a section
 router.get("/sections/:sectionRoute/levels", authMiddleware, getLevels);
 // This endpoint is used to get a single level
@@ -63,6 +68,12 @@ router.get("/sections", authMiddleware, getSections);
 router.put("/progress", authMiddleware, updateProgress);
 
 // --------------------
+// This endpoint is to create a new section
+router.post("/create-section", adminMiddleware, createSection);
+// This endpoint is to delete a section
+router.delete("/delete-section/:sectionId", adminMiddleware, deleteSection);
+// This endpoint is to update a section
+router.put("/update-section/:sectionId", adminMiddleware, updateSection);
 
 // This endpoint is used to create a new level
 router.post("/levels", adminMiddleware, createLevel);

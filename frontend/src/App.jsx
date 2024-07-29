@@ -16,6 +16,7 @@ import Layout from "./components/Layout";
 import Level from "./pages/Level";
 import GuestIDE from "./pages/GuestIDE";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminLevelSelection from "./pages/AdminLevelSelection";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
 
@@ -57,10 +58,15 @@ function App() {
             />
           </Route>
 
+          {/* //! Change the navBar to admin */}
           <Route element={<Layout navBar="guest" />}>
             <Route
               path="/admin-dashboard"
               element={<PrivateAdminRoute element={AdminDashboard} />}
+            />
+            <Route
+              path="/admin-dashboard/:sectionHeading"
+              element={<PrivateAdminRoute element={AdminLevelSelection} />}
             />
           </Route>
         </Routes>
