@@ -15,7 +15,10 @@ import LevelSelection from "./pages/LevelSelection";
 import Layout from "./components/Layout";
 import Level from "./pages/Level";
 import GuestIDE from "./pages/GuestIDE";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminLevelSelection from "./pages/AdminLevelSelection";
 import PrivateRoute from "./components/PrivateRoute";
+import PrivateAdminRoute from "./components/PrivateAdminRoute";
 
 // base URL of the backend server
 axios.defaults.baseURL = "http://localhost:8000";
@@ -35,10 +38,7 @@ function App() {
           </Route>
 
           <Route element={<Layout />}>
-            <Route
-              path="/about"
-              element={<PrivateRoute element={About} />}
-            />
+            <Route path="/about" element={<PrivateRoute element={About} />} />
             <Route path="/ide" element={<PrivateRoute element={IDE} />} />
             <Route
               path="/learning-mode"
@@ -55,6 +55,22 @@ function App() {
             <Route
               path="/documentation"
               element={<PrivateRoute element={Documentation} />}
+            />
+          </Route>
+
+          {/* //! Change the navBar to admin */}
+          <Route element={<Layout navBar="guest" />}>
+            <Route
+              path="/admin-dashboard"
+              element={<PrivateAdminRoute element={AdminDashboard} />}
+            />
+            <Route
+              path="/admin-dashboard/:sectionHeading"
+              element={<PrivateAdminRoute element={AdminLevelSelection} />}
+            />
+            <Route
+              path="/admin-dashboard/:sectionRoute/:levelRoute"
+              element={<PrivateAdminRoute element={Level} />}
             />
           </Route>
         </Routes>

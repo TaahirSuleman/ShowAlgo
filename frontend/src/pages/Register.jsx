@@ -22,16 +22,18 @@ function Register() {
   const [data, setData] = useState({
     username: "",
     password: "",
+    role: "user",
   });
 
   const registerUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
     // destructure data
-    const { username, password } = data;
+    const { username, password, role } = data;
     try {
       const { data } = await axios.post("/register", {
         username,
         password,
+        role,
       });
 
       if (data.error) {
@@ -39,7 +41,7 @@ function Register() {
           title: "Error",
           description: data.error,
           status: "error",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
         });
       } else {
@@ -50,7 +52,7 @@ function Register() {
           description:
             "Register Successful! Please login with your new credentials.",
           status: "success",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
         });
         // redirect to login page
