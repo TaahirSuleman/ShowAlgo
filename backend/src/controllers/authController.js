@@ -17,9 +17,11 @@ export const registerUser = async (req, res) => {
     const { username, password, role } = req.body;
     // check if name is entered and length greater than 6 characters
     if (!username || username.length < 6) {
-      return res.json({ error: "Username is required and should be at least 6 characters long" });
+      return res.json({
+        error: "Username is required and should be at least 6 characters long",
+      });
     }
-    const usernameExist = await User.findOne({ username })
+    const usernameExist = await User.findOne({ username });
     if (usernameExist) {
       return res.json({ error: "Username is already taken" });
     }
@@ -112,17 +114,91 @@ export const logoutUser = (req, res) => {
   }
 };
 
-// Endpoint to create a new level (admin only) //! check the level schema
+// Endpoint to create a new level (admin only)
 export const createLevel = async (req, res) => {
   try {
-    const { title, order, question, test_cases, hints, difficulty } = req.body;
-    const level = await Levels.create({
+    const {
       title,
-      order,
       question,
       test_cases,
       hints,
-      difficulty
+      difficulty,
+      route,
+      examples,
+      solution,
+      order,
+      section_id,
+    } = req.body;
+    const level = await Levels.create({
+      title,
+      question,
+      test_cases,
+      hints,
+      difficulty,
+      route,
+      solution,
+      order,
+      section_id,
+      examples,
+    });
+
+    // Update the section to include the new level's ID
+    await Sections.findByIdAndUpdate(level.section_id, {
+      $push: { levels: level._id },
+    });
+
+    res.json(level);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Endpoint to update a level (admin only)
+export const updateLevel = async (req, res) => {
+  try {
+    const { levelId } = req.params;
+    const {
+      title,
+      question,
+      test_cases,
+      hints,
+      difficulty,
+      route,
+      examples,
+      solution,
+      order,
+    } = req.body;
+    const level = await Levels.findByIdAndUpdate(
+      levelId,
+      {
+        title,
+        question,
+        test_cases,
+        hints,
+        difficulty,
+        route,
+        examples,
+        solution,
+        order,
+      },
+      { upsert: false }
+    );
+    res.json(level);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Endpoint to delete a level (admin only)
+export const deleteLevel = async (req, res) => {
+  try {
+    const { levelId } = req.params;
+    const level = await Levels.findByIdAndDelete(levelId);
+    // Remove the level from the section
+    await Sections.findByIdAndUpdate(level.section_id, {
+      $pull: { levels: levelId },
     });
     res.json(level);
   } catch (error) {
@@ -131,12 +207,13 @@ export const createLevel = async (req, res) => {
   }
 };
 
-
 // Endpoint to get user progress
 export const getUserProgress = async (req, res) => {
   try {
     const { userId } = req.params;
-    const progress = await Progresses.find({ user_id: userId }).populate('section_id level_id');
+    const progress = await Progresses.find({ user_id: userId }).populate(
+      "section_id level_id"
+    );
     res.json(progress);
   } catch (error) {
     console.log(error);
@@ -153,7 +230,7 @@ export const getSections = async (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 // Route to get a section by id
 export const getSingleSection = async (req, res) => {
@@ -165,7 +242,7 @@ export const getSingleSection = async (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 // Route to create a new section
 export const createSection = async (req, res) => {
@@ -174,7 +251,7 @@ export const createSection = async (req, res) => {
     // check that the heading is unique
     const existingSection = await Sections.findOne({ heading });
     if (existingSection) {
-      return res.json({ error: "Module with the same heading already exists"});
+      return res.json({ error: "Module with the same heading already exists" });
     }
 
     const section = await Sections.create({
@@ -188,7 +265,7 @@ export const createSection = async (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 // Route to delete a section
 export const deleteSection = async (req, res) => {
@@ -200,50 +277,54 @@ export const deleteSection = async (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 // Route to update a section
 export const updateSection = async (req, res) => {
   try {
-    console.log(req.body);
     const { sectionId } = req.params;
     const { heading, subheading, route } = req.body;
-    const section = await Sections.findByIdAndUpdate(sectionId, { heading, subheading, route }, { upsert: false });
+    const section = await Sections.findByIdAndUpdate(
+      sectionId,
+      { heading, subheading, route },
+      { upsert: false }
+    );
     res.json(section);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 // Route to get levels for a section
 export const getLevels = async (req, res) => {
   try {
-    console.log(req.params);
     const { sectionRoute } = req.params;
     const section = await Sections.findOne({ route: sectionRoute });
-    const levels = await Levels.find({ section_id: section._id });
-    console.log(section);
+    const sectionId = new mongoose.Types.ObjectId(section._id);
+    const levels = await Levels.find({ section_id: sectionId });
     res.json(levels);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 // Route to get a level by route
 export const getSingleLevel = async (req, res) => {
   try {
     const { sectionRoute, levelRoute } = req.params;
     const section = await Sections.findOne({ route: sectionRoute });
-    const level = await Levels.findOne({ route: levelRoute, section_id: section._id });
+    const level = await Levels.findOne({
+      route: levelRoute,
+      section_id: section._id,
+    });
     res.json(level);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
-
+};
 
 // Route to update progress
 export const updateProgress = async (req, res) => {
@@ -259,4 +340,4 @@ export const updateProgress = async (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};

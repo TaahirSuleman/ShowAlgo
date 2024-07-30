@@ -34,8 +34,16 @@ import EditModuleModal from "../components/EditModuleModal";
 
 function AdminDashboard() {
   const navigate = useNavigate();
-  const { isOpen: isAddModalOpen, onOpen: onAddModalOpen, onClose: onAddModalClose } = useDisclosure();
-  const { isOpen: isEditModalOpen, onOpen: onEditModalOpen, onClose: onEditModalClose } = useDisclosure();
+  const {
+    isOpen: isAddModalOpen,
+    onOpen: onAddModalOpen,
+    onClose: onAddModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isEditModalOpen,
+    onOpen: onEditModalOpen,
+    onClose: onEditModalClose,
+  } = useDisclosure();
   const btnRef = React.useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
@@ -165,7 +173,7 @@ function AdminDashboard() {
         title: "Error",
         description: "Failed to delete module.",
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
     }
@@ -212,12 +220,21 @@ function AdminDashboard() {
         title: "Error",
         description: "Failed to update module.",
         status: "error",
-        duration: 5000,
+        duration: 3000,
         isClosable: true,
       });
     } finally {
       setIsEditing(false);
       setModuleBeingEdited(null);
+      const fetchSections = async () => {
+        try {
+          const response = await axios.get("/sections");
+          setSections(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchSections();
     }
   };
 

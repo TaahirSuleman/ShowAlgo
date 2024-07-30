@@ -16,6 +16,8 @@ import {
   createSection,
   deleteSection,
   updateSection,
+  updateLevel,
+  deleteLevel,
 } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
@@ -76,6 +78,10 @@ router.delete("/delete-section/:sectionId", adminMiddleware, deleteSection);
 router.put("/update-section/:sectionId", adminMiddleware, updateSection);
 
 // This endpoint is used to create a new level
-router.post("/levels", adminMiddleware, createLevel);
+router.post("/create-level", adminMiddleware, createLevel);
+// This endpoint is used to delete a level
+router.delete("/delete-level/:levelId", adminMiddleware, deleteLevel);
+// This endpoint is used to update a level
+router.put("/update-level/:levelId", adminMiddleware, updateLevel);
 
 export default router;

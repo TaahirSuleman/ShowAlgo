@@ -330,7 +330,7 @@ function LearningMode() {
             subheading={section.subheading}
             totalLevels={section.levels.length}
             completedLevels={3}
-            completedPercentage={Math.floor((2 / section.levels.length) * 100)}
+            completedPercentage={section.levels.length === 0 ? 0 : Math.floor((2 / section.levels.length) * 100)}
             onGoClick={() => handleSectionSelect(section.route)}
           />
         ))}

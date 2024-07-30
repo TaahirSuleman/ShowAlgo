@@ -41,7 +41,7 @@ function Register() {
           title: "Error",
           description: data.error,
           status: "error",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
         });
       } else {
@@ -52,7 +52,7 @@ function Register() {
           description:
             "Register Successful! Please login with your new credentials.",
           status: "success",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
         });
         // redirect to login page

@@ -68,6 +68,10 @@ function App() {
               path="/admin-dashboard/:sectionHeading"
               element={<PrivateAdminRoute element={AdminLevelSelection} />}
             />
+            <Route
+              path="/admin-dashboard/:sectionRoute/:levelRoute"
+              element={<PrivateAdminRoute element={Level} />}
+            />
           </Route>
         </Routes>
       </UserContextProvider>

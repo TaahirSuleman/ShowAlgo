@@ -39,7 +39,7 @@ function Login() {
           title: "Error",
           description: data.error,
           status: "error",
-          duration: 9000,
+          duration: 2500,
           isClosable: true,
         });
       } else {
@@ -57,7 +57,7 @@ function Login() {
           title: "Success",
           description: "Login Successful! Welcome back!",
           status: "success",
-          duration: 9000,
+          duration: 2500,
           isClosable: true,
         });
       }
