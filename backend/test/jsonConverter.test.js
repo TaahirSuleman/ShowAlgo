@@ -22,6 +22,7 @@ describe("JsonConverter", () => {
         expect(result).to.deep.equal({
             actionFrames: [
                 {
+                    line: 1,
                     operation: "set",
                     varName: "x",
                     value: "10",
@@ -57,11 +58,13 @@ describe("JsonConverter", () => {
         expect(result).to.deep.equal({
             actionFrames: [
                 {
+                    line: 1,
                     operation: "define",
                     varName: "add_numbers",
                     params: ["a", "b"],
                     body: [
                         {
+                            line: 2,
                             operation: "return",
                             value: {
                                 left: "a",
@@ -109,6 +112,7 @@ describe("JsonConverter", () => {
         expect(result).to.deep.equal({
             actionFrames: [
                 {
+                    line: 1,
                     operation: "if",
                     condition: "10 greater 5",
                     result: true,
@@ -116,6 +120,7 @@ describe("JsonConverter", () => {
                     description: "Checked if 10 greater 5.",
                 },
                 {
+                    line: 2,
                     operation: "print",
                     isLiteral: true,
                     varName: null,
@@ -129,3 +134,5 @@ describe("JsonConverter", () => {
 
     // Add more tests for ForLoop, WhileLoop, and other scenarios as needed
 });
+
+export default JsonConverter;

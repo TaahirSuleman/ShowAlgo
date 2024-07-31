@@ -8,8 +8,12 @@ function writeAndExecuteCode(jsCode, filePath) {
         if (error) {
             console.error(`Error executing ${filePath}:`, stderr);
         } else {
-            console.log(`Output for ${filePath}:`);
-            console.log(stdout);
+            //console.log(`Output for ${filePath}:`);
+            //console.log(stdout);
+            fs.appendFileSync(
+                "jsOutput.txt",
+                `Output for ${filePath}:\n${stdout}\n\n`
+            );
         }
     });
 }

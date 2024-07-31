@@ -1,7 +1,8 @@
 class StringLiteral {
-    constructor(value) {
+    constructor(value, line) {
         this.type = "StringLiteral";
         this.value = value;
+        this.line = line;
     }
 }
 

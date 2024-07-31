@@ -1,5 +1,3 @@
-// models/parser.js
-
 import Program from "./ast/Program.js";
 import VariableDeclaration from "./ast/VariableDeclaration.js";
 import PrintStatement from "./ast/PrintStatement.js";
@@ -15,6 +13,7 @@ import Expression from "./ast/Expression.js";
 import NumberLiteral from "./ast/NumberLiteral.js";
 import StringLiteral from "./ast/StringLiteral.js";
 import Identifier from "./ast/Identifier.js";
+
 class Parser {
     constructor(tokens) {
         this.tokens = tokens;
@@ -31,7 +30,6 @@ class Parser {
 
     parseStatement() {
         const token = this.currentToken();
-        console.log(`parseStatement: ${token.value} at line ${token.line}`);
         switch (token.value.toLowerCase()) {
             case "set":
                 return this.parseVariableDeclaration();
@@ -65,9 +63,7 @@ class Parser {
     }
 
     parseVariableDeclaration() {
-        console.log(
-            `parseVariableDeclaration at line ${this.currentToken().line}`
-        );
+        const line = this.currentToken().line;
         this.expect("Keyword", "set");
         const varName = this.consume("Identifier").value;
         let varType = null;
@@ -79,18 +75,18 @@ class Parser {
         }
         this.expect("Keyword", "to");
         const value = this.parseExpression();
-        return new VariableDeclaration(varName, varType, value);
+        return new VariableDeclaration(varName, varType, value, line);
     }
 
     parsePrintStatement() {
-        console.log(`parsePrintStatement at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         this.expect("Keyword", "print");
         const value = this.parseExpression();
-        return new PrintStatement(value);
+        return new PrintStatement(value, line);
     }
 
     parseArrayCreation() {
-        console.log(`parseArrayCreation at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         this.expect("Keyword", "create");
         this.expect("Keyword", "array");
         this.expect("Keyword", "as");
@@ -99,11 +95,11 @@ class Parser {
         this.expect("Delimiter", "[");
         const values = this.parseValueList();
         this.expect("Delimiter", "]");
-        return new ArrayCreation(varName, values);
+        return new ArrayCreation(varName, values, line);
     }
 
     parseArrayInsertion() {
-        console.log(`parseArrayInsertion at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         this.expect("Keyword", "insert");
         const value = this.parseExpression();
         this.expect("Keyword", "to");
@@ -111,11 +107,11 @@ class Parser {
         this.expect("Keyword", "at");
         this.expect("Keyword", "position");
         const position = this.parseExpression();
-        return new ArrayInsertion(varName, value, position);
+        return new ArrayInsertion(varName, value, position, line);
     }
 
     parseIfStatement() {
-        console.log(`parseIfStatement at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         this.expect("Keyword", "if");
         const condition = this.parseCondition();
         this.expect("Keyword", "then");
@@ -144,21 +140,11 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "if");
-        return new IfStatement(condition, consequent, alternate);
-    }
-
-    peekNextToken() {
-        if (this.currentIndex + 1 < this.tokens.length) {
-            return this.tokens[this.currentIndex + 1];
-        } else {
-            return null; // Return null if there is no next token
-        }
+        return new IfStatement(condition, consequent, alternate, line);
     }
 
     parseFunctionDeclaration() {
-        console.log(
-            `parseFunctionDeclaration at line ${this.currentToken().line}`
-        );
+        const line = this.currentToken().line;
         this.expect("Keyword", "define");
         const name = this.consume("Identifier").value;
         this.expect("Keyword", "with");
@@ -167,8 +153,6 @@ class Parser {
         const params = this.parseParameterList();
         this.expect("Delimiter", ")");
         const body = [];
-
-        // Parse function body until 'end function' is encountered
         while (
             !(
                 this.currentToken().value.toLowerCase() === "end" &&
@@ -177,27 +161,24 @@ class Parser {
         ) {
             body.push(this.parseStatement());
         }
-
-        // Consume 'end function'
         this.expect("Keyword", "end");
         this.expect("Keyword", "function");
-
-        return new FunctionDeclaration(name, params, body);
+        return new FunctionDeclaration(name, params, body, line);
     }
 
     parseFunctionCall() {
-        console.log(`parseFunctionCall at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         this.expect("Keyword", "call");
         const name = this.consume("Identifier").value;
         this.expect("Keyword", "with");
         this.expect("Delimiter", "(");
         const args = this.parseArgumentList();
         this.expect("Delimiter", ")");
-        return new FunctionCall(name, args);
+        return new FunctionCall(name, args, line);
     }
 
     parseForLoop() {
-        console.log(`parseForLoop at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         this.expect("Keyword", "for");
         this.expect("Keyword", "each");
         const iterator = this.consume("Identifier").value;
@@ -214,11 +195,11 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "for");
-        return new ForLoop(iterator, collection, body);
+        return new ForLoop(iterator, collection, body, line);
     }
 
     parseWhileLoop() {
-        console.log(`parseWhileLoop at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         this.expect("Keyword", "while");
         const condition = this.parseCondition();
         const body = [];
@@ -232,23 +213,23 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "while");
-        return new WhileLoop(condition, body);
+        return new WhileLoop(condition, body, line);
     }
 
     parseReturnStatement() {
-        console.log(`parseReturnStatement at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         this.expect("Keyword", "return");
         const value = this.parseExpression();
-        return new ReturnStatement(value);
+        return new ReturnStatement(value, line);
     }
 
     parseCondition() {
-        console.log(`parseCondition at line ${this.currentToken().line}`);
+        const line = this.currentToken().line;
         const left = this.consume("Identifier").value;
         if (this.currentToken().type === "ComparisonOperator") {
             const operator = this.consume("ComparisonOperator").value;
             const right = this.parseExpression();
-            return new Expression(left, operator, right);
+            return new Expression(left, operator, right, line);
         } else {
             this.expect("Keyword", "is");
             const operator = this.consume("Keyword").value;
@@ -265,27 +246,29 @@ class Parser {
             }
             this.expect("Keyword", "than");
             const right = this.parseExpression();
-            return new Expression(left, operator, right);
+            return new Expression(left, operator, right, line);
         }
     }
 
     parseExpression() {
         let left = this.parseValue();
-        console.log("parseExpression: left value:", left);
         while (
             this.currentToken().type === "Operator" ||
             this.currentToken().type === "ComparisonOperator"
         ) {
             const operator = this.consume(this.currentToken().type).value;
             const right = this.parseValue();
-            left = new Expression(left, operator, right);
-            console.log("parseExpression: combined expression:", left);
+            left = new Expression(
+                left,
+                operator,
+                right,
+                this.currentToken().line
+            );
         }
         return left;
     }
 
     parseValueList() {
-        console.log(`parseValueList at line ${this.currentToken().line}`);
         const values = [];
         values.push(this.parseValue());
         while (this.currentToken().value === ",") {
@@ -297,21 +280,17 @@ class Parser {
 
     parseValue() {
         const token = this.currentToken();
-        console.log(
-            `parseValue: ${token.value} (${token.type}) at line ${token.line}`
-        );
         if (token.type === "Number") {
-            return new NumberLiteral(this.consume("Number").value);
+            return new NumberLiteral(this.consume("Number").value, token.line);
         } else if (token.type === "String") {
-            return new StringLiteral(this.consume("String").value);
+            return new StringLiteral(this.consume("String").value, token.line);
         } else if (token.type === "Identifier") {
-            return new Identifier(this.consume("Identifier").value);
+            return new Identifier(this.consume("Identifier").value, token.line);
         } else if (
             token.type === "Keyword" &&
             (token.value.toLowerCase() === "number" ||
                 token.value.toLowerCase() === "string")
         ) {
-            // Consume and skip the type keyword
             this.consume("Keyword");
             return this.parseValue();
         } else {
@@ -322,7 +301,6 @@ class Parser {
     }
 
     parseParameterList() {
-        console.log(`parseParameterList at line ${this.currentToken().line}`);
         const params = [];
         while (this.currentToken().type === "Identifier") {
             params.push(this.consume("Identifier").value);
@@ -334,7 +312,6 @@ class Parser {
     }
 
     parseArgumentList() {
-        console.log(`parseArgumentList at line ${this.currentToken().line}`);
         const args = [];
         while (
             this.currentToken().type === "Number" ||
@@ -381,6 +358,14 @@ class Parser {
                 value: "EOF",
                 line: this.tokens[this.tokens.length - 1]?.line || 0,
             }; // End of file token
+        }
+    }
+
+    peekNextToken() {
+        if (this.currentIndex + 1 < this.tokens.length) {
+            return this.tokens[this.currentIndex + 1];
+        } else {
+            return null;
         }
     }
 }

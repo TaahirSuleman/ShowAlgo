@@ -1,7 +1,8 @@
 class NumberLiteral {
-    constructor(value) {
+    constructor(value, line) {
         this.type = "NumberLiteral";
         this.value = value;
+        this.line = line;
     }
 }
 

@@ -20,6 +20,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         type: "VariableDeclaration",
                         name: "x",
                         value: {
+                            line: 1,
                             type: "NumberLiteral",
                             value: "10",
                         },
@@ -169,6 +170,7 @@ END WHILE`,
                         type: "VariableDeclaration",
                         name: "x",
                         value: {
+                            line: 1,
                             type: "NumberLiteral",
                             value: "10",
                         },

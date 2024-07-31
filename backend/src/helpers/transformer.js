@@ -60,6 +60,19 @@ class Transformer {
                     type: "ReturnStatement",
                     value: this.transformReturnValue(node.value),
                 };
+            case "ArrayCreation":
+                return {
+                    type: "ArrayCreation",
+                    varName: node.varName,
+                    values: node.values,
+                };
+            case "ArrayInsertion":
+                return {
+                    type: "ArrayInsertion",
+                    varName: node.varName,
+                    value: this.transformExpression(node.value),
+                    position: this.transformExpression(node.position).value,
+                };
             default:
                 throw new Error(`Unknown node type: ${node.type}`);
         }

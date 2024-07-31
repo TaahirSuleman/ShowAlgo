@@ -1,6 +1,8 @@
 class JsonConverter {
     constructor() {
         this.variables = {};
+        this.initializedArrays = new Set();
+        this.currentLine = 1; // Start the current line from 1
     }
 
     transformToFinalJSON(ir) {
@@ -14,38 +16,46 @@ class JsonConverter {
     }
 
     transformNode(node) {
-        switch (node.type) {
+        // Add the current line number to the node and increment the line number
+        const nodeWithLine = { ...node, line: this.currentLine++ };
+
+        switch (nodeWithLine.type) {
             case "VariableDeclaration":
-                return this.transformVariableDeclaration(node);
+                return this.transformVariableDeclaration(nodeWithLine);
             case "FunctionDeclaration":
                 return {
+                    line: nodeWithLine.line,
                     operation: "define",
-                    varName: node.name,
-                    params: node.params,
-                    body: this.transformNodes(node.body),
+                    varName: nodeWithLine.name,
+                    params: nodeWithLine.params,
+                    body: this.transformNodes(nodeWithLine.body),
                     timestamp: new Date().toISOString(),
                     description: `Defined function ${
-                        node.name
-                    } with parameters ${node.params.join(", ")}.`,
+                        nodeWithLine.name
+                    } with parameters ${nodeWithLine.params.join(", ")}.`,
                 };
             case "PrintStatement":
                 return {
+                    line: nodeWithLine.line,
                     operation: "print",
                     isLiteral: true,
                     varName: null,
-                    literal: node.value,
+                    literal: nodeWithLine.value,
                     timestamp: new Date().toISOString(),
-                    description: `Printed ${node.value}.`,
+                    description: `Printed ${nodeWithLine.value}.`,
                 };
             case "IfStatement":
-                const conditionResult = this.evaluateCondition(node.condition);
+                const conditionResult = this.evaluateCondition(
+                    nodeWithLine.condition
+                );
                 const conditionString = `${this.evaluateExpression(
-                    node.condition.left
-                )} ${node.condition.operator} ${this.evaluateExpression(
-                    node.condition.right
+                    nodeWithLine.condition.left
+                )} ${nodeWithLine.condition.operator} ${this.evaluateExpression(
+                    nodeWithLine.condition.right
                 )}`;
                 return [
                     {
+                        line: nodeWithLine.line,
                         operation: "if",
                         condition: conditionString,
                         result: conditionResult,
@@ -53,25 +63,30 @@ class JsonConverter {
                         description: `Checked if ${conditionString}.`,
                     },
                     ...(conditionResult
-                        ? this.transformNodes(node.consequent)
-                        : this.transformNodes(node.alternate || [])),
+                        ? this.transformNodes(nodeWithLine.consequent)
+                        : this.transformNodes(nodeWithLine.alternate || [])),
                 ];
             case "ForLoop":
                 return {
+                    line: nodeWithLine.line,
                     operation: "for",
-                    iterator: node.iterator,
-                    collection: node.collection,
-                    body: this.transformNodes(node.body),
+                    iterator: nodeWithLine.iterator,
+                    collection: nodeWithLine.collection,
+                    body: this.transformNodes(nodeWithLine.body),
                     timestamp: new Date().toISOString(),
-                    description: `Iterating over ${node.collection} with ${node.iterator}.`,
+                    description: `Iterating over ${nodeWithLine.collection} with ${nodeWithLine.iterator}.`,
                 };
             case "WhileLoop":
-                return this.transformWhileLoop(node);
+                return {
+                    ...this.transformWhileLoop(nodeWithLine),
+                    line: nodeWithLine.line,
+                };
             case "ReturnStatement":
                 const transformedReturnValue = this.transformExpression(
-                    node.value
+                    nodeWithLine.value
                 );
                 return {
+                    line: nodeWithLine.line,
                     operation: "return",
                     value: transformedReturnValue,
                     timestamp: new Date().toISOString(),
@@ -79,8 +94,18 @@ class JsonConverter {
                         transformedReturnValue
                     )}.`,
                 };
+            case "ArrayCreation":
+                return {
+                    ...this.transformArrayCreation(nodeWithLine),
+                    line: nodeWithLine.line,
+                };
+            case "ArrayInsertion":
+                return {
+                    ...this.transformArrayInsertion(nodeWithLine),
+                    line: nodeWithLine.line,
+                };
             default:
-                throw new Error(`Unknown node type: ${node.type}`);
+                throw new Error(`Unknown node type: ${nodeWithLine.type}`);
         }
     }
 
@@ -88,6 +113,7 @@ class JsonConverter {
         const value = this.evaluateExpression(node.value);
         this.variables[node.name] = value;
         return {
+            line: node.line,
             operation: "set",
             varName: node.name,
             value: value,
@@ -116,6 +142,7 @@ class JsonConverter {
             return frame;
         });
         return {
+            line: node.line,
             operation: "while",
             condition: condition,
             body: body,
@@ -170,7 +197,7 @@ class JsonConverter {
             expression.type === "NumberLiteral" ||
             expression.type === "StringLiteral"
         ) {
-            return expression.value;
+            return this.convertValue(expression.value);
         } else if (expression.type === "Expression") {
             const left = this.evaluateExpression(expression.left);
             const right = this.evaluateExpression(expression.right);
@@ -178,6 +205,48 @@ class JsonConverter {
         } else {
             return expression;
         }
+    }
+
+    transformArrayCreation(node) {
+        const elements = (node.values || []).map((el) =>
+            this.evaluateExpression(el)
+        );
+        this.variables[node.varName] = elements;
+        this.initializedArrays.add(node.varName);
+        return {
+            line: node.line,
+            operation: "create",
+            varName: node.varName,
+            value: elements.map((el) => this.convertValue(el)),
+            timestamp: new Date().toISOString(),
+            description: `Created array ${node.varName}.`,
+        };
+    }
+
+    transformArrayInsertion(node) {
+        if (!this.variables[node.varName]) {
+            throw new Error(`Array ${node.varName} not initialized.`);
+        }
+        const value = this.evaluateExpression(node.value);
+        const position = parseInt(node.position);
+
+        this.variables[node.varName][position] = value;
+        return {
+            line: node.line,
+            operation: "add",
+            varName: node.varName,
+            value: this.convertValue(value),
+            position: position,
+            timestamp: new Date().toISOString(),
+            description: `Added ${value} to array ${node.varName} at position ${node.position}.`,
+        };
+    }
+
+    convertValue(value) {
+        if (!isNaN(value)) {
+            return Number(value);
+        }
+        return value;
     }
 }
 
