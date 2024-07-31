@@ -11,20 +11,22 @@ import {
   Tr,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ArrowBackIcon, CheckIcon, MinusIcon } from "@chakra-ui/icons";
+import { IoMdHome } from "react-icons/io";
 
 function LevelSelection() {
+  const navigate = useNavigate();
   const { sectionHeading } = useParams();
   const [levels, setLevels] = React.useState([]);
   const [section, setSection] = React.useState({
-    _id: '',
-    heading: '',
-    subheading: '',
+    _id: "",
+    heading: "",
+    subheading: "",
     levels: [],
     __v: 0,
-    route: ''
+    route: "",
   });
 
   useEffect(() => {
@@ -57,7 +59,9 @@ function LevelSelection() {
     }
   }, [sectionHeading]);
 
-  console.log(levels);
+  const handleOnHomeClick = () => {
+    navigate("/learning-mode");
+  }
 
   return (
     <Box
@@ -66,7 +70,15 @@ function LevelSelection() {
       alignItems="center"
       justifyContent="center"
     >
-      <Heading fontSize="6xl" textAlign="center" pt={10}>
+      <IconButton
+        icon={<IoMdHome />}
+        mt={10}
+        color="white"
+        bg="black"
+        onClick={handleOnHomeClick}
+      />
+
+      <Heading fontSize="6xl" textAlign="center">
         {section.heading}
       </Heading>
       <Heading fontSize="2xl" color="whiteAlpha.700" textAlign="center" pt={3}>
@@ -111,17 +123,17 @@ function LevelSelection() {
                 >
                   {level.difficulty}
                 </Td>
-                  <Td>
-                    {/* //TODO: Change this to a checkmark or minus icon based on the user's progress */}
-                    {(() => {
-                      const randomNum = Math.floor(Math.random() * 2);
-                      return randomNum ? (
-                        <CheckIcon color="green.400" />
-                      ) : (
-                        <MinusIcon color="gray.400" />
-                      );
-                    })()}
-                  </Td>
+                <Td>
+                  {/* //TODO: Change this to a checkmark or minus icon based on the user's progress */}
+                  {(() => {
+                    const randomNum = Math.floor(Math.random() * 2);
+                    return randomNum ? (
+                      <CheckIcon color="green.400" />
+                    ) : (
+                      <MinusIcon color="gray.400" />
+                    );
+                  })()}
+                </Td>
               </Tr>
             ))}
           </Tbody>

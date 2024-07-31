@@ -38,17 +38,19 @@ import {
   InfoIcon,
   ArrowBackIcon,
 } from "@chakra-ui/icons";
+import PropTypes from "prop-types";
 import { FaPlay, FaCloudUploadAlt } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CodeEditorView from "../components/CodeEditorView";
 import OutputView from "../components/OutputView";
 import { IoMdHome } from "react-icons/io";
 
 function Level() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [value, setValue] = useState("");
   const editorRef = useRef();
   const [output, setOutput] = useState("Hello, World!");
@@ -101,7 +103,11 @@ function Level() {
   }, [sectionRoute, levelRoute]);
 
   const handleOnHomeClick = () => {
-    navigate(`/admin-dashboard/${sectionRoute}`);
+    if (location.pathname.includes("admin")) {
+      navigate(`/admin-dashboard/${sectionRoute}`);
+    } else {
+      navigate(`/learning-mode/${sectionRoute}`);
+    }
   };
 
   const toggleHints = () => {
@@ -531,84 +537,14 @@ function Level() {
           boxShadow="md"
           height={{ base: "75vh", md: "115vh" }}
           p={4}
-        >
-          {/* //! For demo purposes, must be removed */}
-          {/* <HStack justifyContent="center" mt={10}>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>10</Text>
-            </Box>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>17</Text>
-            </Box>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>43</Text>
-            </Box>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>18</Text>
-            </Box>
-            <Box
-              bg="purple.400"
-              color="white"
-              borderRadius={4}
-              p={2}
-              m={1}
-              w="80px"
-              h="80px"
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-            >
-              <Text>9</Text>
-            </Box>
-          </HStack> */}
-        </Box>
+        ></Box>
       </GridItem>
     </Grid>
   );
 }
+
+Level.propTypes = {
+  type: PropTypes.oneOf(["user", "admin"]),
+};
 
 export default Level;
