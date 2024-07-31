@@ -9,6 +9,10 @@ const CodeEditorView = ({
   defaultValue,
   height,
   width,
+  speedState,
+  movementsState,
+  highlightState,
+  setHighlightState
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [editor, setEditor] = useState(null);
@@ -39,6 +43,13 @@ const CodeEditorView = ({
       });
     }
   }, [monaco]);
+
+  useEffect(()=>{
+    if (highlightState){
+      handleHighlightClick();
+      setHighlightState(false);
+    }
+  }, highlightState)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -72,18 +83,10 @@ const CodeEditorView = ({
 
   const handleHighlightClick = () => {
     if (editor) {
-      const linesToHighlight = [
-        { line: 1, time: 500 },
-        { line: 6, time: 3500 },
-        { line: 7, time: 6500 },
-        { line: 8, time: 9500 },
-        { line: 9, time: 12500 },
-        { line: 10, time: 15500 },
-        { line: 11, time: 18500 },
-        { line: 12, time: 21500 },
-        { line: 13, time: 24500 }
-        // Add more lines and times as needed
-      ];
+      let linesToHighlight = [];
+      for (let i=0; i<movementsState.length; i++){
+        linesToHighlight.push({line: movementsState[i].line, time:i*speedState*1000 +500})
+      }
       highlightLines(editor, linesToHighlight);
     }
   };
@@ -108,9 +111,6 @@ const CodeEditorView = ({
         loadingComponent
       ) : (
         <>
-        <Button onClick={handleHighlightClick} mb={4}>
-            Start Highlighting
-        </Button>
         <Editor
           height={height}
           width={width}

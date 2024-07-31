@@ -3,7 +3,15 @@ import { motion } from 'framer-motion';
 import '../styles/App.css'
 
 
-function IfVisualisationComponent(props ){//{ pausedState: boolean; speedState: number; movements: any; indexState: number; setIndexState: any; }
+function IfVisualisationComponent(
+  {
+    movements,
+    speedState,
+    indexState,
+    setIndexState,
+    pausedState,
+    setOutput 
+  }){
       const [ifStatement, setIfStatement] = useState({   
         "operation": "if",  
         "condition": "This is the starter If",   
@@ -16,9 +24,9 @@ function IfVisualisationComponent(props ){//{ pausedState: boolean; speedState: 
       const delay = ms => new Promise(res => setTimeout(res, ms));
 
       useEffect(()=>{
-        if (props.pausedState === true){return;}
-        if (props.indexState > -1 && props.indexState < props.movements.length){
-          const movement = props.movements[props.indexState];
+        if (pausedState === true){return;}
+        if (indexState > -1 && indexState < movements.length){
+          const movement = movements[indexState];
           if (movement.operation === "if"){
             setIfStatement(movement);
             
@@ -31,23 +39,23 @@ function IfVisualisationComponent(props ){//{ pausedState: boolean; speedState: 
     
               const timeoutId2 = setTimeout(() => {
                 setResultColourState("grey");
-              }, props.speedState * 1000 / 2);
+              }, speedState * 1000 / 2);
     
               const timeoutId3 = setTimeout(() => {
-                //props.setOutput(prev => [...prev, props.movements[props.indexState].description]);
-                props.setIndexState((prev) => prev + 1);
-              }, props.speedState * 1000 /2 );
+                //setOutput(prev => [...prev, movements[indexState].description]);
+                setIndexState((prev) => prev + 1);
+              }, speedState * 1000 /2 );
     
               return () => {
                 clearTimeout(timeoutId2);
                 clearTimeout(timeoutId3);
               };
-            }, props.speedState * 1000 /2);
+            }, speedState * 1000 /2);
     
             return () => clearTimeout(timeoutId1);
         }
       }
-      }, [props.indexState, props.pausedState])
+      }, [indexState, pausedState])
             return(
                 <div className="if-vis-window">
                     <motion.div
@@ -63,7 +71,7 @@ function IfVisualisationComponent(props ){//{ pausedState: boolean; speedState: 
                         <p>The if statement asks: </p>
                         <p style={{ fontSize: '35px', fontWeight: 'bold' }}>{(ifStatement.condition != "This is the starter If") ? ifStatement.condition+"?" : "The if statements will be shown here!"}</p>
                     </motion.div>
-                    <button onClick={() => props.setIndexState(0)}></button>
+                    <button onClick={() => setIndexState(0)}></button>
                 </div>
             )
 }

@@ -2,8 +2,14 @@ import { useState, useEffect } from 'react';
 import { motion, useForceUpdate } from 'framer-motion';
 import '../styles/App.css'
 
-function VariableListComponent(props){//{output; outputState; pausedState: boolean; speedState: number; movements: any; indexState: number; setIndexState: any; }
-    let movements = props.movements;
+function VariableListComponent({
+    movements,
+    speedState,
+    indexState,
+    setIndexState,
+    pausedState,
+    setOutput}){
+
     let focusedVar = {type: "NOTE",value:" It will be displayed here!",name:"Click on a variable"};
     let [updating, setUpdating] = useState("");
     let [variablesState, setVariablesState] = useState([]);
@@ -13,20 +19,20 @@ function VariableListComponent(props){//{output; outputState; pausedState: boole
     const delay = ms  => new Promise(res => setTimeout(res, ms));
 
     useEffect(() => {
-        let index = props.indexState;
-        if (props.pausedState === true){return;}
+        let index = indexState;
+        if (pausedState === true){return;}
         if (index > -1 && index < movements.length){
-            if (props.movements[index].operation == "set"){
-                updateVariablesState(props.movements[index].type, props.movements[index].value, props.movements[index].varName);
+            if (movements[index].operation == "set"){
+                updateVariablesState(movements[index].type, movements[index].value, movements[index].varName);
                 const timeoutId2 = setTimeout(() => {
-                    props.setOutput((prev) => {return [...prev, props.movements[props.indexState].description]});
-                    props.setIndexState((i)=>{return i+1});
-                }, props.speedState*1000 +100);
+                    setOutput((prev) => {return [...prev, movements[indexState].description]});
+                    setIndexState((i)=>{return i+1});
+                }, speedState*1000 +100);
                 return () => clearTimeout(timeoutId2);
             }
         }
         
-    }, [props.indexState, props.pausedState])
+    }, [indexState, pausedState])
 
     let updateVariablesState = async (type , value , name) => {
         setVariablesState((prevVariablesState) => {
@@ -52,7 +58,7 @@ function VariableListComponent(props){//{output; outputState; pausedState: boole
     let changedIsChanged = async ()=>{
         setIsChanged(true);
         console.log("its changed")
-        await delay(props.speedState*1000);
+        await delay(speedState*1000);
         console.log("its changed")
         setIsChanged(false);
     }
@@ -85,7 +91,7 @@ function VariableListComponent(props){//{output; outputState; pausedState: boole
              }}
             onClick={() => changeFocusedVariableState(variable)}
             animate={updating === variable.name ? { backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
-            transition={{ duration: props.speedState }}
+            transition={{ duration: speedState }}
           >
             <p>{"(" + variable.type + ") " + variable.name + " = " + variable.value}</p>
           </motion.li>

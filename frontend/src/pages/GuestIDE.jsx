@@ -28,7 +28,7 @@ import {
   PopoverArrow,
   PopoverBody,
 } from "@chakra-ui/react";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import CodeEditorView from "../components/CodeEditorView";
 import OutputView from "../components/OutputView";
 import { FaPlay } from "react-icons/fa";
@@ -47,7 +47,169 @@ function GuestIDE() {
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
   const cancelClearRef = useRef();
+  const [speedState,setSpeedState] = useState(2);
+  const [movementsState, setMovementsState] = useState();
+  const [highlightState, setHighlightState] = useState();
+  const [indexState, setIndexState] = useState(-1);
 
+  useEffect(()=>{
+    setMovementsState([{   
+      "line": 1,
+      "operation": "if",  
+      "condition": "x > 5",   
+      "result": true,  
+      "timestamp": "2024-07-09T12:02:00Z",  
+      "description": "Checked if x is greater than 5."  
+      }, 
+      { 
+      "line": 2,
+      "operation": "print", 
+      "isLiteral": true, 
+      "varName": null, 
+      "literal": "x is greater than 5", 
+      "timestamp": "2024-07-09T12:03:00Z", 
+      "description": "Printed 'x is greater than 5'." 
+      }, 
+      { 
+      "line": 3,
+      "operation": "else", 
+      "timestamp": "2024-07-09T12:04:00Z", 
+      "description": "Else block not executed as condition was true." 
+      },
+      {
+      "line": 6,
+      "operation": "set", 
+      "varName": "x", 
+      "type": "number", 
+      "value": 10,  
+      "timestamp": "2024-07-09T12:01:00Z",  
+      "description": "Set variable x to number 10." 
+      },
+      {
+      "line": 7, 
+      "operation": "create",                   
+      "dataStructure": "array",                   
+      "initialValues": [1,2,3,4,5,6,7,8,9],                   
+      "length": 9,                   
+      "id": "abcd",                   
+      "type": "int",                
+      "varName": "nums",                  
+      "timestamp": "2024-07-09T12:01:00Z",                   
+      "description": "Created an array named nums with initial values [1, 2, 3, 4]."                  
+      },   
+      { 
+      "line": 8,
+      "operation": "create",                   
+      "dataStructure": "array",                   
+      "initialValues": ["a","b","c","d","e","f","g"],                   
+      "length": 7,                   
+      "id": "abcd",                   
+      "type": "string",                
+      "varName": "letters",                  
+      "timestamp": "2024-07-09T12:01:00Z",                   
+      "description": "Created an array named letters with initial values [a,b,c,d,e,f,g]."                  
+      },
+      {
+      "line": 9,
+      "operation": "remove",
+      "dataStructure": "array",
+      "id": "abcd",
+      "varName": "nums",
+      "positionToRemove": 2,
+      "description": "Removed value at position 2 in array nums"
+      },       
+      {
+      "line": 10,
+      "operation": "remove",
+      "dataStructure": "array",
+      "id": "abcd",
+      "varName": "letters",
+      "positionToRemove": 4,
+      "description": "Removed value at position 4 in array letters"
+      },           
+      {    
+      "line": 11,               
+      "operation": "insert",                   
+      "dataStructure": "array",                   
+      "valueToInsert": 5,                   
+      "id": "abcd",                   
+      "varName": "nums",                  
+      "position": 4,                   
+      "timestamp": "2024-07-09T12:02:00Z",                   
+      "description": "Inserted value 5 at position 4 in array nums."                   
+      },
+      { 
+      "line": 12,
+      "operation": "create",                   
+      "dataStructure": "array",                   
+      "initialValues": ["g","a","n","g","s","t","a"],                   
+      "length": 7,                   
+      "id": "abcd",                   
+      "type": "string",                
+      "varName": "gansterlicious",                  
+      "timestamp": "2024-07-09T12:01:00Z",                   
+      "description": "Created an array named letters with initial values [a,b,c,d,e,f,g]."                  
+      },
+      {     
+      "line": 13,              
+      "operation": "insert",                   
+      "dataStructure": "array",                   
+      "valueToInsert": "z",                   
+      "id": "abcd",                   
+      "varName": "letters",                  
+      "position": 0,                   
+      "timestamp": "2024-07-09T12:02:00Z",                   
+      "description": "Inserted value 'zestyAAA' at position 0 in array nums."                   
+      },
+      {
+      "line": 14,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 1,
+      "secondPosition": 3,
+      "varName": "nums",
+      "description": "Swapped values in position 1 and 3 in array nums."   
+      },
+      {
+      "line": 15,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 1,
+      "secondPosition": 3,
+      "varName": "letters",
+      "description": "Swapped values in position 1 and 3 in array letters."   
+      },
+      {
+      "line": 16,
+      "operation": "set", 
+      "varName": "wordString", 
+      "type": "string", 
+      "value": "Hello World",  
+      "timestamp": "2024-07-09T12:01:00Z",  
+      "description": "Set variable y to string 'Wagwan World'." 
+      },
+      {
+      "line": 17,
+      "operation": "set", 
+      "varName": "z", 
+      "type": "boolean", 
+      "value": "true",  
+      "timestamp": "2024-07-09T12:01:00Z",  
+      "description": "Set variable z to boolean true." 
+      },
+      {
+      "line": 18,
+      "operation": "set", 
+      "varName": "wordString", 
+      "type": "string", 
+      "value": "Hello Again World",  
+      "timestamp": "2024-07-09T12:01:00Z",  
+      "description": "Set variable y to string 'Hello Again World'." 
+      }
+      ])
+  }, [])
+  
+  
   // very long sample text
   const sampleText =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -61,7 +223,8 @@ function GuestIDE() {
     setIsRunLoading(true);
     setTimeout(() => {
       setIsRunLoading(false);
-      setOutput(["Hello, World!"]);
+      setIndexState(0);
+      setHighlightState(true)
     }, 2000);
   };
 
@@ -262,11 +425,15 @@ function GuestIDE() {
             </AlertDialog>
           </Box>
           <CodeEditorView
+            speedState = {speedState}
+            movementsState={movementsState}
             height="50dvh"
             width={{ base: "100%", md: "50vw" }}
             theme="vs-dark"
             value={value}
             setValue={setValue}
+            highlightState={highlightState}
+            setHighlightState={setHighlightState}
           />
         </Box>
 
@@ -321,8 +488,12 @@ function GuestIDE() {
           p={4}
         >
           <MainVisualisationWindow
+          movementsState={movementsState}
           output= {output}
           setOutput = {setOutput}
+          speedState={speedState}
+          indexState={indexState}
+          setIndexState={setIndexState}
           ></MainVisualisationWindow>
         </Box>
       </GridItem>

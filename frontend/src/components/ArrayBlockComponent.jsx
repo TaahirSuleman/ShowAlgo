@@ -3,52 +3,67 @@ import { motion, useAnimate } from 'framer-motion';
 import '../styles/App.css'
 
 
-  function ArrayBlockComponent(props){//: {pausedState , speedState , value,keyProp, id, movements, locations, updateLocations, indexState,inserted,removed, swapped, setSwappedState}
+  function ArrayBlockComponent(
+  {
+    keyProp,
+    id, 
+    value,
+    movements,
+    locations,
+    speedState,
+    updateLocations ,
+    indexState, 
+    inserted, 
+    removed,
+    swapped, 
+    change, 
+    setSwappedState
+  }){
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
-  if (props.inserted){
+  if (inserted){
     return (
       <motion.div className="square"
       animate={{ backgroundColor: ['hsl(-120, 100, 50)','hsl(120, 100, 25)','hsl(120, 100, 25)', 'hsl(-120, 100, 50)'] }}
-      transition={{type: 'tween', times: [0, 0.33, 0.66, 1], duration: props.speedState*0.75 }}
+      transition={{type: 'tween', times: [0, 0.33, 0.66, 1], duration: speedState*0.75 }}
       layout
       >
-        {props.value}
+        {value}
       </motion.div>
     );
   }
-  else if (props.removed){
+  else if (removed){
     return (
       <motion.div className="square"
-      transition={{type: 'tween', times: [0, 0.33, 0.66, 1], duration: props.speedState*0.75 }}
+      transition={{type: 'tween', times: [0, 0.33, 0.66, 1], duration: speedState*0.75 }}
       animate={{ backgroundColor: ['hsl(-120, 100, 50)','hsl(0, 100, 50)','hsl(0, 100, 50)', 'hsl(-120, 100, 50)'] }}
       layout
       >
-        {props.value}
+        {value}
       </motion.div>
     );
   }
-  else if (props.swapped[0] == props.keyProp || props.swapped[1] == props.keyProp ){
-    console.log("SWAP SUCCESS at values" + props.value)
+  else if (swapped[0] == keyProp || swapped[1] == keyProp ){
+    console.log("SWAP SUCCESS at values" + value)
       return (
         <motion.div className="square"
         layout 
-        transition={{ duration: props.speedState*0.75 }}
+        transition={{ duration: speedState*0.75 }}
         animate={{ backgroundColor: ['hsl(-120, 100, 50)','hsl(0, 100, 50)','hsl(0, 100, 50)', 'hsl(-120, 100, 50)'],
                    scale: [1,1.5,1.5,1]
                   }}
         >
-          {props.value}
+          {value}
         </motion.div>
       );
     }
   else{
     return (
       <motion.div className="square"
-      transition={{ duration: props.speedState*0.25 }}
+      transition={{ duration: speedState*0.25 }}
       layout
       >
-        {props.value}
+        {value}
       </motion.div>
     );
   }
