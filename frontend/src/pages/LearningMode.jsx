@@ -200,10 +200,40 @@ function LearningMode() {
   ];
 
   // dummy data for pie chart
-  const data01 = [
-    { name: "Group A", value: { totalLevels }, fill: "#8884d8" },
-    { name: "Group B", value: { completedLevels }, fill: "#FFBB28" },
+  const pieChartData = [
+    { name: "Completed Levels", value: completedLevels, fill: "#FFBB28" },
+    { name: "Remaining Levels", value: totalLevels - completedLevels, fill: "#8884d8" },
   ];
+
+  // Generate data for charts based on userProgress
+  const generateChartData = () => {
+    return userProgress.sections.map((section, index) => {
+      const completed = countCompletedLevels(section);
+      const total = section.levels.length;
+      return {
+        name: `Section ${index + 1}`,
+        Completed: completed,
+        Remaining: total - completed,
+      };
+    });
+  };
+
+  const lineChartData = generateChartData();
+
+  // Custom Tooltip Component
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <Box bg="white" p={2} borderRadius={4} boxShadow="md">
+        <Text fontSize="md" color="black">
+          {payload[0].name}: {payload[0].value}
+        </Text>
+      </Box>
+    );
+  }
+
+  return null;
+};
 
   return (
     <Box
@@ -277,6 +307,7 @@ function LearningMode() {
                     fillOpacity={1}
                     fill="url(#colorPv)"
                   />
+                  <Tooltip content={<CustomTooltip />}/>
                 </AreaChart>
               </ResponsiveContainer>
             )}
@@ -296,7 +327,7 @@ function LearningMode() {
               Progress
             </Text>
             <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-              76%
+              {Math.round((completedLevels/totalLevels) * 100)}%
             </Text>
             <Text fontSize="lg" color="green.400"></Text>
           </Box>
@@ -309,15 +340,17 @@ function LearningMode() {
               >
                 <PieChart width="100%" height="100%">
                   <Pie
+                    data={pieChartData}
                     dataKey="value"
-                    data={data01}
                     cx="50%"
                     cy="50%"
                     innerRadius="60%"
                     outerRadius="100%"
+                    startAngle={90}
+                    endAngle={-270}
                     stroke="none"
                   />
-                  <Tooltip />
+                  <Tooltip content={<CustomTooltip />}/>
                 </PieChart>
               </ResponsiveContainer>
             )}
@@ -337,7 +370,7 @@ function LearningMode() {
               Levels Completed
             </Text>
             <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-              10
+              {completedLevels}
             </Text>
           </Box>
           <Box ml={2} width="70dvh" height="100%">
@@ -347,7 +380,7 @@ function LearningMode() {
                 width="100%"
                 height="100%"
               >
-                <BarChart width="100%" height="100%" data={data}>
+                <BarChart width="100%" height="100%" data={lineChartData}>
                   <Tooltip />
                   <Bar
                     dataKey="Completed"
@@ -355,8 +388,7 @@ function LearningMode() {
                     fill="#ffc658"
                     radius={1}
                   />
-                  <Bar dataKey="Total" stackId="a" fill="#8884d8" radius={1} />
-                  <Bar dataKey="uv" fill="#ffc658" />
+                  <Bar dataKey="Remaining" stackId="a" fill="#8884d8" radius={1} />
                 </BarChart>
               </ResponsiveContainer>
             )}
