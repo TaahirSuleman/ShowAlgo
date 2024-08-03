@@ -30,16 +30,25 @@ import {
   useBreakpointValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import { CheckIcon, CloseIcon, WarningIcon, MinusIcon, InfoIcon } from "@chakra-ui/icons";
+import {
+  CheckIcon,
+  CloseIcon,
+  WarningIcon,
+  MinusIcon,
+  InfoIcon,
+  ArrowBackIcon,
+} from "@chakra-ui/icons";
 import { FaPlay, FaCloudUploadAlt } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CodeEditorView from "../components/CodeEditorView";
 import OutputView from "../components/OutputView";
+import { IoMdHome } from "react-icons/io";
 
 function Level() {
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
   const editorRef = useRef();
   const [output, setOutput] = useState("Hello, World!");
@@ -90,6 +99,10 @@ function Level() {
     };
     fetchLevel();
   }, [sectionRoute, levelRoute]);
+
+  const handleOnHomeClick = () => {
+    navigate(`/admin-dashboard/${sectionRoute}`);
+  };
 
   const toggleHints = () => {
     setShowHints(!showHints);
@@ -203,6 +216,15 @@ function Level() {
     >
       <GridItem colSpan={{ base: 1, md: 2 }} rowSpan={1}>
         <Box bg="blackAlpha.900" borderRadius={10} p={5}>
+          <Box display="flex" justifyContent="center">
+            <IconButton
+              icon={<ArrowBackIcon />}
+              color="white"
+              colorScheme="gray"
+              onClick={handleOnHomeClick}
+            />
+          </Box>
+
           <Heading textAlign="center">
             {level.order}. {level.title}
           </Heading>
