@@ -12,8 +12,10 @@ function ArrayComponent(
     speedState ,
     indexState,
     setIndexState,
-    pausedState,
-    setOutput
+    pauseState,
+    setOutput,
+    bufferState,
+    setPauseState
   }) {
   const [values, setValues] = useState(arrayState.values);
   const [removedState, setRemovedState] = useState(-1);
@@ -23,7 +25,7 @@ function ArrayComponent(
   const [changedState, setChangedState] = useState("")
 
   useEffect(() => {
-      if (indexState > -1 && indexState < movements.length) {
+      if (indexState > -1 && indexState < movements.length && !pauseState) {
         console.log(movements[indexState].varName + " _________ " +arrayName)
         if (movements[indexState].varName !== arrayName){
           return;
@@ -39,15 +41,29 @@ function ArrayComponent(
             setValues(prevValues);
             const timeoutId4 = setTimeout(()=> {
               setOutput((prev) => {return [...prev, movements[indexState].description]});
+              if (bufferState == true){
+                setPauseState(!pauseState)
+                const bufferTimer = setTimeout(()=>{
+                  setIndexState((i)=>{return i+1})
+                }, 2000)
+                return bufferTimer
+              }
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between SWAPPING and the next movement.
             return () => clearTimeout(timeoutId4);
             break;
 
-          case "insert":
-            addToArray(movements[indexState].valueToInsert, movements[indexState].position);
+          case "add":
+            addToArray(movements[indexState].value, movements[indexState].position);
             const timeoutId2 = setTimeout(()=> {
               setOutput((prev) => {return [...prev, movements[indexState].description]});
+              if (bufferState == true){
+                setPauseState(!pauseState)
+                const bufferTimer = setTimeout(()=>{
+                  setIndexState((i)=>{return i+1})
+                }, 2000)
+                return bufferTimer
+              }
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between INSERTING and the next movement.
             return () => clearTimeout(timeoutId2);
@@ -57,6 +73,13 @@ function ArrayComponent(
             removeFromArray((movements[indexState].positionToRemove))
             const timeoutId3 = setTimeout(()=> {
               setOutput((prev) => {return [...prev, movements[indexState].description]});
+              if (bufferState == true){
+                setPauseState(!pauseState)
+                const bufferTimer = setTimeout(()=>{
+                  setIndexState((i)=>{return i+1})
+                }, 2000)
+                return bufferTimer
+              }
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between POPPING and the next movement.
             return () => clearTimeout(timeoutId3);
@@ -65,7 +88,7 @@ function ArrayComponent(
         }
       }
 
-  }, [indexState]);
+  }, [indexState, pauseState]);
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
 

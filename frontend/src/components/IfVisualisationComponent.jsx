@@ -9,8 +9,10 @@ function IfVisualisationComponent(
     speedState,
     indexState,
     setIndexState,
-    pausedState,
-    setOutput 
+    pauseState,
+    setOutput,
+    bufferState,
+    setPauseState
   }){
       const [ifStatement, setIfStatement] = useState({   
         "operation": "if",  
@@ -24,8 +26,7 @@ function IfVisualisationComponent(
       const delay = ms => new Promise(res => setTimeout(res, ms));
 
       useEffect(()=>{
-        if (pausedState === true){return;}
-        if (indexState > -1 && indexState < movements.length){
+        if (indexState > -1 && indexState < movements.length && !pauseState){
           const movement = movements[indexState];
           if (movement.operation === "if"){
             setIfStatement(movement);
@@ -43,6 +44,13 @@ function IfVisualisationComponent(
     
               const timeoutId3 = setTimeout(() => {
                 //setOutput(prev => [...prev, movements[indexState].description]);
+                if (bufferState == true){
+                  setPauseState(!pauseState)
+                  const bufferTimer = setTimeout(()=>{
+                    setIndexState((i)=>{return i+1})
+                  }, 2000)
+                  return bufferTimer
+                }
                 setIndexState((prev) => prev + 1);
               }, speedState * 1000 /2 );
     
@@ -55,7 +63,7 @@ function IfVisualisationComponent(
             return () => clearTimeout(timeoutId1);
         }
       }
-      }, [indexState, pausedState])
+      }, [indexState, pauseState])
             return(
                 <div className="if-vis-window">
                     <motion.div
@@ -71,7 +79,6 @@ function IfVisualisationComponent(
                         <p>The if statement asks: </p>
                         <p style={{ fontSize: '35px', fontWeight: 'bold' }}>{(ifStatement.condition != "This is the starter If") ? ifStatement.condition+"?" : "The if statements will be shown here!"}</p>
                     </motion.div>
-                    <button onClick={() => setIndexState(0)}></button>
                 </div>
             )
 }

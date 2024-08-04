@@ -7,8 +7,11 @@ function VariableListComponent({
     speedState,
     indexState,
     setIndexState,
-    pausedState,
-    setOutput}){
+    pauseState,
+    setOutput,
+    bufferState,
+    setPauseState
+    }){
 
     let focusedVar = {type: "NOTE",value:" It will be displayed here!",name:"Click on a variable"};
     let [updating, setUpdating] = useState("");
@@ -19,28 +22,33 @@ function VariableListComponent({
     const delay = ms  => new Promise(res => setTimeout(res, ms));
 
     useEffect(() => {
-        let index = indexState;
-        if (pausedState === true){return;}
-        if (index > -1 && index < movements.length){
-            if (movements[index].operation == "set"){
-                updateVariablesState(movements[index].type, movements[index].value, movements[index].varName);
+        if (indexState > -1 && indexState < movements.length && !pauseState){
+            if (movements[indexState].operation == "set"){
+                updateVariablesState(movements[indexState].type, movements[indexState].value, movements[indexState].varName);
                 const timeoutId2 = setTimeout(() => {
                     setOutput((prev) => {return [...prev, movements[indexState].description]});
+                    if (bufferState == true){
+                        setPauseState(!pauseState)
+                        const bufferTimer = setTimeout(()=>{
+                          setIndexState((i)=>{return i+1})
+                        }, 2000)
+                        return bufferTimer
+                      }
                     setIndexState((i)=>{return i+1});
                 }, speedState*1000 +100);
                 return () => clearTimeout(timeoutId2);
             }
         }
         
-    }, [indexState, pausedState])
+    }, [indexState, pauseState])
 
     let updateVariablesState = async (type , value , name) => {
         setVariablesState((prevVariablesState) => {
             let variables = [...prevVariablesState];
-            const index = variables.findIndex(variable => variable.name === name);
-            if (index !== -1) {
-                variables[index] = {
-                    ...variables[index],
+            const indexState = variables.findIndex(variable => variable.name === name);
+            if (indexState !== -1) {
+                variables[indexState] = {
+                    ...variables[indexState],
                     value: (type === "string" ? "'"+value+"'" : value),
                 };                
             } else {

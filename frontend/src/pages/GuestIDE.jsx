@@ -47,13 +47,19 @@ function GuestIDE() {
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
   const cancelClearRef = useRef();
-  const [speedState,setSpeedState] = useState(2);
+  const [speedState, setSpeedState] = useState(2);
   const [movementsState, setMovementsState] = useState();
   const [highlightState, setHighlightState] = useState();
   const [indexState, setIndexState] = useState(-1);
+  const [pauseState, setPauseState] = useState(false);
+  const [savedIndexState, setSavedIndexState] = useState(-1);
+  const [bufferState, setBufferState] = useState(false);
+
+  let savedIndex=-1;
 
   useEffect(()=>{
-    setMovementsState([{   
+    setMovementsState([
+      {   
       "line": 1,
       "operation": "if",  
       "condition": "x > 5",   
@@ -89,7 +95,7 @@ function GuestIDE() {
       "line": 7, 
       "operation": "create",                   
       "dataStructure": "array",                   
-      "initialValues": [1,2,3,4,5,6,7,8,9],                   
+      "value": [1,2,3,4,5,6,7,8,9],                   
       "length": 9,                   
       "id": "abcd",                   
       "type": "int",                
@@ -101,9 +107,7 @@ function GuestIDE() {
       "line": 8,
       "operation": "create",                   
       "dataStructure": "array",                   
-      "initialValues": ["a","b","c","d","e","f","g"],                   
-      "length": 7,                   
-      "id": "abcd",                   
+      "value": ["a","b","c","d","e","f","g"],                                                       
       "type": "string",                
       "varName": "letters",                  
       "timestamp": "2024-07-09T12:01:00Z",                   
@@ -129,10 +133,9 @@ function GuestIDE() {
       },           
       {    
       "line": 11,               
-      "operation": "insert",                   
+      "operation": "add",                   
       "dataStructure": "array",                   
-      "valueToInsert": 5,                   
-      "id": "abcd",                   
+      "value": 5,                                     
       "varName": "nums",                  
       "position": 4,                   
       "timestamp": "2024-07-09T12:02:00Z",                   
@@ -142,7 +145,7 @@ function GuestIDE() {
       "line": 12,
       "operation": "create",                   
       "dataStructure": "array",                   
-      "initialValues": ["g","a","n","g","s","t","a"],                   
+      "value": ["g","a","n","g","s","t","a"],                   
       "length": 7,                   
       "id": "abcd",                   
       "type": "string",                
@@ -152,14 +155,13 @@ function GuestIDE() {
       },
       {     
       "line": 13,              
-      "operation": "insert",                   
+      "operation": "add",                   
       "dataStructure": "array",                   
-      "valueToInsert": "z",                   
-      "id": "abcd",                   
+      "value": "z",                                   
       "varName": "letters",                  
       "position": 0,                   
       "timestamp": "2024-07-09T12:02:00Z",                   
-      "description": "Inserted value 'zestyAAA' at position 0 in array nums."                   
+      "description": "Inserted value 'z' at position 0 in array nums."                   
       },
       {
       "line": 14,
@@ -211,6 +213,17 @@ function GuestIDE() {
   
   
   // very long sample text
+
+  const pauseAnimation = () =>{
+      if (pauseState == false){
+        setBufferState(true);
+      }
+      else{
+        setBufferState(false)
+        setPauseState(false)
+      } 
+  }
+
   const sampleText =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
@@ -434,6 +447,9 @@ function GuestIDE() {
             setValue={setValue}
             highlightState={highlightState}
             setHighlightState={setHighlightState}
+            pauseState = {pauseState}
+            setPauseState = {setPauseState}
+            bufferState = {bufferState}
           />
         </Box>
 
@@ -494,7 +510,12 @@ function GuestIDE() {
           speedState={speedState}
           indexState={indexState}
           setIndexState={setIndexState}
+          pauseState = {pauseState}
+          setPauseState = {setPauseState}
+          bufferState = {bufferState}
           ></MainVisualisationWindow>
+          <Button  onClick={() => pauseAnimation()}
+          ></Button>
         </Box>
       </GridItem>
     </Grid>

@@ -12,7 +12,8 @@ const CodeEditorView = ({
   speedState,
   movementsState,
   highlightState,
-  setHighlightState
+  setHighlightState,
+  pauseState
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [editor, setEditor] = useState(null);
@@ -37,8 +38,6 @@ const CodeEditorView = ({
           'editor.lineHighlightBorder': '#00000000',
           'editor.lineHighlightBackground': '#0000001C',
           // variable color
-          
-
         }
       });
     }
@@ -85,13 +84,11 @@ const CodeEditorView = ({
     if (editor) {
       let linesToHighlight = [];
       for (let i=0; i<movementsState.length; i++){
-        linesToHighlight.push({line: movementsState[i].line, time:i*speedState*1000 +500})
+        linesToHighlight.push({line: movementsState[i].line, time:i*speedState*1000 +250})
       }
       highlightLines(editor, linesToHighlight);
     }
   };
-
-
 
   const loadingComponent = (
     <Box display="flex" bg="blackAlpha.700" height={height} justifyContent="center" alignItems="center">

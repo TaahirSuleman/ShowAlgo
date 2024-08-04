@@ -5,26 +5,33 @@ import { useState, useEffect } from 'react';
 import '../styles/App.css';
 
 
-function MainVisualisationWindow({output, setOutput, movementsState, speedState, indexState, setIndexState}){
-    //let [indexState, setIndexState] = useState(-1);
-    //let [speedState, setSpeedState] = useState(2); // 2 is the default speed.
-    let [pausedState, setPausedState] = useState(false);
+function MainVisualisationWindow({
+    output,
+    setOutput, 
+    movementsState, 
+    speedState, 
+    indexState, 
+    setIndexState, 
+    pauseState,
+    bufferState,
+    setPauseState
+    })
+    {
     useEffect(()=>{
-        console.log(pausedState)
-    }, [pausedState])
-    //let [movementsState, setMovementsState] = useState(movements);
+        console.log(pauseState)
+    }, [pauseState])
     const [arraysState, setArraysState] = useState([]);
     const genericOperations = ["else","print"];
     useEffect(()=>{
-        console.log(indexState)
-        if(indexState >-1 && indexState < movementsState.length){
-       
+        console.log("index: "+indexState)
+        if(indexState >-1 && indexState < movementsState.length && !pauseState){
+        
             if (movementsState[indexState].operation === "create"){
                 console.log("here is the index: "+indexState)
                 let valuesArr = [];
                 let locationsArr = [];
-                for (let i = 0; i < movementsState[indexState].initialValues.length; i++) {
-                    valuesArr.push(movementsState[indexState].varName + "++" + movementsState[indexState].initialValues[i] + "-" + i);
+                for (let i = 0; i < movementsState[indexState].value.length; i++) {
+                    valuesArr.push(movementsState[indexState].varName + "++" + movementsState[indexState].value[i] + "-" + i);
                     locationsArr.push(i);
                 }
                 setArraysState((pArr) =>{
@@ -34,6 +41,9 @@ function MainVisualisationWindow({output, setOutput, movementsState, speedState,
                 })
                 const timeoutId = setTimeout(()=> {
                 setOutput((prev) => {return [...prev, movementsState[indexState].description]});
+                if (bufferState){
+                    setPauseState(!pauseState)
+                }
                 setIndexState((i)=>{return i+1})
                 }, speedState*1000)
                 return () => clearTimeout(timeoutId);
@@ -44,23 +54,26 @@ function MainVisualisationWindow({output, setOutput, movementsState, speedState,
                     setOutput((prev) => {return [...prev, "colour__(OUTPUT) "+movementsState[indexState].literal]});
                     setOutput((prev) => {return [...prev, movementsState[indexState].description]});
                     const timeoutId1 = setTimeout(() => {
+                        if (bufferState == true){
+                            setPauseState(!pauseState)
+                          }
                         setIndexState((prev) => prev + 1);
                     }, speedState * 1000 );
                     return () => clearTimeout(timeoutId1);
                 }
                 else{
+                    setOutput((prev) => {return [...prev, movementsState[indexState].description]});
                     const timeoutId2 = setTimeout(() => {
+                        if (bufferState == true){
+                            setPauseState(!pauseState)
+                          }
                         setIndexState((prev) => prev + 1);
                     }, speedState * 1000 );
                     return () => clearTimeout(timeoutId2);
                 }
             }
     }
-    }, [indexState])
-
-    let updatePausedState = () =>{
-        setPausedState(!pausedState)
-    }
+    }, [indexState, pauseState])
 
     return(
         <div className="MainVisualisationWindow">
@@ -69,8 +82,10 @@ function MainVisualisationWindow({output, setOutput, movementsState, speedState,
             speedState ={speedState}
             indexState={indexState}
             setIndexState={setIndexState}
-            pausedState = {pausedState}
+            pauseState = {pauseState}
+            setPauseState = {setPauseState}
             setOutput = {setOutput}
+            bufferState = {bufferState}
         />
         <div className="if-array-container">
             <IfVisualisationComponent
@@ -78,8 +93,10 @@ function MainVisualisationWindow({output, setOutput, movementsState, speedState,
                 speedState ={speedState}
                 indexState={indexState}
                 setIndexState={setIndexState}
-                pausedState = {pausedState}
+                pauseState = {pauseState}
+                setPauseState = {setPauseState}
                 setOutput = {setOutput}
+                bufferState = {bufferState}
             />
             {arraysState.map((array, i) => {
                 return (
@@ -91,14 +108,15 @@ function MainVisualisationWindow({output, setOutput, movementsState, speedState,
                     speedState ={speedState}
                     indexState={indexState}
                     setIndexState={setIndexState}
-                    pausedState = {pausedState}
+                    pauseState = {pauseState}
+                    setPauseState = {setPauseState}
                     setOutput = {setOutput}
+                    bufferState = {bufferState}
                     />
                 )
             })}
             
         </div>
-        <button onClick={() => setIndexState(0)}>Click Here</button>
     </div>
     )
 }
