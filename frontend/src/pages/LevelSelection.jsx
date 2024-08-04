@@ -1,6 +1,7 @@
 import {
   Box,
   Heading,
+  IconButton,
   Table,
   TableContainer,
   Tbody,
@@ -12,7 +13,7 @@ import {
 import React, { useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import axios from "axios";
-import { CheckIcon, MinusIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, CheckIcon, MinusIcon } from "@chakra-ui/icons";
 
 function LevelSelection() {
   const { sectionHeading } = useParams();

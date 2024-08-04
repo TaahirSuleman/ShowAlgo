@@ -1,10 +1,4 @@
-import {
-  Box,
-  Divider,
-  Heading,
-  SimpleGrid,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Divider, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -23,7 +17,9 @@ import ModuleCard from "../components/ModuleCard";
 
 function LearningMode() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null); 
+  const [user, setUser] = useState({
+    username: "",
+  });
   const [sections, setSections] = useState([]);
   const [chartKey, setChartKey] = useState(0); // key to force re-render
   const [loading, setLoading] = useState(true); // state to manage loading
@@ -167,25 +163,19 @@ function LearningMode() {
       alignItems="center"
       justifyContent="center"
     >
-      {user ? (
-        <Heading
-          mb={10}
-          fontSize="6xl"
-          mt={10}
-          p={2}
-          textAlign="center"
-          color="whiteAlpha.700"
-        >
-          Welcome back,{" "}
-          <Text as="span" color="whiteAlpha.900">
-            {user.username}!
-          </Text>
-        </Heading>
-      ) : (
-        <Heading mb={10} fontSize="6xl" textAlign="center">
-          Welcome Guest!
-        </Heading>
-      )}
+      <Heading
+        mb={10}
+        fontSize="6xl"
+        mt={10}
+        p={2}
+        textAlign="center"
+        color="whiteAlpha.700"
+      >
+        Welcome back,{" "}
+        <Text as="span" color="whiteAlpha.900">
+          {user.username}!
+        </Text>
+      </Heading>
 
       <Divider width="80%" />
 
@@ -340,8 +330,8 @@ function LearningMode() {
             subheading={section.subheading}
             totalLevels={section.levels.length}
             completedLevels={3}
-            completedPercentage={Math.floor((2 / section.levels.length) * 100)}
-            onClick={() => handleSectionSelect(section.route)}
+            completedPercentage={section.levels.length === 0 ? 0 : Math.floor((2 / section.levels.length) * 100)}
+            onGoClick={() => handleSectionSelect(section.route)}
           />
         ))}
       </SimpleGrid>

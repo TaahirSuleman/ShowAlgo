@@ -13,8 +13,14 @@ import {
   getSingleSection,
   updateProgress,
   createLevel,
+  createSection,
+  deleteSection,
+  updateSection,
+  updateLevel,
+  deleteLevel,
 } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import adminMiddleware from "../middleware/adminMiddleware.js";
 
 const router = express.Router();
 
@@ -37,9 +43,9 @@ router.post("/register", registerUser);
 // This endpoint is used to login a user
 router.post("/login", loginUser);
 // This endpoint is used to get the user profile
-router.get("/profile", authMiddleware, getProfile);
+router.get("/profile", getProfile);
 // This endpoint is used to logout a user
-router.post("/logout", authMiddleware, logoutUser);
+router.post("/logout", logoutUser);
 
 // --------------------
 
@@ -48,6 +54,8 @@ router.post("/logout", authMiddleware, logoutUser);
 
 // This endpoint is used to get user progress
 router.get("/users/:userId/progress", authMiddleware, getUserProgress);
+
+// --------------------
 
 // This endpoint is used to get levels for a section
 router.get("/sections/:sectionRoute/levels", authMiddleware, getLevels);
@@ -62,8 +70,18 @@ router.get("/sections", authMiddleware, getSections);
 router.put("/progress", authMiddleware, updateProgress);
 
 // --------------------
+// This endpoint is to create a new section
+router.post("/create-section", adminMiddleware, createSection);
+// This endpoint is to delete a section
+router.delete("/delete-section/:sectionId", adminMiddleware, deleteSection);
+// This endpoint is to update a section
+router.put("/update-section/:sectionId", adminMiddleware, updateSection);
 
 // This endpoint is used to create a new level
-router.post("/levels", authMiddleware, createLevel);
+router.post("/create-level", adminMiddleware, createLevel);
+// This endpoint is used to delete a level
+router.delete("/delete-level/:levelId", adminMiddleware, deleteLevel);
+// This endpoint is used to update a level
+router.put("/update-level/:levelId", adminMiddleware, updateLevel);
 
 export default router;
