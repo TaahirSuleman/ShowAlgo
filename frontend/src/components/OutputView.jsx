@@ -1,7 +1,12 @@
 import { Box, Text } from "@chakra-ui/react";
-import React from "react";
+import {React, useState, useEffect} from "react";
 
 const OutputView = ({ output, isError, isLoading, className, height, width }) => {
+
+  useEffect(()=>{
+    console.log(output)
+  },[output])
+
   return (
     <Box
       className={className}
@@ -14,9 +19,14 @@ const OutputView = ({ output, isError, isLoading, className, height, width }) =>
       borderColor={isError ? "red.500" : "transparent"}
       overflow="auto"
     >
-      {output
-        ? <Text>{output}</Text>
-        : 'Click "Run Code" to see the ouput here'}
+      {output.map((line, index) => (line.includes("colour__") ? (
+        <Text color="red" key={index}>{line.substring(8)}</Text>
+      )
+      :
+      (
+        <Text key={index}>{line}</Text>
+      )
+      ))}
     </Box>
   );
 };
