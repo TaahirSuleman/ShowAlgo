@@ -1,4 +1,4 @@
-import { Box, Center, Spinner } from "@chakra-ui/react";
+import { Box, Center, Spinner, Button } from "@chakra-ui/react";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import { useEffect, useRef, useState } from "react";
 
@@ -9,9 +9,17 @@ const CodeEditorView = ({
   defaultValue,
   height,
   width,
+  speedState,
+  movementsState,
+  highlightState,
+  setHighlightState,
+  pauseState
 }) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [editor, setEditor] = useState(null);
+  const [decorations, setDecorations] = useState([]);
   const monaco = useMonaco();
+  
 
   useEffect(() => {
     if (monaco) {
@@ -30,12 +38,17 @@ const CodeEditorView = ({
           'editor.lineHighlightBorder': '#00000000',
           'editor.lineHighlightBackground': '#0000001C',
           // variable color
-          
-
         }
       });
     }
   }, [monaco]);
+
+  useEffect(()=>{
+    if (highlightState){
+      handleHighlightClick();
+      setHighlightState(false);
+    }
+  }, highlightState)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -44,6 +57,38 @@ const CodeEditorView = ({
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleEditorDidMount = (editorInstance) => {
+    setEditor(editorInstance);
+  };
+
+  const highlightLines = (editor, lines) => {
+    lines.forEach(({ line, time }) => {
+      setTimeout(() => {
+        setDecorations((oldDecorations) =>
+          editor.deltaDecorations(oldDecorations, [
+            {
+              range: new monaco.Range(line, 1, line, 1),
+              options: {
+                isWholeLine: true,
+                className: 'myLineHighlight',
+              },
+            },
+          ])
+        );
+      }, time);
+    });
+  };
+
+  const handleHighlightClick = () => {
+    if (editor) {
+      let linesToHighlight = [];
+      for (let i=0; i<movementsState.length; i++){
+        linesToHighlight.push({line: movementsState[i].line, time:i*speedState*1000 +250})
+      }
+      highlightLines(editor, linesToHighlight);
+    }
+  };
 
   const loadingComponent = (
     <Box display="flex" bg="blackAlpha.700" height={height} justifyContent="center" alignItems="center">
@@ -62,6 +107,7 @@ const CodeEditorView = ({
       {isLoading ? (
         loadingComponent
       ) : (
+        <>
         <Editor
           height={height}
           width={width}
@@ -81,7 +127,9 @@ const CodeEditorView = ({
               wrappingIndent: "same",
               scrollbar: { vertical: "auto", horizontal: "auto" },
             }}
+            onMount={handleEditorDidMount}
         />
+        </>
       )}
     </Box>
   );

@@ -1,42 +1,228 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  background: linear-gradient(250deg, #090214, #695b65);
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+li {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin: 0;
+  border-radius: 3px;
+  border: 1px solid red;
+  margin-bottom: 2px;
+  justify-content: left;
+  align-items: center;
+  margin-right: 10px;
+  width: 300px;
+  height: fit-content;
+  font-weight: bold; /* This makes the text bold */
+  font-family: 'Arial', sans-serif;
+}
+
+.ul-variables {
+  display: flex;
+  flex-direction: column;
+  color: rgb(255, 255, 255);
+  list-style-type: none; /* Optional: remove bullet points */
+  padding: 0; /* Optional: remove default padding */
+  margin: 0; /* Optional: remove default margin */
+  text-align: left; /* Ensure text is left-aligned */
+}
+
+.App {
+  text-align: center;
+}
+.square {
+  flex: 1; /* Allow the blocks to grow and shrink evenly */
+  background-color: blue;
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  border: 1px solid white;
+  max-width: 50px; /* Set a maximum width for each block */
+  min-width: 30px; /* Optional: Set a minimum width for each block */
+  height: 80px; /* Set a fixed height for the blocks */
+  box-sizing: border-box; /* Include border in the element's width and height */
+}
+
+.inBlockText {
+  font-size: 50px; /* Make text larger */
+  text-align: center;
+  justify-content: center;
+  color: white;
+}
+
+.array-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Center the array blocks within the container */
+  width: 100%; /* Fixed width for the container */
+  max-width: 100%; /* Ensure it doesn't exceed the parent container width */
+  padding: 10px; /* Optional: Add some padding for aesthetics */
+  box-sizing: border-box;
+}
+
+.array-block {
+  width: 50px; /* Ensure consistent width */
+  height: 50px; /* Ensure consistent height */
+  margin: 0; /* Ensure no margin */
+  padding: 0; /* Ensure no padding */
+  border: 1px solid red; /* For visual debugging */
+}
+
+.variables-container {
+  display: flex;
+  flex-direction: column; /* Align items vertically */
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative; /* Ensure it respects document flow */
+  margin-right: 20px; /* Add space between the two components */
+}
+
+.focused-variable {
+  padding: 2px;
+  background-color: rgb(0, 0, 0); /* Optional: for visibility */
+  border-radius: 10px;
+  border: 1px solid blue;
+  margin-left: 10px;
+  align-self: flex-start; /* Align the focused variable to the top */
+  width: 300px;
+  height: fit-content;
+}
+
+.in-focus-text {
+  font-size: 20px; /* Make text larger */
+  text-align: center;
+  justify-content: center;
+  color: white;
+  height: fit-content;
+  font-weight: bold; /* This makes the text bold */
+  font-family: 'Arial', sans-serif;
+}
+
+.notification-blurb {
+  background: white;
+  width: 500px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.notification-blurb[data-ischecking="green"] {
+  height: 200px;
+  border-radius: 50px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.notification-blurb[data-ischecking="red"] {
+  height: 200px;
+  border-radius: 50px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.if-vis-window {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.card {
-  padding: 2em;
+.for-loop-container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  width: 300px;
+  border: 3px solid yellow;
+  align-items: center;
+  justify-content: center;
 }
 
-.read-the-docs {
-  color: #888;
+.MainVisualisationWindow{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* Align children at the top */
+  width: 100%;
+}
+
+.IfVisualisationComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 20px; /* Add space from the left if needed */
+}
+
+.ArrayComponent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%; /* Make it take full width of the if-array-container */
+}
+
+.if-array-container {
+  display: grid;
+  grid-template-rows: auto auto; /* Stack IfVisualisationComponent and ArrayComponent vertically */
+  width: 100%; /* Make it take full width of the remaining space */
+}
+
+.myLineHighlight {
+  background-color: rgba(255, 255, 0, 0.3); /* Light yellow background */
 }
