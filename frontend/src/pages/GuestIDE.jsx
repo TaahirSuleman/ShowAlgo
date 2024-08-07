@@ -47,7 +47,7 @@ function GuestIDE() {
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
   const cancelClearRef = useRef();
-  const [speedState, setSpeedState] = useState(2);
+  const [speedState, setSpeedState] = useState(3);
   const [movementsState, setMovementsState] = useState();
   const [highlightState, setHighlightState] = useState();
   const [indexState, setIndexState] = useState(-1);
@@ -76,21 +76,6 @@ function GuestIDE() {
       "timestamp": "2024-07-09T12:03:00Z", 
       "description": "Printed 'x is greater than 5'." 
       }, 
-      { 
-      "line": 3,
-      "operation": "else", 
-      "timestamp": "2024-07-09T12:04:00Z", 
-      "description": "Else block not executed as condition was true." 
-      },
-      {
-      "line": 6,
-      "operation": "set", 
-      "varName": "x", 
-      "type": "number", 
-      "value": 10,  
-      "timestamp": "2024-07-09T12:01:00Z",  
-      "description": "Set variable x to number 10." 
-      },
       {
       "line": 7, 
       "operation": "create",                   
@@ -102,7 +87,36 @@ function GuestIDE() {
       "varName": "nums",                  
       "timestamp": "2024-07-09T12:01:00Z",                   
       "description": "Created an array named nums with initial values [1, 2, 3, 4]."                  
-      },   
+      }, 
+      {
+      "line": 14,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 1,
+      "secondPosition": 3,
+      "varName": "nums",
+      "description": "Swapped values in position 1 and 3 in array nums."   
+      },
+      {
+      "line": 19,
+      "operation": "get",
+      "setName": "fetchedVar", 
+      "varName": "nums",
+      "type": "number",  
+      "index": 2,  
+      "timestamp": "2024-07-09T12:01:00Z",  
+      "description": "Set variable fetchedVar to nums[2]."
+      },
+      {
+      "line": 19,
+      "operation": "setArr",
+      "dataStructure": "array",
+      "varName": "nums",
+      "index": 5,  
+      "setValue" : 25,
+      "timestamp": "2024-07-09T12:01:00Z",  
+      "description": "Set nums[5] to 25."
+      },
       { 
       "line": 8,
       "operation": "create",                   
@@ -214,15 +228,9 @@ function GuestIDE() {
   
   // very long sample text
 
-  const pauseAnimation = () =>{
-      if (pauseState == false){
-        setBufferState(true);
-      }
-      else{
-        setBufferState(false)
-        setPauseState(false)
-      } 
-  }
+  const pauseAnimation = () => {
+    setPauseState(!pauseState)
+  };
 
   const sampleText =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";

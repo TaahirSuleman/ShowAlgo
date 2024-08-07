@@ -10,7 +10,8 @@ function VariableListComponent({
     pauseState,
     setOutput,
     bufferState,
-    setPauseState
+    setPauseState,
+    arraysState
     }){
 
     let focusedVar = {type: "NOTE",value:" It will be displayed here!",name:"Click on a variable"};
@@ -22,25 +23,35 @@ function VariableListComponent({
     const delay = ms  => new Promise(res => setTimeout(res, ms));
 
     useEffect(() => {
-        if (indexState > -1 && indexState < movements.length && !pauseState){
-            if (movements[indexState].operation == "set"){
-                updateVariablesState(movements[indexState].type, movements[indexState].value, movements[indexState].varName);
-                const timeoutId2 = setTimeout(() => {
-                    setOutput((prev) => {return [...prev, movements[indexState].description]});
-                    if (bufferState == true){
-                        setPauseState(!pauseState)
-                        const bufferTimer = setTimeout(()=>{
-                          setIndexState((i)=>{return i+1})
-                        }, 2000)
-                        return bufferTimer
-                      }
-                    setIndexState((i)=>{return i+1});
-                }, speedState*1000 +100);
-                return () => clearTimeout(timeoutId2);
-            }
-        }
-        
-    }, [indexState, pauseState])
+      const performOperations = () => {
+      if (indexState > -1 && indexState < movements.length && !pauseState){
+          if (movements[indexState].operation == "set"){
+              updateVariablesState(movements[indexState].type, movements[indexState].value, movements[indexState].varName);
+              const timeoutId2 = setTimeout(() => {
+                  setOutput((prev) => {return [...prev, movements[indexState].description]});
+                  setIndexState((i)=>{return i+1});
+              }, speedState*1000 );
+              return () => clearTimeout(timeoutId2);
+          }
+
+          else if (movements[indexState].operation == "get"){
+            arraysState.forEach((currentValue) => {
+              if (currentValue.name == movements[indexState].varName){
+                updateVariablesState(movements[indexState].type, (currentValue.values)[movements[indexState].index].substring((currentValue.values)[movements[indexState].index].indexOf("++")+2,(currentValue.values)[movements[indexState].index].indexOf("-")), movements[indexState].setName);
+                return
+              }
+            })
+            const timeoutId2 = setTimeout(() => {
+              setOutput((prev) => {return [...prev, movements[indexState].description]}); 
+              setIndexState((i)=>{return i+1});
+          }, speedState*1000 );
+          return () => clearTimeout(timeoutId2);
+          }
+      }
+    }
+    performOperations();
+      
+  }, [indexState, pauseState])
 
     let updateVariablesState = async (type , value , name) => {
         setVariablesState((prevVariablesState) => {
@@ -105,14 +116,6 @@ function VariableListComponent({
           </motion.li>
         ))}
       </ul>
-      {/* <motion.div
-        className="focused-variable"
-        layoutId="underline"
-        style={{ backgroundColor: isChanged ? "green" : "black" }}
-        transition={{ duration: 1 }}
-      >
-        <p className="in-focus-text">{"(" + focusedVariableState.type + ") " + focusedVariableState.name + " = " + focusedVariableState.value}</p>
-      </motion.div> */}
     </div>
     )
 
