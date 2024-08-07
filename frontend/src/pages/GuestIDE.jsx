@@ -279,6 +279,7 @@ function GuestIDE() {
       templateRows={gridTemplateRows}
       gap={4}
       p={4}
+      overflow="auto"
     >
       <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
         <Box
