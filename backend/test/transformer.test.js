@@ -21,7 +21,7 @@ describe("Transformer", () => {
     it("should transform a VariableDeclaration node", () => {
         const ast = new Program([
             new VariableDeclaration("x", null, {
-                type: "Number",
+                type: "NumberLiteral",
                 value: "10",
                 line: 1,
             }),
@@ -32,7 +32,11 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "x",
-                    value: "10",
+                    value: {
+                        line: 1,
+                        type: "NumberLiteral",
+                        value: "10",
+                    },
                 },
             ],
         };
@@ -68,9 +72,10 @@ describe("Transformer", () => {
                         {
                             type: "ReturnStatement",
                             value: {
-                                left: "a",
+                                type: "Expression",
+                                left: { value: "a" },
                                 operator: "+",
-                                right: "b",
+                                right: { value: "b" },
                             },
                         },
                     ],
@@ -86,20 +91,20 @@ describe("Transformer", () => {
         const ast = new Program([
             new IfStatement(
                 new Expression("x", "greater", {
-                    type: "Number",
+                    type: "NumberLiteral",
                     value: "5",
                     line: 3,
                 }),
                 [
                     new PrintStatement({
-                        type: "String",
+                        type: "StringLiteral",
                         value: "x is greater than 5",
                         line: 4,
                     }),
                 ],
                 [
                     new PrintStatement({
-                        type: "String",
+                        type: "StringLiteral",
                         value: "x is not greater than 5",
                         line: 6,
                     }),
@@ -171,7 +176,7 @@ describe("Transformer", () => {
         const ast = new Program([
             new WhileLoop(
                 new Expression("x", ">", {
-                    type: "Number",
+                    type: "NumberLiteral",
                     value: "0",
                     line: 10,
                 }),
@@ -187,7 +192,7 @@ describe("Transformer", () => {
                         new Expression(
                             { type: "Identifier", value: "x", line: 12 },
                             "-",
-                            { type: "Number", value: "1", line: 12 }
+                            { type: "NumberLiteral", value: "1", line: 12 }
                         )
                     ),
                 ]
@@ -212,6 +217,7 @@ describe("Transformer", () => {
                             type: "VariableDeclaration",
                             name: "x",
                             value: {
+                                type: "Expression",
                                 left: "x",
                                 operator: "-",
                                 right: "1",
@@ -229,7 +235,7 @@ describe("Transformer", () => {
     it("should transform a complex AST", () => {
         const ast = new Program([
             new VariableDeclaration("x", null, {
-                type: "Number",
+                type: "NumberLiteral",
                 value: "10",
                 line: 1,
             }),
@@ -248,20 +254,20 @@ describe("Transformer", () => {
             ),
             new IfStatement(
                 new Expression("x", "greater", {
-                    type: "Number",
+                    type: "NumberLiteral",
                     value: "5",
                     line: 3,
                 }),
                 [
                     new PrintStatement({
-                        type: "String",
+                        type: "StringLiteral",
                         value: "x is greater than 5",
                         line: 4,
                     }),
                 ],
                 [
                     new PrintStatement({
-                        type: "String",
+                        type: "StringLiteral",
                         value: "x is not greater than 5",
                         line: 6,
                     }),
@@ -276,7 +282,7 @@ describe("Transformer", () => {
             ]),
             new WhileLoop(
                 new Expression("x", ">", {
-                    type: "Number",
+                    type: "NumberLiteral",
                     value: "0",
                     line: 10,
                 }),
@@ -292,7 +298,7 @@ describe("Transformer", () => {
                         new Expression(
                             { type: "Identifier", value: "x", line: 12 },
                             "-",
-                            { type: "Number", value: "1", line: 12 }
+                            { type: "NumberLiteral", value: "1", line: 12 }
                         )
                     ),
                 ]
@@ -304,7 +310,11 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "x",
-                    value: "10",
+                    value: {
+                        line: 1,
+                        type: "NumberLiteral",
+                        value: "10",
+                    },
                 },
                 {
                     type: "FunctionDeclaration",
@@ -314,9 +324,10 @@ describe("Transformer", () => {
                         {
                             type: "ReturnStatement",
                             value: {
-                                left: "a",
+                                type: "Expression",
+                                left: { value: "a" },
                                 operator: "+",
-                                right: "b",
+                                right: { value: "b" },
                             },
                         },
                     ],
@@ -368,6 +379,7 @@ describe("Transformer", () => {
                             type: "VariableDeclaration",
                             name: "x",
                             value: {
+                                type: "Expression",
                                 left: "x",
                                 operator: "-",
                                 right: "1",

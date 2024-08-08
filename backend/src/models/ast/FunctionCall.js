@@ -1,9 +1,10 @@
 class FunctionCall {
-  constructor(name, args) {
-    this.type = "FunctionCall";
-    this.name = name;
-    this.args = args;
-  }
+    constructor(callee, args, line) {
+        this.type = "FunctionCall";
+        this.callee = callee;
+        this.arguments = args;
+        this.line = line;
+    }
 }
 
 export default FunctionCall;

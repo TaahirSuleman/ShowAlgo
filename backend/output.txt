@@ -1,0 +1,2797 @@
+Test case 1
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T13:44:00.986Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Test case 2
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T13:44:00.987Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T13:44:00.987Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T13:44:00.987Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Test case 3
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T13:44:00.989Z",
+      "description": "Created array numbers."
+    }
+  ]
+}
+Test case 4
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T13:44:00.991Z",
+      "description": "Created array numbers."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 1,
+      "position": 1,
+      "timestamp": "2024-07-31T13:44:00.991Z",
+      "description": "Added 1 to array numbers at position 1."
+    },
+    {
+      "line": 3,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 2,
+      "position": 2,
+      "timestamp": "2024-07-31T13:44:00.991Z",
+      "description": "Added 2 to array numbers at position 2."
+    },
+    {
+      "line": 4,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 3,
+      "position": 3,
+      "timestamp": "2024-07-31T13:44:00.991Z",
+      "description": "Added 3 to array numbers at position 3."
+    }
+  ]
+}
+Test case 5
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T13:44:00.992Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T13:44:00.992Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T13:44:00.992Z",
+      "description": "Iterating over nums with num."
+    }
+  ]
+}
+Test case 6
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 5,
+      "timestamp": "2024-07-31T13:44:00.994Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T13:44:00.994Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T13:44:00.994Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T13:44:00.994Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 7
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T13:44:00.996Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "value": 5,
+      "timestamp": "2024-07-31T13:44:00.996Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T13:44:00.996Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "y less 10",
+      "result": true,
+      "timestamp": "2024-07-31T13:44:00.996Z",
+      "description": "Checked if y less 10."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "y is less than 10",
+      "timestamp": "2024-07-31T13:44:00.996Z",
+      "description": "Printed y is less than 10."
+    }
+  ]
+}
+Test case 8
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T13:44:00.998Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T13:44:00.998Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "define",
+      "varName": "add_numbers",
+      "params": [
+        "a",
+        "b"
+      ],
+      "body": [
+        {
+          "line": 4,
+          "operation": "return",
+          "value": {
+            "left": "a",
+            "operator": "+",
+            "right": "b"
+          },
+          "timestamp": "2024-07-31T13:44:00.998Z",
+          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
+        }
+      ],
+      "timestamp": "2024-07-31T13:44:00.998Z",
+      "description": "Defined function add_numbers with parameters a, b."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T13:44:00.998Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T13:44:00.998Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 7,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 8,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T13:44:00.998Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T13:44:00.998Z",
+      "description": "Iterating over nums with num."
+    },
+    {
+      "line": 9,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 10,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T13:44:00.998Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 11,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T13:44:00.998Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T13:44:00.998Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 1
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:12:01.095Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Test case 2
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:12:01.096Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:12:01.096Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:12:01.096Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Test case 3
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:12:01.098Z",
+      "description": "Created array numbers."
+    }
+  ]
+}
+Test case 4
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:12:01.099Z",
+      "description": "Created array numbers."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 1,
+      "position": 1,
+      "timestamp": "2024-07-31T16:12:01.099Z",
+      "description": "Added 1 to array numbers at position 1."
+    },
+    {
+      "line": 3,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 2,
+      "position": 2,
+      "timestamp": "2024-07-31T16:12:01.099Z",
+      "description": "Added 2 to array numbers at position 2."
+    },
+    {
+      "line": 4,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 3,
+      "position": 3,
+      "timestamp": "2024-07-31T16:12:01.099Z",
+      "description": "Added 3 to array numbers at position 3."
+    }
+  ]
+}
+Test case 5
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:12:01.101Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:12:01.101Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:12:01.101Z",
+      "description": "Iterating over nums with num."
+    }
+  ]
+}
+Test case 6
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 5,
+      "timestamp": "2024-07-31T16:12:01.103Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:12:01.103Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:12:01.103Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:12:01.103Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 7
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:12:01.106Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "value": 5,
+      "timestamp": "2024-07-31T16:12:01.106Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:12:01.106Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "y less 10",
+      "result": true,
+      "timestamp": "2024-07-31T16:12:01.106Z",
+      "description": "Checked if y less 10."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "y is less than 10",
+      "timestamp": "2024-07-31T16:12:01.106Z",
+      "description": "Printed y is less than 10."
+    }
+  ]
+}
+Test case 8
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:12:01.113Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:12:01.113Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "define",
+      "varName": "add_numbers",
+      "params": [
+        "a",
+        "b"
+      ],
+      "body": [
+        {
+          "line": 4,
+          "operation": "return",
+          "value": {
+            "left": "a",
+            "operator": "+",
+            "right": "b"
+          },
+          "timestamp": "2024-07-31T16:12:01.113Z",
+          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
+        }
+      ],
+      "timestamp": "2024-07-31T16:12:01.113Z",
+      "description": "Defined function add_numbers with parameters a, b."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:12:01.114Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:12:01.114Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 7,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 8,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:12:01.114Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:12:01.114Z",
+      "description": "Iterating over nums with num."
+    },
+    {
+      "line": 9,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 10,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:12:01.114Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 11,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:12:01.114Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:12:01.114Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 1
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:30:08.815Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Test case 2
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:30:08.816Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:30:08.816Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:30:08.816Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Test case 3
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:30:08.817Z",
+      "description": "Created array numbers."
+    }
+  ]
+}
+Test case 4
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:30:08.818Z",
+      "description": "Created array numbers."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 1,
+      "position": 1,
+      "timestamp": "2024-07-31T16:30:08.819Z",
+      "description": "Added 1 to array numbers at position 1."
+    },
+    {
+      "line": 3,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 2,
+      "position": 2,
+      "timestamp": "2024-07-31T16:30:08.819Z",
+      "description": "Added 2 to array numbers at position 2."
+    },
+    {
+      "line": 4,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 3,
+      "position": 3,
+      "timestamp": "2024-07-31T16:30:08.819Z",
+      "description": "Added 3 to array numbers at position 3."
+    }
+  ]
+}
+Test case 5
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:30:08.819Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:30:08.819Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:30:08.819Z",
+      "description": "Iterating over nums with num."
+    }
+  ]
+}
+Test case 6
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 5,
+      "timestamp": "2024-07-31T16:30:08.822Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:30:08.822Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:30:08.822Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:30:08.822Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 7
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:30:08.823Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "value": 5,
+      "timestamp": "2024-07-31T16:30:08.823Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:30:08.823Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "y less 10",
+      "result": true,
+      "timestamp": "2024-07-31T16:30:08.823Z",
+      "description": "Checked if y less 10."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "y is less than 10",
+      "timestamp": "2024-07-31T16:30:08.823Z",
+      "description": "Printed y is less than 10."
+    }
+  ]
+}
+Test case 8
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:30:08.825Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:30:08.825Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "define",
+      "varName": "add_numbers",
+      "params": [
+        "a",
+        "b"
+      ],
+      "body": [
+        {
+          "line": 4,
+          "operation": "return",
+          "value": {
+            "left": "a",
+            "operator": "+",
+            "right": "b"
+          },
+          "timestamp": "2024-07-31T16:30:08.825Z",
+          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
+        }
+      ],
+      "timestamp": "2024-07-31T16:30:08.825Z",
+      "description": "Defined function add_numbers with parameters a, b."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:30:08.825Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:30:08.825Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 7,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 8,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:30:08.825Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:30:08.825Z",
+      "description": "Iterating over nums with num."
+    },
+    {
+      "line": 9,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 10,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:30:08.825Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 11,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:30:08.825Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:30:08.825Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 1
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:04.990Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Test case 2
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:04.993Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:04.994Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:51:04.994Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Test case 3
+
+Test case 4
+
+Test case 5
+
+Test case 6
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 5,
+      "timestamp": "2024-07-31T16:51:05.001Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:51:05.002Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:51:05.002Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:05.002Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 7
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:05.003Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "value": 5,
+      "timestamp": "2024-07-31T16:51:05.003Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:05.003Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "y less 10",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:05.003Z",
+      "description": "Checked if y less 10."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "y is less than 10",
+      "timestamp": "2024-07-31T16:51:05.003Z",
+      "description": "Printed y is less than 10."
+    }
+  ]
+}
+Test case 8
+
+Test case 1
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:13.775Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Test case 2
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:13.777Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:13.777Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:51:13.777Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Test case 3
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:51:13.778Z",
+      "description": "Created array numbers."
+    }
+  ]
+}
+Test case 4
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:51:13.780Z",
+      "description": "Created array numbers."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 1,
+      "position": 1,
+      "timestamp": "2024-07-31T16:51:13.780Z",
+      "description": "Added 1 to array numbers at position 1."
+    },
+    {
+      "line": 3,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 2,
+      "position": 2,
+      "timestamp": "2024-07-31T16:51:13.780Z",
+      "description": "Added 2 to array numbers at position 2."
+    },
+    {
+      "line": 4,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 3,
+      "position": 3,
+      "timestamp": "2024-07-31T16:51:13.780Z",
+      "description": "Added 3 to array numbers at position 3."
+    }
+  ]
+}
+Test case 5
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:51:13.781Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:51:13.781Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:13.781Z",
+      "description": "Iterating over nums with num."
+    }
+  ]
+}
+Test case 6
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 5,
+      "timestamp": "2024-07-31T16:51:13.783Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:51:13.783Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:51:13.783Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:13.783Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 7
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:13.784Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "value": 5,
+      "timestamp": "2024-07-31T16:51:13.784Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:13.784Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "y less 10",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:13.784Z",
+      "description": "Checked if y less 10."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "y is less than 10",
+      "timestamp": "2024-07-31T16:51:13.784Z",
+      "description": "Printed y is less than 10."
+    }
+  ]
+}
+Test case 8
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:13.785Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:51:13.785Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "define",
+      "varName": "add_numbers",
+      "params": [
+        "a",
+        "b"
+      ],
+      "body": [
+        {
+          "line": 4,
+          "operation": "return",
+          "value": {
+            "left": "a",
+            "operator": "+",
+            "right": "b"
+          },
+          "timestamp": "2024-07-31T16:51:13.785Z",
+          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:13.785Z",
+      "description": "Defined function add_numbers with parameters a, b."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:13.785Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:51:13.785Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 7,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 8,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:51:13.785Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:13.785Z",
+      "description": "Iterating over nums with num."
+    },
+    {
+      "line": 9,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 10,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:51:13.785Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 11,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:51:13.785Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:13.785Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 1
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:34.470Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Test case 2
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:34.471Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:34.471Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:51:34.471Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Test case 3
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:51:34.472Z",
+      "description": "Created array numbers."
+    }
+  ]
+}
+Test case 4
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:51:34.473Z",
+      "description": "Created array numbers."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 1,
+      "position": 1,
+      "timestamp": "2024-07-31T16:51:34.473Z",
+      "description": "Added 1 to array numbers at position 1."
+    },
+    {
+      "line": 3,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 2,
+      "position": 2,
+      "timestamp": "2024-07-31T16:51:34.473Z",
+      "description": "Added 2 to array numbers at position 2."
+    },
+    {
+      "line": 4,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 3,
+      "position": 3,
+      "timestamp": "2024-07-31T16:51:34.473Z",
+      "description": "Added 3 to array numbers at position 3."
+    }
+  ]
+}
+Test case 5
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:51:34.475Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:51:34.475Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:34.475Z",
+      "description": "Iterating over nums with num."
+    }
+  ]
+}
+Test case 6
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 5,
+      "timestamp": "2024-07-31T16:51:34.476Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:51:34.477Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:51:34.477Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:34.477Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 7
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:34.478Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "value": 5,
+      "timestamp": "2024-07-31T16:51:34.478Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:34.478Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "y less 10",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:34.478Z",
+      "description": "Checked if y less 10."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "y is less than 10",
+      "timestamp": "2024-07-31T16:51:34.478Z",
+      "description": "Printed y is less than 10."
+    }
+  ]
+}
+Test case 8
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:34.480Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:51:34.480Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "define",
+      "varName": "add_numbers",
+      "params": [
+        "a",
+        "b"
+      ],
+      "body": [
+        {
+          "line": 4,
+          "operation": "return",
+          "value": {
+            "left": "a",
+            "operator": "+",
+            "right": "b"
+          },
+          "timestamp": "2024-07-31T16:51:34.480Z",
+          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:34.480Z",
+      "description": "Defined function add_numbers with parameters a, b."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:34.480Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:51:34.480Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 7,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 8,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:51:34.480Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:34.480Z",
+      "description": "Iterating over nums with num."
+    },
+    {
+      "line": 9,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 10,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:51:34.480Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 11,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:51:34.480Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:34.480Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 1
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:59.829Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Test case 2
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:59.830Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:59.830Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:51:59.830Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Test case 3
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:51:59.833Z",
+      "description": "Created array numbers."
+    }
+  ]
+}
+Test case 4
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T16:51:59.834Z",
+      "description": "Created array numbers."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 1,
+      "position": 1,
+      "timestamp": "2024-07-31T16:51:59.834Z",
+      "description": "Added 1 to array numbers at position 1."
+    },
+    {
+      "line": 3,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 2,
+      "position": 2,
+      "timestamp": "2024-07-31T16:51:59.834Z",
+      "description": "Added 2 to array numbers at position 2."
+    },
+    {
+      "line": 4,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 3,
+      "position": 3,
+      "timestamp": "2024-07-31T16:51:59.834Z",
+      "description": "Added 3 to array numbers at position 3."
+    }
+  ]
+}
+Test case 5
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:51:59.835Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:51:59.835Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:59.835Z",
+      "description": "Iterating over nums with num."
+    }
+  ]
+}
+Test case 6
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 5,
+      "timestamp": "2024-07-31T16:51:59.836Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:51:59.836Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:51:59.836Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:59.836Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 7
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:59.838Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "value": 5,
+      "timestamp": "2024-07-31T16:51:59.838Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:59.838Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "y less 10",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:59.838Z",
+      "description": "Checked if y less 10."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "y is less than 10",
+      "timestamp": "2024-07-31T16:51:59.838Z",
+      "description": "Printed y is less than 10."
+    }
+  ]
+}
+Test case 8
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T16:51:59.840Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T16:51:59.840Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "define",
+      "varName": "add_numbers",
+      "params": [
+        "a",
+        "b"
+      ],
+      "body": [
+        {
+          "line": 4,
+          "operation": "return",
+          "value": {
+            "left": "a",
+            "operator": "+",
+            "right": "b"
+          },
+          "timestamp": "2024-07-31T16:51:59.840Z",
+          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:59.840Z",
+      "description": "Defined function add_numbers with parameters a, b."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T16:51:59.840Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T16:51:59.840Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 7,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 8,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T16:51:59.840Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:59.840Z",
+      "description": "Iterating over nums with num."
+    },
+    {
+      "line": 9,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 10,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T16:51:59.840Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 11,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T16:51:59.840Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T16:51:59.840Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 1
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T19:51:55.904Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Test case 2
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T19:51:55.905Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T19:51:55.905Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T19:51:55.905Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Test case 3
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T19:51:55.907Z",
+      "description": "Created array numbers."
+    }
+  ]
+}
+Test case 4
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "numbers",
+      "value": [
+        0
+      ],
+      "timestamp": "2024-07-31T19:51:55.908Z",
+      "description": "Created array numbers."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 1,
+      "position": 1,
+      "timestamp": "2024-07-31T19:51:55.908Z",
+      "description": "Added 1 to array numbers at position 1."
+    },
+    {
+      "line": 3,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 2,
+      "position": 2,
+      "timestamp": "2024-07-31T19:51:55.908Z",
+      "description": "Added 2 to array numbers at position 2."
+    },
+    {
+      "line": 4,
+      "operation": "add",
+      "varName": "numbers",
+      "value": 3,
+      "position": 3,
+      "timestamp": "2024-07-31T19:51:55.908Z",
+      "description": "Added 3 to array numbers at position 3."
+    }
+  ]
+}
+Test case 5
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T19:51:55.909Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T19:51:55.909Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T19:51:55.909Z",
+      "description": "Iterating over nums with num."
+    }
+  ]
+}
+Test case 6
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 5,
+      "timestamp": "2024-07-31T19:51:55.910Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T19:51:55.910Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T19:51:55.910Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T19:51:55.911Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Test case 7
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T19:51:55.911Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "value": 5,
+      "timestamp": "2024-07-31T19:51:55.911Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T19:51:55.911Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "y less 10",
+      "result": true,
+      "timestamp": "2024-07-31T19:51:55.911Z",
+      "description": "Checked if y less 10."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "y is less than 10",
+      "timestamp": "2024-07-31T19:51:55.911Z",
+      "description": "Printed y is less than 10."
+    }
+  ]
+}
+Test case 8
+
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-07-31T19:51:55.913Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-07-31T19:51:55.913Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "define",
+      "varName": "add_numbers",
+      "params": [
+        "a",
+        "b"
+      ],
+      "body": [
+        {
+          "line": 4,
+          "operation": "return",
+          "value": {
+            "left": "a",
+            "operator": "+",
+            "right": "b"
+          },
+          "timestamp": "2024-07-31T19:51:55.913Z",
+          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
+        }
+      ],
+      "timestamp": "2024-07-31T19:51:55.913Z",
+      "description": "Defined function add_numbers with parameters a, b."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-07-31T19:51:55.913Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-07-31T19:51:55.913Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 7,
+      "operation": "for",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "line": 8,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "num",
+          "timestamp": "2024-07-31T19:51:55.913Z",
+          "description": "Printed num."
+        }
+      ],
+      "timestamp": "2024-07-31T19:51:55.913Z",
+      "description": "Iterating over nums with num."
+    },
+    {
+      "line": 9,
+      "operation": "while",
+      "condition": "x > 0",
+      "body": [
+        {
+          "line": 10,
+          "operation": "print",
+          "isLiteral": true,
+          "varName": null,
+          "literal": "x",
+          "timestamp": "2024-07-31T19:51:55.913Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 11,
+          "operation": "set",
+          "varName": "x",
+          "value": "x - 1",
+          "timestamp": "2024-07-31T19:51:55.913Z",
+          "description": "Set variable x to x - 1."
+        }
+      ],
+      "timestamp": "2024-07-31T19:51:55.913Z",
+      "description": "While loop with condition x > 0."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T20:54:33.839Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T20:56:31.641Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T20:57:28.076Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "HELLO WORLD",
+      "timestamp": "2024-08-04T21:04:44.150Z",
+      "description": "Printed HELLO WORLD."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:06:33.960Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:10:32.588Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:12:57.813Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:13:44.599Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:14:20.891Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:14:46.071Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:15:13.130Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:15:55.977Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:23:19.662Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-04T21:23:19.662Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-04T21:23:19.662Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-05T10:14:01.367Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-06T13:23:06.312Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-06T13:25:21.956Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-06T13:25:21.956Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-06T13:25:21.956Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-06T13:27:00.810Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-06T13:27:00.810Z",
+      "description": "Printed x is 5 or less."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-06T13:27:36.683Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-06T13:27:36.683Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-06T13:27:36.683Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
