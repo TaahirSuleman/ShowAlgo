@@ -9,18 +9,6 @@ const userProgressSchema = new mongoose.Schema({
         required: true
     },
     sections: [sectionProgressSchema], // Array of section progress
-    // totalPoints: {
-    //     type: Number,
-    //     default: 0
-    // },
-    // totalLevelsCompleted: {
-    //     type: Number,
-    //     default: 0
-    // },
-    // totalSectionsCompleted: {
-    //     type: Number,
-    //     default: 0
-    // }
 });
 
 const UserProgressModel = mongoose.model("UserProgress", userProgressSchema);

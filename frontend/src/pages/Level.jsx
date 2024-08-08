@@ -97,14 +97,10 @@ function Level() {
       {
         section_id: "",
         completed: false,
-        completion_time: "",
-        levelsCompleted: 0,
         levels: [
           {
             level_id: "",
             completed: false,
-            completion_time: "",
-            points: 0,
             difficulty: "",
           },
         ],

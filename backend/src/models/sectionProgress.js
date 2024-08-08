@@ -12,14 +12,6 @@ const sectionProgressSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    completion_time: {
-        type: Date,
-        default: null
-    },
-    // levelsCompleted: {
-    //     type: Number,
-    //     default: 0
-    // },
     levels: [levelProgressSchema] // Array of level progress
 });
 

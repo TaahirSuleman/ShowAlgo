@@ -1,4 +1,11 @@
-import { Box, Divider, Heading, SimpleGrid, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Divider,
+  Heading,
+  ScaleFade,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,8 +13,6 @@ import "react-multi-carousel/lib/styles.css";
 import {
   Bar,
   ResponsiveContainer,
-  AreaChart,
-  Area,
   BarChart,
   Tooltip,
   Pie,
@@ -17,6 +22,7 @@ import ModuleCard from "../components/ModuleCard";
 
 function LearningMode() {
   const navigate = useNavigate();
+  const [streak, setStreak] = useState(0);
   const [user, setUser] = useState({
     username: "",
     _id: "",
@@ -30,14 +36,10 @@ function LearningMode() {
       {
         section_id: "",
         completed: false,
-        completion_time: "",
-        levelsCompleted: 0,
         levels: [
           {
             level_id: "",
             completed: false,
-            completion_time: "",
-            points: 0,
             difficulty: "",
           },
         ],
@@ -54,6 +56,22 @@ function LearningMode() {
       setUser(JSON.parse(storedUser));
     }
   }, []); // Empty dependency array means this runs once on mount
+
+  // Fetch user's daily streak
+  useEffect(() => {
+    const fetchStreak = async () => {
+      try {
+        const response = await axios.get(`/streak/${user._id}`);
+        setStreak(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (user._id) {
+      fetchStreak();
+    }
+  }, [user._id]);
 
   useEffect(() => {
     // Fetch all sections
@@ -138,8 +156,6 @@ function LearningMode() {
     });
     setTotalLevels(totalLvls);
     setCompletedLevels(completedLvls);
-    console.log("Total levels: ", totalLvls);
-    console.log("Completed levels: ", completedLvls);
   };
 
   const handleSectionSelect = (sectionHeading) => {
@@ -160,49 +176,14 @@ function LearningMode() {
     "linear(to-br, #5a136e, #a90b84, #ff009c)", // pink
   ];
 
-  // dummy data for charts
-  const data = [
-    {
-      name: "1",
-      Completed: 3,
-      Total: 3,
-    },
-    {
-      name: "2",
-      Completed: 4,
-      Total: 5,
-    },
-    {
-      name: "3",
-      Completed: 1,
-      Total: 3,
-    },
-    {
-      name: "4",
-      Completed: 6,
-      Total: 7,
-    },
-    {
-      name: "5",
-      Completed: 3,
-      Total: 4,
-    },
-    {
-      name: "6",
-      Completed: 4,
-      Total: 8,
-    },
-    {
-      name: "7",
-      Completed: 2,
-      Total: 8,
-    },
-  ];
-
-  // dummy data for pie chart
+  // Data for Pie Chart
   const pieChartData = [
     { name: "Completed Levels", value: completedLevels, fill: "#FFBB28" },
-    { name: "Remaining Levels", value: totalLevels - completedLevels, fill: "#8884d8" },
+    {
+      name: "Remaining Levels",
+      value: totalLevels - completedLevels,
+      fill: "#8884d8",
+    },
   ];
 
   // Generate data for charts based on userProgress
@@ -218,22 +199,30 @@ function LearningMode() {
     });
   };
 
-  const lineChartData = generateChartData();
+  const barChartData = generateChartData();
 
   // Custom Tooltip Component
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    return (
-      <Box bg="white" p={2} borderRadius={4} boxShadow="md">
-        <Text fontSize="md" color="black">
-          {payload[0].name}: {payload[0].value}
-        </Text>
-      </Box>
-    );
-  }
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      return (
+        <Box bg="white" p={2} borderRadius={4} boxShadow="md">
+          <Text fontSize="md" color="black">
+            {payload[0].name}: {payload[0].value}
+          </Text>
+        </Box>
+      );
+    }
 
-  return null;
-};
+    return null;
+  };
+
+  // Get the current date
+  const now = new Date();
+  const options = {
+    day: "numeric",
+    month: "short",
+  };
+  const formattedDate = now.toLocaleDateString("en-GB", options);
 
   return (
     <Box
@@ -244,7 +233,7 @@ const CustomTooltip = ({ active, payload }) => {
     >
       <Heading
         mb={10}
-        fontSize="6xl"
+        fontSize={["4xl", "5xl", "6xl"]}
         mt={10}
         p={2}
         textAlign="center"
@@ -263,7 +252,7 @@ const CustomTooltip = ({ active, payload }) => {
         spacing={4}
         p={4}
         width="90%"
-        height="40vh"
+        height="auto"
         mb={4}
       >
         <Box
@@ -273,44 +262,59 @@ const CustomTooltip = ({ active, payload }) => {
           display="flex"
           flexDirection="row"
           width="100%"
+          height="35dvh"
         >
           <Box>
             <Text fontSize="lg" color="whiteAlpha.700">
-              Points
+              Daily Streak
             </Text>
-            <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-              200
-            </Text>
-            <Text fontSize="lg" color="green.400">
-              +50%
+            <Text fontSize="2xl" fontWeight="bold" color="whiteAlpha.800">
+              {formattedDate}
             </Text>
           </Box>
-          <Box ml={2} width="70dvh">
-            {!loading && (
-              <ResponsiveContainer
-                key={`area-${chartKey}`}
-                width="100%"
-                height="100%"
-              >
-                <AreaChart width={300} height={100} data={data}>
-                  <defs>
-                    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="0.9">
-                      <stop offset="0%" stopColor="#8884d8" stopOpacity={1} />
-                      <stop offset="100%" stopColor="#8884d8" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <Area
-                    type="monotone"
-                    dataKey="Completed"
-                    stroke="#8884d8"
-                    strokeWidth={2}
-                    fillOpacity={1}
-                    fill="url(#colorPv)"
-                  />
-                  <Tooltip content={<CustomTooltip />}/>
-                </AreaChart>
-              </ResponsiveContainer>
-            )}
+
+          <Box
+            ml={2}
+            width="50dvh"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            position="relative"
+          >
+            <svg
+              viewBox="0 10 511.92 511.92"
+              style={{
+                position: "absolute",
+                width: "100%",
+                height: "100%",
+                zIndex: 0,
+              }}
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m266.91 500.44c-168.738 0-213.822-175.898-193.443-291.147.887-5.016 7.462-6.461 10.327-2.249 8.872 13.04 16.767 31.875 29.848 30.24 19.661-2.458 33.282-175.946 149.807-224.761 3.698-1.549 7.567 1.39 7.161 5.378-5.762 56.533 28.181 137.468 88.316 137.468 34.472 0 58.058-27.512 69.844-55.142 3.58-8.393 15.843-7.335 17.896 1.556 21.031 91.082 77.25 398.657-179.756 398.657z"
+                fill="#ff8f1f"
+              />
+              <path
+                d="m207.756 330.827c3.968-3.334 9.992-1.046 10.893 4.058 2.108 11.943 9.04 32.468 31.778 32.468 27.352 0 45.914-75.264 50.782-97.399.801-3.642 4.35-6.115 8.004-5.372 68.355 13.898 101.59 235.858-48.703 235.858-109.412 0-84.625-142.839-52.754-169.613zm186.781-240.373c2.409-18.842-31.987 32.693-31.987 32.693s26.223 12.386 31.987-32.693zm-346.574 281.002c.725-8.021-9.594-29.497-11.421-20.994-4.373 20.344 10.696 29.016 11.421 20.994z"
+                fill="#ffb636"
+              />
+              <path
+                d="m323.176 348.596c-2.563-10.69-11.755 14.14-10.6 24.254 1.155 10.113 16.731 1.322 10.6-24.254z"
+                fill="#ffd469"
+              />
+            </svg>
+            <Heading
+              fontSize="8xl"
+              color="white"
+              textAlign="center"
+              letterSpacing="0.01em"
+              sx={{
+                zIndex: 1,
+              }}
+            >
+              {streak}
+            </Heading>
           </Box>
         </Box>
 
@@ -321,14 +325,17 @@ const CustomTooltip = ({ active, payload }) => {
           display="flex"
           flexDirection="row"
           width="100%"
+          height="35dvh"
         >
           <Box>
             <Text fontSize="lg" color="whiteAlpha.700">
               Progress
             </Text>
-            <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-              {Math.round((completedLevels/totalLevels) * 100)}%
-            </Text>
+            {!loading && (
+              <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
+                {Math.round((completedLevels / totalLevels) * 100)}%
+              </Text>
+            )}
             <Text fontSize="lg" color="green.400"></Text>
           </Box>
           <Box ml={2} width="70dvh">
@@ -350,7 +357,7 @@ const CustomTooltip = ({ active, payload }) => {
                     endAngle={-270}
                     stroke="none"
                   />
-                  <Tooltip content={<CustomTooltip />}/>
+                  <Tooltip content={<CustomTooltip />} />
                 </PieChart>
               </ResponsiveContainer>
             )}
@@ -364,14 +371,17 @@ const CustomTooltip = ({ active, payload }) => {
           display="flex"
           flexDirection="row"
           width="100%"
+          height="35dvh"
         >
           <Box>
             <Text fontSize="lg" color="whiteAlpha.700">
               Levels Completed
             </Text>
-            <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-              {completedLevels}
-            </Text>
+            {!loading && (
+              <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
+                {completedLevels}
+              </Text>
+            )}
           </Box>
           <Box ml={2} width="70dvh" height="100%">
             {!loading && (
@@ -380,7 +390,7 @@ const CustomTooltip = ({ active, payload }) => {
                 width="100%"
                 height="100%"
               >
-                <BarChart width="100%" height="100%" data={lineChartData}>
+                <BarChart width="100%" height="100%" data={barChartData}>
                   <Tooltip />
                   <Bar
                     dataKey="Completed"
@@ -388,7 +398,12 @@ const CustomTooltip = ({ active, payload }) => {
                     fill="#ffc658"
                     radius={1}
                   />
-                  <Bar dataKey="Remaining" stackId="a" fill="#8884d8" radius={1} />
+                  <Bar
+                    dataKey="Remaining"
+                    stackId="a"
+                    fill="#8884d8"
+                    radius={1}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -402,7 +417,7 @@ const CustomTooltip = ({ active, payload }) => {
         Modules
       </Heading>
 
-      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
+      <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6} p={10}>
         {sections.map((section, index) => (
           <ModuleCard
             key={section._id}

@@ -11,14 +11,6 @@ const levelProgressSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    completion_time: {
-        type: Date,
-        default: null
-    },
-    points: {
-        type: Number,
-        default: 0
-    },
     difficulty: {
         type: String,
         enum: ['easy', 'medium', 'hard'],
