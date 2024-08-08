@@ -1,9 +1,9 @@
-class PrintStatement {
+class StringLiteral {
     constructor(value, line) {
-        this.type = "PrintStatement";
+        this.type = "StringLiteral";
         this.value = value;
         this.line = line;
     }
 }
 
-export default PrintStatement;
+export default StringLiteral;
