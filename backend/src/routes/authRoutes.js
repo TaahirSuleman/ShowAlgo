@@ -6,18 +6,18 @@ import {
   loginUser,
   getProfile,
   logoutUser,
-  getUserProgress,
   getLevels,
   getSingleLevel,
   getSections,
   getSingleSection,
-  updateProgress,
   createLevel,
   createSection,
   deleteSection,
   updateSection,
   updateLevel,
   deleteLevel,
+  getUserProgress,
+  getDailyStreak,
 } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
@@ -36,7 +36,6 @@ router.use(
 router.get("/", test);
 
 // AUTHENTICATION ROUTES
-// --------------------
 
 // This endpoint is used to register a new user
 router.post("/register", registerUser);
@@ -49,27 +48,13 @@ router.post("/logout", logoutUser);
 
 // --------------------
 
-// PROGRESS ROUTES
-// --------------------
 
-// This endpoint is used to get user progress
-router.get("/users/:userId/progress", authMiddleware, getUserProgress);
-
-// --------------------
-
-// This endpoint is used to get levels for a section
-router.get("/sections/:sectionRoute/levels", authMiddleware, getLevels);
-// This endpoint is used to get a single level
-router.get("/sections/:sectionRoute/levels/:levelRoute", authMiddleware, getSingleLevel);
+// SECTION ROUTES
 
 // This endpoint is to get a single section by route name
 router.get("/sections/:sectionRoute", authMiddleware, getSingleSection);
 // This endpoint is used to get all sections
 router.get("/sections", authMiddleware, getSections);
-// This endpoint is used to update user progress
-router.put("/progress", authMiddleware, updateProgress);
-
-// --------------------
 // This endpoint is to create a new section
 router.post("/create-section", adminMiddleware, createSection);
 // This endpoint is to delete a section
@@ -77,11 +62,30 @@ router.delete("/delete-section/:sectionId", adminMiddleware, deleteSection);
 // This endpoint is to update a section
 router.put("/update-section/:sectionId", adminMiddleware, updateSection);
 
+// --------------------
+
+
+// LEVEL ROUTES
+
+
+// This endpoint is used to get levels for a section
+router.get("/sections/:sectionRoute/levels", authMiddleware, getLevels);
+// This endpoint is used to get a single level
+router.get("/sections/:sectionRoute/levels/:levelRoute", authMiddleware, getSingleLevel);
 // This endpoint is used to create a new level
 router.post("/create-level", adminMiddleware, createLevel);
 // This endpoint is used to delete a level
 router.delete("/delete-level/:levelId", adminMiddleware, deleteLevel);
 // This endpoint is used to update a level
 router.put("/update-level/:levelId", adminMiddleware, updateLevel);
+
+// --------------------
+
+// PROGRESS ROUTES
+
+// This endpoint is used to get the user's progress
+router.get("/get-progress/:userId", authMiddleware, getUserProgress);
+// This endpoint is used to get the user's daily streak
+router.get('/streak/:userId', authMiddleware, getDailyStreak);
 
 export default router;

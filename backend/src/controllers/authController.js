@@ -1,7 +1,7 @@
 import User from "../models/user.js";
-import Progresses from "../models/progresses.js";
 import Sections from "../models/section.js";
 import Levels from "../models/level.js";
+import UserProgress from "../models/userProgress.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -39,6 +39,27 @@ export const registerUser = async (req, res) => {
       username,
       password: hashedPassword,
       role,
+    });
+
+    // USER PROGRESS CREATION
+
+    // Fetch all sections and levels
+    const sections = await Sections.find().populate("levels");
+
+    // Create section progress for each section
+    const sectionProgresses = sections.map((section) => ({
+      section_id: section._id,
+      levels: section.levels.map((level) => ({
+        level_id: level._id,
+        completed: false,
+        difficulty: level.difficulty,
+      })),
+    }));
+
+    // Create user progress document
+    const userProgress = await UserProgress.create({
+      user_id: user._id,
+      sections: sectionProgresses,
     });
 
     return res.json(user);
@@ -82,6 +103,34 @@ export const loginUser = async (req, res) => {
     } else {
       return res.json({ error: "Incorrect password" });
     }
+
+    // Check and update streak
+    const now = new Date();
+    const lastLogin = user.lastLogin ? new Date(user.lastLogin) : null;
+
+    if (lastLogin) {
+      // Calculate difference in days
+      const lastLoginDay = new Date(
+        lastLogin.getFullYear(),
+        lastLogin.getMonth(),
+        lastLogin.getDate()
+      );
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+      const diffTime = Math.abs(today - lastLoginDay);
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      if (diffDays === 1) {
+        user.dailyStreak += 1;
+      } else if (diffDays > 1) {
+        user.dailyStreak = 1;
+      }
+    } else {
+      user.dailyStreak = 1;
+    }
+
+    user.lastLogin = now;
+    await user.save();
   } catch (error) {
     console.log(error);
   }
@@ -207,20 +256,6 @@ export const deleteLevel = async (req, res) => {
   }
 };
 
-// Endpoint to get user progress
-export const getUserProgress = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const progress = await Progresses.find({ user_id: userId }).populate(
-      "section_id level_id"
-    );
-    res.json(progress);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
 // Endpoint to get all sections
 export const getSections = async (req, res) => {
   try {
@@ -326,16 +361,27 @@ export const getSingleLevel = async (req, res) => {
   }
 };
 
-// Route to update progress
-export const updateProgress = async (req, res) => {
+// Route to get user progress
+export const getUserProgress = async (req, res) => {
   try {
-    const { userId, sectionId, levelId, completed } = req.body;
-    const progress = await Progress.findOneAndUpdate(
-      { user_id: userId, section_id: sectionId, level_id: levelId },
-      { completed, completion_date: completed ? new Date() : null },
-      { new: true, upsert: true }
-    );
-    res.json(progress);
+    const { userId } = req.params;
+    // convert the userId to an ObjectId
+    const userProgress = await UserProgress.findOne({
+      user_id: userId,
+    });
+    res.json(userProgress);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Route to get the user's daily streak
+export const getDailyStreak = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+    res.json(user.dailyStreak);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });

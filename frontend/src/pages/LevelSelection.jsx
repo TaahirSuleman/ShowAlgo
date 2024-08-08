@@ -10,22 +10,68 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { ArrowBackIcon, CheckIcon, MinusIcon } from "@chakra-ui/icons";
+import { IoMdHome } from "react-icons/io";
 
 function LevelSelection() {
+  const navigate = useNavigate();
   const { sectionHeading } = useParams();
-  const [levels, setLevels] = React.useState([]);
-  const [section, setSection] = React.useState({
-    _id: '',
-    heading: '',
-    subheading: '',
+  const [levels, setLevels] = useState([]);
+  const [user, setUser] = useState({
+    username: "",
+    _id: "",
+  });
+  const [section, setSection] = useState({
+    _id: "",
+    heading: "",
+    subheading: "",
     levels: [],
     __v: 0,
-    route: ''
+    route: "",
   });
+  const [userProgress, setUserProgress] = useState({
+    user_id: "",
+    sections: [
+      {
+        section_id: "",
+        completed: false,
+        levels: [
+          {
+            level_id: "",
+            completed: false,
+            difficulty: "",
+          },
+        ],
+      },
+    ],
+  });
+  const [sectionProgress, setSectionProgress] = useState({
+    section_id: "",
+    completed: false,
+    levels: [
+      {
+        level_id: "",
+        completed: false,
+        difficulty: "",
+      },
+    ],
+  });
+  const [levelProgress, setLevelProgress] = useState({
+    level_id: "",
+    completed: false,
+    difficulty: "",
+  });
+
+  useEffect(() => {
+    // Retrieve user data from localStorage
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []); // Empty dependency array means this runs once on mount
 
   useEffect(() => {
     // Fetch levels for the selected section
@@ -57,7 +103,54 @@ function LevelSelection() {
     }
   }, [sectionHeading]);
 
-  console.log(levels);
+  // get user progress
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      if (!user._id) {
+        console.log("User ID is not defined");
+        return;
+      }
+      try {
+        const response = await axios.get(`/get-progress/${user._id}`); //  /get-progress/:userId
+        setUserProgress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user._id) {
+      fetchUserProgress();
+    }
+  }, [user._id]);
+
+  // get section progress
+  useEffect(() => {
+    if (!userProgress || !userProgress.sections.length) {
+      console.log("User progress is not defined");
+      return;
+    }
+    const getSectionProgress = userProgress.sections.find(
+      (sections) => sections.section_id === section._id
+    );
+    if (getSectionProgress) {
+      setSectionProgress(getSectionProgress);
+    }
+  }, [userProgress, section._id]);
+
+  // get all the levels progress for the section
+  useEffect(() => {
+    if (!sectionProgress || !sectionProgress.levels.length) {
+      console.log("Section progress is not defined");
+      return;
+    }
+    const getLevelProgress = sectionProgress.levels;
+    if (getLevelProgress) {
+      setLevelProgress(getLevelProgress);
+    }
+  }, [sectionProgress]);
+
+  const handleOnHomeClick = () => {
+    navigate("/learning-mode");
+  };
 
   return (
     <Box
@@ -66,7 +159,15 @@ function LevelSelection() {
       alignItems="center"
       justifyContent="center"
     >
-      <Heading fontSize="6xl" textAlign="center" pt={10}>
+      <IconButton
+        icon={<IoMdHome />}
+        mt={10}
+        color="white"
+        bg="black"
+        onClick={handleOnHomeClick}
+      />
+
+      <Heading fontSize="6xl" textAlign="center">
         {section.heading}
       </Heading>
       <Heading fontSize="2xl" color="whiteAlpha.700" textAlign="center" pt={3}>
@@ -85,7 +186,7 @@ function LevelSelection() {
           </Thead>
           <Tbody>
             {levels.map((level) => (
-              <Tr>
+              <Tr key={level._id}>
                 <Td>{level.order}</Td>
                 <Td>
                   <NavLink
@@ -111,17 +212,17 @@ function LevelSelection() {
                 >
                   {level.difficulty}
                 </Td>
-                  <Td>
-                    {/* //TODO: Change this to a checkmark or minus icon based on the user's progress */}
-                    {(() => {
-                      const randomNum = Math.floor(Math.random() * 2);
-                      return randomNum ? (
-                        <CheckIcon color="green.400" />
+                <Td>
+                  {levelProgress.map((progress) => {
+                    if (progress.level_id === level._id) {
+                      return progress.completed ? (
+                        <CheckIcon color="green.400" key={progress.level_id} />
                       ) : (
-                        <MinusIcon color="gray.400" />
+                        <MinusIcon color="gray.400" key={progress.level_id} />
                       );
-                    })()}
-                  </Td>
+                    }
+                  })}
+                </Td>
               </Tr>
             ))}
           </Tbody>

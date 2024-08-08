@@ -80,7 +80,7 @@ function VariableListComponent({
         return(
         <div className="variables-container" style={{width:"300px"}}>
             <ul className="ul-variables">
-                <li style={{backgroundColor: "hsla(120, 50%, 20%, 1)"}}>
+                <li style={{backgroundColor: "hsla(120, 50%, 20%, 1)"}} className="list-items">
                     <p>VARIABLES WILL APPEAR HERE</p>
                 </li>
             </ul>
