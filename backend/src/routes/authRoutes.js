@@ -17,6 +17,7 @@ import {
   updateLevel,
   deleteLevel,
   getUserProgress,
+  getDailyStreak,
 } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
@@ -84,5 +85,7 @@ router.put("/update-level/:levelId", adminMiddleware, updateLevel);
 
 // This endpoint is used to get the user's progress
 router.get("/get-progress/:userId", authMiddleware, getUserProgress);
+// This endpoint is used to get the user's daily streak
+router.get('/streak/:userId', authMiddleware, getDailyStreak);
 
 export default router;

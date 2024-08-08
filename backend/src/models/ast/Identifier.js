@@ -1,9 +1,9 @@
-class PrintStatement {
+class Identifier {
     constructor(value, line) {
-        this.type = "PrintStatement";
+        this.type = "Identifier";
         this.value = value;
         this.line = line;
     }
 }
 
-export default PrintStatement;
+export default Identifier;

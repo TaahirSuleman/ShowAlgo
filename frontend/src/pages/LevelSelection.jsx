@@ -38,14 +38,10 @@ function LevelSelection() {
       {
         section_id: "",
         completed: false,
-        completion_time: "",
-        levelsCompleted: 0,
         levels: [
           {
             level_id: "",
             completed: false,
-            completion_time: "",
-            points: 0,
             difficulty: "",
           },
         ],
@@ -55,14 +51,10 @@ function LevelSelection() {
   const [sectionProgress, setSectionProgress] = useState({
     section_id: "",
     completed: false,
-    completion_time: "",
-    levelsCompleted: 0,
     levels: [
       {
         level_id: "",
         completed: false,
-        completion_time: "",
-        points: 0,
         difficulty: "",
       },
     ],
@@ -70,8 +62,6 @@ function LevelSelection() {
   const [levelProgress, setLevelProgress] = useState({
     level_id: "",
     completed: false,
-    completion_time: "",
-    points: 0,
     difficulty: "",
   });
 
