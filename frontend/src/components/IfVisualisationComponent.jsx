@@ -26,11 +26,11 @@ function IfVisualisationComponent(
       const delay = ms => new Promise(res => setTimeout(res, ms));
 
       useEffect(()=>{
+        const performOperations = () => {
         if (indexState > -1 && indexState < movements.length && !pauseState){
           const movement = movements[indexState];
           if (movement.operation === "if"){
             setIfStatement(movement);
-            
             const timeoutId1 = setTimeout(() => {
               if (movement.result === true) {
                 setResultColourState("green");
@@ -63,6 +63,9 @@ function IfVisualisationComponent(
             return () => clearTimeout(timeoutId1);
         }
       }
+    }
+    performOperations();
+
       }, [indexState, pauseState])
             return(
                 <div className="if-vis-window">

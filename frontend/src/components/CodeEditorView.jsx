@@ -44,9 +44,24 @@ const CodeEditorView = ({
   }, [monaco]);
 
   useEffect(()=>{
+    let linesToHighlight = [];
     if (highlightState){
-      handleHighlightClick();
-      setHighlightState(false);
+      //handleHighlight();
+      if (editor) {
+        for (let i=0; i<movementsState.length; i++){
+          linesToHighlight.push({line: movementsState[i].line, time:i*speedState*1000 +250})
+        }
+        highlightLines(editor, linesToHighlight);
+      }
+    }
+    else{
+      //clearHighlights();
+      if (editor) {
+      for (let i=0; i<movementsState.length; i++){
+        linesToHighlight.push({line: movementsState[i].line})
+      }
+      clearHighlights(editor, linesToHighlight);
+    }
     }
   }, highlightState)
 
@@ -62,8 +77,27 @@ const CodeEditorView = ({
     setEditor(editorInstance);
   };
 
+  const clearHighlights = (editor, lines) => {
+    lines.forEach(( line ) => {
+        setDecorations((oldDecorations) =>
+          editor.deltaDecorations(oldDecorations, [
+            {
+              range: new monaco.Range(line, 1, line, 1),
+              options: {
+                isWholeLine: true,
+                className: 'myLineLowlight',
+              },
+            },
+          ])
+        );
+    });
+  }
+
   const highlightLines = (editor, lines) => {
     lines.forEach(({ line, time }) => {
+      if (!highlightState){
+        return;
+      }
       setTimeout(() => {
         setDecorations((oldDecorations) =>
           editor.deltaDecorations(oldDecorations, [
@@ -80,7 +114,7 @@ const CodeEditorView = ({
     });
   };
 
-  const handleHighlightClick = () => {
+  const handleHighlight = () => {
     if (editor) {
       let linesToHighlight = [];
       for (let i=0; i<movementsState.length; i++){

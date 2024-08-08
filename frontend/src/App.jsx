@@ -17,6 +17,7 @@ import Level from "./pages/Level";
 import GuestIDE from "./pages/GuestIDE";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLevelSelection from "./pages/AdminLevelSelection";
+import AdminLevel from "./pages/AdminLevel";
 import PrivateRoute from "./components/PrivateRoute";
 import PrivateAdminRoute from "./components/PrivateAdminRoute";
 
@@ -70,7 +71,7 @@ function App() {
             />
             <Route
               path="/admin-dashboard/:sectionRoute/:levelRoute"
-              element={<PrivateAdminRoute element={Level} />}
+              element={<PrivateAdminRoute element={AdminLevel} />}
             />
           </Route>
         </Routes>

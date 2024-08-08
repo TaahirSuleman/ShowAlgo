@@ -91,7 +91,7 @@ function VariableListComponent({
         return(
         <div className="variables-container" style={{width:"300px"}}>
             <ul className="ul-variables">
-                <li style={{backgroundColor: "hsla(120, 50%, 20%, 1)"}}>
+                <li style={{backgroundColor: "hsla(120, 50%, 20%, 1)"}} className="list-items">
                     <p>VARIABLES WILL APPEAR HERE</p>
                 </li>
             </ul>
@@ -102,7 +102,7 @@ function VariableListComponent({
         <div className="variables-container">
       <ul className="ul-variables">
         {variablesState.map((variable) => (
-          <motion.li
+          <motion.li className="list-items"
             layout
             key={variable.name}
             style={{ borderRadius: updating === variable.name ? "8px": "3px",

@@ -19,12 +19,33 @@ function LearningMode() {
   const navigate = useNavigate();
   const [user, setUser] = useState({
     username: "",
+    _id: "",
   });
   const [sections, setSections] = useState([]);
   const [chartKey, setChartKey] = useState(0); // key to force re-render
   const [loading, setLoading] = useState(true); // state to manage loading
-
-  //TODO: const [progress, setProgress] = useState([]);
+  const [userProgress, setUserProgress] = useState({
+    user_id: "",
+    sections: [
+      {
+        section_id: "",
+        completed: false,
+        completion_time: "",
+        levelsCompleted: 0,
+        levels: [
+          {
+            level_id: "",
+            completed: false,
+            completion_time: "",
+            points: 0,
+            difficulty: "",
+          },
+        ],
+      },
+    ],
+  });
+  const [totalLevels, setTotalLevels] = useState(0);
+  const [completedLevels, setCompletedLevels] = useState(0);
 
   useEffect(() => {
     // Retrieve user data from localStorage
@@ -58,40 +79,68 @@ function LearningMode() {
     }
   }, [sections]);
 
-  //TODO: Fix get user progress and logic behind it
-  // useEffect(() => {
-  //   // Fetch user progress
-  //   const fetchProgress = async () => {
-  //     try {
-  //       const response = await axios.get(`/users/${user._id}/progress`);
-  //       setProgress(response.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   if (user) {
-  //     fetchProgress();
-  //   }
-  // }, [user]);
+  // get user progress
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      if (!user._id) {
+        console.log("User ID is not defined");
+        return;
+      }
+      try {
+        const response = await axios.get(`/get-progress/${user._id}`); //  /get-progress/:userId
+        setUserProgress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user._id) {
+      fetchUserProgress();
+    }
+  }, [user._id]);
 
-  // TODO
-  // update progress
-  // useEffect(() => {
-  //   const updateProgress = async () => {
-  //     try {
-  //       await axios.put("/progress", {
-  //         userId: user._id,
-  //         sectionId: selectedSection._id,
-  //         levelId: selectedLevelId,
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   if (selectedSection._id && selectedLevelId) {
-  //     updateProgress();
-  //   }
-  // }, [selectedSection._id, selectedLevelId]);
+  // function that counts the number of levels completed in a section
+  const countCompletedLevels = (section) => {
+    if (!section || !section.levels) {
+      return 0;
+    }
+    let completedLevels = 0;
+    section.levels.forEach((level) => {
+      if (level.completed) {
+        completedLevels += 1;
+      }
+    });
+    return completedLevels;
+  };
+
+  // function that calculates the percentage of levels completed in a section
+  const calculateSectionCompletion = (section) => {
+    if (!section || !section.levels) {
+      return 0;
+    }
+    const totalLevels = section.levels.length;
+    const completedLevels = countCompletedLevels(section);
+    return Math.floor((completedLevels / totalLevels) * 100);
+  };
+
+  useEffect(() => {
+    if (userProgress.sections.length > 0) {
+      calculateOverallCompletion();
+    }
+  }, [userProgress]);
+
+  // function that counts total amount of levels and completed levels
+  const calculateOverallCompletion = () => {
+    let totalLvls = 0;
+    let completedLvls = 0;
+    userProgress.sections.forEach((section) => {
+      totalLvls += section.levels.length;
+      completedLvls += countCompletedLevels(section);
+    });
+    setTotalLevels(totalLvls);
+    setCompletedLevels(completedLvls);
+    console.log("Total levels: ", totalLvls);
+    console.log("Completed levels: ", completedLvls);
+  };
 
   const handleSectionSelect = (sectionHeading) => {
     navigate(`/learning-mode/${sectionHeading}`);
@@ -151,10 +200,40 @@ function LearningMode() {
   ];
 
   // dummy data for pie chart
-  const data01 = [
-    { name: "Group A", value: 400, fill: "#8884d8" },
-    { name: "Group B", value: 300, fill: "#FFBB28" },
+  const pieChartData = [
+    { name: "Completed Levels", value: completedLevels, fill: "#FFBB28" },
+    { name: "Remaining Levels", value: totalLevels - completedLevels, fill: "#8884d8" },
   ];
+
+  // Generate data for charts based on userProgress
+  const generateChartData = () => {
+    return userProgress.sections.map((section, index) => {
+      const completed = countCompletedLevels(section);
+      const total = section.levels.length;
+      return {
+        name: `Section ${index + 1}`,
+        Completed: completed,
+        Remaining: total - completed,
+      };
+    });
+  };
+
+  const lineChartData = generateChartData();
+
+  // Custom Tooltip Component
+const CustomTooltip = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    return (
+      <Box bg="white" p={2} borderRadius={4} boxShadow="md">
+        <Text fontSize="md" color="black">
+          {payload[0].name}: {payload[0].value}
+        </Text>
+      </Box>
+    );
+  }
+
+  return null;
+};
 
   return (
     <Box
@@ -228,6 +307,7 @@ function LearningMode() {
                     fillOpacity={1}
                     fill="url(#colorPv)"
                   />
+                  <Tooltip content={<CustomTooltip />}/>
                 </AreaChart>
               </ResponsiveContainer>
             )}
@@ -247,7 +327,7 @@ function LearningMode() {
               Progress
             </Text>
             <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-              76%
+              {Math.round((completedLevels/totalLevels) * 100)}%
             </Text>
             <Text fontSize="lg" color="green.400"></Text>
           </Box>
@@ -260,15 +340,17 @@ function LearningMode() {
               >
                 <PieChart width="100%" height="100%">
                   <Pie
+                    data={pieChartData}
                     dataKey="value"
-                    data={data01}
                     cx="50%"
                     cy="50%"
                     innerRadius="60%"
                     outerRadius="100%"
+                    startAngle={90}
+                    endAngle={-270}
                     stroke="none"
                   />
-                  <Tooltip />
+                  <Tooltip content={<CustomTooltip />}/>
                 </PieChart>
               </ResponsiveContainer>
             )}
@@ -288,7 +370,7 @@ function LearningMode() {
               Levels Completed
             </Text>
             <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
-              10
+              {completedLevels}
             </Text>
           </Box>
           <Box ml={2} width="70dvh" height="100%">
@@ -298,7 +380,7 @@ function LearningMode() {
                 width="100%"
                 height="100%"
               >
-                <BarChart width="100%" height="100%" data={data}>
+                <BarChart width="100%" height="100%" data={lineChartData}>
                   <Tooltip />
                   <Bar
                     dataKey="Completed"
@@ -306,8 +388,7 @@ function LearningMode() {
                     fill="#ffc658"
                     radius={1}
                   />
-                  <Bar dataKey="Total" stackId="a" fill="#8884d8" radius={1} />
-                  <Bar dataKey="uv" fill="#ffc658" />
+                  <Bar dataKey="Remaining" stackId="a" fill="#8884d8" radius={1} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -329,8 +410,10 @@ function LearningMode() {
             heading={section.heading}
             subheading={section.subheading}
             totalLevels={section.levels.length}
-            completedLevels={3}
-            completedPercentage={section.levels.length === 0 ? 0 : Math.floor((2 / section.levels.length) * 100)}
+            completedLevels={countCompletedLevels(userProgress.sections[index])}
+            completedPercentage={calculateSectionCompletion(
+              userProgress.sections[index]
+            )}
             onGoClick={() => handleSectionSelect(section.route)}
           />
         ))}

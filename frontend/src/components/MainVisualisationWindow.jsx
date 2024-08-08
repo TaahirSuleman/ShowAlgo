@@ -18,8 +18,9 @@ function MainVisualisationWindow({
     })
     {
     useEffect(()=>{
-        console.log(pauseState)
-    }, [pauseState])
+        console.log(indexState)
+        console.log(speedState)
+    }, [indexState])
     const [arraysState, setArraysState] = useState([]); // {name, values, locations}
     const genericOperations = ["else","print"];
     useEffect(() => {

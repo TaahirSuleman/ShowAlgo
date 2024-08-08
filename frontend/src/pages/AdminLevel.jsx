@@ -48,7 +48,7 @@ import CodeEditorView from "../components/CodeEditorView";
 import OutputView from "../components/OutputView";
 import { IoMdHome } from "react-icons/io";
 
-function Level() {
+function AdminLevel() {
   const navigate = useNavigate();
   const location = useLocation();
   const [value, setValue] = useState("");
@@ -66,10 +66,6 @@ function Level() {
   const btnRef = React.useRef(null);
   const cancelClearRef = useRef();
   const { sectionRoute, levelRoute } = useParams();
-  const [user, setUser] = useState({
-    username: "",
-    _id: "",
-  });
   const [level, setLevel] = React.useState({
     _id: "",
     section_id: "",
@@ -91,35 +87,6 @@ function Level() {
     route: "",
   });
 
-  const [UserProgress, setUserProgress] = useState({
-    user_id: "",
-    sections: [
-      {
-        section_id: "",
-        completed: false,
-        completion_time: "",
-        levelsCompleted: 0,
-        levels: [
-          {
-            level_id: "",
-            completed: false,
-            completion_time: "",
-            points: 0,
-            difficulty: "",
-          },
-        ],
-      },
-    ],
-  });
-
-  useEffect(() => {
-    // Retrieve user data from localStorage
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []); // Empty dependency array means this runs once on mount
-
   // get level
   useEffect(() => {
     const fetchLevel = async () => {
@@ -135,27 +102,8 @@ function Level() {
     fetchLevel();
   }, [sectionRoute, levelRoute]);
 
-  // get user progress
-  useEffect(() => {
-    const fetchUserProgress = async () => {
-      if (!user._id) {
-        console.log("User ID is not defined");
-        return;
-      }
-      try {
-        const response = await axios.get(`/get-progress/${user._id}`); //  /get-progress/:userId
-        setUserProgress(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    if (user._id) {
-      fetchUserProgress();
-    }
-  }, [user._id]);
-
   const handleOnHomeClick = () => {
-    navigate(`/learning-mode/${sectionRoute}`);
+    navigate(`/admin-dashboard/${sectionRoute}`);
   };
 
   const toggleHints = () => {
@@ -301,15 +249,13 @@ function Level() {
             </Text>
           </Text>
           {showHints && (
-            <Box>
-              <UnorderedList mt={2} color="gray">
-                {level.hints.map((hint, index) => (
-                  <ListItem key={index} fontWeight="normal">
-                    {hint}
-                  </ListItem>
-                ))}
-              </UnorderedList>
-            </Box>
+            <UnorderedList mt={2} color="gray">
+              {level.hints.map((hint, index) => (
+                <ListItem key={index} fontWeight="normal">
+                  {hint}
+                </ListItem>
+              ))}
+            </UnorderedList>
           )}
 
           <Text fontWeight="bold" fontSize="xl" mt={2}>
@@ -593,8 +539,4 @@ function Level() {
   );
 }
 
-Level.propTypes = {
-  type: PropTypes.oneOf(["user", "admin"]),
-};
-
-export default Level;
+export default AdminLevel;
