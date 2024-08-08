@@ -2518,3 +2518,280 @@ Final JSON: {
     }
   ]
 }
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T20:54:33.839Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T20:56:31.641Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T20:57:28.076Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "HELLO WORLD",
+      "timestamp": "2024-08-04T21:04:44.150Z",
+      "description": "Printed HELLO WORLD."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:06:33.960Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:10:32.588Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:12:57.813Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:13:44.599Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:14:20.891Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:14:46.071Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:15:13.130Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:15:55.977Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-04T21:23:19.662Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-04T21:23:19.662Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-04T21:23:19.662Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-05T10:14:01.367Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-06T13:23:06.312Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-06T13:25:21.956Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-06T13:25:21.956Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-06T13:25:21.956Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-06T13:27:00.810Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-06T13:27:00.810Z",
+      "description": "Printed x is 5 or less."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-06T13:27:36.683Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-06T13:27:36.683Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-06T13:27:36.683Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
