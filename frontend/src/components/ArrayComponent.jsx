@@ -32,7 +32,7 @@ function ArrayComponent(
     const operations = ["get","swap","add","remove","setArr"]
     const performOperations = () => {
       if (indexState > -1 && indexState < movements.length && !pauseState) {
-        console.log(movements[indexState].varName + " _________ " +arrayName)
+        //console.log(movements[indexState].varName + " _________ " +arrayName)
         if (!operations.includes(movements[indexState].operation) || movements[indexState].varName !== arrayName){
           console.log("uh oh stupid "+movements[indexState].operation +" "+ movements[indexState].varName)
           return;

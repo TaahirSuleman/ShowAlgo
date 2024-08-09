@@ -490,7 +490,6 @@ function GuestIDE() {
               setHighlightState={setHighlightState}
               pauseState={pauseState}
               setPauseState={setPauseState}
-              bufferState={bufferState}
             />
           </Box>
 

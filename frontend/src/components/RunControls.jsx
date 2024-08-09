@@ -55,7 +55,7 @@ function RunControls({
     const currentIndex = speedOptions.indexOf(speed);
     const nextIndex = (currentIndex + 1) % speedOptions.length;
     setSpeed(speedOptions[nextIndex]);
-    setSpeedState(3/speedOptions[nextIndex])
+    setSpeedState(2/speedOptions[nextIndex]) // THE HARD CODED VALUE HERE IS THE STARTING SPEED STATE
     
   };
 
@@ -89,7 +89,7 @@ function RunControls({
           onClick={handlePauseResume}
           width="100%"
         >
-          {isResuming ? <FaPause size="1em" /> : <FaPlayCircle size="1.6em" />}
+          {pauseState ? <FaPlayCircle size="1.6em" /> : <FaPause size="1em" />}
           <Box as="span" ml={2}>
             {pauseState ? "Resume" : "Pause"}
           </Box>

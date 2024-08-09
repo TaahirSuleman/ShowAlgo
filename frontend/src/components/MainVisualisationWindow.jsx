@@ -19,8 +19,8 @@ function MainVisualisationWindow({
     {
     useEffect(()=>{
         console.log(indexState)
-        console.log(speedState)
-    }, [indexState])
+        console.log("ACTUAL SPEED STATE: "+speedState)
+    }, [indexState,speedState])
     const [arraysState, setArraysState] = useState([]); // {name, values, locations}
     const genericOperations = ["else","print"];
     useEffect(() => {

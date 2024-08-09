@@ -22,7 +22,6 @@ import '../styles/App.css'
   }){
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
-  console.log(keyProp+ " this is the value")
   if (inserted){
     return (
       <motion.div className="square"
