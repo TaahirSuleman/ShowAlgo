@@ -88,6 +88,9 @@ class Tokenizer {
         }
 
         const keywords = [
+            "loop",
+            "from",
+            "until",
             "set",
             "to",
             "number",
@@ -105,7 +108,6 @@ class Tokenizer {
             "otherwise",
             "end",
             "define",
-            "with",
             "parameters",
             "call",
             "for",
@@ -119,7 +121,22 @@ class Tokenizer {
             "less",
             "equal",
             "than",
+            // New combined keywords can be added here if needed
         ];
+
+        // Check if the next word might form a recognized keyword combination
+        if (value.toLowerCase() === "for") {
+            let peekValue = this.peekNextWord();
+            if (peekValue.toLowerCase() === "loop") {
+                this.consumeWhitespace(); // Consume any space between 'for' and 'loop'
+                for (let i = 0; i < peekValue.length; i++) {
+                    // Move currentIndex past 'loop'
+                    this.currentIndex++;
+                }
+                value += " " + peekValue; // Combine 'for' and 'loop' to 'for loop'
+            }
+        }
+
         if (keywords.includes(value.toLowerCase())) {
             return {
                 type: "Keyword",
@@ -187,6 +204,21 @@ class Tokenizer {
             this.currentIndex++;
         }
         return { type: "ComparisonOperator", value, line: this.line };
+    }
+
+    // Helper method to peek next word without consuming it
+    peekNextWord() {
+        let nextWord = "";
+        let tempIndex = this.currentIndex;
+        this.consumeWhitespace();
+        while (
+            tempIndex < this.pseudocode.length &&
+            this.isLetter(this.pseudocode[tempIndex])
+        ) {
+            nextWord += this.pseudocode[tempIndex];
+            tempIndex++;
+        }
+        return nextWord;
     }
 }
 

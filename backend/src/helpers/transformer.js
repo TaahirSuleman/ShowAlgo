@@ -55,6 +55,10 @@ class Transformer {
                     condition: this.transformCondition(node.condition),
                     body: this.transformNodes(node.body),
                 };
+            case "LoopUntil":
+                return this.transformLoopUntil(node);
+            case "LoopFromTo":
+                return this.transformLoopFromTo(node);
             case "ReturnStatement":
                 return {
                     type: "ReturnStatement",
@@ -115,6 +119,25 @@ class Transformer {
         } else {
             return this.transformExpression(expression);
         }
+    }
+
+    transformLoopUntil(node) {
+        return {
+            type: "LoopUntil",
+            condition: this.transformCondition(node.condition),
+            body: this.transformNodes(node.body),
+        };
+    }
+
+    transformLoopFromTo(node) {
+        return {
+            type: "LoopFromTo",
+            range: {
+                start: this.transformExpression(node.range.start).value,
+                end: this.transformExpression(node.range.end).value,
+            },
+            body: this.transformNodes(node.body),
+        };
     }
 }
 

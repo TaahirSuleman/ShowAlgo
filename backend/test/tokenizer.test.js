@@ -125,4 +125,202 @@ describe("Tokenizer", () => {
             "Unexpected end of string at line 1"
         );
     });
+    it("should tokenize 'LOOP until' syntax correctly", () => {
+        const input = `
+            LOOP until x is greater than 5
+                PRINT x
+                SET x to x plus 1
+            END LOOP
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "loop", line: 2 },
+            { type: "Keyword", value: "until", line: 2 },
+            { type: "Identifier", value: "x", line: 2 },
+            { type: "Keyword", value: "is", line: 2 },
+            { type: "Keyword", value: "greater", line: 2 },
+            { type: "Keyword", value: "than", line: 2 },
+            { type: "Number", value: "5", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "x", line: 3 },
+            { type: "Keyword", value: "set", line: 4 },
+            { type: "Identifier", value: "x", line: 4 },
+            { type: "Keyword", value: "to", line: 4 },
+            { type: "Identifier", value: "x", line: 4 },
+            { type: "Identifier", value: "plus", line: 4 },
+            { type: "Number", value: "1", line: 4 },
+            { type: "Keyword", value: "end", line: 5 },
+            { type: "Keyword", value: "loop", line: 5 },
+        ]);
+    });
+
+    it("should tokenize 'LOOP UNTIL' syntax correctly", () => {
+        const input = `
+            LOOP UNTIL x > 5
+                PRINT x
+                SET x TO x + 1
+            END LOOP
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "loop", line: 2 },
+            { type: "Keyword", value: "until", line: 2 },
+            { type: "Identifier", value: "x", line: 2 },
+            { type: "ComparisonOperator", value: ">", line: 2 },
+            { type: "Number", value: "5", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "x", line: 3 },
+            { type: "Keyword", value: "set", line: 4 },
+            { type: "Identifier", value: "x", line: 4 },
+            { type: "Keyword", value: "to", line: 4 },
+            { type: "Identifier", value: "x", line: 4 },
+            { type: "Operator", value: "+", line: 4 },
+            { type: "Number", value: "1", line: 4 },
+            { type: "Keyword", value: "end", line: 5 },
+            { type: "Keyword", value: "loop", line: 5 },
+        ]);
+    });
+
+    it("should tokenize 'FOR LOOP from' syntax correctly", () => {
+        const input = `
+            FOR LOOP from 0 up to 10
+                PRINT i
+            END LOOP
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "for", line: 2 },
+            { type: "Keyword", value: "loop", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "0", line: 2 },
+            { type: "Identifier", value: "up", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Number", value: "10", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "i", line: 3 },
+            { type: "Keyword", value: "end", line: 4 },
+            { type: "Keyword", value: "loop", line: 4 },
+        ]);
+    });
+
+    it("should tokenize 'LOOP FROM TO' syntax correctly", () => {
+        const input = `
+            LOOP FROM 0 TO 10
+                PRINT i
+            END LOOP
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "loop", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "0", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Number", value: "10", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "i", line: 3 },
+            { type: "Keyword", value: "end", line: 4 },
+            { type: "Keyword", value: "loop", line: 4 },
+        ]);
+    });
+
+    it("should tokenize 'FOR LOOP until' syntax correctly", () => {
+        const input = `
+            FOR LOOP until x is greater than 5
+                PRINT x
+                SET x to x plus 1
+            END LOOP
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "for", line: 2 },
+            { type: "Keyword", value: "loop", line: 2 },
+            { type: "Keyword", value: "until", line: 2 },
+            { type: "Identifier", value: "x", line: 2 },
+            { type: "Keyword", value: "is", line: 2 },
+            { type: "Keyword", value: "greater", line: 2 },
+            { type: "Keyword", value: "than", line: 2 },
+            { type: "Number", value: "5", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "x", line: 3 },
+            { type: "Keyword", value: "set", line: 4 },
+            { type: "Identifier", value: "x", line: 4 },
+            { type: "Keyword", value: "to", line: 4 },
+            { type: "Identifier", value: "x", line: 4 },
+            { type: "Identifier", value: "plus", line: 4 },
+            { type: "Number", value: "1", line: 4 },
+            { type: "Keyword", value: "end", line: 5 },
+            { type: "Keyword", value: "loop", line: 5 },
+        ]);
+    });
+
+    it("should tokenize 'FOR LOOP UNTIL' syntax correctly", () => {
+        const input = `
+            FOR LOOP UNTIL x > 5
+                PRINT x
+                SET x TO x + 1
+            END LOOP
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "for", line: 2 },
+            { type: "Keyword", value: "loop", line: 2 },
+            { type: "Keyword", value: "until", line: 2 },
+            { type: "Identifier", value: "x", line: 2 },
+            { type: "ComparisonOperator", value: ">", line: 2 },
+            { type: "Number", value: "5", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "x", line: 3 },
+            { type: "Keyword", value: "set", line: 4 },
+            { type: "Identifier", value: "x", line: 4 },
+            { type: "Keyword", value: "to", line: 4 },
+            { type: "Identifier", value: "x", line: 4 },
+            { type: "Operator", value: "+", line: 4 },
+            { type: "Number", value: "1", line: 4 },
+            { type: "Keyword", value: "end", line: 5 },
+            { type: "Keyword", value: "loop", line: 5 },
+        ]);
+    });
+
+    it("should tokenize 'FOR LOOP from' syntax correctly", () => {
+        const input = `
+            FOR LOOP from 0 up to 10
+                PRINT i
+            END LOOP
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "for", line: 2 },
+            { type: "Keyword", value: "loop", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "0", line: 2 },
+            { type: "Identifier", value: "up", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Number", value: "10", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "i", line: 3 },
+            { type: "Keyword", value: "end", line: 4 },
+            { type: "Keyword", value: "loop", line: 4 },
+        ]);
+    });
+
+    it("should tokenize 'FOR LOOP FROM TO' syntax correctly", () => {
+        const input = `
+            FOR LOOP FROM 0 TO 10
+                PRINT i
+            END LOOP
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "for", line: 2 },
+            { type: "Keyword", value: "loop", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "0", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Number", value: "10", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "i", line: 3 },
+            { type: "Keyword", value: "end", line: 4 },
+            { type: "Keyword", value: "loop", line: 4 },
+        ]);
+    });
 });

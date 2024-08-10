@@ -13,6 +13,8 @@ import Expression from "./ast/Expression.js";
 import NumberLiteral from "./ast/NumberLiteral.js";
 import StringLiteral from "./ast/StringLiteral.js";
 import Identifier from "./ast/Identifier.js";
+import LoopUntil from "./ast/LoopUntil.js";
+import LoopFromTo from "./ast/LoopFromTo.js";
 
 class Parser {
     constructor(tokens) {
@@ -46,9 +48,11 @@ class Parser {
             case "call":
                 return this.parseFunctionCall();
             case "for":
-                return this.parseForLoop();
+                return this.parseForOrLoop();
             case "while":
                 return this.parseWhileLoop();
+            case "loop":
+                return this.parseGenericLoop();
             case "return":
                 return this.parseReturnStatement();
             case "end":
@@ -177,9 +181,22 @@ class Parser {
         return new FunctionCall(name, args, line);
     }
 
-    parseForLoop() {
+    parseForOrLoop() {
         const line = this.currentToken().line;
         this.expect("Keyword", "for");
+        if (this.currentToken().value.toLowerCase() === "each") {
+            return this.parseForEachLoop(line);
+        } else if (this.currentToken().value.toLowerCase() === "loop") {
+            return this.parseGenericLoop(line);
+        }
+        throw new Error(
+            `Unexpected token after 'for': ${
+                this.currentToken().value
+            } at line ${this.currentToken().line}`
+        );
+    }
+
+    parseForEachLoop(line) {
         this.expect("Keyword", "each");
         const iterator = this.consume("Identifier").value;
         this.expect("Keyword", "in");
@@ -196,6 +213,61 @@ class Parser {
         this.expect("Keyword", "end");
         this.expect("Keyword", "for");
         return new ForLoop(iterator, collection, body, line);
+    }
+
+    parseGenericLoop(line = this.currentToken().line) {
+        this.expect("Keyword", "loop");
+        if (this.currentToken().value.toLowerCase() === "until") {
+            return this.parseLoopUntil(line);
+        } else if (this.currentToken().value.toLowerCase() === "from") {
+            return this.parseLoopFromTo(line);
+        }
+        throw new Error(
+            `Unexpected token after 'loop': ${
+                this.currentToken().value
+            } at line ${this.currentToken().line}`
+        );
+    }
+
+    parseLoopUntil(line) {
+        this.expect("Keyword", "until");
+        const condition = this.parseCondition();
+        const body = [];
+        while (
+            !(
+                this.currentToken().value.toLowerCase() === "end" &&
+                this.peekNextToken().value.toLowerCase() === "loop"
+            )
+        ) {
+            body.push(this.parseStatement());
+        }
+        this.expect("Keyword", "end");
+        this.expect("Keyword", "loop");
+        return new LoopUntil(condition, body, line);
+    }
+
+    parseLoopFromTo(line) {
+        this.expect("Keyword", "from");
+        const start = this.parseExpression();
+        if (this.currentToken().value.toLowerCase() === "up") {
+            this.expect("Identifier", "up");
+            this.expect("Keyword", "to");
+        } else {
+            this.expect("Keyword", "to");
+        }
+        const end = this.parseExpression();
+        const body = [];
+        while (
+            !(
+                this.currentToken().value.toLowerCase() === "end" &&
+                this.peekNextToken().value.toLowerCase() === "loop"
+            )
+        ) {
+            body.push(this.parseStatement());
+        }
+        this.expect("Keyword", "end");
+        this.expect("Keyword", "loop");
+        return new LoopFromTo(start, end, body, line);
     }
 
     parseWhileLoop() {
