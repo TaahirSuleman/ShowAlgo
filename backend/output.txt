@@ -1,36 +1,667 @@
 Test case 1
 
-Final JSON: {
-  "actionFrames": [
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "is",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "greater",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "than",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "then",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 4
+  },
+  {
+    "type": "String",
+    "value": "x is greater than 5",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "otherwise",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 6
+  },
+  {
+    "type": "String",
+    "value": "x is 5 or less",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "nums",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "2",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "4",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "6",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "7",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "8",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 8
+  },
+  {
+    "type": "Number",
+    "value": "9",
+    "line": 8
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 9
+  },
+  {
+    "type": "Identifier",
+    "value": "letters",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 9
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 9
+  },
+  {
+    "type": "String",
+    "value": "a",
+    "line": 9
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 9
+  },
+  {
+    "type": "String",
+    "value": "b",
+    "line": 9
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 9
+  },
+  {
+    "type": "String",
+    "value": "c",
+    "line": 9
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 9
+  },
+  {
+    "type": "String",
+    "value": "d",
+    "line": 9
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 9
+  },
+  {
+    "type": "String",
+    "value": "e",
+    "line": 9
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 9
+  },
+  {
+    "type": "String",
+    "value": "f",
+    "line": 9
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 9
+  },
+  {
+    "type": "String",
+    "value": "g",
+    "line": 9
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "insert",
+    "line": 10
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 10
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 10
+  },
+  {
+    "type": "Identifier",
+    "value": "nums",
+    "line": 10
+  },
+  {
+    "type": "Keyword",
+    "value": "at",
+    "line": 10
+  },
+  {
+    "type": "Keyword",
+    "value": "position",
+    "line": 10
+  },
+  {
+    "type": "Number",
+    "value": "4",
+    "line": 10
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
     {
-      "line": 1,
-      "operation": "set",
+      "type": "VariableDeclaration",
       "varName": "x",
-      "value": 10,
-      "timestamp": "2024-08-10T22:41:58.564Z",
-      "description": "Set variable x to 10."
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "greater",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 3
+        },
+        "line": 3
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "x is greater than 5",
+            "line": 4
+          },
+          "line": 4
+        }
+      ],
+      "alternate": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "x is 5 or less",
+            "line": 6
+          },
+          "line": 6
+        }
+      ],
+      "line": 3
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 8
+        }
+      ],
+      "line": 8
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "letters",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "a",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "b",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "c",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "d",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "e",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "f",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "g",
+          "line": 9
+        }
+      ],
+      "line": 9
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 10
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "4",
+        "line": 10
+      },
+      "line": 10
     }
   ]
 }
-Test case 2
-
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": [
+        {
+          "type": "PrintStatement",
+          "value": "x is 5 or less"
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 8
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 8
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "letters",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "a",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "b",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "c",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "d",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "e",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "f",
+          "line": 9
+        },
+        {
+          "type": "StringLiteral",
+          "value": "g",
+          "line": 9
+        }
+      ]
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 10
+      },
+      "position": "4"
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 1,
       "operation": "set",
       "varName": "x",
+      "type": "number",
       "value": 10,
-      "timestamp": "2024-08-10T22:41:58.566Z",
+      "timestamp": "2024-08-15T16:50:32.493Z",
       "description": "Set variable x to 10."
     },
     {
       "line": 2,
       "operation": "if",
-      "condition": "x greater 5",
+      "condition": "x > 5",
       "result": true,
-      "timestamp": "2024-08-10T22:41:58.566Z",
-      "description": "Checked if x greater 5."
+      "timestamp": "2024-08-15T16:50:32.493Z",
+      "description": "Checked if x > 5."
     },
     {
       "line": 3,
@@ -38,658 +669,304 @@ Final JSON: {
       "isLiteral": true,
       "varName": null,
       "literal": "x is greater than 5",
-      "timestamp": "2024-08-10T22:41:58.566Z",
+      "timestamp": "2024-08-15T16:50:32.493Z",
       "description": "Printed x is greater than 5."
-    }
-  ]
-}
-Test case 3
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "create_array",
-      "varName": "numbers",
-      "value": [
-        0
-      ],
-      "timestamp": "2024-08-10T22:41:58.568Z",
-      "description": "Created array numbers."
-    }
-  ]
-}
-Test case 4
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "create_array",
-      "varName": "numbers",
-      "value": [
-        0
-      ],
-      "timestamp": "2024-08-10T22:41:58.569Z",
-      "description": "Created array numbers."
-    },
-    {
-      "line": 2,
-      "operation": "add",
-      "varName": "numbers",
-      "value": 1,
-      "position": 1,
-      "timestamp": "2024-08-10T22:41:58.569Z",
-      "description": "Added 1 to array numbers at position 1."
-    },
-    {
-      "line": 3,
-      "operation": "add",
-      "varName": "numbers",
-      "value": 2,
-      "position": 2,
-      "timestamp": "2024-08-10T22:41:58.569Z",
-      "description": "Added 2 to array numbers at position 2."
-    },
-    {
-      "line": 4,
-      "operation": "add",
-      "varName": "numbers",
-      "value": 3,
-      "position": 3,
-      "timestamp": "2024-08-10T22:41:58.569Z",
-      "description": "Added 3 to array numbers at position 3."
-    }
-  ]
-}
-Test case 5
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "create_array",
-      "varName": "nums",
-      "value": [
-        1,
-        2,
-        3
-      ],
-      "timestamp": "2024-08-10T22:41:58.571Z",
-      "description": "Created array nums."
-    },
-    {
-      "line": 2,
-      "operation": "for",
-      "iterator": "num",
-      "collection": "nums",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": true,
-          "varName": null,
-          "literal": "num",
-          "timestamp": "2024-08-10T22:41:58.571Z",
-          "description": "Printed num."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.571Z",
-      "description": "Iterating over nums with num."
-    }
-  ]
-}
-Test case 6
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 5,
-      "timestamp": "2024-08-10T22:41:58.574Z",
-      "description": "Set variable x to 5."
-    },
-    {
-      "line": 2,
-      "operation": "while",
-      "condition": "x > 0",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.574Z",
-          "description": "Printed x."
-        },
-        {
-          "line": 4,
-          "operation": "set",
-          "varName": "x",
-          "value": "x - 1",
-          "timestamp": "2024-08-10T22:41:58.574Z",
-          "description": "Set variable x to x - 1."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.574Z",
-      "description": "While loop with condition x > 0."
-    }
-  ]
-}
-Test case 7
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 10,
-      "timestamp": "2024-08-10T22:41:58.577Z",
-      "description": "Set variable x to 10."
-    },
-    {
-      "line": 2,
-      "operation": "set",
-      "varName": "y",
-      "value": 5,
-      "timestamp": "2024-08-10T22:41:58.577Z",
-      "description": "Set variable y to 5."
-    },
-    {
-      "line": 3,
-      "operation": "if",
-      "condition": "x greater 5",
-      "result": true,
-      "timestamp": "2024-08-10T22:41:58.577Z",
-      "description": "Checked if x greater 5."
-    },
-    {
-      "line": 4,
-      "operation": "if",
-      "condition": "y less 10",
-      "result": true,
-      "timestamp": "2024-08-10T22:41:58.577Z",
-      "description": "Checked if y less 10."
-    },
-    {
-      "line": 5,
-      "operation": "print",
-      "isLiteral": true,
-      "varName": null,
-      "literal": "y is less than 10",
-      "timestamp": "2024-08-10T22:41:58.577Z",
-      "description": "Printed y is less than 10."
-    }
-  ]
-}
-Test case 8
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 10,
-      "timestamp": "2024-08-10T22:41:58.578Z",
-      "description": "Set variable x to 10."
-    },
-    {
-      "line": 2,
-      "operation": "create_array",
-      "varName": "nums",
-      "value": [
-        1,
-        2,
-        3
-      ],
-      "timestamp": "2024-08-10T22:41:58.578Z",
-      "description": "Created array nums."
-    },
-    {
-      "line": 3,
-      "operation": "define",
-      "varName": "add_numbers",
-      "params": [
-        "a",
-        "b"
-      ],
-      "body": [
-        {
-          "line": 4,
-          "operation": "return",
-          "value": {
-            "left": "a",
-            "operator": "+",
-            "right": "b"
-          },
-          "timestamp": "2024-08-10T22:41:58.578Z",
-          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.578Z",
-      "description": "Defined function add_numbers with parameters a, b."
-    },
-    {
-      "line": 5,
-      "operation": "if",
-      "condition": "x greater 5",
-      "result": true,
-      "timestamp": "2024-08-10T22:41:58.578Z",
-      "description": "Checked if x greater 5."
     },
     {
       "line": 6,
-      "operation": "print",
-      "isLiteral": true,
-      "varName": null,
-      "literal": "x is greater than 5",
-      "timestamp": "2024-08-10T22:41:58.578Z",
-      "description": "Printed x is greater than 5."
+      "operation": "endif",
+      "timestamp": "2024-08-15T16:50:32.493Z",
+      "description": "End of if statement."
     },
     {
       "line": 7,
-      "operation": "for",
-      "iterator": "num",
-      "collection": "nums",
-      "body": [
-        {
-          "line": 8,
-          "operation": "print",
-          "isLiteral": true,
-          "varName": null,
-          "literal": "num",
-          "timestamp": "2024-08-10T22:41:58.578Z",
-          "description": "Printed num."
-        }
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
       ],
-      "timestamp": "2024-08-10T22:41:58.578Z",
-      "description": "Iterating over nums with num."
+      "timestamp": "2024-08-15T16:50:32.493Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 8,
+      "operation": "create_array",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-15T16:50:32.493Z",
+      "description": "Created array letters."
     },
     {
       "line": 9,
-      "operation": "while",
-      "condition": "x > 0",
-      "body": [
-        {
-          "line": 10,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.578Z",
-          "description": "Printed x."
-        },
-        {
-          "line": 11,
-          "operation": "set",
-          "varName": "x",
-          "value": "x - 1",
-          "timestamp": "2024-08-10T22:41:58.578Z",
-          "description": "Set variable x to x - 1."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.578Z",
-      "description": "While loop with condition x > 0."
-    }
-  ]
-}
-Test case 2
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 10,
-      "timestamp": "2024-08-10T22:41:58.582Z",
-      "description": "Set variable x to 10."
-    },
-    {
-      "line": 2,
-      "operation": "if",
-      "condition": "x greater 5",
-      "result": true,
-      "timestamp": "2024-08-10T22:41:58.582Z",
-      "description": "Checked if x greater 5."
-    },
-    {
-      "line": 3,
-      "operation": "print",
-      "isLiteral": true,
-      "varName": null,
-      "literal": "x is greater than 5",
-      "timestamp": "2024-08-10T22:41:58.582Z",
-      "description": "Printed x is greater than 5."
-    }
-  ]
-}
-Test case 9
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 0,
-      "timestamp": "2024-08-10T22:41:58.584Z",
-      "description": "Set variable x to 0."
-    },
-    {
-      "line": 2,
-      "operation": "loop_until",
-      "condition": "x greater 5",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.584Z",
-          "description": "Printed x."
-        },
-        {
-          "line": 4,
-          "operation": "set",
-          "varName": "x",
-          "value": "x + 1",
-          "timestamp": "2024-08-10T22:41:58.584Z",
-          "description": "Set variable x to x + 1."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.584Z",
-      "description": "Loop until x is greater than 5."
-    }
-  ]
-}
-Test case 10
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 0,
-      "timestamp": "2024-08-10T22:41:58.585Z",
-      "description": "Set variable x to 0."
-    },
-    {
-      "line": 2,
-      "operation": "loop_until",
-      "condition": "x > 5",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.585Z",
-          "description": "Printed x."
-        },
-        {
-          "line": 4,
-          "operation": "set",
-          "varName": "x",
-          "value": "x + 1",
-          "timestamp": "2024-08-10T22:41:58.585Z",
-          "description": "Set variable x to x + 1."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.585Z",
-      "description": "Loop until x > 5."
-    }
-  ]
-}
-Test case 11
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 2,
-      "operation": "set",
-      "varName": "i",
-      "value": 0,
-      "timestamp": "2024-08-10T22:41:58.587Z",
-      "description": "Set variable i to 0."
-    },
-    {
-      "line": 4,
-      "operation": "loop_from_to",
-      "range": "0 to 10",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "i",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.587Z",
-          "description": "Printed i."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.587Z",
-      "description": "Loop from 0 to 10."
-    }
-  ]
-}
-Test case 12
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 2,
-      "operation": "set",
-      "varName": "i",
-      "value": 0,
-      "timestamp": "2024-08-10T22:41:58.588Z",
-      "description": "Set variable i to 0."
-    },
-    {
-      "line": 4,
-      "operation": "loop_from_to",
-      "range": "0 to 10",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "i",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.588Z",
-          "description": "Printed i."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.588Z",
-      "description": "Loop from 0 to 10."
-    }
-  ]
-}
-Test case 13
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 0,
-      "timestamp": "2024-08-10T22:41:58.589Z",
-      "description": "Set variable x to 0."
-    },
-    {
-      "line": 2,
-      "operation": "loop_until",
-      "condition": "x greater 5",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.589Z",
-          "description": "Printed x."
-        },
-        {
-          "line": 4,
-          "operation": "set",
-          "varName": "x",
-          "value": "x + 1",
-          "timestamp": "2024-08-10T22:41:58.589Z",
-          "description": "Set variable x to x + 1."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.589Z",
-      "description": "Loop until x is greater than 5."
-    }
-  ]
-}
-Test case 14
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 0,
-      "timestamp": "2024-08-10T22:41:58.590Z",
-      "description": "Set variable x to 0."
-    },
-    {
-      "line": 2,
-      "operation": "loop_until",
-      "condition": "x > 5",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.590Z",
-          "description": "Printed x."
-        },
-        {
-          "line": 4,
-          "operation": "set",
-          "varName": "x",
-          "value": "x + 1",
-          "timestamp": "2024-08-10T22:41:58.590Z",
-          "description": "Set variable x to x + 1."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.590Z",
-      "description": "Loop until x > 5."
-    }
-  ]
-}
-Test case 15
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 2,
-      "operation": "set",
-      "varName": "i",
-      "value": 0,
-      "timestamp": "2024-08-10T22:41:58.592Z",
-      "description": "Set variable i to 0."
-    },
-    {
-      "line": 4,
-      "operation": "loop_from_to",
-      "range": "0 to 10",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "i",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.592Z",
-          "description": "Printed i."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.592Z",
-      "description": "Loop from 0 to 10."
-    }
-  ]
-}
-Test case 16
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 2,
-      "operation": "set",
-      "varName": "i",
-      "value": 0,
-      "timestamp": "2024-08-10T22:41:58.593Z",
-      "description": "Set variable i to 0."
-    },
-    {
-      "line": 4,
-      "operation": "loop_from_to",
-      "range": "0 to 10",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "i",
-          "literal": null,
-          "timestamp": "2024-08-10T22:41:58.593Z",
-          "description": "Printed i."
-        }
-      ],
-      "timestamp": "2024-08-10T22:41:58.593Z",
-      "description": "Loop from 0 to 10."
+      "operation": "add",
+      "varName": "nums",
+      "value": 5,
+      "position": 4,
+      "timestamp": "2024-08-15T16:50:32.493Z",
+      "description": "Added 5 to array nums at position 4."
     }
   ]
 }
 Test case 1
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 1,
       "operation": "set",
       "varName": "x",
+      "type": "number",
       "value": 10,
-      "timestamp": "2024-08-10T22:42:43.228Z",
+      "timestamp": "2024-08-15T16:50:32.495Z",
       "description": "Set variable x to 10."
     }
   ]
 }
 Test case 2
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "is",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "greater",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "than",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "then",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 3
+  },
+  {
+    "type": "String",
+    "value": "x is greater than 5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "greater",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "x is greater than 5",
+            "line": 3
+          },
+          "line": 3
+        }
+      ],
+      "alternate": null,
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 1,
       "operation": "set",
       "varName": "x",
+      "type": "number",
       "value": 10,
-      "timestamp": "2024-08-10T22:42:43.230Z",
+      "timestamp": "2024-08-15T16:50:32.496Z",
       "description": "Set variable x to 10."
     },
     {
       "line": 2,
       "operation": "if",
-      "condition": "x greater 5",
+      "condition": "x > 5",
       "result": true,
-      "timestamp": "2024-08-10T22:42:43.230Z",
-      "description": "Checked if x greater 5."
+      "timestamp": "2024-08-15T16:50:32.496Z",
+      "description": "Checked if x > 5."
     },
     {
       "line": 3,
@@ -697,13 +974,93 @@ Final JSON: {
       "isLiteral": true,
       "varName": null,
       "literal": "x is greater than 5",
-      "timestamp": "2024-08-10T22:42:43.230Z",
+      "timestamp": "2024-08-15T16:50:32.496Z",
       "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "endif",
+      "timestamp": "2024-08-15T16:50:32.496Z",
+      "description": "End of if statement."
     }
   ]
 }
 Test case 3
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "numbers",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "numbers",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ],
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "numbers",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
@@ -713,13 +1070,267 @@ Final JSON: {
       "value": [
         0
       ],
-      "timestamp": "2024-08-10T22:42:43.231Z",
+      "timestamp": "2024-08-15T16:50:32.498Z",
       "description": "Created array numbers."
     }
   ]
 }
 Test case 4
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "numbers",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "insert",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "numbers",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "at",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "position",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "insert",
+    "line": 4
+  },
+  {
+    "type": "Number",
+    "value": "2",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "numbers",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "at",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "position",
+    "line": 4
+  },
+  {
+    "type": "Number",
+    "value": "2",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "insert",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "numbers",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "at",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "position",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 5
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "numbers",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ],
+      "line": 2
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "numbers",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 3
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "numbers",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 4
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 4
+      },
+      "line": 4
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "numbers",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 5
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 5
+      },
+      "line": 5
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "numbers",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "numbers",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 3
+      },
+      "position": "1"
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "numbers",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 4
+      },
+      "position": "2"
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "numbers",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 5
+      },
+      "position": "3"
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
@@ -729,7 +1340,7 @@ Final JSON: {
       "value": [
         0
       ],
-      "timestamp": "2024-08-10T22:42:43.232Z",
+      "timestamp": "2024-08-15T16:50:32.499Z",
       "description": "Created array numbers."
     },
     {
@@ -738,7 +1349,7 @@ Final JSON: {
       "varName": "numbers",
       "value": 1,
       "position": 1,
-      "timestamp": "2024-08-10T22:42:43.232Z",
+      "timestamp": "2024-08-15T16:50:32.499Z",
       "description": "Added 1 to array numbers at position 1."
     },
     {
@@ -747,7 +1358,7 @@ Final JSON: {
       "varName": "numbers",
       "value": 2,
       "position": 2,
-      "timestamp": "2024-08-10T22:42:43.232Z",
+      "timestamp": "2024-08-15T16:50:32.499Z",
       "description": "Added 2 to array numbers at position 2."
     },
     {
@@ -756,13 +1367,200 @@ Final JSON: {
       "varName": "numbers",
       "value": 3,
       "position": 3,
-      "timestamp": "2024-08-10T22:42:43.232Z",
+      "timestamp": "2024-08-15T16:50:32.499Z",
       "description": "Added 3 to array numbers at position 3."
     }
   ]
 }
 Test case 5
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "nums",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "2",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "for",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "each",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "num",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "in",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "nums",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "num",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "for",
+    "line": 6
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 2
+        }
+      ],
+      "line": 2
+    },
+    {
+      "type": "ForLoop",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "num",
+            "line": 4
+          },
+          "line": 4
+        }
+      ],
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 2
+        }
+      ]
+    },
+    {
+      "type": "ForLoop",
+      "iterator": "num",
+      "collection": "nums",
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "num"
+        }
+      ]
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
@@ -774,7 +1572,7 @@ Final JSON: {
         2,
         3
       ],
-      "timestamp": "2024-08-10T22:42:43.233Z",
+      "timestamp": "2024-08-15T16:50:32.500Z",
       "description": "Created array nums."
     },
     {
@@ -789,90 +1587,324 @@ Final JSON: {
           "isLiteral": true,
           "varName": null,
           "literal": "num",
-          "timestamp": "2024-08-10T22:42:43.234Z",
+          "timestamp": "2024-08-15T16:50:32.500Z",
           "description": "Printed num."
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.234Z",
+      "timestamp": "2024-08-15T16:50:32.500Z",
       "description": "Iterating over nums with num."
-    }
-  ]
-}
-Test case 6
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 5,
-      "timestamp": "2024-08-10T22:42:43.235Z",
-      "description": "Set variable x to 5."
-    },
-    {
-      "line": 2,
-      "operation": "while",
-      "condition": "x > 0",
-      "body": [
-        {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.236Z",
-          "description": "Printed x."
-        },
-        {
-          "line": 4,
-          "operation": "set",
-          "varName": "x",
-          "value": "x - 1",
-          "timestamp": "2024-08-10T22:42:43.236Z",
-          "description": "Set variable x to x - 1."
-        }
-      ],
-      "timestamp": "2024-08-10T22:42:43.236Z",
-      "description": "While loop with condition x > 0."
     }
   ]
 }
 Test case 7
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "is",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "greater",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "than",
+    "line": 4
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "then",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "is",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "less",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "than",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "then",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 6
+  },
+  {
+    "type": "String",
+    "value": "y is less than 10",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 8
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "greater",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        "line": 4
+      },
+      "consequent": [
+        {
+          "type": "IfStatement",
+          "condition": {
+            "type": "Expression",
+            "left": "y",
+            "operator": "less",
+            "right": {
+              "type": "NumberLiteral",
+              "value": "10",
+              "line": 5
+            },
+            "line": 5
+          },
+          "consequent": [
+            {
+              "type": "PrintStatement",
+              "value": {
+                "type": "StringLiteral",
+                "value": "y is less than 10",
+                "line": 6
+              },
+              "line": 6
+            }
+          ],
+          "alternate": null,
+          "line": 5
+        }
+      ],
+      "alternate": null,
+      "line": 4
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 3
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "IfStatement",
+          "condition": {
+            "left": "y",
+            "operator": "less",
+            "right": "10"
+          },
+          "consequent": [
+            {
+              "type": "PrintStatement",
+              "value": "y is less than 10"
+            }
+          ],
+          "alternate": null
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 1,
       "operation": "set",
       "varName": "x",
+      "type": "number",
       "value": 10,
-      "timestamp": "2024-08-10T22:42:43.238Z",
+      "timestamp": "2024-08-15T16:50:32.502Z",
       "description": "Set variable x to 10."
     },
     {
       "line": 2,
       "operation": "set",
       "varName": "y",
+      "type": "number",
       "value": 5,
-      "timestamp": "2024-08-10T22:42:43.238Z",
+      "timestamp": "2024-08-15T16:50:32.502Z",
       "description": "Set variable y to 5."
     },
     {
       "line": 3,
       "operation": "if",
-      "condition": "x greater 5",
+      "condition": "x > 5",
       "result": true,
-      "timestamp": "2024-08-10T22:42:43.238Z",
-      "description": "Checked if x greater 5."
+      "timestamp": "2024-08-15T16:50:32.502Z",
+      "description": "Checked if x > 5."
     },
     {
       "line": 4,
       "operation": "if",
-      "condition": "y less 10",
+      "condition": "y < 10",
       "result": true,
-      "timestamp": "2024-08-10T22:42:43.238Z",
-      "description": "Checked if y less 10."
+      "timestamp": "2024-08-15T16:50:32.502Z",
+      "description": "Checked if y < 10."
     },
     {
       "line": 5,
@@ -880,204 +1912,241 @@ Final JSON: {
       "isLiteral": true,
       "varName": null,
       "literal": "y is less than 10",
-      "timestamp": "2024-08-10T22:42:43.238Z",
+      "timestamp": "2024-08-15T16:50:32.502Z",
       "description": "Printed y is less than 10."
-    }
-  ]
-}
-Test case 8
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 10,
-      "timestamp": "2024-08-10T22:42:43.239Z",
-      "description": "Set variable x to 10."
-    },
-    {
-      "line": 2,
-      "operation": "create_array",
-      "varName": "nums",
-      "value": [
-        1,
-        2,
-        3
-      ],
-      "timestamp": "2024-08-10T22:42:43.239Z",
-      "description": "Created array nums."
-    },
-    {
-      "line": 3,
-      "operation": "define",
-      "varName": "add_numbers",
-      "params": [
-        "a",
-        "b"
-      ],
-      "body": [
-        {
-          "line": 4,
-          "operation": "return",
-          "value": {
-            "left": "a",
-            "operator": "+",
-            "right": "b"
-          },
-          "timestamp": "2024-08-10T22:42:43.239Z",
-          "description": "Returned {\"left\":\"a\",\"operator\":\"+\",\"right\":\"b\"}."
-        }
-      ],
-      "timestamp": "2024-08-10T22:42:43.239Z",
-      "description": "Defined function add_numbers with parameters a, b."
-    },
-    {
-      "line": 5,
-      "operation": "if",
-      "condition": "x greater 5",
-      "result": true,
-      "timestamp": "2024-08-10T22:42:43.239Z",
-      "description": "Checked if x greater 5."
     },
     {
       "line": 6,
-      "operation": "print",
-      "isLiteral": true,
-      "varName": null,
-      "literal": "x is greater than 5",
-      "timestamp": "2024-08-10T22:42:43.239Z",
-      "description": "Printed x is greater than 5."
+      "operation": "endif",
+      "timestamp": "2024-08-15T16:50:32.502Z",
+      "description": "End of if statement."
     },
     {
       "line": 7,
-      "operation": "for",
-      "iterator": "num",
-      "collection": "nums",
-      "body": [
-        {
-          "line": 8,
-          "operation": "print",
-          "isLiteral": true,
-          "varName": null,
-          "literal": "num",
-          "timestamp": "2024-08-10T22:42:43.239Z",
-          "description": "Printed num."
-        }
-      ],
-      "timestamp": "2024-08-10T22:42:43.239Z",
-      "description": "Iterating over nums with num."
-    },
-    {
-      "line": 9,
-      "operation": "while",
-      "condition": "x > 0",
-      "body": [
-        {
-          "line": 10,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.239Z",
-          "description": "Printed x."
-        },
-        {
-          "line": 11,
-          "operation": "set",
-          "varName": "x",
-          "value": "x - 1",
-          "timestamp": "2024-08-10T22:42:43.239Z",
-          "description": "Set variable x to x - 1."
-        }
-      ],
-      "timestamp": "2024-08-10T22:42:43.239Z",
-      "description": "While loop with condition x > 0."
-    }
-  ]
-}
-Test case 2
-
-Final JSON: {
-  "actionFrames": [
-    {
-      "line": 1,
-      "operation": "set",
-      "varName": "x",
-      "value": 10,
-      "timestamp": "2024-08-10T22:42:43.243Z",
-      "description": "Set variable x to 10."
-    },
-    {
-      "line": 2,
-      "operation": "if",
-      "condition": "x greater 5",
-      "result": true,
-      "timestamp": "2024-08-10T22:42:43.243Z",
-      "description": "Checked if x greater 5."
-    },
-    {
-      "line": 3,
-      "operation": "print",
-      "isLiteral": true,
-      "varName": null,
-      "literal": "x is greater than 5",
-      "timestamp": "2024-08-10T22:42:43.243Z",
-      "description": "Printed x is greater than 5."
+      "operation": "endif",
+      "timestamp": "2024-08-15T16:50:32.502Z",
+      "description": "End of if statement."
     }
   ]
 }
 Test case 9
 
-Final JSON: {
-  "actionFrames": [
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "until",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "is",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "greater",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "than",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 6
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
     {
-      "line": 1,
-      "operation": "set",
+      "type": "VariableDeclaration",
       "varName": "x",
-      "value": 0,
-      "timestamp": "2024-08-10T22:42:43.244Z",
-      "description": "Set variable x to 0."
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 2
+      },
+      "line": 2
     },
     {
-      "line": 2,
-      "operation": "loop_until",
-      "condition": "x greater 5",
+      "type": "LoopUntil",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "greater",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 3
+        },
+        "line": 3
+      },
       "body": [
         {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.244Z",
-          "description": "Printed x."
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "x",
+            "line": 4
+          },
+          "line": 4
         },
         {
-          "line": 4,
-          "operation": "set",
+          "type": "VariableDeclaration",
           "varName": "x",
-          "value": "x + 1",
-          "timestamp": "2024-08-10T22:42:43.245Z",
-          "description": "Set variable x to x + 1."
+          "varType": null,
+          "value": {
+            "type": "Expression",
+            "left": {
+              "type": "Identifier",
+              "value": "x",
+              "line": 5
+            },
+            "operator": "+",
+            "right": {
+              "type": "NumberLiteral",
+              "value": "1",
+              "line": 5
+            },
+            "line": 6
+          },
+          "line": 5
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.245Z",
-      "description": "Loop until x is greater than 5."
+      "line": 3
     }
   ]
 }
-Test case 10
-
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 2
+      }
+    },
+    {
+      "type": "LoopUntil",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "x"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "x",
+          "value": {
+            "type": "Expression",
+            "left": "x",
+            "operator": "+",
+            "right": "1"
+          }
+        }
+      ]
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 1,
       "operation": "set",
       "varName": "x",
+      "type": "number",
       "value": 0,
-      "timestamp": "2024-08-10T22:42:43.246Z",
+      "timestamp": "2024-08-15T16:50:32.504Z",
       "description": "Set variable x to 0."
     },
     {
@@ -1090,35 +2159,382 @@ Final JSON: {
           "operation": "print",
           "isLiteral": false,
           "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.246Z",
+          "literal": 0,
+          "timestamp": "2024-08-15T16:50:32.504Z",
           "description": "Printed x."
         },
         {
           "line": 4,
           "operation": "set",
           "varName": "x",
-          "value": "x + 1",
-          "timestamp": "2024-08-10T22:42:43.246Z",
+          "type": "number",
+          "value": 1,
+          "timestamp": "2024-08-15T16:50:32.504Z",
           "description": "Set variable x to x + 1."
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.246Z",
+      "timestamp": "2024-08-15T16:50:32.504Z",
+      "description": "Loop until x > 5."
+    }
+  ]
+}
+Test case 10
+
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "until",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "ComparisonOperator",
+    "value": ">",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 6
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "LoopUntil",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": ">",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 3
+        },
+        "line": 3
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "x",
+            "line": 4
+          },
+          "line": 4
+        },
+        {
+          "type": "VariableDeclaration",
+          "varName": "x",
+          "varType": null,
+          "value": {
+            "type": "Expression",
+            "left": {
+              "type": "Identifier",
+              "value": "x",
+              "line": 5
+            },
+            "operator": "+",
+            "right": {
+              "type": "NumberLiteral",
+              "value": "1",
+              "line": 5
+            },
+            "line": 6
+          },
+          "line": 5
+        }
+      ],
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 2
+      }
+    },
+    {
+      "type": "LoopUntil",
+      "condition": {
+        "left": "x",
+        "operator": ">",
+        "right": "5"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "x"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "x",
+          "value": {
+            "type": "Expression",
+            "left": "x",
+            "operator": "+",
+            "right": "1"
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-08-15T16:50:32.511Z",
+      "description": "Set variable x to 0."
+    },
+    {
+      "line": 2,
+      "operation": "loop_until",
+      "condition": "x > 5",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": false,
+          "varName": "x",
+          "literal": 0,
+          "timestamp": "2024-08-15T16:50:32.511Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "type": "number",
+          "value": 1,
+          "timestamp": "2024-08-15T16:50:32.511Z",
+          "description": "Set variable x to x + 1."
+        }
+      ],
+      "timestamp": "2024-08-15T16:50:32.511Z",
       "description": "Loop until x > 5."
     }
   ]
 }
 Test case 11
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "for",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "from",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "up",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "i",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "LoopFromTo",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "10",
+          "line": 2
+        }
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "i",
+            "line": 3
+          },
+          "line": 3
+        }
+      ],
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "range": {
+        "start": "0",
+        "end": "10"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        }
+      ]
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 2,
       "operation": "set",
       "varName": "i",
+      "type": "number",
       "value": 0,
-      "timestamp": "2024-08-10T22:42:43.247Z",
-      "description": "Set variable i to 0."
+      "timestamp": "2024-08-15T16:50:32.514Z",
+      "description": "Set variable i to number 0."
     },
     {
       "line": 4,
@@ -1130,27 +2546,124 @@ Final JSON: {
           "operation": "print",
           "isLiteral": false,
           "varName": "i",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.247Z",
+          "literal": 0,
+          "timestamp": "2024-08-15T16:50:32.514Z",
           "description": "Printed i."
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.247Z",
+      "timestamp": "2024-08-15T16:50:32.514Z",
       "description": "Loop from 0 to 10."
     }
   ]
 }
 Test case 12
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "from",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "i",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "LoopFromTo",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "10",
+          "line": 2
+        }
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "i",
+            "line": 3
+          },
+          "line": 3
+        }
+      ],
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "range": {
+        "start": "0",
+        "end": "10"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        }
+      ]
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 2,
       "operation": "set",
       "varName": "i",
+      "type": "number",
       "value": 0,
-      "timestamp": "2024-08-10T22:42:43.248Z",
-      "description": "Set variable i to 0."
+      "timestamp": "2024-08-15T16:50:32.516Z",
+      "description": "Set variable i to number 0."
     },
     {
       "line": 4,
@@ -1162,66 +2675,239 @@ Final JSON: {
           "operation": "print",
           "isLiteral": false,
           "varName": "i",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.248Z",
+          "literal": 0,
+          "timestamp": "2024-08-15T16:50:32.516Z",
           "description": "Printed i."
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.248Z",
+      "timestamp": "2024-08-15T16:50:32.516Z",
       "description": "Loop from 0 to 10."
     }
   ]
 }
 Test case 13
 
-Final JSON: {
-  "actionFrames": [
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "for",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "until",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "is",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "greater",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "than",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 6
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
     {
-      "line": 1,
-      "operation": "set",
+      "type": "VariableDeclaration",
       "varName": "x",
-      "value": 0,
-      "timestamp": "2024-08-10T22:42:43.250Z",
-      "description": "Set variable x to 0."
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 2
+      },
+      "line": 2
     },
     {
-      "line": 2,
-      "operation": "loop_until",
-      "condition": "x greater 5",
+      "type": "LoopUntil",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "greater",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 3
+        },
+        "line": 3
+      },
       "body": [
         {
-          "line": 3,
-          "operation": "print",
-          "isLiteral": false,
-          "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.250Z",
-          "description": "Printed x."
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "x",
+            "line": 4
+          },
+          "line": 4
         },
         {
-          "line": 4,
-          "operation": "set",
+          "type": "VariableDeclaration",
           "varName": "x",
-          "value": "x + 1",
-          "timestamp": "2024-08-10T22:42:43.250Z",
-          "description": "Set variable x to x + 1."
+          "varType": null,
+          "value": {
+            "type": "Expression",
+            "left": {
+              "type": "Identifier",
+              "value": "x",
+              "line": 5
+            },
+            "operator": "+",
+            "right": {
+              "type": "NumberLiteral",
+              "value": "1",
+              "line": 5
+            },
+            "line": 6
+          },
+          "line": 5
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.250Z",
-      "description": "Loop until x is greater than 5."
+      "line": 3
     }
   ]
 }
-Test case 14
-
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 2
+      }
+    },
+    {
+      "type": "LoopUntil",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "x"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "x",
+          "value": {
+            "type": "Expression",
+            "left": "x",
+            "operator": "+",
+            "right": "1"
+          }
+        }
+      ]
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 1,
       "operation": "set",
       "varName": "x",
+      "type": "number",
       "value": 0,
-      "timestamp": "2024-08-10T22:42:43.254Z",
+      "timestamp": "2024-08-15T16:50:32.517Z",
       "description": "Set variable x to 0."
     },
     {
@@ -1234,35 +2920,387 @@ Final JSON: {
           "operation": "print",
           "isLiteral": false,
           "varName": "x",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.254Z",
+          "literal": 0,
+          "timestamp": "2024-08-15T16:50:32.517Z",
           "description": "Printed x."
         },
         {
           "line": 4,
           "operation": "set",
           "varName": "x",
-          "value": "x + 1",
-          "timestamp": "2024-08-10T22:42:43.254Z",
+          "type": "number",
+          "value": 1,
+          "timestamp": "2024-08-15T16:50:32.517Z",
           "description": "Set variable x to x + 1."
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.254Z",
+      "timestamp": "2024-08-15T16:50:32.517Z",
+      "description": "Loop until x > 5."
+    }
+  ]
+}
+Test case 14
+
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "for",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "until",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "ComparisonOperator",
+    "value": ">",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 6
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "LoopUntil",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": ">",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 3
+        },
+        "line": 3
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "x",
+            "line": 4
+          },
+          "line": 4
+        },
+        {
+          "type": "VariableDeclaration",
+          "varName": "x",
+          "varType": null,
+          "value": {
+            "type": "Expression",
+            "left": {
+              "type": "Identifier",
+              "value": "x",
+              "line": 5
+            },
+            "operator": "+",
+            "right": {
+              "type": "NumberLiteral",
+              "value": "1",
+              "line": 5
+            },
+            "line": 6
+          },
+          "line": 5
+        }
+      ],
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 2
+      }
+    },
+    {
+      "type": "LoopUntil",
+      "condition": {
+        "left": "x",
+        "operator": ">",
+        "right": "5"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "x"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "x",
+          "value": {
+            "type": "Expression",
+            "left": "x",
+            "operator": "+",
+            "right": "1"
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-08-15T16:50:32.519Z",
+      "description": "Set variable x to 0."
+    },
+    {
+      "line": 2,
+      "operation": "loop_until",
+      "condition": "x > 5",
+      "body": [
+        {
+          "line": 3,
+          "operation": "print",
+          "isLiteral": false,
+          "varName": "x",
+          "literal": 0,
+          "timestamp": "2024-08-15T16:50:32.519Z",
+          "description": "Printed x."
+        },
+        {
+          "line": 4,
+          "operation": "set",
+          "varName": "x",
+          "type": "number",
+          "value": 1,
+          "timestamp": "2024-08-15T16:50:32.519Z",
+          "description": "Set variable x to x + 1."
+        }
+      ],
+      "timestamp": "2024-08-15T16:50:32.519Z",
       "description": "Loop until x > 5."
     }
   ]
 }
 Test case 15
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "for",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "from",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "up",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "i",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "LoopFromTo",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "10",
+          "line": 2
+        }
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "i",
+            "line": 3
+          },
+          "line": 3
+        }
+      ],
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "range": {
+        "start": "0",
+        "end": "10"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        }
+      ]
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 2,
       "operation": "set",
       "varName": "i",
+      "type": "number",
       "value": 0,
-      "timestamp": "2024-08-10T22:42:43.255Z",
-      "description": "Set variable i to 0."
+      "timestamp": "2024-08-15T16:50:32.522Z",
+      "description": "Set variable i to number 0."
     },
     {
       "line": 4,
@@ -1274,27 +3312,129 @@ Final JSON: {
           "operation": "print",
           "isLiteral": false,
           "varName": "i",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.255Z",
+          "literal": 0,
+          "timestamp": "2024-08-15T16:50:32.522Z",
           "description": "Printed i."
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.255Z",
+      "timestamp": "2024-08-15T16:50:32.522Z",
       "description": "Loop from 0 to 10."
     }
   ]
 }
 Test case 16
 
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "for",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "from",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "i",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "LoopFromTo",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "10",
+          "line": 2
+        }
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "i",
+            "line": 3
+          },
+          "line": 3
+        }
+      ],
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "range": {
+        "start": "0",
+        "end": "10"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        }
+      ]
+    }
+  ]
+}
 Final JSON: {
   "actionFrames": [
     {
       "line": 2,
       "operation": "set",
       "varName": "i",
+      "type": "number",
       "value": 0,
-      "timestamp": "2024-08-10T22:42:43.256Z",
-      "description": "Set variable i to 0."
+      "timestamp": "2024-08-15T16:50:32.524Z",
+      "description": "Set variable i to number 0."
     },
     {
       "line": 4,
@@ -1306,13 +3446,1738 @@ Final JSON: {
           "operation": "print",
           "isLiteral": false,
           "varName": "i",
-          "literal": null,
-          "timestamp": "2024-08-10T22:42:43.256Z",
+          "literal": 0,
+          "timestamp": "2024-08-15T16:50:32.524Z",
           "description": "Printed i."
         }
       ],
-      "timestamp": "2024-08-10T22:42:43.256Z",
+      "timestamp": "2024-08-15T16:50:32.524Z",
       "description": "Loop from 0 to 10."
+    }
+  ]
+}
+Test case 17
+
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "x",
+          "line": 3
+        },
+        "operator": "+",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "+",
+        "right": "3"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-15T16:50:32.525Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 8,
+      "timestamp": "2024-08-15T16:50:32.525Z",
+      "description": "Set variable y to x + 3."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "a",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "b",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "c",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "a",
+    "line": 4
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "b",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "a",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "b",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "c",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "a",
+          "line": 4
+        },
+        "operator": "+",
+        "right": {
+          "type": "Identifier",
+          "value": "b",
+          "line": 4
+        },
+        "line": 4
+      },
+      "line": 4
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "Expression",
+        "left": "a",
+        "operator": "+",
+        "right": "b"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-15T16:50:32.527Z",
+      "description": "Set variable a to 5."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-15T16:50:32.527Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 15,
+      "timestamp": "2024-08-15T16:50:32.527Z",
+      "description": "Set variable c to a + b."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "20",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Operator",
+    "value": "-",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "z",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 4
+  },
+  {
+    "type": "Operator",
+    "value": "*",
+    "line": 4
+  },
+  {
+    "type": "Number",
+    "value": "2",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "20",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "x",
+          "line": 3
+        },
+        "operator": "-",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 3
+        },
+        "line": 4
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "z",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "y",
+          "line": 4
+        },
+        "operator": "*",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 4
+        },
+        "line": 4
+      },
+      "line": 4
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "20",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "-",
+        "right": "5"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "z",
+      "value": {
+        "type": "Expression",
+        "left": "y",
+        "operator": "*",
+        "right": "2"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 20,
+      "timestamp": "2024-08-15T16:50:32.528Z",
+      "description": "Set variable x to 20."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 15,
+      "timestamp": "2024-08-15T16:50:32.528Z",
+      "description": "Set variable y to x - 5."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "z",
+      "type": "number",
+      "value": 30,
+      "timestamp": "2024-08-15T16:50:32.528Z",
+      "description": "Set variable z to y * 2."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "p",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "100",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "q",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "p",
+    "line": 3
+  },
+  {
+    "type": "Operator",
+    "value": "/",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "4",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "r",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Delimiter",
+    "value": "(",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "q",
+    "line": 4
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 4
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 4
+  },
+  {
+    "type": "Delimiter",
+    "value": ")",
+    "line": 4
+  },
+  {
+    "type": "Operator",
+    "value": "*",
+    "line": 4
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "p",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "100",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "q",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "p",
+          "line": 3
+        },
+        "operator": "/",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 3
+        },
+        "line": 4
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "r",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Expression",
+          "left": {
+            "type": "Identifier",
+            "value": "q",
+            "line": 4
+          },
+          "operator": "+",
+          "right": {
+            "type": "NumberLiteral",
+            "value": "5",
+            "line": 4
+          },
+          "line": 4
+        },
+        "operator": "*",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 4
+        },
+        "line": 4
+      },
+      "line": 4
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "p",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "100",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "q",
+      "value": {
+        "type": "Expression",
+        "left": "p",
+        "operator": "/",
+        "right": "4"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "r",
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Expression",
+          "left": "q",
+          "operator": "+",
+          "right": "5"
+        },
+        "operator": "*",
+        "right": "3"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "p",
+      "type": "number",
+      "value": 100,
+      "timestamp": "2024-08-15T16:50:32.529Z",
+      "description": "Set variable p to 100."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "q",
+      "type": "number",
+      "value": 25,
+      "timestamp": "2024-08-15T16:50:32.529Z",
+      "description": "Set variable q to p / 4."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "r",
+      "type": "number",
+      "value": 90,
+      "timestamp": "2024-08-15T16:50:32.529Z",
+      "description": "Set variable r to (q + 5) * 3."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Operator",
+    "value": "/",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "x",
+          "line": 3
+        },
+        "operator": "/",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "/",
+        "right": "0"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-15T16:50:32.531Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": null,
+      "timestamp": "2024-08-15T16:50:32.531Z",
+      "description": "Set variable y to x / 0."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "a",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Operator",
+    "value": "-",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "b",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "a",
+    "line": 3
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "c",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "b",
+    "line": 4
+  },
+  {
+    "type": "Operator",
+    "value": "*",
+    "line": 4
+  },
+  {
+    "type": "Operator",
+    "value": "-",
+    "line": 4
+  },
+  {
+    "type": "Number",
+    "value": "2",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "a",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "NumberLiteral",
+          "value": 0,
+          "line": 2
+        },
+        "operator": "-",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "b",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "a",
+          "line": 3
+        },
+        "operator": "+",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "10",
+          "line": 3
+        },
+        "line": 4
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "c",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "b",
+          "line": 4
+        },
+        "operator": "*",
+        "right": {
+          "type": "Expression",
+          "left": {
+            "type": "NumberLiteral",
+            "value": 0,
+            "line": 4
+          },
+          "operator": "-",
+          "right": {
+            "type": "NumberLiteral",
+            "value": "2",
+            "line": 4
+          },
+          "line": 4
+        },
+        "line": 4
+      },
+      "line": 4
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "Expression",
+        "left": 0,
+        "operator": "-",
+        "right": "5"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "Expression",
+        "left": "a",
+        "operator": "+",
+        "right": "10"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "Expression",
+        "left": "b",
+        "operator": "*",
+        "right": {
+          "type": "Expression",
+          "left": 0,
+          "operator": "-",
+          "right": "2"
+        }
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": -5,
+      "timestamp": "2024-08-15T16:50:32.534Z",
+      "description": "Set variable a to -5."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-15T16:50:32.534Z",
+      "description": "Set variable b to a + 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": -10,
+      "timestamp": "2024-08-15T16:50:32.534Z",
+      "description": "Set variable c to b * -2."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "z",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 4
+  },
+  {
+    "type": "Operator",
+    "value": "*",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "z",
+      "varType": null,
+      "value": {
+        "type": "Expression",
+        "left": {
+          "type": "Identifier",
+          "value": "x",
+          "line": 4
+        },
+        "operator": "*",
+        "right": {
+          "type": "Identifier",
+          "value": "y",
+          "line": 4
+        },
+        "line": 4
+      },
+      "line": 4
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "z",
+      "value": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "*",
+        "right": "y"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-15T16:50:32.538Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-15T16:50:32.538Z",
+      "description": "Set variable y to 5."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "z",
+      "type": "number",
+      "value": 50,
+      "timestamp": "2024-08-15T16:50:32.538Z",
+      "description": "Set variable z to x * y."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "while",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "ComparisonOperator",
+    "value": ">",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 5
+  },
+  {
+    "type": "Operator",
+    "value": "-",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "while",
+    "line": 6
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "WhileLoop",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": ">",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        "line": 3
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "x",
+            "line": 4
+          },
+          "line": 4
+        },
+        {
+          "type": "VariableDeclaration",
+          "varName": "x",
+          "varType": null,
+          "value": {
+            "type": "Expression",
+            "left": {
+              "type": "Identifier",
+              "value": "x",
+              "line": 5
+            },
+            "operator": "-",
+            "right": {
+              "type": "NumberLiteral",
+              "value": "1",
+              "line": 5
+            },
+            "line": 6
+          },
+          "line": 5
+        }
+      ],
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      }
+    },
+    {
+      "type": "WhileLoop",
+      "condition": {
+        "left": "x",
+        "operator": ">",
+        "right": "0"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "x"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "x",
+          "value": {
+            "type": "Expression",
+            "left": "x",
+            "operator": "-",
+            "right": "1"
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "x > 0",
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "While loop with condition x > 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 0",
+      "result": true,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Checked if x > 0."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "x",
+      "literal": 5,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Printed x."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Set variable x to x - 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 0",
+      "result": true,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Checked if x > 0."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "x",
+      "literal": 4,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Printed x."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Set variable x to x - 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 0",
+      "result": true,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Checked if x > 0."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "x",
+      "literal": 3,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Printed x."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Set variable x to x - 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 0",
+      "result": true,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Checked if x > 0."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "x",
+      "literal": 2,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Printed x."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Set variable x to x - 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 0",
+      "result": true,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Checked if x > 0."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "x",
+      "literal": 1,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Printed x."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Set variable x to x - 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 0",
+      "result": false,
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "Checked if x > 0."
+    },
+    {
+      "line": 5,
+      "operation": "loop_end",
+      "timestamp": "2024-08-15T16:50:32.539Z",
+      "description": "End of while loop"
     }
   ]
 }
