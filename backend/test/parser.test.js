@@ -190,20 +190,20 @@ END WHILE`;
             left: {
                 type: "Identifier",
                 value: "x",
-                line: 4,
+                line: 3,
             },
             operator: "+",
             right: {
                 type: "NumberLiteral",
                 value: "1",
-                line: 4,
+                line: 3,
             },
             line: 4,
         });
 
-        expect(loop.line).to.equal(2);
-        expect(loop.body[0].line).to.equal(3);
-        expect(loop.body[1].line).to.equal(4);
+        expect(loop.line).to.equal(1);
+        expect(loop.body[0].line).to.equal(2);
+        expect(loop.body[1].line).to.equal(3);
     });
 
     it("should parse 'LOOP from up to' with high-level syntax correctly", () => {
@@ -263,7 +263,8 @@ END WHILE`;
         expect(loop.body[0].value.value).to.equal("x");
         expect(loop.body[1].type).to.equal("VariableDeclaration");
         expect(loop.body[1].varName).to.equal("x");
-        expect(loop.body[1].value.value).to.equal("x + 1");
+        expect(loop.body[1].value.operator).to.equal("+");
+        expect(loop.body[1].value.right.value).to.equal("1");
         expect(loop.line).to.equal(2);
         expect(loop.body[0].line).to.equal(3);
         expect(loop.body[1].line).to.equal(4);
@@ -288,7 +289,9 @@ END WHILE`;
         expect(loop.body[0].value.value).to.equal("x");
         expect(loop.body[1].type).to.equal("VariableDeclaration");
         expect(loop.body[1].varName).to.equal("x");
-        expect(loop.body[1].value.value).to.equal("x + 1");
+        expect(loop.body[1].varName).to.equal("x");
+        expect(loop.body[1].value.operator).to.equal("+");
+        expect(loop.body[1].value.right.value).to.equal("1");
         expect(loop.line).to.equal(2);
         expect(loop.body[0].line).to.equal(3);
         expect(loop.body[1].line).to.equal(4);

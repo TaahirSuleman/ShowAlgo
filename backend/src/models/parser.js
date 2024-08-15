@@ -323,7 +323,17 @@ class Parser {
     }
 
     parseExpression() {
-        let left = this.parseValue();
+        let left;
+        if (
+            this.currentToken().type === "Delimiter" &&
+            this.currentToken().value === "("
+        ) {
+            this.consume("Delimiter"); // consume "("
+            left = this.parseExpression(); // parse the sub-expression
+            this.expect("Delimiter", ")"); // expect ")"
+        } else {
+            left = this.parseValue();
+        }
         while (
             this.currentToken().type === "Operator" ||
             this.currentToken().type === "ComparisonOperator"
@@ -352,12 +362,26 @@ class Parser {
 
     parseValue() {
         const token = this.currentToken();
+
+        // Handle negative numbers as a unary operator
+        if (token.type === "Operator" && token.value === "-") {
+            this.consume("Operator");
+            const right = this.parseValue();
+            return new Expression(
+                new NumberLiteral(0, token.line), // Implicitly represent as 0 - number
+                "-",
+                right,
+                token.line
+            );
+        }
+
+        // Handle normal numbers and identifiers
         if (token.type === "Number") {
             return new NumberLiteral(this.consume("Number").value, token.line);
-        } else if (token.type === "String") {
-            return new StringLiteral(this.consume("String").value, token.line);
         } else if (token.type === "Identifier") {
             return new Identifier(this.consume("Identifier").value, token.line);
+        } else if (token.type === "String") {
+            return new StringLiteral(this.consume("String").value, token.line);
         } else if (
             token.type === "Keyword" &&
             (token.value.toLowerCase() === "number" ||

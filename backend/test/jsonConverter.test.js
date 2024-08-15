@@ -14,7 +14,11 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "x",
-                    value: "10",
+                    value: {
+                        type: "NumberLiteral",
+                        value: 10,
+                        line: 1,
+                    },
                 },
             ],
         };
@@ -25,7 +29,8 @@ describe("JsonConverter", () => {
                     line: 1,
                     operation: "set",
                     varName: "x",
-                    value: "10",
+                    type: "number",
+                    value: 10,
                     timestamp: result.actionFrames[0].timestamp,
                     description: "Set variable x to 10.",
                 },
@@ -89,7 +94,11 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration", // Ensure variable x is declared
                     name: "x",
-                    value: "10",
+                    value: {
+                        type: "NumberLiteral",
+                        value: 10,
+                        line: 1,
+                    },
                 },
                 {
                     type: "IfStatement",
@@ -120,17 +129,18 @@ describe("JsonConverter", () => {
                     line: 1,
                     operation: "set",
                     varName: "x",
-                    value: "10",
+                    type: "number",
+                    value: 10,
                     timestamp: result.actionFrames[0].timestamp,
                     description: "Set variable x to 10.",
                 },
                 {
                     line: 2,
                     operation: "if",
-                    condition: "10 greater 5",
+                    condition: "10 > 5",
                     result: true,
                     timestamp: result.actionFrames[1].timestamp,
-                    description: "Checked if 10 greater 5.",
+                    description: "Checked if 10 > 5.",
                 },
                 {
                     line: 3,
@@ -140,6 +150,12 @@ describe("JsonConverter", () => {
                     literal: "x is greater than 5",
                     timestamp: result.actionFrames[2].timestamp,
                     description: "Printed x is greater than 5.",
+                },
+                {
+                    description: "End of if statement.",
+                    line: 6,
+                    operation: "endif",
+                    timestamp: result.actionFrames[3].timestamp,
                 },
             ],
         });
@@ -151,7 +167,11 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration", // Ensure variable x is declared
                     name: "x",
-                    value: "0",
+                    value: {
+                        type: "NumberLiteral",
+                        value: "0",
+                        line: 1,
+                    },
                 },
                 {
                     type: "LoopUntil",
@@ -186,21 +206,22 @@ describe("JsonConverter", () => {
                     line: 1,
                     operation: "set",
                     varName: "x",
-                    value: "0",
+                    type: "number",
+                    value: 0,
                     timestamp: result.actionFrames[0].timestamp,
                     description: "Set variable x to 0.",
                 },
                 {
                     line: 2,
                     operation: "loop_until",
-                    condition: "x greater 5",
+                    condition: "x > 5",
                     body: [
                         {
                             line: 3,
                             operation: "print",
                             isLiteral: false,
                             varName: "x",
-                            literal: null,
+                            literal: 0, // Reflecting the value of x at this point
                             timestamp: result.actionFrames[1].body[0].timestamp,
                             description: "Printed x.",
                         },
@@ -208,13 +229,14 @@ describe("JsonConverter", () => {
                             line: 4,
                             operation: "set",
                             varName: "x",
-                            value: "x + 1",
+                            type: "number",
+                            value: 1,
                             timestamp: result.actionFrames[1].body[1].timestamp,
                             description: "Set variable x to x + 1.",
                         },
                     ],
                     timestamp: result.actionFrames[1].timestamp,
-                    description: "Loop until x is greater than 5.",
+                    description: "Loop until x > 5.",
                 },
             ],
         });
@@ -226,7 +248,11 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration", // Ensure variable x is declared
                     name: "x",
-                    value: "0",
+                    value: {
+                        type: "NumberLiteral",
+                        value: "0",
+                        line: 1,
+                    },
                 },
                 {
                     type: "LoopUntil",
@@ -261,7 +287,8 @@ describe("JsonConverter", () => {
                     line: 1,
                     operation: "set",
                     varName: "x",
-                    value: "0",
+                    type: "number",
+                    value: 0,
                     timestamp: result.actionFrames[0].timestamp,
                     description: "Set variable x to 0.",
                 },
@@ -275,7 +302,7 @@ describe("JsonConverter", () => {
                             operation: "print",
                             isLiteral: false,
                             varName: "x",
-                            literal: null,
+                            literal: 0, // Reflecting the value of x at this point
                             timestamp: result.actionFrames[1].body[0].timestamp,
                             description: "Printed x.",
                         },
@@ -283,7 +310,8 @@ describe("JsonConverter", () => {
                             line: 4,
                             operation: "set",
                             varName: "x",
-                            value: "x + 1",
+                            type: "number",
+                            value: 1,
                             timestamp: result.actionFrames[1].body[1].timestamp,
                             description: "Set variable x to x + 1.",
                         },
@@ -301,7 +329,11 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration", // Ensure variable x is declared
                     name: "x",
-                    value: "0",
+                    value: {
+                        type: "NumberLiteral",
+                        value: "0",
+                        line: 1,
+                    },
                 },
                 {
                     type: "LoopUntil",
@@ -336,21 +368,22 @@ describe("JsonConverter", () => {
                     line: 1,
                     operation: "set",
                     varName: "x",
-                    value: "0",
+                    type: "number",
+                    value: 0,
                     timestamp: result.actionFrames[0].timestamp,
                     description: "Set variable x to 0.",
                 },
                 {
                     line: 2,
                     operation: "loop_until",
-                    condition: "x greater 5",
+                    condition: "x > 5",
                     body: [
                         {
                             line: 3,
                             operation: "print",
                             isLiteral: false,
                             varName: "x",
-                            literal: null,
+                            literal: 0, // Reflecting the value of x at this point
                             timestamp: result.actionFrames[1].body[0].timestamp,
                             description: "Printed x.",
                         },
@@ -358,13 +391,14 @@ describe("JsonConverter", () => {
                             line: 4,
                             operation: "set",
                             varName: "x",
-                            value: "x + 1",
+                            type: "number",
+                            value: 1,
                             timestamp: result.actionFrames[1].body[1].timestamp,
                             description: "Set variable x to x + 1.",
                         },
                     ],
                     timestamp: result.actionFrames[1].timestamp,
-                    description: "Loop until x is greater than 5.",
+                    description: "Loop until x > 5.",
                 },
             ],
         });
@@ -376,7 +410,11 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration", // Ensure variable x is declared
                     name: "x",
-                    value: "0",
+                    value: {
+                        type: "NumberLiteral",
+                        value: "0",
+                        line: 1,
+                    },
                 },
                 {
                     type: "LoopUntil",
@@ -411,7 +449,8 @@ describe("JsonConverter", () => {
                     line: 1,
                     operation: "set",
                     varName: "x",
-                    value: "0",
+                    type: "number",
+                    value: 0,
                     timestamp: result.actionFrames[0].timestamp,
                     description: "Set variable x to 0.",
                 },
@@ -425,7 +464,7 @@ describe("JsonConverter", () => {
                             operation: "print",
                             isLiteral: false,
                             varName: "x",
-                            literal: null,
+                            literal: 0, // Reflecting the value of x at this point
                             timestamp: result.actionFrames[1].body[0].timestamp,
                             description: "Printed x.",
                         },
@@ -433,7 +472,8 @@ describe("JsonConverter", () => {
                             line: 4,
                             operation: "set",
                             varName: "x",
-                            value: "x + 1",
+                            type: "number",
+                            value: 1,
                             timestamp: result.actionFrames[1].body[1].timestamp,
                             description: "Set variable x to x + 1.",
                         },
@@ -470,9 +510,10 @@ describe("JsonConverter", () => {
                     line: 2, // Check the line number based on JSON
                     operation: "set",
                     varName: "i",
+                    type: "number",
                     value: 0,
                     timestamp: result.actionFrames[0].timestamp,
-                    description: "Set variable i to 0.",
+                    description: "Set variable i to number 0.",
                 },
                 {
                     line: 4,
@@ -484,8 +525,7 @@ describe("JsonConverter", () => {
                             operation: "print",
                             isLiteral: false,
                             varName: "i",
-                            literal: null,
-                            // Check that the body exists and has the correct index
+                            literal: 0, // Reflecting the value of i at this point
                             timestamp:
                                 result.actionFrames[1]?.body[0]?.timestamp ||
                                 new Date().toISOString(),
@@ -526,9 +566,10 @@ describe("JsonConverter", () => {
                     line: 2, // Check the line number based on JSON
                     operation: "set",
                     varName: "i",
+                    type: "number",
                     value: 0,
                     timestamp: result.actionFrames[0].timestamp,
-                    description: "Set variable i to 0.",
+                    description: "Set variable i to number 0.",
                 },
                 {
                     line: 4,
@@ -540,8 +581,7 @@ describe("JsonConverter", () => {
                             operation: "print",
                             isLiteral: false,
                             varName: "i",
-                            literal: null,
-                            // Check that the body exists and has the correct index
+                            literal: 0, // Reflecting the value of i at this point
                             timestamp:
                                 result.actionFrames[1]?.body[0]?.timestamp ||
                                 new Date().toISOString(),

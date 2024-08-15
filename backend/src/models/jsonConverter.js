@@ -1,106 +1,50 @@
 class JsonConverter {
     constructor() {
         this.variables = {};
-        this.declaredVariables = new Set(); // Track declared variable names
+        this.declaredVariables = new Set();
         this.initializedArrays = new Set();
-        this.currentLine = 1; // Start the current line from 1
+        this.currentLine = 1;
     }
 
     transformToFinalJSON(ir) {
+        // console.log("Transforming IR to final JSON:", ir);
         return {
             actionFrames: this.transformNodes(ir.program),
         };
     }
 
     transformNodes(nodes) {
+        // console.log("Transforming nodes:", nodes);
         return nodes.flatMap((node) => this.transformNode(node));
     }
 
     transformNode(node) {
-        // Add the current line number to the node and increment the line number
+        // console.log("Transforming node:", node);
         const nodeWithLine = { ...node, line: this.currentLine++ };
 
         switch (nodeWithLine.type) {
             case "VariableDeclaration":
                 return this.transformVariableDeclaration(nodeWithLine);
             case "FunctionDeclaration":
-                return {
-                    line: nodeWithLine.line,
-                    operation: "define",
-                    varName: nodeWithLine.name,
-                    params: nodeWithLine.params,
-                    body: this.transformNodes(nodeWithLine.body),
-                    timestamp: new Date().toISOString(),
-                    description: `Defined function ${
-                        nodeWithLine.name
-                    } with parameters ${nodeWithLine.params.join(", ")}.`,
-                };
+                return this.transformFunctionDeclaration(nodeWithLine);
             case "PrintStatement":
                 return this.transformPrintStatement(nodeWithLine);
             case "IfStatement":
-                const conditionResult = this.evaluateCondition(
-                    nodeWithLine.condition
-                );
-                const conditionString = `${this.evaluateExpression(
-                    nodeWithLine.condition.left
-                )} ${nodeWithLine.condition.operator} ${this.evaluateExpression(
-                    nodeWithLine.condition.right
-                )}`;
-                return [
-                    {
-                        line: nodeWithLine.line,
-                        operation: "if",
-                        condition: conditionString,
-                        result: conditionResult,
-                        timestamp: new Date().toISOString(),
-                        description: `Checked if ${conditionString}.`,
-                    },
-                    ...(conditionResult
-                        ? this.transformNodes(nodeWithLine.consequent)
-                        : this.transformNodes(nodeWithLine.alternate || [])),
-                ];
+                return this.transformIfStatement(nodeWithLine);
             case "ForLoop":
-                return {
-                    line: nodeWithLine.line,
-                    operation: "for",
-                    iterator: nodeWithLine.iterator,
-                    collection: nodeWithLine.collection,
-                    body: this.transformNodes(nodeWithLine.body),
-                    timestamp: new Date().toISOString(),
-                    description: `Iterating over ${nodeWithLine.collection} with ${nodeWithLine.iterator}.`,
-                };
+                return this.transformForLoop(nodeWithLine);
             case "WhileLoop":
-                return {
-                    ...this.transformWhileLoop(nodeWithLine),
-                    line: nodeWithLine.line,
-                };
+                return this.transformWhileLoop(nodeWithLine);
             case "LoopUntil":
                 return this.transformLoopUntil(nodeWithLine);
             case "LoopFromTo":
                 return this.transformLoopFromTo(nodeWithLine);
             case "ReturnStatement":
-                const transformedReturnValue = this.transformExpression(
-                    nodeWithLine.value
-                );
-                return {
-                    line: nodeWithLine.line,
-                    operation: "return",
-                    value: transformedReturnValue,
-                    timestamp: new Date().toISOString(),
-                    description: `Returned ${JSON.stringify(
-                        transformedReturnValue
-                    )}.`,
-                };
+                return this.transformReturnStatement(nodeWithLine);
             case "ArrayCreation":
-                return {
-                    ...this.transformArrayCreation(nodeWithLine),
-                    line: nodeWithLine.line,
-                };
+                return this.transformArrayCreation(nodeWithLine);
             case "ArrayInsertion":
-                return {
-                    ...this.transformArrayInsertion(nodeWithLine),
-                    line: nodeWithLine.line,
-                };
+                return this.transformArrayInsertion(nodeWithLine);
             default:
                 throw new Error(`Unknown node type: ${nodeWithLine.type}`);
         }
@@ -109,122 +53,282 @@ class JsonConverter {
     transformVariableDeclaration(node) {
         const value = this.evaluateExpression(node.value);
         this.variables[node.name] = value;
-        this.declaredVariables.add(node.name); // Add variable to declaredVariables set
+        this.declaredVariables.add(node.name);
+        let varType = this.determineType(value);
+
+        const buildExpressionString = (expr) => {
+            if (expr.type === "Expression") {
+                // Check if this is a subtraction from zero (negative number)
+                if (expr.operator === "-" && expr.left === 0) {
+                    return `-${buildExpressionString(expr.right)}`;
+                } else {
+                    return `(${buildExpressionString(expr.left)} ${
+                        expr.operator
+                    } ${buildExpressionString(expr.right)})`;
+                }
+            } else {
+                return String(expr); // Convert to string to avoid object errors
+            }
+        };
+
+        // Generate the expression string
+        let returnVal =
+            node.value.type === "Expression"
+                ? buildExpressionString(node.value)
+                : String(value);
+
+        // Remove outer parentheses for top-level expression
+        if (
+            typeof returnVal === "string" &&
+            returnVal.startsWith("(") &&
+            returnVal.endsWith(")")
+        ) {
+            returnVal = returnVal.slice(1, -1);
+        }
 
         return {
             line: node.line,
             operation: "set",
             varName: node.name,
-            value: value,
+            type: varType,
+            value: isNaN(parseInt(value)) ? value : parseInt(value),
             timestamp: new Date().toISOString(),
-            description: `Set variable ${node.name} to ${value}.`,
+            description: `Set variable ${node.name} to ${returnVal}.`,
         };
+    }
+
+    determineType(value) {
+        // Try to convert the value to a number
+        const convertedValue = Number(value);
+
+        // Check if the conversion is successful and the result is not NaN
+        if (!isNaN(convertedValue)) {
+            return "number";
+        } else {
+            return typeof value;
+        }
+    }
+
+    transformFunctionDeclaration(node) {
+        const returnVal = {
+            line: node.line,
+            operation: "define",
+            varName: node.name,
+            params: node.params,
+            body: this.transformNodes(node.body),
+            timestamp: new Date().toISOString(),
+            description: `Defined function ${
+                node.name
+            } with parameters ${node.params.join(", ")}.`,
+        };
+        this.currentLine++;
+        return returnVal;
     }
 
     transformPrintStatement(node) {
         const value = node.value;
-
-        // Check if the value is a declared variable
         const isLiteral = !this.declaredVariables.has(value);
-
         return {
             line: node.line,
             operation: "print",
             isLiteral: isLiteral,
-            varName: isLiteral ? null : value, // Use varName for variables
-            literal: isLiteral ? value : null, // Use value directly for literals
+            varName: isLiteral ? null : value,
+            literal: isLiteral ? value : this.variables[value],
             timestamp: new Date().toISOString(),
             description: `Printed ${value}.`,
         };
     }
 
-    transformWhileLoop(node) {
-        const condition = `${this.evaluateExpression(node.condition.left)} ${
-            node.condition.operator
-        } ${this.evaluateExpression(node.condition.right)}`;
-        const body = this.transformNodes(node.body).map((frame) => {
-            if (frame.operation === "set" && frame.value.operator) {
-                const description = `Set variable ${frame.varName} to ${frame.value.left} ${frame.value.operator} ${frame.value.right}.`;
-                return {
-                    ...frame,
-                    description: description,
-                    value: {
-                        left: frame.value.left,
-                        operator: frame.value.operator,
-                        right: frame.value.right,
-                    },
-                };
+    transformIfStatement(node) {
+        const conditionResult = this.evaluateCondition(node.condition);
+        const conditionString = this.convertConditionToString(node.condition);
+
+        // Start with the IF statement
+        let frames = [
+            {
+                line: node.line,
+                operation: "if",
+                condition: conditionString,
+                result: conditionResult,
+                timestamp: new Date().toISOString(),
+                description: `Checked if ${conditionString}.`,
+            },
+        ];
+
+        if (conditionResult) {
+            // Handle the true condition (consequent)
+            frames = frames.concat(this.transformNodes(node.consequent));
+
+            // Adjust currentLine to account for alternate block length + 1
+            if (node.alternate && node.alternate.length > 0) {
+                this.currentLine += node.alternate.length + 1;
+            } else {
+                //this.currentLine++;
             }
-            return frame;
+        } else {
+            // Handle the false condition (alternate)
+            frames = frames.concat(this.transformNodes(node.alternate || []));
+
+            // Simply increment the current line by 1
+            this.currentLine++;
+        }
+        // Add the "End If" movement object
+        frames.push({
+            line: this.currentLine,
+            operation: "endif",
+            timestamp: new Date().toISOString(),
+            description: "End of if statement.",
         });
+        this.currentLine++;
+        return frames;
+    }
+
+    transformForLoop(node) {
         return {
             line: node.line,
-            operation: "while",
-            condition: condition,
-            body: body,
+            operation: "for",
+            iterator: node.iterator,
+            collection: node.collection,
+            body: this.transformNodes(node.body),
             timestamp: new Date().toISOString(),
-            description: `While loop with condition ${condition}.`,
+            description: `Iterating over ${node.collection} with ${node.iterator}.`,
         };
     }
 
-    transformLoopUntil(node) {
-        const condition = `${this.evaluateExpression(node.condition.left)} ${
-            node.condition.operator
-        } ${this.evaluateExpression(node.condition.right)}`;
-        const body = this.transformNodes(node.body).map((frame) => {
-            if (frame.operation === "set" && frame.value.operator) {
-                const description = `Set variable ${frame.varName} to ${frame.value.left} ${frame.value.operator} ${frame.value.right}.`;
-                return {
-                    ...frame,
-                    description: description,
-                    value: {
-                        left: frame.value.left,
-                        operator: frame.value.operator,
-                        right: frame.value.right,
-                    },
-                };
-            }
-            return frame;
+    transformWhileLoop(node) {
+        if (!node.condition || typeof node.condition !== "object") {
+            throw new Error("While loop condition is malformed or missing.");
+        }
+
+        const { left, operator, right } = node.condition;
+
+        if (
+            typeof left === "undefined" ||
+            typeof operator === "undefined" ||
+            typeof right === "undefined"
+        ) {
+            console.error("While loop condition components are undefined.", {
+                left,
+                operator,
+                right,
+            });
+            throw new Error(
+                "While loop condition is missing components: left, operator, or right."
+            );
+        }
+
+        const conditionString = this.convertConditionToString(node.condition);
+        // Initial while statement
+        const actionFrames = [
+            {
+                line: node.line,
+                operation: "while",
+                condition: conditionString,
+                timestamp: new Date().toISOString(),
+                description: `While loop with condition ${conditionString}.`,
+            },
+        ];
+
+        // Simulate the loop execution by manually evaluating the condition
+        while (this.evaluateCondition(node.condition)) {
+            // Add an if statement for the condition evaluation
+            actionFrames.push({
+                line: node.line,
+                operation: "if",
+                condition: conditionString,
+                result: true,
+                timestamp: new Date().toISOString(),
+                description: `Checked if ${conditionString}.`,
+            });
+
+            // Add the body operations, ensuring the line numbers remain consistent
+            const bodyFrames = this.transformNodes(node.body).map((frame) => ({
+                ...frame,
+                line: frame.line, // Keep the line number consistent
+            }));
+
+            actionFrames.push(...bodyFrames);
+            this.currentLine = this.currentLine - node.body.length;
+        }
+
+        // Final if statement where the condition evaluates to false
+        actionFrames.push({
+            line: node.line,
+            operation: "if",
+            condition: conditionString,
+            result: false,
+            timestamp: new Date().toISOString(),
+            description: `Checked if ${conditionString}.`,
         });
-        const description =
-            node.condition.operator === "greater"
-                ? `Loop until ${node.condition.left} is greater than ${node.condition.right}.`
-                : `Loop until ${condition}.`;
+
+        // Add the loop end statement with line number after the while loop
+        actionFrames.push({
+            line: node.line + node.body.length + 1,
+            operation: "loop_end",
+            timestamp: new Date().toISOString(),
+            description: "End of while loop",
+        });
+
+        return actionFrames;
+    }
+
+    transformLoopUntil(node) {
+        const conditionString = this.convertConditionToString(node.condition);
+
+        if (!conditionString) {
+            throw new Error("Loop until condition is malformed.");
+        }
+
+        const body = this.transformNodes(node.body);
         return {
             line: node.line,
             operation: "loop_until",
-            condition: condition,
+            condition: conditionString,
             body: body,
             timestamp: new Date().toISOString(),
-            description: description,
+            description: `Loop until ${conditionString}.`,
         };
+    }
+
+    convertConditionToString(condition) {
+        if (!condition || !condition.operator) {
+            console.error(
+                "Condition is undefined or missing operator:",
+                condition
+            );
+            return null;
+        }
+
+        let operator = condition.operator;
+        if (operator === "greater") operator = ">";
+        if (operator === "less") operator = "<";
+        if (operator === "equal") operator = "==";
+
+        return `${condition.left} ${operator} ${condition.right}`;
     }
 
     transformLoopFromTo(node) {
         const start = this.convertValue(node.range.start);
         const end = this.convertValue(node.range.end);
 
-        // Determine an available variable name for the loop variable
         let loopVariableName = "i";
         let counter = 0;
         while (this.declaredVariables.has(loopVariableName)) {
             loopVariableName = `i${++counter}`;
         }
 
-        // Add the loop variable to the declared variables
         this.declaredVariables.add(loopVariableName);
 
-        // Initialize the loop variable
         const initialization = {
             line: this.currentLine++,
             operation: "set",
             varName: loopVariableName,
+            type: "number",
             value: start,
             timestamp: new Date().toISOString(),
-            description: `Set variable ${loopVariableName} to ${start}.`,
+            description: `Set variable ${loopVariableName} to number ${start}.`,
         };
-
-        // Transform the loop body
+        this.variables[loopVariableName] = start;
         const body = this.transformNodes(node.body).map((frame) => {
             if (
                 frame.operation === "print" &&
@@ -254,22 +358,63 @@ class JsonConverter {
         ];
     }
 
+    transformReturnStatement(node) {
+        const transformedReturnValue = this.transformExpression(node.value);
+        return {
+            line: node.line,
+            operation: "return",
+            value: transformedReturnValue,
+            timestamp: new Date().toISOString(),
+            description: `Returned ${JSON.stringify(transformedReturnValue)}.`,
+        };
+    }
+
     evaluateCondition(condition) {
+        if (!condition || !condition.operator) {
+            console.error("Condition is malformed or undefined:", condition);
+            throw new Error("Condition is malformed or undefined.");
+        }
+
         const left = isNaN(condition.left)
             ? this.variables[condition.left] || condition.left
             : parseFloat(condition.left);
         const right = isNaN(condition.right)
             ? this.variables[condition.right] || condition.right
             : parseFloat(condition.right);
-        switch (condition.operator) {
-            case "greater":
+
+        const operatorsMap = {
+            greater: ">",
+            less: "<",
+            equal: "==",
+            ">": ">",
+            "<": "<",
+            "==": "==",
+            "!=": "!=",
+            ">=": ">=",
+            "<=": "<=",
+        };
+
+        const operator = operatorsMap[condition.operator];
+
+        if (!operator) {
+            throw new Error(`Unknown operator: ${condition.operator}`);
+        }
+
+        switch (operator) {
+            case ">":
                 return left > right;
-            case "less":
+            case "<":
                 return left < right;
-            case "equal":
+            case "==":
                 return left === right;
+            case "!=":
+                return left !== right;
+            case ">=":
+                return left >= right;
+            case "<=":
+                return left <= right;
             default:
-                throw new Error(`Unknown operator: ${condition.operator}`);
+                throw new Error(`Unhandled operator: ${operator}`);
         }
     }
 
@@ -294,19 +439,38 @@ class JsonConverter {
     }
 
     evaluateExpression(expression) {
-        if (expression.type === "Identifier") {
-            return this.variables[expression.value] || expression.value;
+        //console.log("x value " + this.variables["x"]);
+        if (expression.type === "Expression") {
+            const left = this.evaluateExpression(expression.left);
+            const right = this.evaluateExpression(expression.right);
+            // console.log(`${left} ${expression.operator} ${right}`);
+            return this.computeExpression(left, expression.operator, right);
+        } else if (this.declaredVariables.has(expression)) {
+            // console.log("var name " + expression);
+            return this.convertValue(this.variables[expression]);
         } else if (
             expression.type === "NumberLiteral" ||
             expression.type === "StringLiteral"
         ) {
+            // console.log("Value " + this.convertValue(expression.value));
             return this.convertValue(expression.value);
-        } else if (expression.type === "Expression") {
-            const left = this.evaluateExpression(expression.left);
-            const right = this.evaluateExpression(expression.right);
-            return `${left} ${expression.operator} ${right}`;
         } else {
-            return expression;
+            return this.convertValue(expression);
+        }
+    }
+
+    computeExpression(left, operator, right) {
+        switch (operator) {
+            case "+":
+                return left + right;
+            case "-":
+                return left - right;
+            case "*":
+                return left * right;
+            case "/":
+                return left / right;
+            default:
+                throw new Error(`Unknown operator: ${operator}`);
         }
     }
 
@@ -316,7 +480,7 @@ class JsonConverter {
         );
         this.variables[node.varName] = elements;
         this.initializedArrays.add(node.varName);
-        this.declaredVariables.add(node.varName); // Add array to declaredVariables set
+        this.declaredVariables.add(node.varName);
         return {
             line: node.line,
             operation: "create_array",
