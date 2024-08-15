@@ -18,62 +18,63 @@ function MainVisualisationWindow({
     })
     {
     useEffect(()=>{
-        console.log(pauseState)
-    }, [pauseState])
-    const [arraysState, setArraysState] = useState([]);
+        console.log(indexState)
+        console.log("ACTUAL SPEED STATE: "+speedState)
+    }, [indexState,speedState])
+    const [arraysState, setArraysState] = useState([]); // {name, values, locations}
     const genericOperations = ["else","print"];
-    useEffect(()=>{
-        console.log("index: "+indexState)
-        if(indexState >-1 && indexState < movementsState.length && !pauseState){
-        
-            if (movementsState[indexState].operation === "create"){
-                console.log("here is the index: "+indexState)
-                let valuesArr = [];
-                let locationsArr = [];
-                for (let i = 0; i < movementsState[indexState].value.length; i++) {
-                    valuesArr.push(movementsState[indexState].varName + "++" + movementsState[indexState].value[i] + "-" + i);
-                    locationsArr.push(i);
+    useEffect(() => {
+        const performOperations = () => {
+            if (indexState > -1 && indexState < movementsState.length && !pauseState) {
+                const movement = movementsState[indexState];
+                
+                if (movement.operation === "create") {
+                    const valuesArr = movement.value.map((value, i) =>
+                        `${movement.varName}++${value}-${i}`
+                    );
+                    const locationsArr = movement.value.map((_, i) => i);
+                    
+                    setArraysState((pArr) => {
+                        return [...pArr, { name: movement.varName, values: valuesArr, locations: locationsArr }];
+                    });
+                    
+                    const timeoutId = setTimeout(() => {
+                        setOutput((prev) => [...prev, movement.description]);
+                        setIndexState((i) => i + 1);
+                    }, speedState * 1000);
+    
+                    return () => clearTimeout(timeoutId);
                 }
-                setArraysState((pArr) =>{
-                    let tempArr = [...pArr];
-                    tempArr.push({name: movementsState[indexState].varName, values: valuesArr, locations:locationsArr});
-                    return tempArr;
-                })
-                const timeoutId = setTimeout(()=> {
-                setOutput((prev) => {return [...prev, movementsState[indexState].description]});
-                if (bufferState){
-                    setPauseState(!pauseState)
-                }
-                setIndexState((i)=>{return i+1})
-                }, speedState*1000)
-                return () => clearTimeout(timeoutId);
-            }
-
-            if (genericOperations.includes(movementsState[indexState].operation)){ // Check for generic operations that need no animation but need a print.
-                if (movementsState[indexState].operation === "print"){
-                    setOutput((prev) => {return [...prev, "colour__(OUTPUT) "+movementsState[indexState].literal]});
-                    setOutput((prev) => {return [...prev, movementsState[indexState].description]});
-                    const timeoutId1 = setTimeout(() => {
-                        if (bufferState == true){
-                            setPauseState(!pauseState)
-                          }
-                        setIndexState((prev) => prev + 1);
-                    }, speedState * 1000 );
-                    return () => clearTimeout(timeoutId1);
-                }
-                else{
-                    setOutput((prev) => {return [...prev, movementsState[indexState].description]});
-                    const timeoutId2 = setTimeout(() => {
-                        if (bufferState == true){
-                            setPauseState(!pauseState)
-                          }
-                        setIndexState((prev) => prev + 1);
-                    }, speedState * 1000 );
-                    return () => clearTimeout(timeoutId2);
+    
+                if (genericOperations.includes(movement.operation)) {
+                    if (movement.operation === "print") {
+                        setOutput((prev) => [...prev, `colour__(OUTPUT) ${movement.literal}`]);
+                        setOutput((prev) => [...prev, movement.description]);
+    
+                        const timeoutId1 = setTimeout(() => {
+                            if (bufferState) {
+                                setPauseState(true); // Toggle pause if buffer is true
+                            }
+                            setIndexState((prev) => prev + 1);
+                        }, speedState * 1000);
+    
+                        return () => clearTimeout(timeoutId1);
+                    } else {
+                        setOutput((prev) => [...prev, movement.description]);
+    
+                        const timeoutId2 = setTimeout(() => {
+                            setIndexState((prev) => prev + 1);
+                        }, speedState * 1000);
+    
+                        return () => clearTimeout(timeoutId2);
+                    }
                 }
             }
-    }
-    }, [indexState, pauseState])
+        };
+    
+        // Execute the operations function
+        performOperations();
+    }, [indexState, pauseState]);
 
     return(
         <div className="MainVisualisationWindow">
@@ -84,6 +85,7 @@ function MainVisualisationWindow({
             setIndexState={setIndexState}
             pauseState = {pauseState}
             setPauseState = {setPauseState}
+            arraysState = {arraysState}
             setOutput = {setOutput}
             bufferState = {bufferState}
         />
@@ -105,6 +107,7 @@ function MainVisualisationWindow({
                     arrayName = {array.name}
                     movements={movementsState}
                     arrayState = {arraysState[i]}
+                    arraysState = {arraysState}
                     speedState ={speedState}
                     indexState={indexState}
                     setIndexState={setIndexState}

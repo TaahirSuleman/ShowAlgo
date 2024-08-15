@@ -1,6 +1,6 @@
-import { Box, Center, Spinner, Button } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 import { Editor, useMonaco } from "@monaco-editor/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 const CodeEditorView = ({
   language,
@@ -13,42 +13,50 @@ const CodeEditorView = ({
   movementsState,
   highlightState,
   setHighlightState,
-  pauseState
+  pauseState,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [editor, setEditor] = useState(null);
   const [decorations, setDecorations] = useState([]);
   const monaco = useMonaco();
-  
+  const timerRefs = useRef([]); // Ref to store timeout IDs
+  const currentLineIndex = useRef(0); // Ref to store the current line index being highlighted
+  const currentSpeed = useRef(speedState); // Ref to track the current speed state for ongoing highlights
 
   useEffect(() => {
     if (monaco) {
-      monaco.editor.defineTheme('myCustomTheme', {
-        base: 'vs-dark', // can also be vs-dark or hc-black
-        inherit: true, // whether to inherit the base theme's rules
-
+      monaco.editor.defineTheme("myCustomTheme", {
+        base: "vs-dark",
+        inherit: true,
         rules: [
-          { token: 'comment', foreground: 'ffa500', fontStyle: 'italic underline' },
-          { token: 'keyword', foreground: 'ff0000', fontStyle: 'bold' },
-
+          { token: "comment", foreground: "ffa500", fontStyle: "italic underline" },
+          { token: "keyword", foreground: "ff0000", fontStyle: "bold" },
         ],
         colors: {
-          'editor.foreground': '#FFFFFF',
-          'editor.background': '#0000004C',
-          'editor.lineHighlightBorder': '#00000000',
-          'editor.lineHighlightBackground': '#0000001C',
-          // variable color
-        }
+          "editor.foreground": "#FFFFFF",
+          "editor.background": "#0000004C",
+          "editor.lineHighlightBorder": "#00000000",
+          "editor.lineHighlightBackground": "#0000001C",
+        },
       });
     }
   }, [monaco]);
 
-  useEffect(()=>{
-    if (highlightState){
-      handleHighlightClick();
-      setHighlightState(false);
+  useEffect(() => {
+    if (editor) {
+      if (highlightState && !pauseState) {
+        // Begin or continue highlighting
+        startHighlighting();
+      } else {
+        // Pause or clear highlights
+        clearTimers(); // Clear ongoing timers
+        if (!highlightState) {
+          clearHighlights(editor); // Clear decorations if highlightState is false
+          currentLineIndex.current = 0; // Reset current line index if highlightState is false
+        }
+      }
     }
-  }, highlightState)
+  }, [highlightState, pauseState, editor]); // Removed speedState from dependencies
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -62,33 +70,53 @@ const CodeEditorView = ({
     setEditor(editorInstance);
   };
 
-  const highlightLines = (editor, lines) => {
-    lines.forEach(({ line, time }) => {
-      setTimeout(() => {
+  // Clear all active timers
+  const clearTimers = () => {
+    timerRefs.current.forEach((id) => clearTimeout(id));
+    timerRefs.current = [];
+  };
+
+  const clearHighlights = (editor) => {
+    setDecorations((oldDecorations) => editor.deltaDecorations(oldDecorations, []));
+  };
+
+  // Start highlighting lines with speed and pause control
+  const startHighlighting = () => {
+    clearTimers(); // Clear existing timers before starting new ones
+
+    const highlightNextLine = () => {
+      if (currentLineIndex.current < movementsState.length && !pauseState) {
+        const { line } = movementsState[currentLineIndex.current];
         setDecorations((oldDecorations) =>
           editor.deltaDecorations(oldDecorations, [
             {
               range: new monaco.Range(line, 1, line, 1),
               options: {
                 isWholeLine: true,
-                className: 'myLineHighlight',
+                className: "myLineHighlight",
               },
             },
           ])
         );
-      }, time);
-    });
+
+        currentLineIndex.current += 1; // Move to the next line
+
+        if (currentLineIndex.current < movementsState.length) {
+          const delay = currentSpeed.current * 1000; // Use current speed for all subsequent lines
+          const timerId = setTimeout(highlightNextLine, delay);
+          timerRefs.current.push(timerId);
+        }
+      }
+    };
+
+    // Start highlighting from the current position
+    highlightNextLine();
   };
 
-  const handleHighlightClick = () => {
-    if (editor) {
-      let linesToHighlight = [];
-      for (let i=0; i<movementsState.length; i++){
-        linesToHighlight.push({line: movementsState[i].line, time:i*speedState*1000 +250})
-      }
-      highlightLines(editor, linesToHighlight);
-    }
-  };
+  // Update current speed when speedState changes
+  useEffect(() => {
+    currentSpeed.current = speedState; // Update the ref to reflect the new speedState
+  }, [speedState]);
 
   const loadingComponent = (
     <Box display="flex" bg="blackAlpha.700" height={height} justifyContent="center" alignItems="center">

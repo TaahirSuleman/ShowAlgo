@@ -14,6 +14,14 @@ const userSchema = new mongoose.Schema({
         default: "user",
         enum: ["user", "admin"],
     },
+    lastLogin: {
+        type: Date,
+        default: null,
+    },
+    dailyStreak: {
+        type: Number,
+        default: 0,
+    },
 })
 
 const UserModel = mongoose.model("User", userSchema);

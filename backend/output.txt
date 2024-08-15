@@ -5181,3 +5181,4451 @@ Final JSON: {
     }
   ]
 }
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T12:06:44.410Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T12:07:33.770Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T12:07:33.770Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T12:07:33.770Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T12:08:14.347Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T12:08:14.347Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T12:08:14.347Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:08:14.347Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T12:09:25.220Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T12:09:25.220Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T12:09:25.220Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:09:25.220Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:09:25.220Z",
+      "description": "Created array letters."
+    },
+    {
+      "line": 6,
+      "operation": "add",
+      "varName": "nums",
+      "value": 5,
+      "position": 4,
+      "timestamp": "2024-08-09T12:09:25.220Z",
+      "description": "Added 5 to array nums at position 4."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T12:10:00.541Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T12:10:00.541Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T12:10:00.541Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:10:00.541Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:10:00.541Z",
+      "description": "Created array letters."
+    },
+    {
+      "line": 6,
+      "operation": "add",
+      "varName": "nums",
+      "value": 5,
+      "position": 4,
+      "timestamp": "2024-08-09T12:10:00.541Z",
+      "description": "Added 5 to array nums at position 4."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T12:16:23.824Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T12:16:23.824Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T12:16:23.824Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:16:23.824Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:16:23.824Z",
+      "description": "Created array letters."
+    },
+    {
+      "line": 6,
+      "operation": "add",
+      "varName": "nums",
+      "value": 5,
+      "position": 4,
+      "timestamp": "2024-08-09T12:16:23.824Z",
+      "description": "Added 5 to array nums at position 4."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "gangsterlicious",
+      "value": [
+        "g",
+        "a",
+        "n",
+        "g",
+        "s",
+        "t",
+        "a"
+      ],
+      "timestamp": "2024-08-09T12:16:23.824Z",
+      "description": "Created array gangsterlicious."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:32:52.348Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:33:41.693Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:33:41.694Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:33:41.694Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:35:35.941Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:35:35.942Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:35:35.942Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:35:35.942Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:35:57.418Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:35:57.418Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:35:57.418Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:35:57.418Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:38:01.342Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:38:01.342Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:38:01.342Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:38:01.342Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:38:19.665Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:38:19.665Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:38:19.665Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:38:19.665Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:39:50.552Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:39:50.552Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:39:50.552Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:39:50.553Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:40:25.675Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:40:25.675Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:40:25.675Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:40:25.675Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:46:10.535Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:46:10.535Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:46:10.535Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:46:10.535Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": false,
+      "timestamp": "2024-08-09T12:46:31.751Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-09T12:46:31.751Z",
+      "description": "Printed x is 5 or less."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:46:31.751Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:46:31.751Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T12:48:54.978Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T12:48:54.978Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T12:48:54.978Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T12:48:54.978Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T12:48:54.978Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T13:05:36.347Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T13:05:36.347Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T13:05:36.347Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T13:05:36.347Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T13:05:36.347Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T13:05:41.323Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T13:05:41.323Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T13:05:41.323Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T13:05:41.323Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T13:05:41.323Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T13:06:45.941Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T13:07:02.554Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T13:07:02.554Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T13:07:02.554Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T13:07:02.554Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T13:07:02.554Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T20:13:23.512Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-09T20:13:23.512Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-09T20:13:23.512Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:13:23.512Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-09T20:15:46.857Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:17:09.202Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:17:09.202Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:17:43.403Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:17:43.403Z",
+      "description": "Created array letters."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:17:43.403Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:17:43.403Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:17:43.403Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:17:43.403Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:17:43.403Z",
+      "description": "Created array e."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:18:44.088Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:18:44.088Z",
+      "description": "Created array letters."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:18:44.088Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:18:44.088Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:18:44.088Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:18:44.088Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:18:44.088Z",
+      "description": "Created array e."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:29:39.869Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:29:39.869Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:29:39.869Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:29:39.869Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:29:39.869Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:29:39.869Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:29:39.869Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:29:39.869Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:30:59.785Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:30:59.785Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:30:59.785Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:30:59.785Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:30:59.785Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:30:59.785Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:30:59.785Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:30:59.785Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:31:23.538Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:31:23.538Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:31:23.539Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:31:23.539Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:31:23.539Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:31:23.539Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:31:23.539Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:31:23.539Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:32:49.783Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:32:49.783Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:32:49.783Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:32:49.783Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:32:49.783Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:32:49.783Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:32:49.783Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:32:49.783Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:40:28.215Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:40:28.215Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:40:28.215Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:40:28.215Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:40:28.215Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:40:28.215Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:40:28.215Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:40:28.215Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:40:55.302Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:40:55.302Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:40:55.302Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:40:55.302Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:40:55.302Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:40:55.302Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:40:55.302Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:40:55.302Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:41:34.699Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:41:34.699Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:41:34.699Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:41:34.699Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:41:34.699Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:41:34.699Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:41:34.699Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:41:34.699Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:42:10.521Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:42:10.521Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:42:10.521Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:42:10.521Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:42:10.521Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:42:10.521Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:42:10.521Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:42:10.521Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:42:46.772Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:42:46.772Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:42:46.772Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:42:46.772Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:42:46.772Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:42:46.772Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:42:46.772Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:42:46.772Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "a",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable a to 1."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "b",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable b to 1."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "c",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable c to 1."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "d",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable d to 1."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "e",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable e to 1."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "f",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable f to 1."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "g",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable g to 1."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "h",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable h to 1."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "i",
+      "value": 1,
+      "timestamp": "2024-08-09T20:44:30.649Z",
+      "description": "Set variable i to 1."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "a",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable a to 1."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "b",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable b to 1."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "c",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable c to 1."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "d",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable d to 1."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "e",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable e to 1."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "f",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable f to 1."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "g",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable g to 1."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "h",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable h to 1."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "i",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:03.077Z",
+      "description": "Set variable i to 1."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "a",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable a to 1."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "b",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable b to 1."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "c",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable c to 1."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "d",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable d to 1."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "e",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable e to 1."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "f",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable f to 1."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "g",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable g to 1."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "h",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable h to 1."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "i",
+      "value": 1,
+      "timestamp": "2024-08-09T20:46:51.457Z",
+      "description": "Set variable i to 1."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:47:23.805Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:47:23.805Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:47:23.805Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:47:23.805Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:47:23.805Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:47:23.805Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:47:23.805Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:47:23.805Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:48:37.981Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "varName": "a",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:48:37.981Z",
+      "description": "Created array a."
+    },
+    {
+      "line": 3,
+      "operation": "create",
+      "varName": "b",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:48:37.981Z",
+      "description": "Created array b."
+    },
+    {
+      "line": 4,
+      "operation": "create",
+      "varName": "c",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:48:37.981Z",
+      "description": "Created array c."
+    },
+    {
+      "line": 5,
+      "operation": "create",
+      "varName": "d",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:48:37.981Z",
+      "description": "Created array d."
+    },
+    {
+      "line": 6,
+      "operation": "create",
+      "varName": "e",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:48:37.981Z",
+      "description": "Created array e."
+    },
+    {
+      "line": 7,
+      "operation": "create",
+      "varName": "f",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-09T20:48:37.981Z",
+      "description": "Created array f."
+    },
+    {
+      "line": 8,
+      "operation": "create",
+      "varName": "g",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-09T20:48:37.981Z",
+      "description": "Created array g."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:12.090Z",
+      "description": "Set variable a to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T20:49:42.363Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T20:54:11.065Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:09.750Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T20:55:51.340Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.483Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T20:58:39.484Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T20:59:40.879Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T21:00:18.867Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T21:02:22.344Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:36.354Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T21:05:56.898Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T21:07:21.217Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:04.535Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T21:08:29.753Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "value": 10,
+      "timestamp": "2024-08-09T21:18:34.789Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
