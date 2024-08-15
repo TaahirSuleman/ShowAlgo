@@ -1,5 +1,6 @@
 import VariableListComponent from "./VariableListComponent";
 import IfVisualisationComponent from "./IfVisualisationComponent";
+import LoopNotificationComponent from "./LoopNotificationComponent";
 import ArrayComponent from "./ArrayComponent";
 import { useState, useEffect } from 'react';
 import '../styles/App.css';
@@ -14,7 +15,7 @@ function MainVisualisationWindow({
     setIndexState, 
     pauseState,
     bufferState,
-    setPauseState
+    setPauseState,
     })
     {
     useEffect(()=>{
@@ -23,6 +24,7 @@ function MainVisualisationWindow({
     }, [indexState,speedState])
     const [arraysState, setArraysState] = useState([]); // {name, values, locations}
     const genericOperations = ["else","print"];
+
     useEffect(() => {
         const performOperations = () => {
             if (indexState > -1 && indexState < movementsState.length && !pauseState) {
@@ -52,9 +54,6 @@ function MainVisualisationWindow({
                         setOutput((prev) => [...prev, movement.description]);
     
                         const timeoutId1 = setTimeout(() => {
-                            if (bufferState) {
-                                setPauseState(true); // Toggle pause if buffer is true
-                            }
                             setIndexState((prev) => prev + 1);
                         }, speedState * 1000);
     
@@ -100,6 +99,17 @@ function MainVisualisationWindow({
                 setOutput = {setOutput}
                 bufferState = {bufferState}
             />
+            <LoopNotificationComponent 
+                movements={movementsState}
+                speedState ={speedState}
+                indexState={indexState}
+                setIndexState={setIndexState}
+                pauseState = {pauseState}
+                setPauseState = {setPauseState}
+                arraysState = {arraysState}
+                setOutput = {setOutput}
+                bufferState = {bufferState}
+            />
             {arraysState.map((array, i) => {
                 return (
                     <ArrayComponent
@@ -108,6 +118,7 @@ function MainVisualisationWindow({
                     movements={movementsState}
                     arrayState = {arraysState[i]}
                     arraysState = {arraysState}
+                    setArraysState={setArraysState}
                     speedState ={speedState}
                     indexState={indexState}
                     setIndexState={setIndexState}

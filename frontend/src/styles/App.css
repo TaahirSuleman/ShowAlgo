@@ -141,11 +141,16 @@
   width: 100%;
 }
 
-.IfVisualisationComponent {
+.IfVisualisationComponent{
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  margin-left: 20px; /* Add space from the left if needed */
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid #ccc; /* Matching border for both components */
+  border-radius: 10px; /* Matching border-radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+  text-align: center;
 }
 
 .ArrayComponent {
@@ -157,8 +162,10 @@
 
 .if-array-container {
   display: grid;
-  grid-template-rows: auto auto; /* Stack IfVisualisationComponent and ArrayComponent vertically */
-  width: 100%; /* Make it take full width of the remaining space */
+  grid-template-columns: 2fr 1fr; /* Two columns, IfVisualisationComponent twice as wide as LoopNotificationComponent */
+  grid-template-rows: auto; /* Keep them in a single row */
+  width: 100%; /* Take full width of the parent container */
+  gap: 0; /* Ensure no gap between components */
 }
 
 .myLineHighlight {
@@ -166,4 +173,26 @@
 }
 .myLineLowlight {
   background-color: rgba(0,0,0,0); /* No background */
+}
+
+.loop-notification {
+  height: 100%; /* Full height to match IfVisualisationComponent */
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Align text to the left */
+  text-align: left; /* Ensure text alignment is left */
+  border: 1px solid #ccc; /* Border to separate from IfVisualisationComponent */
+  white-space: nowrap; /* Prevent text from wrapping */
+  width: auto; /* Allow the width to grow based on content */
+  box-sizing: border-box; /* Include padding and border in the element's width and height */
+}
+
+.loop-title {
+  font-size: 24px; /* Large font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 10px; /* Space between title and the rest */
+  color: #333; /* Text color */
 }

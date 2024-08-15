@@ -7243,3 +7243,1246 @@ Final JSON: {
     }
   ]
 }
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T17:22:22.932Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T17:26:28.994Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:03:05.265Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:03.992Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:03.992Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:03.992Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:03.992Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:03.992Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:03.992Z",
+      "description": "Set variable e to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:28.894Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:28.894Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:28.894Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:28.894Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:28.894Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-10T18:13:28.894Z",
+      "description": "Set variable e to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:14:08.487Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-10T18:14:08.487Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "b",
+      "value": 10,
+      "timestamp": "2024-08-10T18:14:08.487Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "c",
+      "value": 10,
+      "timestamp": "2024-08-10T18:14:08.487Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "d",
+      "value": 10,
+      "timestamp": "2024-08-10T18:14:08.487Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "e",
+      "value": 10,
+      "timestamp": "2024-08-10T18:14:08.487Z",
+      "description": "Set variable e to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:39:35.105Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:39:49.220Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "value": "x + 1",
+      "timestamp": "2024-08-10T18:39:49.220Z",
+      "description": "Set variable x to x + 1."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:40:41.565Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "value": "x + 1",
+      "timestamp": "2024-08-10T18:40:41.565Z",
+      "description": "Set variable x to x + 1."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:56:06.646Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T18:56:40.659Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "value": 10,
+      "timestamp": "2024-08-10T18:57:14.110Z",
+      "description": "Set variable a to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-10T19:04:39.470Z",
+      "description": "Set variable i to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-10T19:06:58.100Z",
+      "description": "Set variable i to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-10T19:07:26.639Z",
+      "description": "Set variable i to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-10T19:09:08.750Z",
+      "description": "Set variable i to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 10,
+      "timestamp": "2024-08-10T19:13:24.441Z",
+      "description": "Set variable i to 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 6,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 7,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 9,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 10,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 11,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:13:36.506Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 6,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 7,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 9,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 10,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 11,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:14:31.381Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 6,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 7,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 9,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 10,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 11,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:15:53.905Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 6,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 7,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 9,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 10,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 11,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:02.721Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 11,
+      "timestamp": "2024-08-10T19:16:30.645Z",
+      "description": "Set variable i to 11."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:30.645Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-10T19:16:47.047Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:16:47.047Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T19:17:16.432Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x greater 5",
+      "result": true,
+      "timestamp": "2024-08-10T19:17:16.432Z",
+      "description": "Checked if x greater 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-10T19:17:16.432Z",
+      "description": "Printed x is greater than 5."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-10T19:17:32.137Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x less 5",
+      "result": false,
+      "timestamp": "2024-08-10T19:17:32.137Z",
+      "description": "Checked if x less 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is 5 or less",
+      "timestamp": "2024-08-10T19:17:32.137Z",
+      "description": "Printed x is 5 or less."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-10T19:18:05.748Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:18:05.748Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-10T19:18:33.423Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:18:33.423Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "nah nah",
+      "timestamp": "2024-08-10T19:18:33.423Z",
+      "description": "Printed nah nah."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 1,
+      "timestamp": "2024-08-10T19:19:47.322Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": true,
+      "timestamp": "2024-08-10T19:19:47.322Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "yeah yeah",
+      "timestamp": "2024-08-10T19:19:47.322Z",
+      "description": "Printed yeah yeah."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-10T19:20:00.406Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:20:00.407Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "nah nah",
+      "timestamp": "2024-08-10T19:20:00.407Z",
+      "description": "Printed nah nah."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 2,
+      "timestamp": "2024-08-10T19:21:29.684Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": true,
+      "timestamp": "2024-08-10T19:21:29.684Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "yeah yeah",
+      "timestamp": "2024-08-10T19:21:29.684Z",
+      "description": "Printed yeah yeah."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 1,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": true,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "Hallo",
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Printed Hallo."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "i",
+      "value": "i + 1",
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 6,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 7,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 9,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 10,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 11,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 12,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-10T19:22:31.116Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-11T19:00:59.654Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 5",
+      "result": false,
+      "timestamp": "2024-08-11T19:00:59.654Z",
+      "description": "Checked if i less 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i less 5",
+      "result": false,
+      "timestamp": "2024-08-11T19:00:59.654Z",
+      "description": "Checked if i less 5."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "i less 5",
+      "result": false,
+      "timestamp": "2024-08-11T19:00:59.654Z",
+      "description": "Checked if i less 5."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "i less 5",
+      "result": false,
+      "timestamp": "2024-08-11T19:00:59.654Z",
+      "description": "Checked if i less 5."
+    },
+    {
+      "line": 6,
+      "operation": "if",
+      "condition": "i less 5",
+      "result": false,
+      "timestamp": "2024-08-11T19:00:59.654Z",
+      "description": "Checked if i less 5."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 6,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 7,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 9,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 10,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    },
+    {
+      "line": 11,
+      "operation": "if",
+      "condition": "i less 10",
+      "result": false,
+      "timestamp": "2024-08-11T19:09:20.672Z",
+      "description": "Checked if i less 10."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "value": 0,
+      "timestamp": "2024-08-11T19:11:38.377Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i less 4",
+      "result": false,
+      "timestamp": "2024-08-11T19:11:38.377Z",
+      "description": "Checked if i less 4."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i less 4",
+      "result": false,
+      "timestamp": "2024-08-11T19:11:38.377Z",
+      "description": "Checked if i less 4."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "i less 4",
+      "result": false,
+      "timestamp": "2024-08-11T19:11:38.377Z",
+      "description": "Checked if i less 4."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "i less 4",
+      "result": false,
+      "timestamp": "2024-08-11T19:11:38.377Z",
+      "description": "Checked if i less 4."
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "value": 10,
+      "timestamp": "2024-08-14T15:46:03.494Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}

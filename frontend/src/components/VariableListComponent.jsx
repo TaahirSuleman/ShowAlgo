@@ -41,11 +41,12 @@ function VariableListComponent({
                 return
               }
             })
-            const timeoutId2 = setTimeout(() => {
-              setOutput((prev) => {return [...prev, movements[indexState].description]}); 
-              setIndexState((i)=>{return i+1});
-          }, speedState*1000 );
-          return () => clearTimeout(timeoutId2);
+            // NOTE THAT THE UPDATING OF THE INDEXSTATE HAPPENS IN ARRAYCOMPONENT
+          //   const timeoutId2 = setTimeout(() => {
+          //     setOutput((prev) => {return [...prev, movements[indexState].description]}); 
+          //     setIndexState((i)=>{return i+1});
+          // }, speedState*1000 );
+          // return () => clearTimeout(timeoutId2);
           }
       }
     }

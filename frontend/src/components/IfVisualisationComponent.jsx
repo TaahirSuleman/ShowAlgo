@@ -43,14 +43,7 @@ function IfVisualisationComponent(
               }, speedState * 1000 / 2);
     
               const timeoutId3 = setTimeout(() => {
-                //setOutput(prev => [...prev, movements[indexState].description]);
-                if (bufferState == true){
-                  setPauseState(!pauseState)
-                  const bufferTimer = setTimeout(()=>{
-                    setIndexState((i)=>{return i+1})
-                  }, 2000)
-                  return bufferTimer
-                }
+                setOutput((prev) => {return [...prev, movements[indexState].description]});
                 setIndexState((prev) => prev + 1);
               }, speedState * 1000 /2 );
     
@@ -67,22 +60,22 @@ function IfVisualisationComponent(
     performOperations();
 
       }, [indexState, pauseState])
-            return(
-                <div className="if-vis-window">
-                    <motion.div
-                        className="notification-blurb"
-                        layout
-                        style= {{backgroundColor: resultColourState}}
-                        initial = {{borderRadius: 15}}
-                        animate={{
-                        borderRadius: resultColourState === "green" || resultColourState === "red" ? 50 : 15
-                        }}
+    return(
+        <div className="if-vis-window">
+            <motion.div
+                className="notification-blurb"
+                layout
+                style= {{backgroundColor: resultColourState}}
+                initial = {{borderRadius: 15}}
+                animate={{
+                borderRadius: resultColourState === "green" || resultColourState === "red" ? 50 : 15
+                }}
 
-                    >
-                        <p>The if statement asks: </p>
-                        <p style={{ fontSize: '35px', fontWeight: 'bold' }}>{(ifStatement.condition != "This is the starter If") ? ifStatement.condition+"?" : "The if statements will be shown here!"}</p>
-                    </motion.div>
-                </div>
-            )
+            >
+                <p>The if statement asks: </p>
+                <p style={{ fontSize: '35px', fontWeight: 'bold' }}>{(ifStatement.condition != "This is the starter If") ? ifStatement.condition+"?" : "The if statements will be shown here!"}</p>
+            </motion.div>
+        </div>
+    )
 }
 export default IfVisualisationComponent;
