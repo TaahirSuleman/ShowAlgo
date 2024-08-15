@@ -126,4 +126,212 @@ END WHILE`;
             expect(error.message).to.include("Unexpected end of string");
         }
     });
+    it("should parse 'LOOP until' with high-level syntax correctly", () => {
+        const pseudocode = `LOOP until x is greater than 5
+                PRINT x
+                SET x to x + 1
+            END LOOP`;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(1);
+        const loop = ast.body[0];
+        expect(loop.type).to.equal("LoopUntil");
+        expect(loop.condition.left).to.equal("x");
+        expect(loop.condition.operator).to.equal("greater");
+        expect(loop.condition.right.value).to.equal("5");
+        expect(loop.body).to.have.lengthOf(2);
+        expect(loop.body[0].type).to.equal("PrintStatement");
+        expect(loop.body[0].value.value).to.equal("x");
+
+        // Updated assertion for the VariableDeclaration
+        expect(loop.body[1].type).to.equal("VariableDeclaration");
+        expect(loop.body[1].varName).to.equal("x");
+        expect(loop.body[1].value).to.deep.equal({
+            type: "Expression",
+            left: {
+                type: "Identifier",
+                value: "x",
+                line: 3,
+            },
+            operator: "+",
+            right: {
+                type: "NumberLiteral",
+                value: "1",
+                line: 3,
+            },
+            line: 4,
+        });
+
+        expect(loop.line).to.equal(1);
+        expect(loop.body[0].line).to.equal(2);
+        expect(loop.body[1].line).to.equal(3);
+    });
+
+    it("should parse 'LOOP UNTIL' with traditional syntax correctly", () => {
+        const pseudocode = `LOOP UNTIL x > 5
+                PRINT x
+                SET x TO x + 1
+            END LOOP`;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(1);
+        const loop = ast.body[0];
+        expect(loop.type).to.equal("LoopUntil");
+        expect(loop.condition.left).to.equal("x");
+        expect(loop.condition.operator).to.equal(">");
+        expect(loop.condition.right.value).to.equal("5");
+        expect(loop.body).to.have.lengthOf(2);
+        expect(loop.body[0].type).to.equal("PrintStatement");
+        expect(loop.body[0].value.value).to.equal("x");
+
+        // Updated assertion for the VariableDeclaration
+        expect(loop.body[1].type).to.equal("VariableDeclaration");
+        expect(loop.body[1].varName).to.equal("x");
+        expect(loop.body[1].value).to.deep.equal({
+            type: "Expression",
+            left: {
+                type: "Identifier",
+                value: "x",
+                line: 3,
+            },
+            operator: "+",
+            right: {
+                type: "NumberLiteral",
+                value: "1",
+                line: 3,
+            },
+            line: 4,
+        });
+
+        expect(loop.line).to.equal(1);
+        expect(loop.body[0].line).to.equal(2);
+        expect(loop.body[1].line).to.equal(3);
+    });
+
+    it("should parse 'LOOP from up to' with high-level syntax correctly", () => {
+        const pseudocode = `
+            LOOP from 0 up to 10
+                PRINT i
+            END LOOP
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(1);
+        const loop = ast.body[0];
+        expect(loop.type).to.equal("LoopFromTo");
+        expect(loop.range.start.value).to.equal("0");
+        expect(loop.range.end.value).to.equal("10");
+        expect(loop.body).to.have.lengthOf(1);
+        expect(loop.body[0].type).to.equal("PrintStatement");
+        expect(loop.body[0].value.value).to.equal("i");
+        expect(loop.line).to.equal(2);
+        expect(loop.body[0].line).to.equal(3);
+    });
+
+    it("should parse 'LOOP FROM TO' with traditional syntax correctly", () => {
+        const pseudocode = `
+            LOOP FROM 0 TO 10
+                PRINT i
+            END LOOP
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(1);
+        const loop = ast.body[0];
+        expect(loop.type).to.equal("LoopFromTo");
+        expect(loop.range.start.value).to.equal("0");
+        expect(loop.range.end.value).to.equal("10");
+        expect(loop.body).to.have.lengthOf(1);
+        expect(loop.body[0].type).to.equal("PrintStatement");
+        expect(loop.body[0].value.value).to.equal("i");
+        expect(loop.line).to.equal(2);
+        expect(loop.body[0].line).to.equal(3);
+    });
+
+    it("should parse 'FOR LOOP until' with high-level syntax correctly", () => {
+        const pseudocode = `
+            FOR LOOP until x is greater than 5
+                PRINT x
+                SET x to x + 1
+            END LOOP
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(1);
+        const loop = ast.body[0];
+        expect(loop.type).to.equal("LoopUntil");
+        expect(loop.condition.left).to.equal("x");
+        expect(loop.condition.operator).to.equal("greater");
+        expect(loop.condition.right.value).to.equal("5");
+        expect(loop.body).to.have.lengthOf(2);
+        expect(loop.body[0].type).to.equal("PrintStatement");
+        expect(loop.body[0].value.value).to.equal("x");
+        expect(loop.body[1].type).to.equal("VariableDeclaration");
+        expect(loop.body[1].varName).to.equal("x");
+        expect(loop.body[1].value.operator).to.equal("+");
+        expect(loop.body[1].value.right.value).to.equal("1");
+        expect(loop.line).to.equal(2);
+        expect(loop.body[0].line).to.equal(3);
+        expect(loop.body[1].line).to.equal(4);
+    });
+
+    it("should parse 'FOR LOOP UNTIL' with traditional syntax correctly", () => {
+        const pseudocode = `
+            FOR LOOP UNTIL x > 5
+                PRINT x
+                SET x TO x + 1
+            END LOOP
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(1);
+        const loop = ast.body[0];
+        expect(loop.type).to.equal("LoopUntil");
+        expect(loop.condition.left).to.equal("x");
+        expect(loop.condition.operator).to.equal(">");
+        expect(loop.condition.right.value).to.equal("5");
+        expect(loop.body).to.have.lengthOf(2);
+        expect(loop.body[0].type).to.equal("PrintStatement");
+        expect(loop.body[0].value.value).to.equal("x");
+        expect(loop.body[1].type).to.equal("VariableDeclaration");
+        expect(loop.body[1].varName).to.equal("x");
+        expect(loop.body[1].varName).to.equal("x");
+        expect(loop.body[1].value.operator).to.equal("+");
+        expect(loop.body[1].value.right.value).to.equal("1");
+        expect(loop.line).to.equal(2);
+        expect(loop.body[0].line).to.equal(3);
+        expect(loop.body[1].line).to.equal(4);
+    });
+
+    it("should parse 'FOR LOOP from up to' with high-level syntax correctly", () => {
+        const pseudocode = `
+            FOR LOOP from 0 up to 10
+                PRINT i
+            END LOOP
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(1);
+        const loop = ast.body[0];
+        expect(loop.type).to.equal("LoopFromTo");
+        expect(loop.range.start.value).to.equal("0");
+        expect(loop.range.end.value).to.equal("10");
+        expect(loop.body).to.have.lengthOf(1);
+        expect(loop.body[0].type).to.equal("PrintStatement");
+        expect(loop.body[0].value.value).to.equal("i");
+        expect(loop.line).to.equal(2);
+        expect(loop.body[0].line).to.equal(3);
+    });
+
+    it("should parse 'FOR LOOP FROM TO' with traditional syntax correctly", () => {
+        const pseudocode = `
+            FOR LOOP FROM 0 TO 10
+                PRINT i
+            END LOOP
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(1);
+        const loop = ast.body[0];
+        expect(loop.type).to.equal("LoopFromTo");
+        expect(loop.range.start.value).to.equal("0");
+        expect(loop.range.end.value).to.equal("10");
+        expect(loop.body).to.have.lengthOf(1);
+        expect(loop.body[0].type).to.equal("PrintStatement");
+        expect(loop.body[0].value.value).to.equal("i");
+        expect(loop.line).to.equal(2);
+        expect(loop.body[0].line).to.equal(3);
+    });
 });
