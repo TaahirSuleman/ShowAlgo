@@ -41,9 +41,9 @@ function IfVisualisationComponent(
               const timeoutId2 = setTimeout(() => {
                 setResultColourState("grey");
               }, speedState * 1000 / 2);
-    
+              setOutput((prev) => {return [...prev, movements[indexState].description]});
               const timeoutId3 = setTimeout(() => {
-                setOutput((prev) => {return [...prev, movements[indexState].description]});
+
                 setIndexState((prev) => prev + 1);
               }, speedState * 1000 /2 );
     

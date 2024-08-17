@@ -23,7 +23,7 @@ function MainVisualisationWindow({
         console.log("ACTUAL SPEED STATE: "+speedState)
     }, [indexState,speedState])
     const [arraysState, setArraysState] = useState([]); // {name, values, locations}
-    const genericOperations = ["else","print"];
+    const genericOperations = ["else","print","endif"];
 
     useEffect(() => {
         const performOperations = () => {
@@ -39,9 +39,9 @@ function MainVisualisationWindow({
                     setArraysState((pArr) => {
                         return [...pArr, { name: movement.varName, values: valuesArr, locations: locationsArr }];
                     });
-                    
+                    setOutput((prev) => [...prev, movement.description]);
                     const timeoutId = setTimeout(() => {
-                        setOutput((prev) => [...prev, movement.description]);
+
                         setIndexState((i) => i + 1);
                     }, speedState * 1000);
     
@@ -50,7 +50,7 @@ function MainVisualisationWindow({
     
                 if (genericOperations.includes(movement.operation)) {
                     if (movement.operation === "print") {
-                        setOutput((prev) => [...prev, `colour__(OUTPUT) ${movement.literal}`]);
+                        setOutput((prev) => [...prev, `colourRed__(OUTPUT) ${movement.literal}`]);
                         setOutput((prev) => [...prev, movement.description]);
     
                         const timeoutId1 = setTimeout(() => {
@@ -75,64 +75,63 @@ function MainVisualisationWindow({
         performOperations();
     }, [indexState, pauseState]);
 
-    return(
+    return (
         <div className="MainVisualisationWindow">
-        <VariableListComponent
+          <VariableListComponent
             movements={movementsState}
-            speedState ={speedState}
+            speedState={speedState}
             indexState={indexState}
             setIndexState={setIndexState}
-            pauseState = {pauseState}
-            setPauseState = {setPauseState}
-            arraysState = {arraysState}
-            setOutput = {setOutput}
-            bufferState = {bufferState}
-        />
-        <div className="if-array-container">
-            <IfVisualisationComponent
+            pauseState={pauseState}
+            setPauseState={setPauseState}
+            arraysState={arraysState}
+            setOutput={setOutput}
+            bufferState={bufferState}
+          />
+          <div className="if-array-container">
+            <div className="top-row">
+              <IfVisualisationComponent
                 movements={movementsState}
-                speedState ={speedState}
+                speedState={speedState}
                 indexState={indexState}
                 setIndexState={setIndexState}
-                pauseState = {pauseState}
-                setPauseState = {setPauseState}
-                setOutput = {setOutput}
-                bufferState = {bufferState}
-            />
-            <LoopNotificationComponent 
+                pauseState={pauseState}
+                setPauseState={setPauseState}
+                setOutput={setOutput}
+                bufferState={bufferState}
+              />
+              <LoopNotificationComponent 
                 movements={movementsState}
-                speedState ={speedState}
+                speedState={speedState}
                 indexState={indexState}
                 setIndexState={setIndexState}
-                pauseState = {pauseState}
-                setPauseState = {setPauseState}
-                arraysState = {arraysState}
-                setOutput = {setOutput}
-                bufferState = {bufferState}
-            />
-            {arraysState.map((array, i) => {
-                return (
-                    <ArrayComponent
-                    key = {array.name}
-                    arrayName = {array.name}
-                    movements={movementsState}
-                    arrayState = {arraysState[i]}
-                    arraysState = {arraysState}
-                    setArraysState={setArraysState}
-                    speedState ={speedState}
-                    indexState={indexState}
-                    setIndexState={setIndexState}
-                    pauseState = {pauseState}
-                    setPauseState = {setPauseState}
-                    setOutput = {setOutput}
-                    bufferState = {bufferState}
-                    />
-                )
-            })}
-            
+                pauseState={pauseState}
+                setPauseState={setPauseState}
+                arraysState={arraysState}
+                setOutput={setOutput}
+                bufferState={bufferState}
+              />
+            </div>
+            {arraysState.map((array, i) => (
+              <ArrayComponent
+                key={array.name}
+                arrayName={array.name}
+                movements={movementsState}
+                arrayState={arraysState[i]}
+                arraysState={arraysState}
+                setArraysState={setArraysState}
+                speedState={speedState}
+                indexState={indexState}
+                setIndexState={setIndexState}
+                pauseState={pauseState}
+                setPauseState={setPauseState}
+                setOutput={setOutput}
+                bufferState={bufferState}
+              />
+            ))}
+          </div>
         </div>
-    </div>
-    )
+      );
 }
 
 export default MainVisualisationWindow

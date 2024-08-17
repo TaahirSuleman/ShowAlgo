@@ -19,13 +19,24 @@ const OutputView = ({ output, isError, isLoading, className, height, width }) =>
       borderColor={isError ? "red.500" : "transparent"}
       overflow="auto"
     >
-      {output.map((line, index) => (line.includes("colour__") ? (
-        <Text color="red" key={index}>{line.substring(8)}</Text>
+      {output.map((line, index) => (line.includes("colourRed__") ? (
+        <Text color="red" 
+              key={index} 
+              style={{
+                fontWeight:"bold",
+                textShadow: `
+                  -1px -1px 0 #fff,  
+                  1px -1px 0 #fff,
+                  -1px 1px 0 #fff,
+                  1px 1px 0 #fff`
+              }}
+        >{line.substring(11)}</Text>  
       )
-      :
-      (
-        <Text key={index}>{line}</Text>
-      )
+      : (line.includes("colourYellow__") ? 
+          <Text color="yellow" key={index}>{line.substring(14)}</Text>
+          :
+          <Text key={index}>{line}</Text>
+        )
       ))}
     </Box>
   );

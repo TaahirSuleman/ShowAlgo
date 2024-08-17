@@ -81,7 +81,16 @@ function GuestIDE() {
         ],
         "timestamp": "2024-08-14T16:51:45.846Z",
         "description": "Loop from 0 to 10."
-      },  
+      }, 
+      {
+          line: 6,
+          operation: "set",
+          varName: "x",
+          type: "string",
+          value: "10000000000000000000000000000000000000000000000",
+          timestamp: "2024-07-09T12:01:00Z",
+          description: "Set variable x to number 10.",
+        }, 
       {
         line: 7,
         operation: "create",
@@ -91,6 +100,19 @@ function GuestIDE() {
         id: "abcd",
         type: "int",
         varName: "nums",
+        timestamp: "2024-07-09T12:01:00Z",
+        description:
+          "Created an array named nums with initial values [1, 2, 3, 4].",
+      },
+      {
+        line: 7,
+        operation: "create",
+        dataStructure: "array",
+        value: ["a","b","c"],
+        length: 9,
+        id: "abcd",
+        type: "int",
+        varName: "letters",
         timestamp: "2024-07-09T12:01:00Z",
         description:
           "Created an array named nums with initial values [1, 2, 3, 4].",
@@ -115,7 +137,7 @@ function GuestIDE() {
         description: "Removed value at position 2 in array nums",
       },
       {
-        operation:"end_loop",
+        operation:"loop_end",
         description:"end this loop"
       },
       {
@@ -176,7 +198,7 @@ function GuestIDE() {
         "description": "Set variable fetchedVar to nums[2]."
       },
       {
-        operation:"end_loop",
+        operation:"loop_end",
         description:"end this loop"
       },
       {
@@ -198,14 +220,14 @@ function GuestIDE() {
         "timestamp": "2024-07-09T12:01:00Z",  
         "description": "Set variable fetchedVar to nums[2]."
       },
-  //     {
-  //       line: 1,
-  //       operation: "if",
-  //       condition: "x > 5",
-  //       result: true,
-  //       timestamp: "2024-07-09T12:02:00Z",
-  //       description: "Checked if x is greater than 5.",
-  //     },
+      {
+        line: 1,
+        operation: "if",
+        condition: "x > 5",
+        result: true,
+        timestamp: "2024-07-09T12:02:00Z",
+        description: "Checked if x is greater than 5.",
+      },
   //     {
   //       line: 2,
   //       operation: "print",
@@ -382,26 +404,25 @@ function GuestIDE() {
     setIsRunLoading(true); // To show loading state on the button
     let code = value; // Get code from the editor
     //setMovementsState(actionFrames);
-    setIndexState(0);
-    setHighlightState(true);
-    //code = codePreprocessor(code);
-    // console.log(code)
-    // try {
-    //   let response = await axios.post(
-    //     "http://localhost:8000/api/pseudocode/run",
-    //     { code }
-    //   );
-    //   console.log(response.data.result);
-    //   let actionFrames = response.data.result.actionFrames;
-    //   //setOutput(response.data.result); // Assuming the response has the execution result
-    //   setMovementsState(actionFrames);
-    //   setIndexState(0);
-    //   setHighlightState(true);
-    // } catch (error) {
-    //   console.error("Failed to run code:", error);
-    //   setIsError(true); // Handle error state
-    // }
-    // setIsRunLoading(false);
+    // setIndexState(0);
+    // setHighlightState(true);
+    console.log(code)
+    try {
+      let response = await axios.post(
+        "http://localhost:8000/api/pseudocode/run",
+        { code }
+      );
+      console.log(response.data.result);
+      let actionFrames = response.data.result.actionFrames;
+      //setOutput(response.data.result); // Assuming the response has the execution result
+      setMovementsState(actionFrames);
+      setIndexState(0);
+      setHighlightState(true);
+    } catch (error) {
+      console.error("Failed to run code:", error);
+      setIsError(true); // Handle error state
+    }
+    setIsRunLoading(false);
   };
 
   const stopCode = () => {
@@ -411,6 +432,7 @@ function GuestIDE() {
       setHighlightState(false);
       setKey((prevKey) => prevKey + 1);
       setPauseState(false);
+      setOutput((prev) => [...prev, `colourYellow__RUN TERMINATED. NEXT RUN OUTPUT WILL APPEAR BELOW.`]);
     }, speedState + 2000);
     return () => timeoutSetKey;
   };

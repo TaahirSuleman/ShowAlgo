@@ -59,8 +59,8 @@ function ArrayComponent(
                 setArraysState(tempArrState)
               }
             }
+            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId1 = setTimeout(()=> {
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
               setIndexState((i)=>{return i+1})
               setSwappedState(["",""])
             }, speedState*1000) // This controls the time between SWAPPING and the next movement.
@@ -69,8 +69,9 @@ function ArrayComponent(
 
           case "add":
             addToArray(movements[indexState].value, movements[indexState].position);
+            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId2 = setTimeout(()=> {
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
+
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between INSERTING and the next movement.
             return () => clearTimeout(timeoutId2);
@@ -78,8 +79,9 @@ function ArrayComponent(
 
           case "remove":
             removeFromArray((movements[indexState].positionToRemove))
+            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId3 = setTimeout(()=> {
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
+
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between POPPING and the next movement.
             return () => clearTimeout(timeoutId3);
@@ -88,9 +90,10 @@ function ArrayComponent(
             case "get":
               setGotState(values[movements[indexState].index]);
               console.log(values[movements[indexState].index] + " This is the got state ")
+              setOutput((prev) => {return [...prev, movements[indexState].description]});
               const timeoutId4 = setTimeout(()=> {
                 setGotState("")
-                setOutput((prev) => {return [...prev, movements[indexState].description]});
+
                 setIndexState((i)=>{return i+1})
               }, speedState*1000) // This controls the time between POPPING and the next movement.
               return () => clearTimeout(timeoutId4);
@@ -99,8 +102,9 @@ function ArrayComponent(
             case "setArr":
               setValueInArray(movements[indexState].setValue, movements[indexState].index)
               console.log(values[movements[indexState].index] + " This is the changed state ")
+              setOutput((prev) => {return [...prev, movements[indexState].description]});
               const timeoutId5 = setTimeout(()=> {
-                setOutput((prev) => {return [...prev, movements[indexState].description]});
+
                 setChangedState("")
                 setIndexState((i)=>{return i+1})
               }, speedState*1000) // This controls the time between POPPING and the next movement.

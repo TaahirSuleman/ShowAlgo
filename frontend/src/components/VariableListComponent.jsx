@@ -27,8 +27,8 @@ function VariableListComponent({
       if (indexState > -1 && indexState < movements.length && !pauseState){
           if (movements[indexState].operation == "set"){
               updateVariablesState(movements[indexState].type, movements[indexState].value, movements[indexState].varName);
+              setOutput((prev) => {return [...prev, movements[indexState].description]});
               const timeoutId2 = setTimeout(() => {
-                  setOutput((prev) => {return [...prev, movements[indexState].description]});
                   setIndexState((i)=>{return i+1});
               }, speedState*1000 );
               return () => clearTimeout(timeoutId2);
