@@ -2,6 +2,7 @@ import User from "../models/user.js";
 import Sections from "../models/section.js";
 import Levels from "../models/level.js";
 import UserProgress from "../models/userProgress.js";
+import Documentation from "../models/documentation.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -387,3 +388,58 @@ export const getDailyStreak = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 }
+
+// Route to get all documentation
+export const getDocumentation = async (req, res) => {
+  try {
+    const documentation = await Documentation.find();
+    res.json(documentation);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Route to create new documentation section
+export const createDocumentationSection = async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const documentation = await Documentation.create({
+      title,
+      content,
+    });
+    res.json(documentation);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Route to update documentation section
+export const updateDocumentationSection = async (req, res) => {
+  try {
+    const { documentationId } = req.params;
+    const { title, content } = req.body;
+    const documentation = await Documentation.findByIdAndUpdate(
+      documentationId,
+      { title, content },
+      { upsert: false }
+    );
+    res.json(documentation);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Route to delete documentation section
+export const deleteDocumentationSection = async (req, res) => {
+  try {
+    const { documentationId } = req.params;
+    const documentation = await Documentation.findByIdAndDelete(documentationId);
+    res.json(documentation);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

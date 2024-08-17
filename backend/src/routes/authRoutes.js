@@ -18,6 +18,10 @@ import {
   deleteLevel,
   getUserProgress,
   getDailyStreak,
+  getDocumentation,
+  createDocumentationSection,
+  updateDocumentationSection,
+  deleteDocumentationSection,
 } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
@@ -87,5 +91,18 @@ router.put("/update-level/:levelId", adminMiddleware, updateLevel);
 router.get("/get-progress/:userId", authMiddleware, getUserProgress);
 // This endpoint is used to get the user's daily streak
 router.get('/streak/:userId', authMiddleware, getDailyStreak);
+
+// --------------------
+
+// DOCUMENTATION ROUTES
+
+// This endpoint is used to get the documentation
+router.get("/get-documentation", getDocumentation);
+// This endpoint is used to create a new section in the documentation
+router.post("/create-documentation-section", adminMiddleware, createDocumentationSection);
+// This endpoint is used to update a section in the documentation
+router.put("/update-documentation-section/:documentationId", adminMiddleware, updateDocumentationSection);
+// This endpoint is used to delete a section in the documentation
+router.delete("/delete-documentation-section/:documentationId", adminMiddleware, deleteDocumentationSection);
 
 export default router;
