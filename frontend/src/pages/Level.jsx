@@ -49,8 +49,10 @@ import OutputView from "../components/OutputView";
 import { IoMdHome } from "react-icons/io";
 import RunControls from "../components/RunControls";
 import MainVisualisationWindow from "../components/MainVisualisationWindow";
+import DocumentationComponent from "../components/DocumentationComponent";
 
 function Level() {
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef(null);
@@ -461,7 +463,6 @@ function Level() {
     setSubmitClicked(true);
     setTimeout(() => {
       setIsSubmitLoading(false);
-      setOutput("Hello, World!");
       checkTestCases();
     }, 2000);
   };
@@ -653,41 +654,11 @@ function Level() {
                       scrollBehavior="inside"
                     >
                       <ModalOverlay />
-                      <ModalContent bg="gray.900">
+                      <ModalContent bg="gray.900" maxW="90vw" maxH="90vh">
                         <ModalHeader>Documentation</ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
-                          <Text>
-                            Documentation goes here... <br />
-                            <br />
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore
-                            eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum. Lorem ipsum
-                            dolor sit amet, consectetur adipiscing elit sed do
-                            eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore
-                            eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum. Lorem ipsum
-                            dolor sit amet, consectetur adipiscing elit sed do
-                            eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud
-                            exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate velit esse cillum dolore
-                            eu fugiat nulla pariatur. Excepteur sint occaecat
-                            cupidatat non proident, sunt in culpa qui officia
-                            deserunt mollit anim id est laborum."
-                          </Text>
+                          <DocumentationComponent />
                         </ModalBody>
                         <ModalFooter>
                           <Button onClick={onClose}>Close</Button>

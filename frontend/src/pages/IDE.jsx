@@ -37,6 +37,7 @@ import { InfoIcon } from "@chakra-ui/icons";
 import MainVisualisationWindow from "../components/MainVisualisationWindow";
 import axios from "axios";
 import RunControls from "../components/RunControls";
+import DocumentationComponent from "../components/DocumentationComponent";
 
 
 function IDE() {
@@ -393,42 +394,14 @@ function IDE() {
                     finalFocusRef={btnRef}
                     isOpen={isOpen}
                     scrollBehavior="inside"
+                    size="xl"
                   >
                     <ModalOverlay />
-                    <ModalContent bg="gray.900">
+                    <ModalContent bg="gray.900" maxW="90vw" maxH="90vh">
                       <ModalHeader>Documentation</ModalHeader>
                       <ModalCloseButton />
                       <ModalBody>
-                        <Text>
-                          Documentation goes here... <br />
-                          <br />
-                          "Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua. Ut enim ad minim veniam, quis
-                          nostrud exercitation ullamco laboris nisi ut aliquip
-                          ex ea commodo consequat. Duis aute irure dolor in
-                          reprehenderit in voluptate velit esse cillum dolore eu
-                          fugiat nulla pariatur. Excepteur sint occaecat
-                          cupidatat non proident, sunt in culpa qui officia
-                          deserunt mollit anim id est laborum. Lorem ipsum dolor
-                          sit amet, consectetur adipiscing elit sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua. Ut
-                          enim ad minim veniam, quis nostrud exercitation
-                          ullamco laboris nisi ut aliquip ex ea commodo
-                          consequat. Duis aute irure dolor in reprehenderit in
-                          voluptate velit esse cillum dolore eu fugiat nulla
-                          pariatur. Excepteur sint occaecat cupidatat non
-                          proident, sunt in culpa qui officia deserunt mollit
-                          anim id est laborum. Lorem ipsum dolor sit amet,
-                          consectetur adipiscing elit sed do eiusmod tempor
-                          incididunt ut labore et dolore magna aliqua. Ut enim
-                          ad minim veniam, quis nostrud exercitation ullamco
-                          laboris nisi ut aliquip ex ea commodo consequat. Duis
-                          aute irure dolor in reprehenderit in voluptate velit
-                          esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                          sint occaecat cupidatat non proident, sunt in culpa
-                          qui officia deserunt mollit anim id est laborum."
-                        </Text>
+                        <DocumentationComponent />
                       </ModalBody>
                       <ModalFooter>
                         <Button onClick={onClose}>Close</Button>
