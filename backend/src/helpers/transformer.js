@@ -142,6 +142,7 @@ class Transformer {
     transformLoopFromTo(node) {
         return {
             type: "LoopFromTo",
+            loopVariable: node.loopVariable,
             range: {
                 start: this.transformExpression(node.range.start).value,
                 end: this.transformExpression(node.range.end).value,

@@ -208,7 +208,7 @@ END WHILE`;
 
     it("should parse 'LOOP from up to' with high-level syntax correctly", () => {
         const pseudocode = `
-            LOOP from 0 up to 10
+            LOOP i from 0 up to 10
                 PRINT i
             END LOOP
         `;
@@ -227,7 +227,7 @@ END WHILE`;
 
     it("should parse 'LOOP FROM TO' with traditional syntax correctly", () => {
         const pseudocode = `
-            LOOP FROM 0 TO 10
+            LOOP i FROM 0 TO 10
                 PRINT i
             END LOOP
         `;
@@ -299,7 +299,7 @@ END WHILE`;
 
     it("should parse 'FOR LOOP from up to' with high-level syntax correctly", () => {
         const pseudocode = `
-            FOR LOOP from 0 up to 10
+            FOR LOOP i from 0 up to 10
                 PRINT i
             END LOOP
         `;
@@ -318,7 +318,7 @@ END WHILE`;
 
     it("should parse 'FOR LOOP FROM TO' with traditional syntax correctly", () => {
         const pseudocode = `
-            FOR LOOP FROM 0 TO 10
+            FOR LOOP i FROM 0 TO 10
                 PRINT i
             END LOOP
         `;

@@ -34,9 +34,12 @@ class JsonConverter {
             case "ForLoop":
                 return this.transformForLoop(nodeWithLine);
             case "WhileLoop":
-                return this.transformWhileLoop(nodeWithLine);
+                return this.transformWhileOrLoopUntil(nodeWithLine, "while");
             case "LoopUntil":
-                return this.transformLoopUntil(nodeWithLine);
+                return this.transformWhileOrLoopUntil(
+                    nodeWithLine,
+                    "loop_until"
+                );
             case "LoopFromTo":
                 return this.transformLoopFromTo(nodeWithLine);
             case "ReturnStatement":
@@ -126,6 +129,7 @@ class JsonConverter {
     }
 
     transformPrintStatement(node) {
+        console.log("Print vars " + this.variables["i"]);
         const value = node.value;
         const isLiteral = !this.declaredVariables.has(value);
         return {
@@ -154,25 +158,44 @@ class JsonConverter {
                 description: `Checked if ${conditionString}.`,
             },
         ];
-
+        let consequentLineCount = 0;
+        let alternateLineCount = 0;
         if (conditionResult) {
             // Handle the true condition (consequent)
             frames = frames.concat(this.transformNodes(node.consequent));
-
+            consequentLineCount = frames.length;
             // Adjust currentLine to account for alternate block length + 1
             if (node.alternate && node.alternate.length > 0) {
-                this.currentLine += node.alternate.length + 1;
+                this.currentLine = Math.max(
+                    this.currentLine,
+                    this.currentLine + node.alternate.length + 1
+                );
             } else {
                 //this.currentLine++;
             }
         } else {
             // Handle the false condition (alternate)
+            this.currentLine = Math.max(
+                this.currentLine,
+                this.currentLine + node.consequent.length + 1
+            );
             frames = frames.concat(this.transformNodes(node.alternate || []));
 
             // Simply increment the current line by 1
-            this.currentLine++;
+            //this.currentLine++;
         }
         // Add the "End If" movement object
+        if (node.alternate && node.alternate.length > 0) {
+            this.currentLine = Math.max(
+                this.currentLine,
+                node.line + node.consequent.length + node.alternate.length + 2
+            );
+        } else {
+            this.currentLine = Math.max(
+                this.currentLine,
+                node.line + node.consequent.length + 1
+            );
+        }
         frames.push({
             line: this.currentLine,
             operation: "endif",
@@ -194,44 +217,37 @@ class JsonConverter {
             description: `Iterating over ${node.collection} with ${node.iterator}.`,
         };
     }
-
-    transformWhileLoop(node) {
-        if (!node.condition || typeof node.condition !== "object") {
-            throw new Error("While loop condition is malformed or missing.");
-        }
-
-        const { left, operator, right } = node.condition;
-
-        if (
-            typeof left === "undefined" ||
-            typeof operator === "undefined" ||
-            typeof right === "undefined"
-        ) {
-            console.error("While loop condition components are undefined.", {
-                left,
-                operator,
-                right,
-            });
-            throw new Error(
-                "While loop condition is missing components: left, operator, or right."
-            );
-        }
-
-        const conditionString = this.convertConditionToString(node.condition);
-        // Initial while statement
+    transformGenericLoop(node, loopType, conditionString) {
+        console.log(conditionString);
+        const loopLine = node.line;
         const actionFrames = [
             {
                 line: node.line,
-                operation: "while",
+                operation: loopType,
                 condition: conditionString,
                 timestamp: new Date().toISOString(),
-                description: `While loop with condition ${conditionString}.`,
+                description: `${loopType.replace(
+                    "_",
+                    " "
+                )} loop with condition ${conditionString}.`,
             },
         ];
 
-        // Simulate the loop execution by manually evaluating the condition
+        // Debugging: Print the initial condition
+        console.log(`Initial condition for ${loopType}:`, node.condition);
+        let bodyLineStart = node.line; // Line where loop body starts
+        let bodyLineCount = 0; // Track the number of lines in the loop body
+
         while (this.evaluateCondition(node.condition)) {
-            // Add an if statement for the condition evaluation
+            // Debugging: Print the current state of the variables
+            //console.log(`Variables at the start of the loop:`, this.variables);
+            let z = 0;
+            this.currentLine = node.line + 1;
+            if (this.variables["x"] == 0) {
+                console.log("TRUE!");
+                console.log(this.variables);
+                z += 1;
+            }
             actionFrames.push({
                 line: node.line,
                 operation: "if",
@@ -241,17 +257,27 @@ class JsonConverter {
                 description: `Checked if ${conditionString}.`,
             });
 
-            // Add the body operations, ensuring the line numbers remain consistent
             const bodyFrames = this.transformNodes(node.body).map((frame) => ({
                 ...frame,
-                line: frame.line, // Keep the line number consistent
+                line: frame.line,
             }));
 
             actionFrames.push(...bodyFrames);
-            this.currentLine = this.currentLine - node.body.length;
+            bodyLineCount = Math.max(
+                bodyLineCount,
+                this.currentLine - bodyLineStart
+            );
+            // For loop_from_to, update the loop variable and add the set movement object
+            if (loopType === "loop_from_to") {
+                const updateFrame = this.updateLoopVariable(
+                    node.loopVariable,
+                    loopLine
+                );
+                actionFrames.push(updateFrame);
+            }
+            //this.currentLine = this.currentLine - node.body.length;
         }
 
-        // Final if statement where the condition evaluates to false
         actionFrames.push({
             line: node.line,
             operation: "if",
@@ -261,33 +287,145 @@ class JsonConverter {
             description: `Checked if ${conditionString}.`,
         });
 
-        // Add the loop end statement with line number after the while loop
+        this.currentLine = bodyLineStart + bodyLineCount;
         actionFrames.push({
-            line: node.line + node.body.length + 1,
+            line: this.currentLine++,
             operation: "loop_end",
             timestamp: new Date().toISOString(),
-            description: "End of while loop",
+            description: `End of ${loopType.replace("_", " ")} loop`,
         });
-
+        console.log(this.currentLine);
         return actionFrames;
     }
 
-    transformLoopUntil(node) {
-        const conditionString = this.convertConditionToString(node.condition);
-
-        if (!conditionString) {
-            throw new Error("Loop until condition is malformed.");
+    updateLoopVariable(loopVariableName, loopLine) {
+        if (!this.variables.hasOwnProperty(loopVariableName)) {
+            throw new Error(
+                `Loop variable ${loopVariableName} is not declared.`
+            );
         }
 
-        const body = this.transformNodes(node.body);
+        // Increment the loop variable
+        this.variables[loopVariableName] += 1;
+
+        // Return the frame representing this update
         return {
-            line: node.line,
-            operation: "loop_until",
-            condition: conditionString,
-            body: body,
+            line: loopLine,
+            operation: "set",
+            varName: loopVariableName,
+            type: "number",
+            value: this.variables[loopVariableName],
             timestamp: new Date().toISOString(),
-            description: `Loop until ${conditionString}.`,
+            description: `Set variable ${loopVariableName} to ${this.variables[loopVariableName]}.`,
         };
+    }
+
+    transformWhileOrLoopUntil(node, loopType) {
+        if (!node.condition || typeof node.condition !== "object") {
+            throw new Error(`${loopType} condition is malformed or missing.`);
+        }
+
+        let { left, operator, right } = node.condition;
+
+        if (
+            typeof left === "undefined" ||
+            typeof operator === "undefined" ||
+            typeof right === "undefined"
+        ) {
+            console.error(`${loopType} condition components are undefined.`, {
+                left,
+                operator,
+                right,
+            });
+            throw new Error(
+                `${loopType} condition is missing components: left, operator, or right.`
+            );
+        }
+
+        let conditionString = this.convertConditionToString(node.condition);
+
+        if (loopType === "loop_until") {
+            // Flip the condition for `loop_until`
+            conditionString = this.flipCondition(conditionString);
+
+            // Flip the operator in node.condition as well
+            node.condition.operator = this.flipOperator(operator);
+        }
+
+        return this.transformGenericLoop(node, "while", conditionString);
+    }
+
+    flipOperator(operator) {
+        const flipMap = {
+            ">": "<=",
+            "<": ">=",
+            ">=": "<",
+            "<=": ">",
+            "==": "!=",
+            "!=": "==",
+        };
+
+        if (flipMap[operator]) {
+            return flipMap[operator];
+        }
+
+        throw new Error(`Unsupported operator for flipping: ${operator}`);
+    }
+
+    // Helper function to flip the condition for LoopUntil
+    flipCondition(condition) {
+        if (condition.includes(">=")) {
+            return condition.replace(">=", "<");
+        } else if (condition.includes(">")) {
+            return condition.replace(">", "<=");
+        } else if (condition.includes("<=")) {
+            return condition.replace("<=", ">");
+        } else if (condition.includes("<")) {
+            return condition.replace("<", ">=");
+        } else if (condition.includes("==")) {
+            return condition.replace("==", "!=");
+        } else if (condition.includes("!=")) {
+            return condition.replace("!=", "==");
+        }
+        throw new Error("Unsupported condition operator for flipping");
+    }
+
+    transformLoopFromTo(node) {
+        console.log(this.currentLine);
+        const startValue = this.convertValue(node.range.start);
+        const endValue = this.convertValue(node.range.end);
+        const loopVariable = node.loopVariable;
+
+        // Create an action frame to set the loop variable to the start value
+        const actionFrames = [
+            {
+                line: this.currentLine - 1,
+                operation: "set",
+                varName: loopVariable,
+                type: "number",
+                value: startValue,
+                timestamp: new Date().toISOString(),
+                description: `Set variable ${loopVariable} to ${startValue}.`,
+            },
+        ];
+        this.variables[loopVariable] = startValue;
+        this.declaredVariables.add(loopVariable);
+        // Generate the condition string for the loop
+        const conditionString = `${loopVariable} <= ${endValue}`;
+        console.log("end val " + endValue);
+        // Set the node.condition to the associated condition
+        node.condition = {
+            left: loopVariable,
+            operator: "<=",
+            right: endValue,
+        };
+
+        // Start the loop processing using the common logic
+        actionFrames.push(
+            ...this.transformGenericLoop(node, "loop_from_to", conditionString)
+        );
+
+        return actionFrames;
     }
 
     convertConditionToString(condition) {
@@ -305,57 +443,6 @@ class JsonConverter {
         if (operator === "equal") operator = "==";
 
         return `${condition.left} ${operator} ${condition.right}`;
-    }
-
-    transformLoopFromTo(node) {
-        const start = this.convertValue(node.range.start);
-        const end = this.convertValue(node.range.end);
-
-        let loopVariableName = "i";
-        let counter = 0;
-        while (this.declaredVariables.has(loopVariableName)) {
-            loopVariableName = `i${++counter}`;
-        }
-
-        this.declaredVariables.add(loopVariableName);
-
-        const initialization = {
-            line: this.currentLine++,
-            operation: "set",
-            varName: loopVariableName,
-            type: "number",
-            value: start,
-            timestamp: new Date().toISOString(),
-            description: `Set variable ${loopVariableName} to number ${start}.`,
-        };
-        this.variables[loopVariableName] = start;
-        const body = this.transformNodes(node.body).map((frame) => {
-            if (
-                frame.operation === "print" &&
-                frame.varName === null &&
-                frame.literal === loopVariableName
-            ) {
-                return {
-                    ...frame,
-                    isLiteral: false,
-                    varName: loopVariableName,
-                    literal: null,
-                };
-            }
-            return frame;
-        });
-
-        return [
-            initialization,
-            {
-                line: this.currentLine++,
-                operation: "loop_from_to",
-                range: `${start} to ${end}`,
-                body: body,
-                timestamp: new Date().toISOString(),
-                description: `Loop from ${start} to ${end}.`,
-            },
-        ];
     }
 
     transformReturnStatement(node) {
@@ -376,12 +463,13 @@ class JsonConverter {
         }
 
         const left = isNaN(condition.left)
-            ? this.variables[condition.left] || condition.left
+            ? this.variables[condition.left]
             : parseFloat(condition.left);
         const right = isNaN(condition.right)
-            ? this.variables[condition.right] || condition.right
+            ? this.variables[condition.right]
             : parseFloat(condition.right);
-
+        if (this.variables[condition.left] == 0) console.log(left);
+        console.log(right);
         const operatorsMap = {
             greater: ">",
             less: "<",

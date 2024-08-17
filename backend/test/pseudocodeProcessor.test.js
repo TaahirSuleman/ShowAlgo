@@ -7,6 +7,1926 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should process a 'LOOP UNTIL' statement with a conditional update inside correctly", () => {
+        const pseudocode = `
+            SET x TO 1
+            LOOP UNTIL x >= 10
+                PRINT x
+                IF x < 5 THEN
+                    SET x TO x + 2
+                OTHERWISE
+                    SET x TO x + 3
+                END IF
+            END LOOP`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable x to 1.",
+                },
+                {
+                    line: 2,
+                    operation: "while",
+                    condition: "x < 10",
+                    timestamp: undefined,
+                    description: "while loop with condition x < 10.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x < 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x < 10.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 1,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x < 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x < 5.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable x to x + 2.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x < 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x < 10.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 3,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x < 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x < 5.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable x to x + 2.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x < 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x < 10.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 5,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x < 5",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x < 5.",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 8,
+                    timestamp: undefined,
+                    description: "Set variable x to x + 3.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x < 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x < 10.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 8,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x < 5",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x < 5.",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 11,
+                    timestamp: undefined,
+                    description: "Set variable x to x + 3.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x < 10",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x < 10.",
+                },
+                {
+                    line: 9,
+                    operation: "loop_end",
+                    timestamp: undefined,
+                    description: "End of while loop",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process a while loop with multiple variables and operations", () => {
+        const pseudocode = `
+            SET x to number 5
+            SET y to number 0
+            WHILE x > 0
+                PRINT x
+                SET y to y + x
+                SET x to x - 1
+            END WHILE
+            PRINT y`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable x to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "y",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable y to 0.",
+                },
+                {
+                    line: 3,
+                    operation: "while",
+                    condition: "x > 0",
+                    timestamp: undefined,
+                    description: "while loop with condition x > 0.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 5,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "y",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable y to y + x.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 4,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 4,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "y",
+                    type: "number",
+                    value: 9,
+                    timestamp: undefined,
+                    description: "Set variable y to y + x.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 3,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "y",
+                    type: "number",
+                    value: 12,
+                    timestamp: undefined,
+                    description: "Set variable y to y + x.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 2,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 2,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "y",
+                    type: "number",
+                    value: 14,
+                    timestamp: undefined,
+                    description: "Set variable y to y + x.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 1,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "y",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Set variable y to y + x.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 7,
+                    operation: "loop_end",
+                    timestamp: undefined,
+                    description: "End of while loop",
+                },
+                {
+                    line: 8,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "y",
+                    literal: 15,
+                    timestamp: undefined,
+                    description: "Printed y.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process a 'LOOP FROM TO' followed by additional operations correctly", () => {
+        const pseudocode = `
+            SET sum TO 0
+            LOOP i FROM 1 TO 3
+                PRINT i
+                SET sum TO sum + i
+            END LOOP
+            PRINT sum
+            SET sum TO sum * 2
+            PRINT sum`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable sum to 0.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable i to 1.",
+                },
+                {
+                    line: 2,
+                    operation: "loop_from_to",
+                    condition: "i <= 3",
+                    timestamp: undefined,
+                    description: "loop from_to loop with condition i <= 3.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 3",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 3.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 1,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum + i.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 2,
+                    timestamp: undefined,
+                    description: "Set variable i to 2.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 3",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 3.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 2,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum + i.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable i to 3.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 3",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 3.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 3,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 6,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum + i.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 4,
+                    timestamp: undefined,
+                    description: "Set variable i to 4.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 3",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if i <= 3.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_end",
+                    timestamp: undefined,
+                    description: "End of loop from_to loop",
+                },
+                {
+                    line: 6,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "sum",
+                    literal: 6,
+                    timestamp: undefined,
+                    description: "Printed sum.",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 12,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum * 2.",
+                },
+                {
+                    line: 8,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "sum",
+                    literal: 12,
+                    timestamp: undefined,
+                    description: "Printed sum.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process a 'LOOP FROM TO' with an additional operation correctly", () => {
+        const pseudocode = `
+            SET sum TO 0
+            LOOP i FROM 1 TO 5
+                PRINT i
+                SET sum TO sum + i
+            END LOOP`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable sum to 0.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable i to 1.",
+                },
+                {
+                    line: 2,
+                    operation: "loop_from_to",
+                    condition: "i <= 5",
+                    timestamp: undefined,
+                    description: "loop from_to loop with condition i <= 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 1,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum + i.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 2,
+                    timestamp: undefined,
+                    description: "Set variable i to 2.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 2,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum + i.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable i to 3.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 3,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 6,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum + i.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 4,
+                    timestamp: undefined,
+                    description: "Set variable i to 4.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 4,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum + i.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable i to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 5,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Set variable sum to sum + i.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 6,
+                    timestamp: undefined,
+                    description: "Set variable i to 6.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_end",
+                    timestamp: undefined,
+                    description: "End of loop from_to loop",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process a 'LOOP FROM TO' statement correctly", () => {
+        const pseudocode = `LOOP i FROM 0 TO 5
+                PRINT i
+            END LOOP`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable i to 0.",
+                },
+                {
+                    line: 1,
+                    operation: "loop_from_to",
+                    condition: "i <= 5",
+                    timestamp: undefined,
+                    description: "loop from_to loop with condition i <= 5.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 0,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable i to 1.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 1,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 2,
+                    timestamp: undefined,
+                    description: "Set variable i to 2.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 2,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable i to 3.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 3,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 4,
+                    timestamp: undefined,
+                    description: "Set variable i to 4.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 4,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable i to 5.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 5,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 6,
+                    timestamp: undefined,
+                    description: "Set variable i to 6.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 5",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if i <= 5.",
+                },
+                {
+                    line: 3,
+                    operation: "loop_end",
+                    timestamp: undefined,
+                    description: "End of loop from_to loop",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process a 'LOOP UNTIL' statement correctly", () => {
+        const pseudocode = `
+            SET x TO 10
+            LOOP UNTIL x == 0
+                PRINT x
+                SET x TO x - 1
+            END LOOP`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable x to 10.",
+                },
+                {
+                    line: 2,
+                    operation: "while",
+                    condition: "x != 0",
+                    timestamp: undefined,
+                    description: "while loop with condition x != 0.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 10,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 9,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 9,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 8,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 8,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 7,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 7,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 6,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 6,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 5,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 4,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 4,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 3,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 2,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 2,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 1,
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x != 0",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x != 0.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_end",
+                    timestamp: undefined,
+                    description: "End of while loop",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process a while loop with repeated if statements and loop_end", () => {
+        const pseudocode = `
+        SET x to number 5
+        WHILE x > 0
+            PRINT x
+            SET x to x - 1
+        END WHILE
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable x to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "while",
+                    condition: "x > 0",
+                    timestamp: undefined,
+                    description: "while loop with condition x > 0.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 5, // Reflecting the value of x at this point
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 4,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 4, // Reflecting the value of x at this point
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 3, // Reflecting the value of x at this point
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 2,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 2, // Reflecting the value of x at this point
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "x",
+                    literal: 1, // Reflecting the value of x at this point
+                    timestamp: undefined,
+                    description: "Printed x.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable x to x - 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 0",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 0.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_end",
+                    timestamp: undefined,
+                    description: "End of while loop",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should process a 'FOR LOOP FROM TO' with traditional syntax correctly", () => {
+        writeTestNumber(16);
+        const pseudocode = `
+            LOOP i FROM 0 TO 10
+                PRINT i
+            END LOOP`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable i to 0.",
+                },
+                {
+                    line: 1,
+                    operation: "loop_from_to",
+                    condition: "i <= 10",
+                    timestamp: undefined,
+                    description: "loop from_to loop with condition i <= 10.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 0,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable i to 1.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 1,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 2,
+                    timestamp: undefined,
+                    description: "Set variable i to 2.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 2,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable i to 3.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 3,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 4,
+                    timestamp: undefined,
+                    description: "Set variable i to 4.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 4,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable i to 5.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 5,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 6,
+                    timestamp: undefined,
+                    description: "Set variable i to 6.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 6,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 7,
+                    timestamp: undefined,
+                    description: "Set variable i to 7.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 7,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 8,
+                    timestamp: undefined,
+                    description: "Set variable i to 8.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 8,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 9,
+                    timestamp: undefined,
+                    description: "Set variable i to 9.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 9,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable i to 10.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "i",
+                    literal: 10,
+                    timestamp: undefined,
+                    description: "Printed i.",
+                },
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 11,
+                    timestamp: undefined,
+                    description: "Set variable i to 11.",
+                },
+                {
+                    line: 1,
+                    operation: "if",
+                    condition: "i <= 10",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if i <= 10.",
+                },
+                {
+                    line: 3,
+                    operation: "loop_end",
+                    timestamp: undefined,
+                    description: "End of loop from_to loop",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+
     it("should process complex pseudocode with if-else, array creation, and array insertion", () => {
         writeTestNumber(1);
         const pseudocode = `
@@ -511,7 +2431,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "while",
                     condition: "x > 0",
                     timestamp: undefined,
-                    description: "While loop with condition x > 0.",
+                    description: "while loop with condition x > 0.",
                 },
                 {
                     line: 13,
@@ -802,538 +2722,6 @@ describe("PseudocodeProcessor", () => {
             }
         });
 
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a 'LOOP until' with high-level syntax correctly", () => {
-        writeTestNumber(9);
-        const pseudocode = `
-        SET x to 0
-        LOOP until x is greater than 5
-            PRINT x
-            SET x to x + 1
-        END LOOP`;
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable x to 0.",
-                },
-                {
-                    line: 2,
-                    operation: "loop_until",
-                    condition: "x > 5",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "x",
-                            literal: 0, // Reflecting the value of x at this point
-                            timestamp: undefined,
-                            description: "Printed x.",
-                        },
-                        {
-                            line: 4,
-                            operation: "set",
-                            varName: "x",
-                            type: "number",
-                            value: 1,
-                            timestamp: undefined,
-                            description: "Set variable x to x + 1.",
-                        },
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "x",
-                            literal: 1, // Reflecting the value of x at this point
-                            timestamp: undefined,
-                            description: "Printed x.",
-                        },
-                        {
-                            line: 4,
-                            operation: "set",
-                            varName: "x",
-                            type: "number",
-                            value: 2,
-                            timestamp: undefined,
-                            description: "Set variable x to x + 1.",
-                        },
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "x",
-                            literal: 2, // Reflecting the value of x at this point
-                            timestamp: undefined,
-                            description: "Printed x.",
-                        },
-                        {
-                            line: 4,
-                            operation: "set",
-                            varName: "x",
-                            type: "number",
-                            value: 3,
-                            timestamp: undefined,
-                            description: "Set variable x to x + 1.",
-                        },
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "x",
-                            literal: 3, // Reflecting the value of x at this point
-                            timestamp: undefined,
-                            description: "Printed x.",
-                        },
-                        {
-                            line: 4,
-                            operation: "set",
-                            varName: "x",
-                            type: "number",
-                            value: 4,
-                            timestamp: undefined,
-                            description: "Set variable x to x + 1.",
-                        },
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "x",
-                            literal: 4, // Reflecting the value of x at this point
-                            timestamp: undefined,
-                            description: "Printed x.",
-                        },
-                        {
-                            line: 4,
-                            operation: "set",
-                            varName: "x",
-                            type: "number",
-                            value: 5,
-                            timestamp: undefined,
-                            description: "Set variable x to x + 1.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Loop until x > 5.",
-                },
-            ],
-        };
-        const result = PseudocodeProcessor.process(pseudocode);
-        result.actionFrames.forEach((frame, index) => {
-            frame.timestamp = expectedJson.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        expectedJson.actionFrames[index].body[
-                            subIndex
-                        ].timestamp;
-                });
-            }
-        });
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a 'LOOP UNTIL' with traditional syntax correctly", () => {
-        writeTestNumber(10);
-        const pseudocode = `
-        SET x to 0    
-        LOOP UNTIL x > 5
-            PRINT x
-            SET x TO x + 1
-        END LOOP`;
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable x to 0.",
-                },
-                {
-                    line: 2,
-                    operation: "loop_until",
-                    condition: "x > 5",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "x",
-                            literal: null,
-                            timestamp: undefined,
-                            description: "Printed x.",
-                        },
-                        {
-                            line: 4,
-                            operation: "set",
-                            varName: "x",
-                            type: "number",
-                            value: 1,
-                            timestamp: undefined,
-                            description: "Set variable x to x + 1.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Loop until x > 5.",
-                },
-            ],
-        };
-        const result = PseudocodeProcessor.process(pseudocode);
-        result.actionFrames.forEach((frame, index) => {
-            frame.timestamp = expectedJson.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        expectedJson.actionFrames[index].body[
-                            subIndex
-                        ].timestamp;
-                });
-            }
-        });
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a 'LOOP from up to' with high-level syntax correctly", () => {
-        writeTestNumber(11);
-        const pseudocode = `
-        FOR LOOP from 0 up to 10
-            PRINT i
-        END LOOP`;
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "i",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable i to number 0.",
-                },
-                {
-                    line: 4,
-                    operation: "loop_from_to",
-                    range: "0 to 10",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "i",
-                            literal: null,
-                            timestamp: undefined,
-                            description: "Printed i.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Loop from 0 to 10.",
-                },
-            ],
-        };
-        const result = PseudocodeProcessor.process(pseudocode);
-        result.actionFrames.forEach((frame, index) => {
-            frame.timestamp = expectedJson.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        expectedJson.actionFrames[index].body[
-                            subIndex
-                        ].timestamp;
-                });
-            }
-        });
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a 'LOOP FROM TO' with traditional syntax correctly", () => {
-        writeTestNumber(12);
-        const pseudocode = `
-        LOOP FROM 0 TO 10
-            PRINT i
-        END LOOP`;
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "i",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable i to number 0.",
-                },
-                {
-                    line: 4,
-                    operation: "loop_from_to",
-                    range: "0 to 10",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "i",
-                            literal: null,
-                            timestamp: undefined,
-                            description: "Printed i.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Loop from 0 to 10.",
-                },
-            ],
-        };
-        const result = PseudocodeProcessor.process(pseudocode);
-        result.actionFrames.forEach((frame, index) => {
-            frame.timestamp = expectedJson.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        expectedJson.actionFrames[index].body[
-                            subIndex
-                        ].timestamp;
-                });
-            }
-        });
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a 'FOR LOOP until' with high-level syntax correctly", () => {
-        writeTestNumber(13);
-        const pseudocode = `
-        SET x to 0
-        FOR LOOP until x is greater than 5
-            PRINT x
-            SET x to x + 1
-        END LOOP`;
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable x to 0.",
-                },
-                {
-                    line: 2,
-                    operation: "loop_until",
-                    condition: "x > 5",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "x",
-                            literal: null,
-                            timestamp: undefined,
-                            description: "Printed x.",
-                        },
-                        {
-                            line: 4,
-                            operation: "set",
-                            varName: "x",
-                            type: "number",
-                            value: 1,
-                            timestamp: undefined,
-                            description: "Set variable x to x + 1.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Loop until x > 5.",
-                },
-            ],
-        };
-        const result = PseudocodeProcessor.process(pseudocode);
-        result.actionFrames.forEach((frame, index) => {
-            frame.timestamp = expectedJson.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        expectedJson.actionFrames[index].body[
-                            subIndex
-                        ].timestamp;
-                });
-            }
-        });
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a 'FOR LOOP UNTIL' with traditional syntax correctly", () => {
-        writeTestNumber(14);
-        const pseudocode = `
-        SET x to 0
-        FOR LOOP UNTIL x > 5
-            PRINT x
-            SET x TO x + 1
-        END LOOP`;
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable x to 0.",
-                },
-                {
-                    line: 2,
-                    operation: "loop_until",
-                    condition: "x > 5",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "x",
-                            literal: null,
-                            timestamp: undefined,
-                            description: "Printed x.",
-                        },
-                        {
-                            line: 4,
-                            operation: "set",
-                            varName: "x",
-                            type: "number",
-                            value: 1,
-                            timestamp: undefined,
-                            description: "Set variable x to x + 1.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Loop until x > 5.",
-                },
-            ],
-        };
-        const result = PseudocodeProcessor.process(pseudocode);
-        result.actionFrames.forEach((frame, index) => {
-            frame.timestamp = expectedJson.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        expectedJson.actionFrames[index].body[
-                            subIndex
-                        ].timestamp;
-                });
-            }
-        });
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a 'FOR LOOP from up to' with high-level syntax correctly", () => {
-        writeTestNumber(15);
-        const pseudocode = `
-        FOR LOOP from 0 up to 10
-            PRINT i
-        END LOOP`;
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "i",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable i to number 0.",
-                },
-                {
-                    line: 4,
-                    operation: "loop_from_to",
-                    range: "0 to 10",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "i",
-                            literal: null,
-                            timestamp: undefined,
-                            description: "Printed i.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Loop from 0 to 10.",
-                },
-            ],
-        };
-        const result = PseudocodeProcessor.process(pseudocode);
-        result.actionFrames.forEach((frame, index) => {
-            frame.timestamp = expectedJson.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        expectedJson.actionFrames[index].body[
-                            subIndex
-                        ].timestamp;
-                });
-            }
-        });
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a 'FOR LOOP FROM TO' with traditional syntax correctly", () => {
-        writeTestNumber(16);
-        const pseudocode = `
-        FOR LOOP FROM 0 TO 10
-            PRINT i
-        END LOOP`;
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "i",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable i to number 0.",
-                },
-                {
-                    line: 4,
-                    operation: "loop_from_to",
-                    range: "0 to 10",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: false,
-                            varName: "i",
-                            literal: null,
-                            timestamp: undefined,
-                            description: "Printed i.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Loop from 0 to 10.",
-                },
-            ],
-        };
-        const result = PseudocodeProcessor.process(pseudocode);
-        result.actionFrames.forEach((frame, index) => {
-            frame.timestamp = expectedJson.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        expectedJson.actionFrames[index].body[
-                            subIndex
-                        ].timestamp;
-                });
-            }
-        });
         expect(result).to.deep.equal(expectedJson);
     });
     it("should process variable declarations with arithmetic expressions", () => {
@@ -1677,7 +3065,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "while",
                     condition: "x > 0",
                     timestamp: undefined,
-                    description: "While loop with condition x > 0.",
+                    description: "while loop with condition x > 0.",
                 },
                 {
                     line: 2,

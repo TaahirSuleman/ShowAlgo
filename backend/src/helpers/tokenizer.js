@@ -196,13 +196,16 @@ class Tokenizer {
         const char = this.pseudocode[this.currentIndex];
         let value = char;
         this.currentIndex++;
+
+        // Check if the next character forms a multi-character operator
         if (
-            (char === ">" || char === "<") &&
+            (char === ">" || char === "<" || char === "=" || char === "!") &&
             this.pseudocode[this.currentIndex] === "="
         ) {
             value += "=";
             this.currentIndex++;
         }
+
         return { type: "ComparisonOperator", value, line: this.line };
     }
 
