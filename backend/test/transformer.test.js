@@ -461,6 +461,7 @@ describe("Transformer", () => {
             body: [
                 {
                     type: "LoopFromTo",
+                    loopVariable: "i",
                     range: {
                         start: {
                             type: "NumberLiteral",
@@ -493,6 +494,7 @@ describe("Transformer", () => {
             program: [
                 {
                     type: "LoopFromTo",
+                    loopVariable: "i",
                     range: {
                         start: "0",
                         end: "10",

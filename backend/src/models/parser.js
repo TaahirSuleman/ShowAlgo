@@ -217,11 +217,16 @@ class Parser {
 
     parseGenericLoop(line = this.currentToken().line) {
         this.expect("Keyword", "loop");
-        if (this.currentToken().value.toLowerCase() === "until") {
-            return this.parseLoopUntil(line);
-        } else if (this.currentToken().value.toLowerCase() === "from") {
+
+        // If the next token is an identifier, it's a loop variable for a 'from-to' loop
+        if (this.currentToken().type === "Identifier") {
             return this.parseLoopFromTo(line);
         }
+
+        if (this.currentToken().value.toLowerCase() === "until") {
+            return this.parseLoopUntil(line);
+        }
+
         throw new Error(
             `Unexpected token after 'loop': ${
                 this.currentToken().value
@@ -247,6 +252,7 @@ class Parser {
     }
 
     parseLoopFromTo(line) {
+        const loopVariable = this.consume("Identifier").value; // Expect and consume the loop variable (e.g., 'i')
         this.expect("Keyword", "from");
         const start = this.parseExpression();
         if (this.currentToken().value.toLowerCase() === "up") {
@@ -257,6 +263,16 @@ class Parser {
         }
         const end = this.parseExpression();
         const body = [];
+
+        // Create a variable declaration node for the loop variable
+        const variableDeclarationNode = new VariableDeclaration(
+            loopVariable,
+            "number",
+            start,
+            line
+        );
+
+        // Parse the loop body
         while (
             !(
                 this.currentToken().value.toLowerCase() === "end" &&
@@ -267,7 +283,12 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "loop");
-        return new LoopFromTo(start, end, body, line);
+
+        // Create the loop node
+        const loopNode = new LoopFromTo(loopVariable, start, end, body, line);
+
+        // Return the variable declaration node first, then the loop node
+        return variableDeclarationNode, loopNode;
     }
 
     parseWhileLoop() {

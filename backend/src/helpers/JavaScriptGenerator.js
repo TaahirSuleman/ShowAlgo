@@ -1,5 +1,3 @@
-import fs from "fs";
-
 class JavaScriptGenerator {
     constructor(ir) {
         this.ir = ir;
@@ -31,6 +29,8 @@ class JavaScriptGenerator {
                 return this.generateForLoop(node);
             case "WhileLoop":
                 return this.generateWhileLoop(node);
+            case "LoopUntil": // New case for LoopUntil
+                return this.generateLoopUntil(node);
             case "PrintStatement":
                 return this.generatePrintStatement(node);
             case "ArrayCreation":
@@ -80,6 +80,15 @@ class JavaScriptGenerator {
         const condition = this.generateCondition(node.condition);
         const body = this.generateNodes(node.body);
         return `while (${condition}) {\n${body}\n}`;
+    }
+
+    generateLoopUntil(node) {
+        // New method for handling LoopUntil
+        const flippedCondition = this.flipCondition(
+            this.generateCondition(node.condition)
+        );
+        console.log(flippedCondition);
+        return this.generateWhileLoop({ ...node, condition: flippedCondition });
     }
 
     generatePrintStatement(node) {
@@ -155,6 +164,23 @@ class JavaScriptGenerator {
             default:
                 throw new Error(`Unknown operator: ${operator}`);
         }
+    }
+
+    flipCondition(condition) {
+        if (condition.includes(">=")) {
+            return condition.replace(">=", "<");
+        } else if (condition.includes(">")) {
+            return condition.replace(">", "<=");
+        } else if (condition.includes("<=")) {
+            return condition.replace("<=", ">");
+        } else if (condition.includes("<")) {
+            return condition.replace("<", ">=");
+        } else if (condition.includes("==")) {
+            return condition.replace("==", "!=");
+        } else if (condition.includes("!=")) {
+            return condition.replace("!=", "==");
+        }
+        throw new Error("Unsupported condition operator for flipping");
     }
 }
 

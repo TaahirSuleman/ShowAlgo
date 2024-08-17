@@ -1,0 +1,86 @@
+import { expect } from "chai";
+import JSGenerator from "../src/models/jsGenerator.js";
+
+describe("JSGenerator", () => {
+    it("should convert simple variable assignment pseudocode to JavaScript", () => {
+        const pseudocode = `
+            SET x TO 10
+            SET y TO 5
+            SET z TO x + y
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+            let x = 10;
+            let y = 5;
+            let z = x + y;
+        `.trim();
+
+        const result = JSGenerator.convert(pseudocode);
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should convert a simple loop pseudocode to JavaScript", () => {
+        const pseudocode = `
+            SET x TO 1
+            LOOP UNTIL x >= 5
+                SET x TO x + 1
+            END LOOP
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+            let x = 1;
+            while (x < 5) {
+                x = x + 1;
+            }
+        `.trim();
+
+        const result = JSGenerator.convert(pseudocode);
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should convert if-else pseudocode to JavaScript", () => {
+        const pseudocode = `
+            SET x TO 10
+            IF x > 5 THEN
+                PRINT "x is greater than 5"
+            OTHERWISE
+                PRINT "x is 5 or less"
+            END IF
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+            let x = 10;
+            if (x > 5) {
+                console.log("x is greater than 5");
+            } else {
+                console.log("x is 5 or less");
+            }
+        `.trim();
+
+        const result = JSGenerator.convert(pseudocode);
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should convert a for loop pseudocode to JavaScript", () => {
+        const pseudocode = `
+            CREATE array as nums WITH [1, 2, 3]
+            FOR EACH num IN nums
+                PRINT num
+            END FOR
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+            let nums = [1, 2, 3];
+            for (const num of nums) {
+                console.log(num);
+            }
+        `.trim();
+
+        const result = JSGenerator.convert(pseudocode);
+        expect(result).to.equal(expectedJavaScript);
+    });
+});

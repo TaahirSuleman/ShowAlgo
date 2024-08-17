@@ -1,6 +1,7 @@
 class LoopFromTo {
-    constructor(start, end, body, line) {
+    constructor(loopVariable, start, end, body, line) {
         this.type = "LoopFromTo";
+        this.loopVariable = loopVariable;
         this.range = { start, end };
         this.body = body;
         this.line = line;
