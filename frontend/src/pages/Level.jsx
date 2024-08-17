@@ -51,19 +51,6 @@ import RunControls from "../components/RunControls";
 import MainVisualisationWindow from "../components/MainVisualisationWindow";
 
 function Level() {
-  // // IDE states
-  // const navigate = useNavigate();
-  // const [value, setValue] = useState("");
-  // const editorRef = useRef();
-  // const [output, setOutput] = useState("Hello, World!");
-  // const [isError, setIsError] = useState(false);
-  // const [isRunLoading, setIsRunLoading] = useState(false);
-  // const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
-  // const [submitClicked, setSubmitClicked] = useState(false);
-  // const [isClearLoading, setIsClearLoading] = useState(false);
-  // const btnRef = React.useRef(null);
-  // const cancelClearRef = useRef();
-
   const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef(null);
@@ -73,6 +60,7 @@ function Level() {
   const [isRunLoading, setIsRunLoading] = useState(false);
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
+  const [isClearOutputLoading, setIsClearOutputLoading] = useState(false);
   const cancelClearRef = useRef();
   const [speedState, setSpeedState] = useState(2);
   const [movementsState, setMovementsState] = useState();
@@ -347,7 +335,14 @@ function Level() {
     setTimeout(() => {
       setValue("");
       setIsClearLoading(false);
+    }, 1000);
+  };
+
+  const clearOutput = () => {
+    setIsClearOutputLoading(true);
+    setTimeout(() => {
       setOutput([]);
+      setIsClearOutputLoading(false);
     }, 1000);
   };
 
@@ -738,6 +733,7 @@ function Level() {
                   </AlertDialogOverlay>
                 </AlertDialog>
               </Box>
+
               <CodeEditorView
                 speedState={speedState}
                 movementsState={movementsState}
@@ -761,8 +757,22 @@ function Level() {
                 display="flex"
                 alignItems="center"
                 height="12dvh"
-                justifyContent="center"
+                justifyContent="space-between"
               >
+                <Button
+                  variant="solid"
+                  colorScheme="red"
+                  isDisabled={output.length === 0}
+                  onClick={clearOutput}
+                  isLoading={isClearOutputLoading}
+                  m={2}
+                  pl={1}
+                  width="85px"
+                >
+                  <IoClose size="1.6em" />
+                  <Box as="span">Clear</Box>
+                </Button>
+
                 <Heading
                   fontWeight="normal"
                   color="whiteAlpha.900"
@@ -770,6 +780,9 @@ function Level() {
                 >
                   Output View
                 </Heading>
+
+                <Box width="84px" />
+
               </Box>
               <Box
                 borderBottomRadius={4}

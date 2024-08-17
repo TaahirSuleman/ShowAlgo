@@ -49,6 +49,7 @@ function IDE() {
   const [isRunLoading, setIsRunLoading] = useState(false);
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
+  const [isClearOutputLoading, setIsClearOutputLoading] = useState(false); 
   const cancelClearRef = useRef();
   const [speedState, setSpeedState] = useState(2);
   const [movementsState, setMovementsState] = useState();
@@ -275,7 +276,14 @@ function IDE() {
     setTimeout(() => {
       setValue("");
       setIsClearLoading(false);
-      setOutput([]);
+    }, 1000);
+  };
+
+  const clearOutput = () => {
+    setIsClearOutputLoading(true);
+    setTimeout(() => {
+    setOutput([]);
+    setIsClearOutputLoading(false);
     }, 1000);
   };
 
@@ -432,23 +440,6 @@ function IDE() {
 
               <Box width="84px" />
 
-              {/* <Box>
-                <Button
-                  variant="solid"
-                  colorScheme="green"
-                  isDisabled={value === ""}
-                  onClick={runCode}
-                  isLoading={isRunLoading}
-                  m={2}
-                  width="85px"
-                >
-                  <FaPlay />
-                  <Box as="span" ml={2}>
-                    Run
-                  </Box>
-                </Button>
-              </Box> */}
-
               <AlertDialog
                 isOpen={isClearDialogOpen}
                 leastDestructiveRef={cancelClearRef}
@@ -480,6 +471,7 @@ function IDE() {
                 </AlertDialogOverlay>
               </AlertDialog>
             </Box>
+
             <CodeEditorView
               speedState={speedState}
               movementsState={movementsState}
@@ -503,8 +495,22 @@ function IDE() {
               display="flex"
               alignItems="center"
               height="12dvh"
-              justifyContent="center"
+              justifyContent="space-between"
             >
+              <Button
+                variant="solid"
+                colorScheme="red"
+                isDisabled={output.length === 0}
+                onClick={clearOutput}
+                isLoading={isClearOutputLoading}
+                m={2}
+                pl={1}
+                width="85px"
+              >
+                <IoClose size="1.6em" />
+                <Box as="span">Clear</Box>
+              </Button>
+
               <Heading
                 fontWeight="normal"
                 color="whiteAlpha.900"
@@ -512,6 +518,9 @@ function IDE() {
               >
                 Output View
               </Heading>
+
+              <Box width="84px" />
+              
             </Box>
             <Box
               borderBottomRadius={4}
