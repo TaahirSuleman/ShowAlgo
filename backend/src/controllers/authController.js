@@ -423,7 +423,7 @@ export const updateDocumentationSection = async (req, res) => {
     const documentation = await Documentation.findByIdAndUpdate(
       documentationId,
       { title, content },
-      { upsert: false }
+      { new: true, upsert: false }
     );
     res.json(documentation);
   } catch (error) {

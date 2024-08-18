@@ -4,15 +4,9 @@ import {
   Flex,
   Text,
   VStack,
-  HStack,
   Heading,
   Input,
   IconButton,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
   Code,
   Button,
   Tooltip,
@@ -38,100 +32,27 @@ import {
   ButtonGroup,
   Textarea,
   useToast,
+  FormHelperText,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  useBreakpointValue,
+  HStack,
 } from "@chakra-ui/react";
-import { SearchIcon, CopyIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import {
+  SearchIcon,
+  CopyIcon,
+  EditIcon,
+  DeleteIcon,
+  HamburgerIcon,
+} from "@chakra-ui/icons";
 import axios from "axios";
 
 const DocumentationComponent = ({ admin = false }) => {
-  //   const sections = [
-  //     {
-  //       title: "Introduction",
-  //       content:
-  //         "SPL (Standardized Pseudocode Language) is designed for users with basic programming knowledge...",
-  //     },
-  //     {
-  //       title: "General Rules",
-  //       content: (
-  //         <>
-  //           <VStack align="start" mt={2}>
-  //             <HStack>
-  //               <Text fontWeight="bold">1.</Text>
-  //               <Text>
-  //                 End of Line (EOL): Each statement can end naturally or with a
-  //                 semicolon <Code>;</Code>.
-  //               </Text>
-  //             </HStack>
-
-  //             <HStack>
-  //               <Text fontWeight="bold">2.</Text>
-  //               <Text>
-  //                 Indentation and Brackets: Use indentation to denote code blocks
-  //                 or use curly brackets <Code>{"{}"}</Code>.
-  //               </Text>
-  //             </HStack>
-
-  //             <HStack>
-  //               <Text fontWeight="bold">3.</Text>
-  //               <Text>
-  //                 Case Sensitivity: Keywords are case-insensitive (e.g.,{" "}
-  //                 <Code>SET</Code>, <Code>set</Code>, and <Code>Set</Code> are
-  //                 equivalent).
-  //               </Text>
-  //             </HStack>
-
-  //             <HStack>
-  //               <Text fontWeight="bold">4.</Text>
-  //               <Text>
-  //                 Comments: Use <Code>//</Code> or <Code>#</Code> for single-line
-  //                 comments.
-  //               </Text>
-  //               <Text>Example:</Text>
-  //             </HStack>
-
-  //             <HStack>
-  //               <Text fontWeight="bold">5.</Text>
-  //               <Text>
-  //                 Case Sensitivity: Keywords are case-insensitive (e.g.,{" "}
-  //                 <Code>SET</Code>, <Code>set</Code>, and <Code>Set</Code> are
-  //                 equivalent).
-  //               </Text>
-  //             </HStack>
-  //           </VStack>
-  //         </>
-  //       ),
-  //     },
-  //     {
-  //       title: "Variables",
-  //       content: (
-  //         <>
-  //           <Text>Variables can be defined using the following syntax:</Text>
-  //           <CodeBlock code="SET x to number 7" />
-  //         </>
-  //       ),
-  //     },
-  //     {
-  //       title: "Data Structures",
-  //       content: (
-  //         <>
-  //           <Text>Create and manipulate data structures as shown below:</Text>
-  //           <CodeBlock code="CREATE an Array named myArray with values [1 2 3]" />
-  //         </>
-  //       ),
-  //     },
-  //     {
-  //       title: "Control Structures",
-  //       content: (
-  //         <>
-  //           <Text>
-  //             Control the flow of your program using If-Else statements:
-  //           </Text>
-  //           <CodeBlock
-  //             code={`IF x is greater than 5 THEN\n   PRINT "x is greater than 5"\nEND IF`}
-  //           />
-  //         </>
-  //       ),
-  //     },
-  //   ];
   const toast = useToast();
   const [documentation, setDocumentation] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -144,6 +65,7 @@ const DocumentationComponent = ({ admin = false }) => {
     content: "",
     _id: "",
   });
+  const [selectedSection, setSelectedSection] = useState(null); // State for selected section
   const [isEditing, setIsEditing] = useState(false);
   const [sectionToDelete, setSectionToDelete] = useState(null);
   const [newSection, setNewSection] = useState({
@@ -160,6 +82,13 @@ const DocumentationComponent = ({ admin = false }) => {
     onOpen: onEditSectionOpen,
     onClose: onEditSectionClose,
   } = useDisclosure();
+  const {
+    isOpen: isDrawerOpen,
+    onOpen: onDrawerOpen,
+    onClose: onDrawerClose,
+  } = useDisclosure();
+
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   // Fetch the documentation sections
   useEffect(() => {
@@ -271,6 +200,7 @@ const DocumentationComponent = ({ admin = false }) => {
           duration: 2500,
           isClosable: true,
         });
+        setSelectedSection(null); // Clear selected section if it's deleted
       }
     } catch (error) {
       console.log(error);
@@ -288,10 +218,9 @@ const DocumentationComponent = ({ admin = false }) => {
   };
 
   const handleEditClick = (section) => {
-    setSectionBeingEdited(section);
-    console.log(section);
+    setSectionBeingEdited({ ...section });
     setIsEditing(true);
-    onEditSectionOpen(); // Open the modal for editing
+    onEditSectionOpen();
   };
 
   const handleEditSave = async () => {
@@ -300,7 +229,6 @@ const DocumentationComponent = ({ admin = false }) => {
         `/update-documentation-section/${sectionBeingEdited._id}`,
         sectionBeingEdited
       );
-
       if (response.data && response.data.error) {
         toast({
           title: "Error",
@@ -324,6 +252,7 @@ const DocumentationComponent = ({ admin = false }) => {
         });
         onEditSectionClose();
         setIsEditing(false);
+        setSelectedSection(response.data); // Update the selected section with the new content
       } else {
         toast({
           title: "Error",
@@ -361,11 +290,6 @@ const DocumentationComponent = ({ admin = false }) => {
     onEditSectionClose();
   };
 
-  const onClose = () => {
-    setIsAlertOpen(false);
-    setSectionToDelete(null);
-  };
-
   const parseContent = (content) => {
     // Split the content by the CodeBlock delimiters
     const codeBlockParts = content.split(/<<|>>/);
@@ -385,9 +309,13 @@ const DocumentationComponent = ({ admin = false }) => {
           } else {
             // This is a normal text part
             return (
-              <React.Fragment key={`${index}-${subIndex}`} whiteSpace={"pre-wrap"}>
+              <Text
+                key={`${index}-${subIndex}`}
+                whiteSpace={"pre-wrap"}
+                as="span"
+              >
                 {subPart}
-              </React.Fragment>
+              </Text>
             );
           }
         });
@@ -397,148 +325,183 @@ const DocumentationComponent = ({ admin = false }) => {
 
   return (
     <Box p={2} width="100%">
-      <Flex direction="row" p={4} bg="blackAlpha.500" borderRadius={10}>
+      <Flex
+        direction={{ base: "column", md: "row" }}
+        p={4}
+        bg="blackAlpha.500"
+        borderRadius={10}
+      >
         {/* Sidebar */}
-        <Box w="20%" p={4} borderRight="1px solid" borderColor="gray.200">
-          <Heading size="md" mb={4}>
-            Documentation
-          </Heading>
-
-          <InputGroup mb={4}>
-            <InputLeftElement pointerEvents="none">
-              <SearchIcon color="gray.300" />
-            </InputLeftElement>
-            <Input
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+        {isMobile ? (
+          <>
+            <IconButton
+              icon={<HamburgerIcon />}
+              aria-label="Open Menu"
+              onClick={onDrawerOpen}
+              mb={4}
+              alignSelf="flex-start"
             />
-          </InputGroup>
-
-          <VStack align="start">
-            {filteredSections.map((section, index) => (
-              <Button
-                key={index}
-                variant="link"
-                onClick={() => scrollToSection(section.title)}
-              >
-                {section.title}
-              </Button>
-            ))}
-            {admin && (
-              <Button border="1px solid" onClick={onAddSectionOpen}>
-                Add New Section
-              </Button>
-            )}
-
-            <Modal
-              onClose={onAddSectionClose}
-              finalFocusRef={btnRef}
-              isOpen={isAddSectionOpen}
-              scrollBehavior="inside"
+            <Drawer
+              isOpen={isDrawerOpen}
+              placement="left"
+              onClose={onDrawerClose}
             >
-              <ModalOverlay />
-              <ModalContent bg="gray.900">
-                <ModalHeader>Add New Section</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                  <FormControl id="title" mb={4}>
-                    <FormLabel>Title</FormLabel>
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Documentation</DrawerHeader>
+
+                <DrawerBody>
+                  <InputGroup mb={4}>
+                    <InputLeftElement pointerEvents="none">
+                      <SearchIcon color="gray.300" />
+                    </InputLeftElement>
                     <Input
-                      type="text"
-                      value={newSection.title}
-                      onChange={(e) =>
-                        setNewSection({ ...newSection, title: e.target.value })
-                      }
-                      placeholder="Enter title"
+                      placeholder="Search..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
                     />
-                  </FormControl>
+                  </InputGroup>
 
-                  <FormControl id="content">
-                    <FormLabel>Content</FormLabel>
-                    <Textarea
-                      type="text"
-                      value={newSection.content}
-                      onChange={(e) =>
-                        setNewSection({
-                          ...newSection,
-                          content: e.target.value,
-                        })
-                      }
-                      placeholder="Enter content"
-                    />
-                  </FormControl>
-                </ModalBody>
-                <ModalFooter>
-                  <ButtonGroup>
-                    <Button
-                      colorScheme="blue"
-                      onClick={handleNewSectionSubmit}
-                      isLoading={isLoading}
+                  <VStack align="start">
+                    {filteredSections.map((section, index) => (
+                      <Button
+                        key={index}
+                        variant="link"
+                        onClick={() => {
+                          setSelectedSection(section);
+                          onDrawerClose();
+                        }} // Set the selected section
+                      >
+                        {section.title}
+                      </Button>
+                    ))}
+                    {admin && (
+                      <Button border="1px solid" onClick={onAddSectionOpen}>
+                        Add New Section
+                      </Button>
+                    )}
+                    <Modal
+                      onClose={onAddSectionClose}
+                      finalFocusRef={btnRef}
+                      isOpen={isAddSectionOpen}
+                      scrollBehavior="inside"
                     >
-                      Save
-                    </Button>
-                    <Button onClick={onAddSectionClose}>Cancel</Button>
-                  </ButtonGroup>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
-          </VStack>
-        </Box>
+                      <ModalOverlay />
+                      <ModalContent bg="gray.900">
+                        <ModalHeader>Add New Section</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          <FormControl id="title" mb={4}>
+                            <FormLabel>Title</FormLabel>
+                            <Input
+                              type="text"
+                              value={newSection.title}
+                              onChange={(e) =>
+                                setNewSection({
+                                  ...newSection,
+                                  title: e.target.value,
+                                })
+                              }
+                              placeholder="Enter title"
+                            />
+                          </FormControl>
 
-        {/* Content Area */}
-        <Box w="80%" p={4}>
-          <Accordion allowToggle>
-            {filteredSections.map((section, index) => (
-              <AccordionItem key={index} id={section.title}>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    {section.title}
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-                <AccordionPanel pb={4}>
-                  {parseContent(section.content)}
-                  {admin && (
-                    <HStack mt={4} spacing={2}>
-                      <IconButton
-                        icon={<EditIcon />}
-                        colorScheme="blue"
-                        onClick={() => handleEditClick(section)}
-                      />
-                      <IconButton
-                        icon={<DeleteIcon />}
-                        colorScheme="red"
-                        onClick={() => handleDeleteClick(section)}
-                      />
-                    </HStack>
-                  )}
-                </AccordionPanel>
-              </AccordionItem>
-            ))}
+                          <FormControl id="content">
+                            <FormLabel>Content</FormLabel>
+                            <Textarea
+                              type="text"
+                              value={newSection.content}
+                              onChange={(e) =>
+                                setNewSection({
+                                  ...newSection,
+                                  content: e.target.value,
+                                })
+                              }
+                              placeholder="Enter content"
+                            />
+                          </FormControl>
+                        </ModalBody>
+                        <ModalFooter>
+                          <ButtonGroup>
+                            <Button
+                              colorScheme="blue"
+                              onClick={handleNewSectionSubmit}
+                              isLoading={isLoading}
+                            >
+                              Save
+                            </Button>
+                            <Button onClick={onAddSectionClose}>Cancel</Button>
+                          </ButtonGroup>
+                        </ModalFooter>
+                      </ModalContent>
+                    </Modal>
+                  </VStack>
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          </>
+        ) : (
+          <Box w="20%" p={4} borderRight="1px solid">
+            <Heading size="md" mb={4}>
+              Documentation
+            </Heading>
 
-            {isEditing && (
+            <InputGroup mb={4}>
+              <InputLeftElement pointerEvents="none">
+                <SearchIcon color="gray.300" />
+              </InputLeftElement>
+              <Input
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </InputGroup>
+
+            <VStack align="start">
+              {filteredSections.map((section, index) => (
+                <Button
+                  key={index}
+                  variant="link"
+                  onClick={() => setSelectedSection(section)} // Set the selected section
+                  width="100%"
+                  justifyContent="flex-start"
+                >
+                  <Text isTruncated>{section.title}</Text>
+                </Button>
+              ))}
+              {admin && (
+                <Button
+                  border="1px solid"
+                  onClick={onAddSectionOpen}
+                  width="100%"
+                >
+                  Add New Section
+                </Button>
+              )}
               <Modal
-                isOpen={isEditSectionOpen}
-                onClose={handleEditCancel}
+                onClose={onAddSectionClose}
+                finalFocusRef={btnRef}
+                isOpen={isAddSectionOpen}
                 scrollBehavior="inside"
               >
                 <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>Edit Section</ModalHeader>
+                <ModalContent bg="gray.900">
+                  <ModalHeader>Add New Section</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
                     <FormControl id="title" mb={4}>
                       <FormLabel>Title</FormLabel>
                       <Input
                         type="text"
-                        value={sectionBeingEdited?.title || ""}
+                        value={newSection.title}
                         onChange={(e) =>
-                          setSectionBeingEdited({
-                            ...sectionBeingEdited,
+                          setNewSection({
+                            ...newSection,
                             title: e.target.value,
                           })
                         }
+                        placeholder="Enter title"
                       />
                     </FormControl>
 
@@ -546,35 +509,140 @@ const DocumentationComponent = ({ admin = false }) => {
                       <FormLabel>Content</FormLabel>
                       <Textarea
                         type="text"
-                        value={sectionBeingEdited?.content || ""}
+                        value={newSection.content}
                         onChange={(e) =>
-                          setSectionBeingEdited({
-                            ...sectionBeingEdited,
+                          setNewSection({
+                            ...newSection,
                             content: e.target.value,
                           })
                         }
+                        placeholder="Enter content"
                       />
                     </FormControl>
                   </ModalBody>
                   <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={handleEditSave}>
-                      Save
-                    </Button>
-                    <Button variant="ghost" onClick={handleEditCancel}>
-                      Cancel
-                    </Button>
+                    <ButtonGroup>
+                      <Button
+                        colorScheme="blue"
+                        onClick={handleNewSectionSubmit}
+                        isLoading={isLoading}
+                      >
+                        Save
+                      </Button>
+                      <Button onClick={onAddSectionClose}>Cancel</Button>
+                    </ButtonGroup>
                   </ModalFooter>
                 </ModalContent>
               </Modal>
-            )}
-          </Accordion>
+            </VStack>
+          </Box>
+        )}
+
+        {/* Content Area */}
+        <Box w="100%" p={4}>
+          {selectedSection ? (
+            <>
+              <Heading size="lg" mb={4}>
+                {selectedSection.title}
+              </Heading>
+              <Box>{parseContent(selectedSection.content)}</Box>
+              {admin && (
+                <HStack mt={4} spacing={2}>
+                  <IconButton
+                    icon={<EditIcon />}
+                    colorScheme="blue"
+                    onClick={() => handleEditClick(selectedSection)}
+                  />
+                  <IconButton
+                    icon={<DeleteIcon />}
+                    colorScheme="red"
+                    onClick={() => handleDeleteClick(selectedSection)}
+                  />
+                </HStack>
+              )}
+            </>
+          ) : (
+            // automatically select the first section if none is selected
+            documentation.length > 0 && (
+              <Box>
+                <Heading size="lg" mb={4}>
+                  {documentation[0].title}
+                </Heading>
+                <Box>{parseContent(documentation[0].content)}</Box>
+                {admin && (
+                  <HStack mt={4} spacing={2}>
+                    <IconButton
+                      icon={<EditIcon />}
+                      colorScheme="blue"
+                      onClick={() => handleEditClick(documentation[0])}
+                    />
+                    <IconButton
+                      icon={<DeleteIcon />}
+                      colorScheme="red"
+                      onClick={() => handleDeleteClick(documentation[0])}
+                    />
+                  </HStack>
+                )}
+              </Box>
+            )
+          )}
+          {isEditing && (
+            <Modal
+              isOpen={isEditSectionOpen}
+              onClose={handleEditCancel}
+              scrollBehavior="inside"
+            >
+              <ModalOverlay />
+              <ModalContent>
+                <ModalHeader>Edit Section</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <FormControl id="title" mb={4}>
+                    <FormLabel>Title</FormLabel>
+                    <Input
+                      type="text"
+                      value={sectionBeingEdited?.title || ""}
+                      onChange={(e) =>
+                        setSectionBeingEdited({
+                          ...sectionBeingEdited,
+                          title: e.target.value,
+                        })
+                      }
+                    />
+                  </FormControl>
+
+                  <FormControl id="content">
+                    <FormLabel>Content</FormLabel>
+                    <Textarea
+                      type="text"
+                      value={sectionBeingEdited?.content || ""}
+                      onChange={(e) =>
+                        setSectionBeingEdited({
+                          ...sectionBeingEdited,
+                          content: e.target.value,
+                        })
+                      }
+                    />
+                  </FormControl>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme="blue" mr={3} onClick={handleEditSave}>
+                    Save
+                  </Button>
+                  <Button variant="ghost" onClick={handleEditCancel}>
+                    Cancel
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal>
+          )}
         </Box>
       </Flex>
 
       <AlertDialog
         isOpen={isAlertOpen}
         leastDestructiveRef={cancelRef}
-        onClose={onClose}
+        onClose={() => setIsAlertOpen(false)}
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
@@ -588,7 +656,7 @@ const DocumentationComponent = ({ admin = false }) => {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button ref={cancelRef} onClick={() => setIsAlertOpen(false)}>
                 Cancel
               </Button>
               <Button colorScheme="red" onClick={confirmDelete} ml={3}>
@@ -606,8 +674,8 @@ const CodeBlock = ({ code }) => {
   const { hasCopied, onCopy } = useClipboard(code);
 
   return (
-    <Box position="relative" mb={4}>
-      <Code p={4} display="block" whiteSpace="pre">
+    <Box position="relative" mt={1} >
+      <Code p={4} display="block" whiteSpace="pre-wrap">
         {code}
       </Code>
       <Tooltip label={hasCopied ? "Copied!" : "Copy"}>
@@ -626,12 +694,5 @@ const CodeBlock = ({ code }) => {
     </Box>
   );
 };
-
-function scrollToSection(id) {
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({ behavior: "smooth" });
-  }
-}
 
 export default DocumentationComponent;
