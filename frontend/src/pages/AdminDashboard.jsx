@@ -31,6 +31,7 @@ import "react-multi-carousel/lib/styles.css";
 import ModuleCard from "../components/ModuleCard";
 import { AddIcon } from "@chakra-ui/icons";
 import EditModuleModal from "../components/EditModuleModal";
+import DocumentationComponent from "../components/DocumentationComponent";
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -408,6 +409,20 @@ function AdminDashboard() {
           </Card>
         </GridItem>
       </SimpleGrid>
+
+      <Divider width="80%" mt={10}/>
+
+      <Heading
+        fontSize="5xl"
+        mb={10}
+        mt={10}
+        color="whiteAlpha.800"
+        textAlign="center"
+      >
+        Documentation:
+      </Heading>
+
+      <DocumentationComponent admin={true}/>
     </Box>
   );
 }
