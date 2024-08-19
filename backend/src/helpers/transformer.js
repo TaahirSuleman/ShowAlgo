@@ -55,6 +55,10 @@ class Transformer {
                     condition: this.transformCondition(node.condition),
                     body: this.transformNodes(node.body),
                 };
+            case "LoopUntil":
+                return this.transformLoopUntil(node);
+            case "LoopFromTo":
+                return this.transformLoopFromTo(node);
             case "ReturnStatement":
                 return {
                     type: "ReturnStatement",
@@ -88,17 +92,27 @@ class Transformer {
 
     transformExpression(expression) {
         if (expression.type === "Expression") {
-            return {
+            let leftExp =
+                expression.left.type === "Expression"
+                    ? this.transformExpression(expression.left)
+                    : this.transformExpression(expression.left).value;
+            let rightExp =
+                expression.right.type === "Expression"
+                    ? this.transformExpression(expression.right)
+                    : this.transformExpression(expression.right).value;
+            const result = {
                 type: "Expression",
-                left: this.transformExpression(expression.left).value,
+                left: leftExp,
                 operator: expression.operator,
-                right: this.transformExpression(expression.right).value,
+                right: rightExp,
             };
+            return result;
         } else if (
             expression.type === "Identifier" ||
             expression.type === "Literal"
         ) {
-            return { value: expression.value };
+            const result = { value: expression.value };
+            return result;
         } else {
             return expression;
         }
@@ -115,6 +129,26 @@ class Transformer {
         } else {
             return this.transformExpression(expression);
         }
+    }
+
+    transformLoopUntil(node) {
+        return {
+            type: "LoopUntil",
+            condition: this.transformCondition(node.condition),
+            body: this.transformNodes(node.body),
+        };
+    }
+
+    transformLoopFromTo(node) {
+        return {
+            type: "LoopFromTo",
+            loopVariable: node.loopVariable,
+            range: {
+                start: this.transformExpression(node.range.start).value,
+                end: this.transformExpression(node.range.end).value,
+            },
+            body: this.transformNodes(node.body),
+        };
     }
 }
 
