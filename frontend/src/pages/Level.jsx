@@ -451,6 +451,7 @@ function Level() {
       setTestResultsLoading(false);
     }
   };
+  
   const getStatusIcon = (status) => {
     if (!submitClicked) {
       return (
