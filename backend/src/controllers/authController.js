@@ -175,6 +175,7 @@ export const createLevel = async (req, res) => {
       difficulty,
       route,
       examples,
+      starter_code,
       solution,
       order,
       section_id,
@@ -190,12 +191,27 @@ export const createLevel = async (req, res) => {
       order,
       section_id,
       examples,
+      starter_code,
     });
 
     // Update the section to include the new level's ID
     await Sections.findByIdAndUpdate(level.section_id, {
       $push: { levels: level._id },
     });
+
+    // Update all userProgress documents to include the new level
+    await UserProgress.updateMany(
+      { "sections.section_id": section_id },
+      {
+        $push: {
+          "sections.$.levels": {
+            level_id: level._id,
+            completed: false,
+            difficulty: level.difficulty,
+          },
+        },
+      }
+    );
 
     res.json(level);
   } catch (error) {
@@ -216,6 +232,7 @@ export const updateLevel = async (req, res) => {
       difficulty,
       route,
       examples,
+      starter_code,
       solution,
       order,
     } = req.body;
@@ -230,6 +247,7 @@ export const updateLevel = async (req, res) => {
         route,
         examples,
         solution,
+        starter_code,
         order,
       },
       { upsert: false }
@@ -296,6 +314,20 @@ export const createSection = async (req, res) => {
       route,
       levels: [],
     });
+
+    // Update all userProgress documents to include the new section
+    await UserProgress.updateMany(
+      {},
+      {
+        $push: {
+          sections: {
+            section_id: section._id,
+            levels: [],
+          },
+        },
+      }
+    );
+
     res.json(section);
   } catch (error) {
     console.log(error);

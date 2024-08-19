@@ -100,6 +100,7 @@ function AdminLevel() {
     solution: "",
     hints: [],
     difficulty: "",
+    starter_code: "",
     __v: 0,
     route: "",
   });
@@ -335,7 +336,7 @@ function AdminLevel() {
   const clearCode = () => {
     setIsClearLoading(true);
     setTimeout(() => {
-      setValue("");
+      setValue(level.starter_code);
       setIsClearLoading(false);
     }, 1000);
   };
@@ -414,12 +415,14 @@ function AdminLevel() {
   };
 
   const checkTestCases = () => {
-    const testCases = level.test_cases.map((testCase) => {
-      console.log(testCase.output);
-      const result = output === testCase.output;
-      return { ...testCase, passed: result };
-    });
-    setLevel({ ...level, test_cases: testCases });
+    // const testCases = level.test_cases.map((testCase) => {
+    //   console.log(testCase.output);
+    //   const result = output === testCase.output;
+    //   return { ...testCase, passed: result };
+    // });
+    // setLevel({ ...level, test_cases: testCases });
+
+
   };
 
   const getStatusIcon = () => {
@@ -462,8 +465,8 @@ function AdminLevel() {
     setIsSubmitLoading(true);
     setSubmitClicked(true);
     setTimeout(() => {
-      setIsSubmitLoading(false);
       checkTestCases();
+      setIsSubmitLoading(false);
     }, 2000);
   };
 
@@ -718,6 +721,7 @@ function AdminLevel() {
                 setHighlightState={setHighlightState}
                 pauseState={pauseState}
                 setPauseState={setPauseState}
+                defaultValue={level.starter_code}
               />
             </Box>
 

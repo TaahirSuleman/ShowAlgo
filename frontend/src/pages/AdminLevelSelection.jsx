@@ -31,6 +31,9 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   useToast,
+  Divider,
+  VStack,
+  HStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
@@ -62,12 +65,13 @@ function AdminLevelSelection() {
   const [formData, setFormData] = useState({
     title: "",
     question: "",
-    test_cases: [{ input: "", output: "" }],
+    test_cases: [{ inputs: [], output: "" }],
     hints: [""],
     difficulty: "easy",
     route: "",
     examples: [""],
     solution: "",
+    starter_code: "",
     order: 0,
     section_id: "",
   });
@@ -209,26 +213,57 @@ function AdminLevelSelection() {
         duration: 2500,
         isClosable: true,
       });
+    } finally {
+      setFormData({
+        title: "",
+        question: "",
+        test_cases: [{ inputs: [], output: "" }],
+        hints: [""],
+        difficulty: "easy",
+        route: "",
+        examples: [""],
+        solution: "",
+        starter_code: "",
+        order: 0,
+        section_id: "",
+      });
     }
   };
 
-  const handleTestCaseChange = (index, e) => {
+  const handleTestCaseChange = (testCaseIndex, inputIndex, e) => {
     const { name, value } = e.target;
-    const updatedTestCases = formData.test_cases.map((testCase, i) =>
-      i === index ? { ...testCase, [name]: value } : testCase
-    );
+    const updatedTestCases = [...formData.test_cases];
+    if (name === "input") {
+      updatedTestCases[testCaseIndex].inputs[inputIndex] = value;
+    } else {
+      updatedTestCases[testCaseIndex][name] = value;
+    }
     setFormData({ ...formData, test_cases: updatedTestCases });
   };
 
   const addTestCase = () => {
     setFormData({
       ...formData,
-      test_cases: [...formData.test_cases, { input: "", output: "" }],
+      test_cases: [...formData.test_cases, { inputs: [""], output: "" }],
     });
   };
 
   const removeTestCase = (index) => {
     const updatedTestCases = formData.test_cases.filter((_, i) => i !== index);
+    setFormData({ ...formData, test_cases: updatedTestCases });
+  };
+
+  const addInputField = (testCaseIndex) => {
+    const updatedTestCases = [...formData.test_cases];
+    updatedTestCases[testCaseIndex].inputs.push("");
+    setFormData({ ...formData, test_cases: updatedTestCases });
+  };
+
+  const removeInputField = (testCaseIndex, inputIndex) => {
+    const updatedTestCases = [...formData.test_cases];
+    updatedTestCases[testCaseIndex].inputs = updatedTestCases[
+      testCaseIndex
+    ].inputs.filter((_, i) => i !== inputIndex);
     setFormData({ ...formData, test_cases: updatedTestCases });
   };
 
@@ -248,7 +283,7 @@ function AdminLevelSelection() {
   const addEditTestCase = () => {
     setSelectedLevel({
       ...selectedLevel,
-      test_cases: [...selectedLevel.test_cases, { input: "", output: "" }],
+      test_cases: [...selectedLevel.test_cases, { inputs: [""], output: "" }],
     });
   };
 
@@ -257,6 +292,25 @@ function AdminLevelSelection() {
       (_, i) => i !== index
     );
     setSelectedLevel({ ...selectedLevel, test_cases: updatedTestCases });
+  };
+
+  const removeEditTestCaseInput = (testCaseIndex, inputIndex) => {
+    setSelectedLevel((prevSelectedLevel) => {
+      const updatedTestCases = [...prevSelectedLevel.test_cases];
+      updatedTestCases[testCaseIndex].inputs.splice(inputIndex, 1);
+      return { ...prevSelectedLevel, test_cases: updatedTestCases };
+    });
+  };
+
+  const addEditTestCaseInput = (testCaseIndex) => {
+    setSelectedLevel((prevSelectedLevel) => {
+      const updatedTestCases = [...prevSelectedLevel.test_cases];
+      updatedTestCases[testCaseIndex] = {
+        ...updatedTestCases[testCaseIndex],
+        inputs: [...updatedTestCases[testCaseIndex].inputs, ""],
+      };
+      return { ...prevSelectedLevel, test_cases: updatedTestCases };
+    });
   };
 
   const handleEditFormSubmit = async (e) => {
@@ -441,35 +495,77 @@ function AdminLevelSelection() {
               </FormControl>
 
               <FormControl isRequired>
+                <FormLabel>Starter Code</FormLabel>
+                <Textarea
+                  name="starter_code"
+                  value={formData.starter_code}
+                  onChange={handleInputChange}
+                />
+              </FormControl>
+
+              <FormControl isRequired>
                 <FormLabel>Test Cases</FormLabel>
-                {formData.test_cases.map((testCase, index) => (
-                  <Box key={index} mb={2}>
-                    <Input
-                      name="input"
-                      placeholder="Input"
-                      value={testCase.input}
-                      onChange={(e) => handleTestCaseChange(index, e)}
-                      mb={1}
-                    />
-                    <Input
-                      name="output"
-                      placeholder="Output"
-                      value={testCase.output}
-                      onChange={(e) => handleTestCaseChange(index, e)}
-                    />
-                    <Button
-                      mt={2}
-                      colorScheme="red"
-                      onClick={() => removeTestCase(index)}
-                    >
-                      Remove Test Case
-                    </Button>
+                {formData.test_cases.map((testCase, testCaseIndex) => (
+                  <Box
+                    key={testCaseIndex}
+                    mb={4}
+                    p={4}
+                    borderWidth="1px"
+                    borderRadius="md"
+                  >
+                    <FormLabel>Test Case {testCaseIndex + 1}</FormLabel>
+                    <Divider mb={4} />
+                    <VStack spacing={4} align="stretch">
+                      {testCase.inputs.map((input, inputIndex) => (
+                        <HStack key={inputIndex} spacing={4}>
+                          <Input
+                            name="input"
+                            placeholder={`Input ${inputIndex + 1}`}
+                            value={input}
+                            onChange={(e) =>
+                              handleTestCaseChange(testCaseIndex, inputIndex, e)
+                            }
+                          />
+                          <IconButton
+                            icon={<MinusIcon />}
+                            colorScheme="red"
+                            onClick={() =>
+                              removeInputField(testCaseIndex, inputIndex)
+                            }
+                          />
+                        </HStack>
+                      ))}
+                      <Button
+                        colorScheme="blue"
+                        onClick={() => addInputField(testCaseIndex)}
+                      >
+                        Add Input
+                      </Button>
+                      <Input
+                        name="output"
+                        placeholder="Output"
+                        value={testCase.output}
+                        onChange={(e) =>
+                          handleTestCaseChange(testCaseIndex, null, e)
+                        }
+                      />
+                      <Button
+                        colorScheme="red"
+                        onClick={() => removeTestCase(testCaseIndex)}
+                      >
+                        Remove Test Case
+                      </Button>
+                    </VStack>
                   </Box>
                 ))}
-                <Button mt={2} colorScheme="green" onClick={addTestCase}>
-                  Add Test Case
-                </Button>
+
+                <Box width="100%" justifyContent="center" display="flex">
+                  <Button mt={2} colorScheme="green" onClick={addTestCase}>
+                    Add Test Case
+                  </Button>
+                </Box>
               </FormControl>
+
               <FormControl>
                 <FormLabel>Hints</FormLabel>
                 <Textarea
@@ -478,8 +574,11 @@ function AdminLevelSelection() {
                   onChange={handleInputChange}
                 />
               </FormControl>
-              <Button type="submit" colorScheme="blue" mt={4}>
+              <Button type="submit" colorScheme="blue" mt={8}>
                 Submit
+              </Button>
+              <Button colorScheme="gray" mt={8} ml={2} onClick={onClose}>
+                Cancel
               </Button>
             </form>
           </ModalBody>
@@ -502,6 +601,7 @@ function AdminLevelSelection() {
                     onChange={handleEditInputChange}
                   />
                 </FormControl>
+
                 <FormControl isRequired>
                   <FormLabel>Question</FormLabel>
                   <Textarea
@@ -510,6 +610,7 @@ function AdminLevelSelection() {
                     onChange={handleEditInputChange}
                   />
                 </FormControl>
+
                 <FormControl isRequired>
                   <FormLabel>Difficulty</FormLabel>
                   <Select
@@ -522,6 +623,7 @@ function AdminLevelSelection() {
                     <option value="hard">Hard</option>
                   </Select>
                 </FormControl>
+
                 <FormControl isRequired>
                   <FormLabel>Solution</FormLabel>
                   <Textarea
@@ -530,6 +632,7 @@ function AdminLevelSelection() {
                     onChange={handleEditInputChange}
                   />
                 </FormControl>
+
                 <FormControl isRequired>
                   <FormLabel>Examples</FormLabel>
                   <Textarea
@@ -538,36 +641,85 @@ function AdminLevelSelection() {
                     onChange={handleEditInputChange}
                   />
                 </FormControl>
+
+                <FormControl isRequired>
+                  <FormLabel>Starter Code</FormLabel>
+                  <Textarea
+                    name="starter_code"
+                    value={selectedLevel.starter_code}
+                    onChange={handleEditInputChange}
+                  />
+                </FormControl>
+
                 <FormControl isRequired>
                   <FormLabel>Test Cases</FormLabel>
-                  {selectedLevel.test_cases.map((testCase, index) => (
-                    <Box key={index} mb={2}>
-                      <Input
-                        name="input"
-                        placeholder="Input"
-                        value={testCase.input}
-                        onChange={(e) => handleEditTestCaseChange(index, e)}
-                        mb={1}
-                      />
-                      <Input
-                        name="output"
-                        placeholder="Output"
-                        value={testCase.output}
-                        onChange={(e) => handleEditTestCaseChange(index, e)}
-                      />
-                      <Button
-                        mt={2}
-                        colorScheme="red"
-                        onClick={() => removeEditTestCase(index)}
+                  {(selectedLevel.test_cases || []).map(
+                    (testCase, testCaseIndex) => (
+                      <Box
+                        key={testCaseIndex}
+                        mb={4}
+                        p={4}
+                        borderWidth="1px"
+                        borderRadius="md"
                       >
-                        Remove Test Case
-                      </Button>
-                    </Box>
-                  ))}
+                        <FormLabel>Test Case {testCaseIndex + 1}</FormLabel>
+                        <Divider mb={4} />
+                        <VStack spacing={4} align="stretch">
+                          {testCase.inputs.map((input, inputIndex) => (
+                            <HStack key={inputIndex} spacing={4}>
+                              <Input
+                                name="input"
+                                placeholder={`Input ${inputIndex + 1}`}
+                                value={input}
+                                onChange={(e) =>
+                                  handleEditTestCaseChange(
+                                    testCaseIndex,
+                                    inputIndex,
+                                    e
+                                  )
+                                }
+                              />
+                              <IconButton
+                                icon={<MinusIcon />}
+                                colorScheme="red"
+                                onClick={() =>
+                                  removeEditTestCaseInput(
+                                    testCaseIndex,
+                                    inputIndex
+                                  )
+                                }
+                              />
+                            </HStack>
+                          ))}
+                          <Button
+                            colorScheme="blue"
+                            onClick={() => addEditTestCaseInput(testCaseIndex)}
+                          >
+                            Add Input
+                          </Button>
+                          <Input
+                            name="output"
+                            placeholder="Output"
+                            value={testCase.output}
+                            onChange={(e) =>
+                              handleEditTestCaseChange(testCaseIndex, null, e)
+                            }
+                          />
+                          <Button
+                            colorScheme="red"
+                            onClick={() => removeEditTestCase(testCaseIndex)}
+                          >
+                            Remove Test Case
+                          </Button>
+                        </VStack>
+                      </Box>
+                    )
+                  )}
                   <Button mt={2} colorScheme="green" onClick={addEditTestCase}>
                     Add Test Case
                   </Button>
                 </FormControl>
+
                 <FormControl>
                   <FormLabel>Hints</FormLabel>
                   <Textarea
@@ -605,7 +757,7 @@ function AdminLevelSelection() {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button ref={cancelRef} onClick={onAlertClose}>
                 Cancel
               </Button>
               <Button
