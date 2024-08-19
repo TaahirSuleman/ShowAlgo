@@ -508,21 +508,31 @@ class JsonConverter {
 
     transformExpression(expression) {
         if (expression.type === "Expression") {
+            // Recursively transform the left and right parts of the expression
+            const left = this.transformExpression(expression.left);
+            const right = this.transformExpression(expression.right);
             return {
-                left:
-                    this.transformExpression(expression.left).value ||
-                    this.transformExpression(expression.left),
+                left: left.value || left, // Return the transformed value or the transformed expression
                 operator: expression.operator,
-                right:
-                    this.transformExpression(expression.right).value ||
-                    this.transformExpression(expression.right),
+                right: right.value || right, // Return the transformed value or the transformed expression
             };
-        } else if (expression.type === "Identifier") {
+        } else if (this.declaredVariables.has(expression)) {
+            // If the expression is an identifier and has been declared, retrieve its value
             return {
-                value: this.variables[expression.value] || expression.value,
+                value: this.variables[expression] || expression,
+            };
+        } else if (
+            expression.type === "NumberLiteral" ||
+            expression.type === "StringLiteral"
+        ) {
+            // If the expression is a literal (number or string), return its value directly
+            return {
+                value: expression.value,
             };
         } else {
-            return { value: expression.value };
+            // Handle any other cases (like a plain value or unrecognized type)
+
+            return expression;
         }
     }
 

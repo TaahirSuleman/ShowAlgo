@@ -56,7 +56,13 @@ class JavaScriptGenerator {
 
     generateFunctionDeclaration(node) {
         const params = node.params.join(", ");
+        for (const param of params) {
+            this.declaredVariables.add(param);
+        }
         const body = this.generateNodes(node.body);
+        for (const param of params) {
+            this.declaredVariables.delete(param);
+        }
         return `function ${node.name}(${params}) {\n${body}\n}`;
     }
 

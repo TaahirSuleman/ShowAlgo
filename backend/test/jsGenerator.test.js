@@ -2,6 +2,23 @@ import { expect } from "chai";
 import JSGenerator from "../src/models/jsGenerator.js";
 
 describe("JSGenerator", () => {
+    it("should convert function declaration pseudocode to JavaScript", () => {
+        const pseudocode = `
+        DEFINE add_numbers WITH PARAMETERS (a, b)
+            RETURN a + b
+        END FUNCTION
+    `;
+
+        const expectedJavaScript = `
+'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+    `.trim();
+
+        const result = JSGenerator.convert(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
     it("should convert a LoopFromTo pseudocode to JavaScript", () => {
         const pseudocode = `
         SET sum TO 0
