@@ -53,7 +53,6 @@ export const registerUser = async (req, res) => {
       section_id: section._id,
       levels: section.levels.map((level) => ({
         level_id: level._id,
-        completed: false,
         difficulty: level.difficulty,
       })),
     }));

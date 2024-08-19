@@ -50,7 +50,6 @@ function LevelSelection() {
   });
   const [sectionProgress, setSectionProgress] = useState({
     section_id: "",
-    completed: false,
     levels: [
       {
         level_id: "",

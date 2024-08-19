@@ -8,10 +8,6 @@ const sectionProgressSchema = new mongoose.Schema({
         ref: 'Section',
         required: true
     },
-    completed: {
-        type: Boolean,
-        default: false
-    },
     levels: [levelProgressSchema] // Array of level progress
 });
 

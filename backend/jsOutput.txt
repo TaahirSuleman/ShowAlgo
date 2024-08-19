@@ -486,3 +486,31 @@ Final JavaScript: 'use strict';
 function HelloWorld() {
 return "Hello, Worl!";
 }
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, Worl!";
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return 4;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
