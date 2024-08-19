@@ -3,6 +3,7 @@ import Sections from "../models/section.js";
 import Levels from "../models/level.js";
 import UserProgress from "../models/userProgress.js";
 import Documentation from "../models/documentation.js";
+import testUserCode from '../helpers/testUserCode.js';
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -473,5 +474,25 @@ export const deleteDocumentationSection = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Route to test the user's code
+export const testCode = async (req, res) => {
+  const { userCode, testCases } = req.body;
+
+  if (!userCode || !testCases) {
+    return res.status(400).json({ error: "User code and test cases are required." });
+  }
+
+  try {
+    // Call the testUserCode function with the provided code and test cases
+    const results = testUserCode(userCode, testCases);
+
+    // Send back the results to the frontend
+    res.json(results);
+  } catch (error) {
+    // Handle any errors that occur during code testing
+    res.status(500).json({ error: error.message });
   }
 };

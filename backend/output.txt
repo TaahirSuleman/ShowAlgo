@@ -13558,3 +13558,66 @@ Final JSON: {
     }
   ]
 }
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "PrintStatement",
+      "value": "Hello, World!"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "Hello, World!",
+      "timestamp": "2024-08-19T21:44:23.017Z",
+      "description": "Printed Hello, World!."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "FunctionDeclaration",
+      "name": "HelloWorld",
+      "params": [],
+      "body": [
+        {
+          "type": "ReturnStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "Hello, World!",
+            "line": 2
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "define",
+      "varName": "HelloWorld",
+      "params": [],
+      "body": [
+        {
+          "line": 2,
+          "operation": "return",
+          "value": {
+            "value": "Hello, World!"
+          },
+          "timestamp": "2024-08-19T22:46:50.142Z",
+          "description": "Returned {\"value\":\"Hello, World!\"}."
+        }
+      ],
+      "timestamp": "2024-08-19T22:46:50.142Z",
+      "description": "Defined function HelloWorld with parameters ."
+    }
+  ]
+}

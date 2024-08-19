@@ -1,4 +1,9 @@
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   AlertDialog,
   AlertDialogBody,
   AlertDialogContent,
@@ -25,10 +30,12 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Spinner,
   Text,
   UnorderedList,
   useBreakpointValue,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -52,6 +59,7 @@ import MainVisualisationWindow from "../components/MainVisualisationWindow";
 import DocumentationComponent from "../components/DocumentationComponent";
 
 function Level() {
+  const toast = useToast();
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -74,6 +82,8 @@ function Level() {
   const [key, setKey] = useState(0);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [testResults, setTestResults] = useState([]);
+  const [testResultsLoading, setTestResultsLoading] = useState(false);
 
   // level states
   const [showHints, setShowHints] = useState(false);
@@ -414,58 +424,88 @@ function Level() {
     setShowTestCaseStatus(!showTestCaseStatus);
   };
 
-  const checkTestCases = () => {
-    // const testCases = level.test_cases.map((testCase) => {
-    //   console.log(testCase.output);
-    //   const result = output === testCase.output;
-    //   return { ...testCase, passed: result };
-    // });
-    // setLevel({ ...level, test_cases: testCases });
+  const checkTestCases = async (code, cases) => {
+    try {
+      setTestResultsLoading(true);
+      console.log("code:", code);
+      console.log("cases:", cases);
+      const response = await axios.post("/test-code", {
+        userCode: code,
+        testCases: cases,
+      });
 
+      const results = response.data;
+      console.log("Test results:", results);
+      setTestResults(results);
+    } catch (error) {
+      console.error("Error testing code:", error);
 
+      toast({
+        title: "Error testing code",
+        description: "Failed to test code",
+        status: "error",
+        duration: 2500,
+        isClosable: true,
+      });
+    } finally {
+      setTestResultsLoading(false);
+    }
   };
+  const getStatusIcon = (status) => {
+    if (!submitClicked) {
+      return (
+        <MinusIcon
+          color="white"
+          boxSize={8}
+          bg="gray.500"
+          borderRadius="50%"
+          p={1}
+          ml={1}
+        />
+      );
+    }
 
-  const getStatusIcon = () => {
-    if (!submitClicked)
-      return <MinusIcon color="gray.500" boxSize={8} ml={1} />;
-    if (level.test_cases.every((tc) => tc.passed))
-      return (
-        <CheckIcon
-          color="white"
-          boxSize={8}
-          bg="green.500"
-          borderRadius="50%"
-          p={1}
-          ml={1}
-        />
-      );
-    if (level.test_cases.every((tc) => !tc.passed))
-      return (
-        <CloseIcon
-          color="white"
-          boxSize={8}
-          bg="red.500"
-          borderRadius="50%"
-          p={1}
-          ml={1}
-        />
-      );
-    return (
-      <WarningIcon
-        boxSize={8}
-        borderRadius="50%"
-        ml={1}
-        color="yellow.500"
-        bg="white"
-      />
-    );
+    switch (status) {
+      case "success":
+        return (
+          <CheckIcon
+            color="white"
+            boxSize={8}
+            bg="green.500"
+            borderRadius="50%"
+            p={1}
+            ml={1}
+          />
+        );
+      case "error":
+        return (
+          <CloseIcon
+            color="white"
+            boxSize={8}
+            bg="red.500"
+            borderRadius="50%"
+            p={1}
+            ml={1}
+          />
+        );
+      case "warning":
+        return (
+          <WarningIcon
+            boxSize={8}
+            borderRadius="50%"
+            ml={1}
+            color="yellow.500"
+            bg="white"
+          />
+        );
+    }
   };
 
   const submitCode = () => {
     setIsSubmitLoading(true);
     setSubmitClicked(true);
     setTimeout(() => {
-      checkTestCases();
+      checkTestCases(value, level.test_cases);
       setIsSubmitLoading(false);
     }, 2000);
   };
@@ -530,32 +570,66 @@ function Level() {
           <Divider mt={4} />
 
           <Text fontWeight="bold" fontSize="xl" mt={2}>
-            Status: {getStatusIcon()}
+            Status:{" "}
+            {isSubmitLoading ? (
+              <Spinner ml={1} />
+            ) : (
+              getStatusIcon(testResults.status)
+            )}
           </Text>
 
-          <Button
-            onClick={toggleTestCaseStatus}
-            mt={4}
-            colorScheme="gray"
-            size="sm"
-          >
-            {showTestCaseStatus ? "Hide Test Cases" : "Show Test Cases"}
-          </Button>
-          {showTestCaseStatus && (
-            <UnorderedList mt={2} color="gray" listStyleType="none">
-              {level.test_cases.map((testCase, index) => (
-                <ListItem key={index} fontWeight="normal">
-                  Test Case {index + 1}: {testCase.output}
-                  {!submitClicked ? (
-                    <MinusIcon color="gray.500" boxSize={4} ml={2} />
-                  ) : testCase.passed ? (
-                    <CheckIcon color="green.500" boxSize={4} ml={2} />
-                  ) : (
-                    <CloseIcon color="red.500" boxSize={4} ml={2} />
-                  )}
-                </ListItem>
-              ))}
-            </UnorderedList>
+          {testResults.test_results && (
+            <Box>
+              <Button
+                onClick={toggleTestCaseStatus}
+                mt={4}
+                colorScheme="gray"
+                size="sm"
+              >
+                {showTestCaseStatus ? "Hide Test Cases" : "Show Test Cases"}
+              </Button>
+
+              {showTestCaseStatus && (
+                <Accordion allowToggle mt={2} color="gray">
+                  {testResults.test_results.map((result, index) => (
+                    <AccordionItem
+                      key={index}
+                      border="1px solid"
+                      borderColor="gray.200"
+                      borderRadius="md"
+                      mb={2}
+                    >
+                      <AccordionButton>
+                        <Box
+                          flex="1"
+                          textAlign="left"
+                          fontWeight="bold"
+                          textColor="white"
+                        >
+                          Test Case {result.testCase}:
+                          {isSubmitLoading ? (
+                            <Spinner ml={1} />
+                          ) : result.passed ? (
+                            <CheckIcon color="green.500" boxSize={4} ml={2} />
+                          ) : (
+                            <CloseIcon color="red.500" boxSize={4} ml={2} />
+                          )}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel pb={4}>
+                        <Text fontWeight="normal">
+                          Expected: {result.expectedOutput}
+                        </Text>
+                        <Text fontWeight="normal">
+                          Actual: {result.actualOutput}
+                        </Text>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              )}
+            </Box>
           )}
         </Box>
       </Box>
@@ -574,6 +648,8 @@ function Level() {
             speedState={speedState}
             setSpeedState={setSpeedState}
             submitButton={true}
+            isSubmitLoading={isSubmitLoading}
+            submitCode={submitCode}
           />
         </Box>
 
@@ -757,7 +833,6 @@ function Level() {
                 </Heading>
 
                 <Box width="84px" />
-
               </Box>
               <Box
                 borderBottomRadius={4}
