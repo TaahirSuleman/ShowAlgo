@@ -11,6 +11,7 @@ const Layout = ({ navBar = "normal" }) => {
     <>
       {navBar === "normal" && <NavBar />}
       {navBar === "guest" && <GuestNavBar />}
+      {navBar === "none" && null}
       <Box
         bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
         minHeight="100dvh"
@@ -23,7 +24,7 @@ const Layout = ({ navBar = "normal" }) => {
 };
 
 Layout.propTypes = {
-  navBar: PropTypes.oneOf(["normal", "guest"]),
+  navBar: PropTypes.oneOf(["normal", "guest", "none"]),
 };
 
 export default Layout;

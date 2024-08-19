@@ -1,4 +1,4 @@
-import { Box, Spinner } from "@chakra-ui/react";
+import { Box, Fade, Spinner } from "@chakra-ui/react";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import { useEffect, useState, useRef } from "react";
 
@@ -29,7 +29,11 @@ const CodeEditorView = ({
         base: "vs-dark",
         inherit: true,
         rules: [
-          { token: "comment", foreground: "ffa500", fontStyle: "italic underline" },
+          {
+            token: "comment",
+            foreground: "ffa500",
+            fontStyle: "italic underline",
+          },
           { token: "keyword", foreground: "ff0000", fontStyle: "bold" },
         ],
         colors: {
@@ -77,7 +81,9 @@ const CodeEditorView = ({
   };
 
   const clearHighlights = (editor) => {
-    setDecorations((oldDecorations) => editor.deltaDecorations(oldDecorations, []));
+    setDecorations((oldDecorations) =>
+      editor.deltaDecorations(oldDecorations, [])
+    );
   };
 
   // Start highlighting lines with speed and pause control
@@ -119,14 +125,15 @@ const CodeEditorView = ({
   }, [speedState]);
 
   const loadingComponent = (
-    <Box display="flex" bg="blackAlpha.700" height={height} justifyContent="center" alignItems="center">
-      <Spinner
-        thickness="6px"
-        speed="0.50s"
-        color="purple.400"
-        size="xl"
-
-      />
+    <Box
+      display="flex"
+      bg="blackAlpha.600"
+      height={height}
+      justifyContent="center"
+      alignItems="center"
+      width="100%"
+    >
+      <Spinner thickness="6px" speed="0.50s" color="purple.400" size="xl" />
     </Box>
   );
 
@@ -135,18 +142,17 @@ const CodeEditorView = ({
       {isLoading ? (
         loadingComponent
       ) : (
-        <>
-        <Editor
-          height={height}
-          width={width}
-          theme="myCustomTheme"
-          language={language}
-          defaultValue={defaultValue}
-          value={value}
-          onChange={(value) => setValue(value)}
-          loading={loadingComponent}
-          options={
-            {
+        <Fade in={!isLoading}>
+          <Editor
+            height={height}
+            width={width}
+            theme="myCustomTheme"
+            language={language}
+            defaultValue={defaultValue}
+            value={value}
+            onChange={(value) => setValue(value)}
+            loading={loadingComponent}
+            options={{
               fontSize: 16,
               minimap: { enabled: false },
               scrollBeyondLastLine: false,
@@ -156,8 +162,8 @@ const CodeEditorView = ({
               scrollbar: { vertical: "auto", horizontal: "auto" },
             }}
             onMount={handleEditorDidMount}
-        />
-        </>
+          />
+        </Fade>
       )}
     </Box>
   );
