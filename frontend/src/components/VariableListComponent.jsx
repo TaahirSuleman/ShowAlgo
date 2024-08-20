@@ -14,11 +14,9 @@ function VariableListComponent({
     arraysState
     }){
 
-    let focusedVar = {type: "NOTE",value:" It will be displayed here!",name:"Click on a variable"};
     let [updating, setUpdating] = useState("");
     let [variablesState, setVariablesState] = useState([]);
-    let [isChanged, setIsChanged] = useState(false);
-    let [focusedVariableState, setFocusedVariableState] = useState(focusedVar);
+    const [counter, setCounter] = useState(0);
 
     const delay = ms  => new Promise(res => setTimeout(res, ms));
 
@@ -41,12 +39,6 @@ function VariableListComponent({
                 return
               }
             })
-            // NOTE THAT THE UPDATING OF THE INDEXSTATE HAPPENS IN ARRAYCOMPONENT
-          //   const timeoutId2 = setTimeout(() => {
-          //     setOutput((prev) => {return [...prev, movements[indexState].description]}); 
-          //     setIndexState((i)=>{return i+1});
-          // }, speedState*1000 );
-          // return () => clearTimeout(timeoutId2);
           }
       }
     }
@@ -70,22 +62,11 @@ function VariableListComponent({
                     name: name,
                 });
             }
+
             setUpdating(name);
+            setCounter(c => c+1)
             return variables;
         });
-    }
-
-    let changedIsChanged = async ()=>{
-        setIsChanged(true);
-        console.log("its changed")
-        await delay(speedState*1000);
-        console.log("its changed")
-        setIsChanged(false);
-    }
-
-    let changeFocusedVariableState= (variable)=>{// {type:string,value:string,name:string,focused:boolean}
-        setFocusedVariableState(variable)
-        changedIsChanged();
     }
 
     if (variablesState.length == 0){
@@ -105,11 +86,10 @@ function VariableListComponent({
         {variablesState.map((variable) => (
           <motion.li className="list-items"
             layout
-            key={variable.name}
+            key={variable.name + counter}
             style={{ borderRadius: updating === variable.name ? "8px": "3px",
                      border: updating === variable.name ? "5px solid black": "1px solid red"
              }}
-            onClick={() => changeFocusedVariableState(variable)}
             animate={updating === variable.name ? { backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
             transition={{ duration: speedState }}
           >

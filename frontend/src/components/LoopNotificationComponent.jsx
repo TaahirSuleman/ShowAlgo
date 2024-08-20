@@ -27,9 +27,8 @@ arraysState
                     setIsAnimated(true)
                     setIsActive(true)
                     let loopObj =   {
-                                        "target_var": (movements[indexState].operation == "while") ? "" : movements[indexState].looping_var,
+                                        "condition":movements[indexState].condition,
                                         "loop_type": (movements[indexState].operation == "while") ? "While Loop" : "For Loop",
-                                        "loop_range": (movements[indexState].operation == "while") ? "The loop will run until the condition is met! Watch closely!" : movements[indexState].range
                                     }
                     setLoopNotificationState(loopObj)
                     setOutput((prev) => {return [...prev, movements[indexState].description]});
@@ -70,22 +69,19 @@ arraysState
                 animate={{backgroundColor: isAnimated ? 'hsl(39, 100, 70)' : 'hsl(0, 0, 0)',
                           color: isAnimated ? 'hsl(0, 0, 0)' : 'hsl(0, 0, 100)'}}
             >
-            <p style={{ fontSize: '25px', fontWeight: 'bold' }}>
+            <p style={{ fontSize: '30px', fontWeight: 'bold' }}>
   A {loopNotificationState.loop_type} is in progress!
 </p>
 
 <p style={{ fontSize: '20px' }}>
-  {loopNotificationState.loop_type !== "While Loop" && (
     <>
-      Watch the variable <strong>{loopNotificationState.target_var}</strong> closely!
+      The condition to watch is:
     </>
-  )}
 </p>
-
-<p style={{ fontSize: '20px' }}>
-  {loopNotificationState.loop_type === "While Loop"
-    ? loopNotificationState.loop_range
-    : `The loop is running in the range ${loopNotificationState.loop_range}`}
+<p style={{ fontSize: '25px' }}>
+    <strong style={{ textDecoration: 'underline' }}>
+        {loopNotificationState.condition}
+    </strong>
 </p>
         </motion.div>);
     }

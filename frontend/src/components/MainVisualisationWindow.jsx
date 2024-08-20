@@ -15,7 +15,7 @@ function MainVisualisationWindow({
     setIndexState, 
     pauseState,
     bufferState,
-    setPauseState,
+    setPauseState
     })
     {
     useEffect(()=>{
@@ -29,7 +29,6 @@ function MainVisualisationWindow({
         const performOperations = () => {
             if (indexState > -1 && indexState < movementsState.length && !pauseState) {
                 const movement = movementsState[indexState];
-                
                 if (movement.operation === "create") {
                     const valuesArr = movement.value.map((value, i) =>
                         `${movement.varName}++${value}-${i}`
