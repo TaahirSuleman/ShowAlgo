@@ -57,9 +57,13 @@ import { IoMdHome } from "react-icons/io";
 import RunControls from "../components/RunControls";
 import MainVisualisationWindow from "../components/MainVisualisationWindow";
 import DocumentationComponent from "../components/DocumentationComponent";
+import CustomToast from "../components/CustomToast";
+import ConfettiExplosion from "react-confetti-explosion";
 
 function Level() {
   const toast = useToast();
+  const [customToast, setCustomToast] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -83,7 +87,6 @@ function Level() {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
   const [testResults, setTestResults] = useState([]);
-  const [testResultsLoading, setTestResultsLoading] = useState(false);
 
   // level states
   const [showHints, setShowHints] = useState(false);
@@ -120,7 +123,6 @@ function Level() {
     sections: [
       {
         section_id: "",
-        completed: false,
         levels: [
           {
             level_id: "",
@@ -131,6 +133,74 @@ function Level() {
       },
     ],
   });
+
+  // get user progress
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      if (!user._id) {
+        console.log("User ID is not defined");
+        return;
+      }
+      try {
+        const response = await axios.get(`/get-progress/${user._id}`);
+        setUserProgress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user._id) {
+      fetchUserProgress();
+    }
+  }, [user._id]);
+
+  // update user progress
+  useEffect(() => {
+    const updateUserProgress = async () => {
+      try {
+        // Check if the level was already marked as completed
+        const section = UserProgress.sections.find(
+          (section) => section.section_id === level.section_id
+        );
+        const levelProgress = section
+          ? section.levels.find((lvl) => lvl.level_id === level._id)
+          : null;
+        const wasCompletedBefore = levelProgress
+          ? levelProgress.completed
+          : false;
+
+        // Update the progress on the backend
+        const response = await axios.put(`/update-progress/${user._id}`, {
+          levelId: level._id,
+        });
+
+        // If it wasn't completed before but is now, it's the first time
+        const isFirstTime = !wasCompletedBefore;
+
+        // Show appropriate toast message
+        setCustomToast({
+          title: isFirstTime ? "Level Completed!" : "Level Re-completed!",
+          description: isFirstTime
+            ? "Congratulations on completing this level for the first time!"
+            : "You've successfully completed this level again!",
+          status: "success",
+          duration: 4000,
+          isClosable: false,
+          position: "bottom",
+        });
+        setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 2500);
+
+        // update the UserProgress state to reflect the new progress
+        setUserProgress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (user._id) {
+      updateUserProgress();
+    }
+  }, [testResults]);
 
   // IDE functions
 
@@ -426,7 +496,6 @@ function Level() {
 
   const checkTestCases = async (code, cases) => {
     try {
-      setTestResultsLoading(true);
       console.log("code:", code);
       console.log("cases:", cases);
       const response = await axios.post("/test-code", {
@@ -447,11 +516,9 @@ function Level() {
         duration: 2500,
         isClosable: true,
       });
-    } finally {
-      setTestResultsLoading(false);
     }
   };
-  
+
   const getStatusIcon = (status) => {
     if (!submitClicked) {
       return (
@@ -891,6 +958,18 @@ function Level() {
           </GridItem>
         </Grid>
       </Box>
+
+      {customToast && (
+        <Box>
+          <ConfettiExplosion force={0.6} duration={2500} particleCount={80} width={1000}/>
+          <CustomToast
+            title={customToast.title}
+            description={customToast.description}
+            duration={customToast.duration}
+            onClose={() => setCustomToast(null)}
+          />
+        </Box>
+      )}
     </Box>
   );
 }

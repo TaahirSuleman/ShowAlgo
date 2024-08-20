@@ -409,6 +409,36 @@ export const getUserProgress = async (req, res) => {
   }
 };
 
+// Route to update user progress after successfully completing a level
+export const updateUserProgress = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { levelId } = req.body;
+
+    // Find the user's progress document
+    const userProgress = await UserProgress.findOne({ user_id: userId });
+
+    // Find the section and level in the user's progress document
+    const sectionIndex = userProgress.sections.findIndex((section) =>
+      section.levels.some((level) => level.level_id.equals(levelId))
+    );
+    const levelIndex = userProgress.sections[sectionIndex].levels.findIndex((level) =>
+      level.level_id.equals(levelId)
+    );
+
+    // Update the level to be completed
+    userProgress.sections[sectionIndex].levels[levelIndex].completed = true;
+
+    // Save the updated progress document
+    await userProgress.save();
+
+    res.json(userProgress);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 // Route to get the user's daily streak
 export const getDailyStreak = async (req, res) => {
   try {
