@@ -175,18 +175,19 @@ function Level() {
         // If it wasn't completed before but is now, it's the first time
         const isFirstTime = !wasCompletedBefore;
 
-        // Show appropriate toast message
-        setCustomToast({
-          title: isFirstTime ? "Level Completed!" : "Level Re-completed!",
-          description: isFirstTime
-            ? "Congratulations on completing this level for the first time!"
-            : "You've successfully completed this level again!",
-          status: "success",
-          duration: 5000,
-          isClosable: false,
-          position: "bottom",
-        });
-        
+        if (testResults.status === "success") {
+          // Show appropriate toast message
+          setCustomToast({
+            title: isFirstTime ? "Level Completed!" : "Level Re-completed!",
+            description: isFirstTime
+              ? "Congratulations on completing this level for the first time!"
+              : "You've successfully completed this level again!",
+            status: "success",
+            duration: 6000,
+            isClosable: false,
+            position: "bottom",
+          });
+        }
 
         // update the UserProgress state to reflect the new progress
         setUserProgress(response.data);
@@ -567,13 +568,46 @@ function Level() {
     }
   };
 
-  const submitCode = () => {
-    setIsSubmitLoading(true);
+  const submitCode = async () => {
     setSubmitClicked(true);
-    setTimeout(() => {
-      checkTestCases(value, level.test_cases);
+
+    try {
+      let response = await axios.post(
+        "http://localhost:8000/api/pseudocode/run",
+        { code: value }
+      );
+
+      console.log(response)
+
+      if (response.status === 200) {
+        setIsSubmitLoading(true);
+        setTimeout(() => {
+          checkTestCases(value, level.test_cases);
+          setIsSubmitLoading(false);
+        }, 2000);
+      } else {
+        setIsSubmitLoading(false);
+        setTestResults([]);
+        toast({
+          title: "Code Execution Failed",
+          description: "The code did not pass the execution.",
+          status: "error",
+          duration: 2500,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      setTestResults([]);
+      console.error("Failed to run code:", error);
+      toast({
+        title: "Error running code",
+        description: "Failed to run code",
+        status: "error",
+        duration: 2500,
+        isClosable: true,
+      });
       setIsSubmitLoading(false);
-    }, 2000);
+    }
   };
 
   return (
@@ -958,12 +992,12 @@ function Level() {
       </Box>
 
       {customToast && (
-          <CustomToast
-            title={customToast.title}
-            description={customToast.description}
-            duration={customToast.duration}
-            onClose={() => setCustomToast(null)}
-          />
+        <CustomToast
+          title={customToast.title}
+          description={customToast.description}
+          duration={customToast.duration}
+          onClose={() => setCustomToast(null)}
+        />
       )}
     </Box>
   );
