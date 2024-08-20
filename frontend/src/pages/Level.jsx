@@ -1,4 +1,9 @@
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   AlertDialog,
   AlertDialogBody,
   AlertDialogContent,
@@ -25,10 +30,12 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Spinner,
   Text,
   UnorderedList,
   useBreakpointValue,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -50,8 +57,12 @@ import { IoMdHome } from "react-icons/io";
 import RunControls from "../components/RunControls";
 import MainVisualisationWindow from "../components/MainVisualisationWindow";
 import DocumentationComponent from "../components/DocumentationComponent";
+import CustomToast from "../components/CustomToast";
+import ConfettiExplosion from "react-confetti-explosion";
 
 function Level() {
+  const toast = useToast();
+  const [customToast, setCustomToast] = useState(false);
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -74,6 +85,7 @@ function Level() {
   const [key, setKey] = useState(0);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
+  const [testResults, setTestResults] = useState([]);
 
   // level states
   const [showHints, setShowHints] = useState(false);
@@ -100,6 +112,7 @@ function Level() {
     solution: "",
     hints: [],
     difficulty: "",
+    starter_code: "",
     __v: 0,
     route: "",
   });
@@ -109,7 +122,6 @@ function Level() {
     sections: [
       {
         section_id: "",
-        completed: false,
         levels: [
           {
             level_id: "",
@@ -120,6 +132,73 @@ function Level() {
       },
     ],
   });
+
+  // get user progress
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      if (!user._id) {
+        console.log("User ID is not defined");
+        return;
+      }
+      try {
+        const response = await axios.get(`/get-progress/${user._id}`);
+        setUserProgress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user._id) {
+      fetchUserProgress();
+    }
+  }, [user._id]);
+
+  // update user progress
+  useEffect(() => {
+    const updateUserProgress = async () => {
+      try {
+        // Check if the level was already marked as completed
+        const section = UserProgress.sections.find(
+          (section) => section.section_id === level.section_id
+        );
+        const levelProgress = section
+          ? section.levels.find((lvl) => lvl.level_id === level._id)
+          : null;
+        const wasCompletedBefore = levelProgress
+          ? levelProgress.completed
+          : false;
+
+        // Update the progress on the backend
+        const response = await axios.put(`/update-progress/${user._id}`, {
+          levelId: level._id,
+        });
+
+        // If it wasn't completed before but is now, it's the first time
+        const isFirstTime = !wasCompletedBefore;
+
+        // Show appropriate toast message
+        setCustomToast({
+          title: isFirstTime ? "Level Completed!" : "Level Re-completed!",
+          description: isFirstTime
+            ? "Congratulations on completing this level for the first time!"
+            : "You've successfully completed this level again!",
+          status: "success",
+          duration: 5000,
+          isClosable: false,
+          position: "bottom",
+        });
+        
+
+        // update the UserProgress state to reflect the new progress
+        setUserProgress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (user._id) {
+      updateUserProgress();
+    }
+  }, [testResults]);
 
   // IDE functions
 
@@ -335,7 +414,7 @@ function Level() {
   const clearCode = () => {
     setIsClearLoading(true);
     setTimeout(() => {
-      setValue("");
+      setValue(level.starter_code);
       setIsClearLoading(false);
     }, 1000);
   };
@@ -413,57 +492,87 @@ function Level() {
     setShowTestCaseStatus(!showTestCaseStatus);
   };
 
-  const checkTestCases = () => {
-    const testCases = level.test_cases.map((testCase) => {
-      console.log(testCase.output);
-      const result = output === testCase.output;
-      return { ...testCase, passed: result };
-    });
-    setLevel({ ...level, test_cases: testCases });
+  const checkTestCases = async (code, cases) => {
+    try {
+      console.log("code:", code);
+      console.log("cases:", cases);
+      const response = await axios.post("/test-code", {
+        userCode: code,
+        testCases: cases,
+      });
+
+      const results = response.data;
+      console.log("Test results:", results);
+      setTestResults(results);
+    } catch (error) {
+      console.error("Error testing code:", error);
+
+      toast({
+        title: "Error testing code",
+        description: "Failed to test code",
+        status: "error",
+        duration: 2500,
+        isClosable: true,
+      });
+    }
   };
 
-  const getStatusIcon = () => {
-    if (!submitClicked)
-      return <MinusIcon color="gray.500" boxSize={8} ml={1} />;
-    if (level.test_cases.every((tc) => tc.passed))
+  const getStatusIcon = (status) => {
+    if (!submitClicked) {
       return (
-        <CheckIcon
+        <MinusIcon
           color="white"
           boxSize={8}
-          bg="green.500"
+          bg="gray.500"
           borderRadius="50%"
           p={1}
           ml={1}
         />
       );
-    if (level.test_cases.every((tc) => !tc.passed))
-      return (
-        <CloseIcon
-          color="white"
-          boxSize={8}
-          bg="red.500"
-          borderRadius="50%"
-          p={1}
-          ml={1}
-        />
-      );
-    return (
-      <WarningIcon
-        boxSize={8}
-        borderRadius="50%"
-        ml={1}
-        color="yellow.500"
-        bg="white"
-      />
-    );
+    }
+
+    switch (status) {
+      case "success":
+        return (
+          <CheckIcon
+            color="white"
+            boxSize={8}
+            bg="green.500"
+            borderRadius="50%"
+            p={1}
+            ml={1}
+          />
+        );
+      case "error":
+        return (
+          <CloseIcon
+            color="white"
+            boxSize={8}
+            bg="red.500"
+            borderRadius="50%"
+            p={1}
+            ml={1}
+          />
+        );
+      case "warning":
+        return (
+          <WarningIcon
+            boxSize={8}
+            borderRadius="50%"
+            ml={1}
+            color="yellow.500"
+            bg="white"
+          />
+        );
+    }
   };
 
   const submitCode = () => {
     setIsSubmitLoading(true);
     setSubmitClicked(true);
     setTimeout(() => {
+      checkTestCases(value, level.test_cases);
       setIsSubmitLoading(false);
-      checkTestCases();
     }, 2000);
   };
 
@@ -527,32 +636,66 @@ function Level() {
           <Divider mt={4} />
 
           <Text fontWeight="bold" fontSize="xl" mt={2}>
-            Status: {getStatusIcon()}
+            Status:{" "}
+            {isSubmitLoading ? (
+              <Spinner ml={1} />
+            ) : (
+              getStatusIcon(testResults.status)
+            )}
           </Text>
 
-          <Button
-            onClick={toggleTestCaseStatus}
-            mt={4}
-            colorScheme="gray"
-            size="sm"
-          >
-            {showTestCaseStatus ? "Hide Test Cases" : "Show Test Cases"}
-          </Button>
-          {showTestCaseStatus && (
-            <UnorderedList mt={2} color="gray" listStyleType="none">
-              {level.test_cases.map((testCase, index) => (
-                <ListItem key={index} fontWeight="normal">
-                  Test Case {index + 1}: {testCase.output}
-                  {!submitClicked ? (
-                    <MinusIcon color="gray.500" boxSize={4} ml={2} />
-                  ) : testCase.passed ? (
-                    <CheckIcon color="green.500" boxSize={4} ml={2} />
-                  ) : (
-                    <CloseIcon color="red.500" boxSize={4} ml={2} />
-                  )}
-                </ListItem>
-              ))}
-            </UnorderedList>
+          {testResults.test_results && (
+            <Box>
+              <Button
+                onClick={toggleTestCaseStatus}
+                mt={4}
+                colorScheme="gray"
+                size="sm"
+              >
+                {showTestCaseStatus ? "Hide Test Cases" : "Show Test Cases"}
+              </Button>
+
+              {showTestCaseStatus && (
+                <Accordion allowToggle mt={2} color="gray">
+                  {testResults.test_results.map((result, index) => (
+                    <AccordionItem
+                      key={index}
+                      border="1px solid"
+                      borderColor="gray.200"
+                      borderRadius="md"
+                      mb={2}
+                    >
+                      <AccordionButton>
+                        <Box
+                          flex="1"
+                          textAlign="left"
+                          fontWeight="bold"
+                          textColor="white"
+                        >
+                          Test Case {result.testCase}:
+                          {isSubmitLoading ? (
+                            <Spinner ml={1} />
+                          ) : result.passed ? (
+                            <CheckIcon color="green.500" boxSize={4} ml={2} />
+                          ) : (
+                            <CloseIcon color="red.500" boxSize={4} ml={2} />
+                          )}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel pb={4}>
+                        <Text fontWeight="normal">
+                          Expected: {result.expectedOutput}
+                        </Text>
+                        <Text fontWeight="normal">
+                          Actual: {result.actualOutput}
+                        </Text>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              )}
+            </Box>
           )}
         </Box>
       </Box>
@@ -571,6 +714,8 @@ function Level() {
             speedState={speedState}
             setSpeedState={setSpeedState}
             submitButton={true}
+            isSubmitLoading={isSubmitLoading}
+            submitCode={submitCode}
           />
         </Box>
 
@@ -717,6 +862,7 @@ function Level() {
                 setHighlightState={setHighlightState}
                 pauseState={pauseState}
                 setPauseState={setPauseState}
+                defaultValue={level.starter_code}
               />
             </Box>
 
@@ -753,7 +899,6 @@ function Level() {
                 </Heading>
 
                 <Box width="84px" />
-
               </Box>
               <Box
                 borderBottomRadius={4}
@@ -811,6 +956,15 @@ function Level() {
           </GridItem>
         </Grid>
       </Box>
+
+      {customToast && (
+          <CustomToast
+            title={customToast.title}
+            description={customToast.description}
+            duration={customToast.duration}
+            onClose={() => setCustomToast(null)}
+          />
+      )}
     </Box>
   );
 }

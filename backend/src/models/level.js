@@ -20,7 +20,7 @@ const levelSchema = new mongoose.Schema({
         required: true
     },
     test_cases: [{
-        input: String,
+        inputs: [String],
         output: String
     }],
     hints: [String],
@@ -38,6 +38,10 @@ const levelSchema = new mongoose.Schema({
         required: true,
     },
     solution: {
+        type: String,
+        required: true
+    },
+    starter_code: {
         type: String,
         required: true
     }

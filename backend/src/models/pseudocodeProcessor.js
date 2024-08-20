@@ -22,9 +22,9 @@ class PseudocodeProcessor {
 
         const transformer = new Transformer();
         const ir = transformer.transform(ast);
-        /*PseudocodeProcessor.writeToFile(
+        PseudocodeProcessor.writeToFile(
             "Intermediate Representation: " + JSON.stringify(ir, null, 2)
-        );*/
+        );
 
         const jsonConverter = new JsonConverter();
         const finalJson = jsonConverter.transformToFinalJSON(ir);

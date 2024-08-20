@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# debugging txt files
+jsOutput.txt
+output.txt

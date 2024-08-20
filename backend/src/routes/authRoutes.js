@@ -17,11 +17,13 @@ import {
   updateLevel,
   deleteLevel,
   getUserProgress,
+  updateUserProgress,
   getDailyStreak,
   getDocumentation,
   createDocumentationSection,
   updateDocumentationSection,
   deleteDocumentationSection,
+  testCode,
 } from "../controllers/authController.js";
 import authMiddleware from "../middleware/authMiddleware.js";
 import adminMiddleware from "../middleware/adminMiddleware.js";
@@ -91,7 +93,15 @@ router.put("/update-level/:levelId", adminMiddleware, updateLevel);
 router.get("/get-progress/:userId", authMiddleware, getUserProgress);
 // This endpoint is used to get the user's daily streak
 router.get('/streak/:userId', authMiddleware, getDailyStreak);
+// This enpoint is to update the user's progress after completing a level
+router.put("/update-progress/:userId", authMiddleware, updateUserProgress);
 
+// --------------------
+
+// TEST CASES ROUTES
+
+// This endpoint is used to test the user's code
+router.post('/test-code', testCode);
 // --------------------
 
 // DOCUMENTATION ROUTES

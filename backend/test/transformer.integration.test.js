@@ -44,13 +44,9 @@ END FUNCTION`,
                                 type: "ReturnStatement",
                                 value: {
                                     type: "Expression",
-                                    left: {
-                                        value: "a",
-                                    },
+                                    left: "a",
                                     operator: "+",
-                                    right: {
-                                        value: "b",
-                                    },
+                                    right: "b",
                                 },
                             },
                         ],
@@ -184,13 +180,9 @@ END WHILE`,
                                 type: "ReturnStatement",
                                 value: {
                                     type: "Expression",
-                                    left: {
-                                        value: "a",
-                                    },
+                                    left: "a",
                                     operator: "+",
-                                    right: {
-                                        value: "b",
-                                    },
+                                    right: "b",
                                 },
                             },
                         ],

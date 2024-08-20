@@ -3,6 +3,7 @@ import Sections from "../models/section.js";
 import Levels from "../models/level.js";
 import UserProgress from "../models/userProgress.js";
 import Documentation from "../models/documentation.js";
+import testUserCode from '../helpers/testUserCode.js';
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -52,7 +53,6 @@ export const registerUser = async (req, res) => {
       section_id: section._id,
       levels: section.levels.map((level) => ({
         level_id: level._id,
-        completed: false,
         difficulty: level.difficulty,
       })),
     }));
@@ -175,6 +175,7 @@ export const createLevel = async (req, res) => {
       difficulty,
       route,
       examples,
+      starter_code,
       solution,
       order,
       section_id,
@@ -190,12 +191,27 @@ export const createLevel = async (req, res) => {
       order,
       section_id,
       examples,
+      starter_code,
     });
 
     // Update the section to include the new level's ID
     await Sections.findByIdAndUpdate(level.section_id, {
       $push: { levels: level._id },
     });
+
+    // Update all userProgress documents to include the new level
+    await UserProgress.updateMany(
+      { "sections.section_id": section_id },
+      {
+        $push: {
+          "sections.$.levels": {
+            level_id: level._id,
+            completed: false,
+            difficulty: level.difficulty,
+          },
+        },
+      }
+    );
 
     res.json(level);
   } catch (error) {
@@ -216,6 +232,7 @@ export const updateLevel = async (req, res) => {
       difficulty,
       route,
       examples,
+      starter_code,
       solution,
       order,
     } = req.body;
@@ -230,6 +247,7 @@ export const updateLevel = async (req, res) => {
         route,
         examples,
         solution,
+        starter_code,
         order,
       },
       { upsert: false }
@@ -296,6 +314,20 @@ export const createSection = async (req, res) => {
       route,
       levels: [],
     });
+
+    // Update all userProgress documents to include the new section
+    await UserProgress.updateMany(
+      {},
+      {
+        $push: {
+          sections: {
+            section_id: section._id,
+            levels: [],
+          },
+        },
+      }
+    );
+
     res.json(section);
   } catch (error) {
     console.log(error);
@@ -377,6 +409,36 @@ export const getUserProgress = async (req, res) => {
   }
 };
 
+// Route to update user progress after successfully completing a level
+export const updateUserProgress = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { levelId } = req.body;
+
+    // Find the user's progress document
+    const userProgress = await UserProgress.findOne({ user_id: userId });
+
+    // Find the section and level in the user's progress document
+    const sectionIndex = userProgress.sections.findIndex((section) =>
+      section.levels.some((level) => level.level_id.equals(levelId))
+    );
+    const levelIndex = userProgress.sections[sectionIndex].levels.findIndex((level) =>
+      level.level_id.equals(levelId)
+    );
+
+    // Update the level to be completed
+    userProgress.sections[sectionIndex].levels[levelIndex].completed = true;
+
+    // Save the updated progress document
+    await userProgress.save();
+
+    res.json(userProgress);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 // Route to get the user's daily streak
 export const getDailyStreak = async (req, res) => {
   try {
@@ -441,5 +503,25 @@ export const deleteDocumentationSection = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Route to test the user's code
+export const testCode = async (req, res) => {
+  const { userCode, testCases } = req.body;
+
+  if (!userCode || !testCases) {
+    return res.status(400).json({ error: "User code and test cases are required." });
+  }
+
+  try {
+    // Call the testUserCode function with the provided code and test cases
+    const results = testUserCode(userCode, testCases);
+
+    // Send back the results to the frontend
+    res.json(results);
+  } catch (error) {
+    // Handle any errors that occur during code testing
+    res.status(500).json({ error: error.message });
   }
 };

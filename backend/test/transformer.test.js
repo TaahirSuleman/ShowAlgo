@@ -7,6 +7,8 @@ import ArrayCreation from "../src/models/ast/ArrayCreation.js";
 import IfStatement from "../src/models/ast/IfStatement.js";
 import FunctionDeclaration from "../src/models/ast/FunctionDeclaration.js";
 import ForLoop from "../src/models/ast/ForLoop.js";
+import LoopUntil from "../src/models/ast/LoopUntil.js";
+import LoopFromTo from "../src/models/ast/LoopFromTo.js";
 import WhileLoop from "../src/models/ast/WhileLoop.js";
 import ReturnStatement from "../src/models/ast/ReturnStatement.js";
 import Expression from "../src/models/ast/Expression.js";
@@ -73,9 +75,9 @@ describe("Transformer", () => {
                             type: "ReturnStatement",
                             value: {
                                 type: "Expression",
-                                left: { value: "a" },
+                                left: "a",
                                 operator: "+",
-                                right: { value: "b" },
+                                right: "b",
                             },
                         },
                     ],
@@ -325,9 +327,9 @@ describe("Transformer", () => {
                             type: "ReturnStatement",
                             value: {
                                 type: "Expression",
-                                left: { value: "a" },
+                                left: "a",
                                 operator: "+",
-                                right: { value: "b" },
+                                right: "b",
                             },
                         },
                     ],
@@ -384,6 +386,123 @@ describe("Transformer", () => {
                                 operator: "-",
                                 right: "1",
                             },
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+    it("should transform 'LOOP until' with high-level syntax", () => {
+        const ast = new Program([
+            new LoopUntil(
+                new Expression("x", "greater", {
+                    type: "NumberLiteral",
+                    value: "5",
+                }),
+                [
+                    new PrintStatement({
+                        type: "Identifier",
+                        value: "x",
+                    }),
+                    new VariableDeclaration(
+                        "x",
+                        null,
+                        new Expression(
+                            { type: "Identifier", value: "x" },
+                            "+",
+                            { type: "NumberLiteral", value: "1" }
+                        )
+                    ),
+                ]
+            ),
+        ]);
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "LoopUntil",
+                    condition: {
+                        left: "x",
+                        operator: "greater",
+                        right: "5",
+                    },
+                    body: [
+                        {
+                            type: "PrintStatement",
+                            value: "x",
+                        },
+                        {
+                            type: "VariableDeclaration",
+                            name: "x",
+                            value: {
+                                type: "Expression",
+                                left: "x",
+                                operator: "+",
+                                right: "1",
+                            },
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    // Similar test case for 'FOR LOOP UNTIL'...
+
+    it("should transform 'LOOP from to' with traditional syntax", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "LoopFromTo",
+                    loopVariable: "i",
+                    range: {
+                        start: {
+                            type: "NumberLiteral",
+                            value: "0",
+                            line: 2,
+                        },
+                        end: {
+                            type: "NumberLiteral",
+                            value: "10",
+                            line: 2,
+                        },
+                    },
+                    body: [
+                        {
+                            type: "PrintStatement",
+                            value: {
+                                type: "Identifier",
+                                value: "i",
+                                line: 3,
+                            },
+                            line: 3,
+                        },
+                    ],
+                    line: 2,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "LoopFromTo",
+                    loopVariable: "i",
+                    range: {
+                        start: "0",
+                        end: "10",
+                    },
+                    body: [
+                        {
+                            type: "PrintStatement",
+                            value: "i",
                         },
                     ],
                 },
