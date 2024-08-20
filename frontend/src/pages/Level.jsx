@@ -63,7 +63,6 @@ import ConfettiExplosion from "react-confetti-explosion";
 function Level() {
   const toast = useToast();
   const [customToast, setCustomToast] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(false);
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -183,12 +182,11 @@ function Level() {
             ? "Congratulations on completing this level for the first time!"
             : "You've successfully completed this level again!",
           status: "success",
-          duration: 4000,
+          duration: 5000,
           isClosable: false,
           position: "bottom",
         });
-        setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 2500);
+        
 
         // update the UserProgress state to reflect the new progress
         setUserProgress(response.data);
@@ -960,15 +958,12 @@ function Level() {
       </Box>
 
       {customToast && (
-        <Box>
-          <ConfettiExplosion force={0.6} duration={2500} particleCount={80} width={1000}/>
           <CustomToast
             title={customToast.title}
             description={customToast.description}
             duration={customToast.duration}
             onClose={() => setCustomToast(null)}
           />
-        </Box>
       )}
     </Box>
   );
