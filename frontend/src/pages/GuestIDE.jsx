@@ -52,174 +52,351 @@ function GuestIDE() {
   const [isClearOutputLoading, setIsClearOutputLoading] = useState(false);
   const cancelClearRef = useRef();
   const [speedState, setSpeedState] = useState(2);
-  const [movementsState, setMovementsState] = useState();
+  const [movementsState, setMovementsState] = useState([]);
   const [highlightState, setHighlightState] = useState();
   const [indexState, setIndexState] = useState(-1);
   const [pauseState, setPauseState] = useState(false);
   const [savedIndexState, setSavedIndexState] = useState(-1);
   const [bufferState, setBufferState] = useState(false);
   const [key, setKey] = useState(0);
+  const [killState, setKillState] = useState(-2);
+
 
   let savedIndex = -1;
 
-  useEffect(() => {
-    setMovementsState([
-      {
-        line: 1,
-        operation: "if",
-        condition: "x > 5",
-        result: true,
-        timestamp: "2024-07-09T12:02:00Z",
-        description: "Checked if x is greater than 5.",
-      },
-      {
-        line: 2,
-        operation: "print",
-        isLiteral: true,
-        varName: null,
-        literal: "x is greater than 5",
-        timestamp: "2024-07-09T12:03:00Z",
-        description: "Printed 'x is greater than 5'.",
-      },
-      {
-        line: 3,
-        operation: "else",
-        timestamp: "2024-07-09T12:04:00Z",
-        description: "Else block not executed as condition was true.",
-      },
-      {
-        line: 6,
-        operation: "set",
-        varName: "x",
-        type: "number",
-        value: 10,
-        timestamp: "2024-07-09T12:01:00Z",
-        description: "Set variable x to number 10.",
-      },
-      {
-        line: 7,
-        operation: "create",
-        dataStructure: "array",
-        value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        length: 9,
-        id: "abcd",
-        type: "int",
-        varName: "nums",
-        timestamp: "2024-07-09T12:01:00Z",
-        description:
-          "Created an array named nums with initial values [1, 2, 3, 4].",
-      },
-      {
-        line: 8,
-        operation: "create",
-        dataStructure: "array",
-        value: ["a", "b", "c", "d", "e", "f", "g"],
-        type: "string",
-        varName: "letters",
-        timestamp: "2024-07-09T12:01:00Z",
-        description:
-          "Created an array named letters with initial values [a,b,c,d,e,f,g].",
-      },
-      {
-        line: 9,
-        operation: "remove",
-        dataStructure: "array",
-        id: "abcd",
-        varName: "nums",
-        positionToRemove: 2,
-        description: "Removed value at position 2 in array nums",
-      },
-      {
-        line: 10,
-        operation: "remove",
-        dataStructure: "array",
-        id: "abcd",
-        varName: "letters",
-        positionToRemove: 4,
-        description: "Removed value at position 4 in array letters",
-      },
-      {
-        line: 11,
-        operation: "add",
-        dataStructure: "array",
-        value: 5,
-        varName: "nums",
-        position: 4,
-        timestamp: "2024-07-09T12:02:00Z",
-        description: "Inserted value 5 at position 4 in array nums.",
-      },
-      {
-        line: 12,
-        operation: "create",
-        dataStructure: "array",
-        value: ["g", "a", "n", "g", "s", "t", "a"],
-        length: 7,
-        id: "abcd",
-        type: "string",
-        varName: "gansterlicious",
-        timestamp: "2024-07-09T12:01:00Z",
-        description:
-          "Created an array named letters with initial values [a,b,c,d,e,f,g].",
-      },
-      {
-        line: 13,
-        operation: "add",
-        dataStructure: "array",
-        value: "z",
-        varName: "letters",
-        position: 0,
-        timestamp: "2024-07-09T12:02:00Z",
-        description: "Inserted value 'z' at position 0 in array nums.",
-      },
-      {
-        line: 14,
-        operation: "swap",
-        dataStructure: "array",
-        firstPosition: 1,
-        secondPosition: 3,
-        varName: "nums",
-        description: "Swapped values in position 1 and 3 in array nums.",
-      },
-      {
-        line: 15,
-        operation: "swap",
-        dataStructure: "array",
-        firstPosition: 1,
-        secondPosition: 3,
-        varName: "letters",
-        description: "Swapped values in position 1 and 3 in array letters.",
-      },
-      {
-        line: 16,
-        operation: "set",
-        varName: "wordString",
-        type: "string",
-        value: "Hello World",
-        timestamp: "2024-07-09T12:01:00Z",
-        description: "Set variable y to string 'Wagwan World'.",
-      },
-      {
-        line: 17,
-        operation: "set",
-        varName: "z",
-        type: "boolean",
-        value: "true",
-        timestamp: "2024-07-09T12:01:00Z",
-        description: "Set variable z to boolean true.",
-      },
-      {
-        line: 18,
-        operation: "set",
-        varName: "wordString",
-        type: "string",
-        value: "Hello Again World",
-        timestamp: "2024-07-09T12:01:00Z",
-        description: "Set variable y to string 'Hello Again World'.",
-      },
-    ]);
-  }, []);
-
-  // very long sample text
+//   useEffect(() => {
+//     setMovementsState([
+//       {
+//         "line": 4,
+//         "operation": "loop_from_to",
+//         "range": "0 to 3",
+//         "looping_var": "i",
+//         "body": [
+//           {
+//             "line": 3,
+//             "operation": "print",
+//             "isLiteral": false,
+//             "varName": "i",
+//             "literal": null,
+//             "timestamp": "2024-08-14T16:51:45.846Z",
+//             "description": "Printed i."
+//           }
+//         ],
+//         "timestamp": "2024-08-14T16:51:45.846Z",
+//         "description": "Loop from 0 to 10."
+//       }, 
+//       {
+//           line: 6,
+//           operation: "set",
+//           varName: "x",
+//           type: "string",
+//           value: "10000000000000000000000000000000000000000000000",
+//           timestamp: "2024-07-09T12:01:00Z",
+//           description: "Set variable x to number 10.",
+//         }, 
+//       {
+//         line: 7,
+//         operation: "create",
+//         dataStructure: "array",
+//         value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+//         length: 9,
+//         id: "abcd",
+//         type: "int",
+//         varName: "nums",
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description:
+//           "Created an array named nums with initial values [1, 2, 3, 4].",
+//       },
+//       {
+//         line: 7,
+//         operation: "create",
+//         dataStructure: "array",
+//         value: ["a","b","c"],
+//         length: 9,
+//         id: "abcd",
+//         type: "int",
+//         varName: "letters",
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description:
+//           "Created an array named nums with initial values [1, 2, 3, 4].",
+//       },
+//       {
+//         "line": 19,
+//         "operation": "get",
+//         "setName": "fetchedVar1", 
+//         "varName": "nums",
+//         "type": "number",  
+//         "index": 2,  
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set variable fetchedVar to nums[2]."
+//       },
+//       {
+//         line: 9,
+//         operation: "remove",
+//         dataStructure: "array",
+//         id: "abcd",
+//         varName: "nums",
+//         positionToRemove: 2,
+//         description: "Removed value at position 2 in array nums",
+//       },
+//       {
+//         operation:"loop_end",
+//         description:"end this loop"
+//       },
+//       {
+//         "line": 4,
+//         "operation": "loop_from_to",
+//         "range": "0 to 4",
+//         "looping_var": "k",
+//         "timestamp": "2024-08-14T16:51:45.846Z",
+//         "description": "Loop from 0 to 10."
+//       },  
+//       {
+//         "line": 19,
+//         "operation": "get",
+//         "setName": "fetchedVar2", 
+//         "varName": "nums",
+//         "type": "number",  
+//         "index": 2,  
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set variable fetchedVar to nums[2]."
+//       },
+//       {
+//         "line": 19,
+//         "operation": "setArr",
+//         "varName": "nums",
+//         "index": 2,  
+//         "setValue" : 25,
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set nums[2] to 25."
+//       },
+//       {
+//         "line": 19,
+//         "operation": "get",
+//         "setName": "fetchedVar3", 
+//         "varName": "nums",
+//         "type": "number",  
+//         "index": 2,  
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set variable fetchedVar to nums[2]."
+//       },
+//       {
+//         line: 11,
+//         operation: "add",
+//         dataStructure: "array",
+//         value: 99,
+//         varName: "nums",
+//         position: 2,
+//         timestamp: "2024-07-09T12:02:00Z",
+//         description: "Inserted value 5 at position 4 in array nums.",
+//       },
+//       {
+//         "line": 19,
+//         "operation": "get",
+//         "setName": "fetchedVar4", 
+//         "varName": "nums",
+//         "type": "number",  
+//         "index": 2,  
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set variable fetchedVar to nums[2]."
+//       },
+//       {
+//         operation:"loop_end",
+//         description:"end this loop"
+//       },
+//       {
+//         line: 14,
+//         operation: "swap",
+//         dataStructure: "array",
+//         firstPosition: 2,
+//         secondPosition: 6,
+//         varName: "nums",
+//         description: "Swapped values in position 1 and 3 in array nums.",
+//       },
+//       {
+//         "line": 19,
+//         "operation": "get",
+//         "setName": "fetchedVar5", 
+//         "varName": "nums",
+//         "type": "number",  
+//         "index": 2,  
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set variable fetchedVar to nums[2]."
+//       },
+//       {
+//         line: 1,
+//         operation: "if",
+//         condition: "x > 5",
+//         result: true,
+//         timestamp: "2024-07-09T12:02:00Z",
+//         description: "Checked if x is greater than 5.",
+//       },
+//       {
+//         line: 2,
+//         operation: "print",
+//         isLiteral: true,
+//         varName: null,
+//         literal: "x is greater than 5",
+//         timestamp: "2024-07-09T12:03:00Z",
+//         description: "Printed 'x is greater than 5'.",
+//       },
+//       {
+//         line: 3,
+//         operation: "else",
+//         timestamp: "2024-07-09T12:04:00Z",
+//         description: "Else block not executed as condition was true.",
+//       },
+//       {
+//         line: 6,
+//         operation: "set",
+//         varName: "x",
+//         type: "number",
+//         value: 10,
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description: "Set variable x to number 10.",
+//       },
+//       {
+//         line: 7,
+//         operation: "create",
+//         dataStructure: "array",
+//         value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+//         length: 9,
+//         id: "abcd",
+//         type: "int",
+//         varName: "nums",
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description:
+//           "Created an array named nums with initial values [1, 2, 3, 4].",
+//       },
+//       {
+//         "line": 19,
+//         "operation": "setArr",
+//         "varName": "nums",
+//         "index": 2,  
+//         "setValue" : 25,
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set nums[2] to 25."
+//         },
+//       {
+//         line: 8,
+//         operation: "create",
+//         dataStructure: "array",
+//         value: ["a", "b", "c", "d", "e", "f", "g"],
+//         type: "string",
+//         varName: "letters",
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description:
+//           "Created an array named letters with initial values [a,b,c,d,e,f,g].",
+//       },
+//       {
+//         line: 9,
+//         operation: "remove",
+//         dataStructure: "array",
+//         id: "abcd",
+//         varName: "nums",
+//         positionToRemove: 2,
+//         description: "Removed value at position 2 in array nums",
+//       },
+//       {
+//         line: 10,
+//         operation: "remove",
+//         dataStructure: "array",
+//         id: "abcd",
+//         varName: "letters",
+//         positionToRemove: 4,
+//         description: "Removed value at position 4 in array letters",
+//       },
+//       {
+//         line: 11,
+//         operation: "add",
+//         dataStructure: "array",
+//         value: 5,
+//         varName: "nums",
+//         position: 4,
+//         timestamp: "2024-07-09T12:02:00Z",
+//         description: "Inserted value 5 at position 4 in array nums.",
+//       },
+//       {
+//         line: 12,
+//         operation: "create",
+//         dataStructure: "array",
+//         value: ["g", "a", "n", "g", "s", "t", "a"],
+//         length: 7,
+//         id: "abcd",
+//         type: "string",
+//         varName: "gansterlicious",
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description:
+//           "Created an array named letters with initial values [a,b,c,d,e,f,g].",
+//       },
+//       {
+//         line: 13,
+//         operation: "add",
+//         dataStructure: "array",
+//         value: "z",
+//         varName: "letters",
+//         position: 0,
+//         timestamp: "2024-07-09T12:02:00Z",
+//         description: "Inserted value 'z' at position 0 in array nums.",
+//       },
+//       {
+//         line: 14,
+//         operation: "swap",
+//         dataStructure: "array",
+//         firstPosition: 1,
+//         secondPosition: 3,
+//         varName: "nums",
+//         description: "Swapped values in position 1 and 3 in array nums.",
+//       },
+//       {
+//         line: 15,
+//         operation: "swap",
+//         dataStructure: "array",
+//         firstPosition: 1,
+//         secondPosition: 3,
+//         varName: "letters",
+//         description: "Swapped values in position 1 and 3 in array letters.",
+//       },
+//       {
+//         line: 16,
+//         operation: "set",
+//         varName: "wordString",
+//         type: "string",
+//         value: "Hello World",
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description: "Set variable y to string 'Wagwan World'.",
+//       },
+//       {
+//         line: 17,
+//         operation: "set",
+//         varName: "z",
+//         type: "boolean",
+//         value: "true",
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description: "Set variable z to boolean true.",
+//       },
+//       {
+//         line: 18,
+//         operation: "set",
+//         varName: "wordString",
+//         type: "string",
+//         value: "Hello Again World",
+//         timestamp: "2024-07-09T12:01:00Z",
+//         description: "Set variable y to string 'Hello Again World'.",
+//       },
+//       {
+//         "line": 19,
+//         "operation": "get",
+//         "setName": "fetchedVar", 
+//         "varName": "nums",
+//         "type": "number",  
+//         "index": 2,  
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set variable fetchedVar to nums[2]."
+//         }, 
+//     ]);
+//   }, []);
+// very long sample text
 
   const pauseAnimation = () => {
     setPauseState(!pauseState);
@@ -227,8 +404,12 @@ function GuestIDE() {
 
   const runCode = async () => {
     setIsRunLoading(true); // To show loading state on the button
-    const code = value; // Get code from the editor
-    console.log(code);
+    let code = value; // Get code from the editor
+    //setMovementsState(actionFrames);
+    // setIndexState(0);
+    // setHighlightState(true);
+    console.log(code)
+    console.log("I oath im ran")
     try {
       let response = await axios.post(
         "http://localhost:8000/api/pseudocode/run",
@@ -236,8 +417,10 @@ function GuestIDE() {
       );
       console.log(response.data.result);
       let actionFrames = response.data.result.actionFrames;
+      setKillState(actionFrames.length)
       //setOutput(response.data.result); // Assuming the response has the execution result
       setMovementsState(actionFrames);
+      setOutput((prev) => [...prev, `colourYellow__RUN STARTING.`]);
       setIndexState(0);
       setHighlightState(true);
     } catch (error) {
@@ -254,6 +437,7 @@ function GuestIDE() {
       setHighlightState(false);
       setKey((prevKey) => prevKey + 1);
       setPauseState(false);
+      setOutput((prev) => [...prev, `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`]);
     }, speedState + 2000);
     return () => timeoutSetKey;
   };
@@ -297,6 +481,69 @@ function GuestIDE() {
     md: "1fr 1fr", // Two rows layout for medium and larger screens
   });
 
+//   const codePreprocessor = (pseudocode) => {
+//     const lines = pseudocode.split("\r\n");
+//     let result = [];
+//     let loopBlock = [];
+//     let insideLoop = false;
+//     let loopVariable = '';
+//     let start = 0;
+//     let end = 0;
+//     let currentLineNumber = 0; // Counter to track the current line number
+//     let loopStartLine = 0; // To store the line number of the loop declaration
+
+//     for (let line of lines) {
+//         // Increment line number
+//         currentLineNumber++;
+
+//         // Trim whitespace for processing
+//         line = line.trim();
+
+//         // Check if the line is a loop declaration
+//         const loopMatch = line.match(/^LOOP\s+(\w+)\s+FROM\s+(\d+)\s+TO\s+(\d+):$/i);
+//         if (loopMatch) {
+//             insideLoop = true;
+//             loopVariable = loopMatch[1];
+//             start = parseInt(loopMatch[2], 10);
+//             end = parseInt(loopMatch[3], 10);
+//             loopStartLine = currentLineNumber; // Store the line number of the loop declaration
+//             // Set the loop variable to the start value
+//             result.push(`/*${loopStartLine}*/ SET ${loopVariable} TO ${start}`);
+//             continue;
+//         }
+
+//         // Check if we are ending a loop block
+//         if (line === 'END LOOP') {
+//             insideLoop = false;
+//             const endLoopLineNumber = currentLineNumber; // The line number for END LOOP
+//             // Expand the loop block
+//             for (let i = start; i < end; i++) {
+//                 result.push(`/*${loopStartLine}*/ IF ${loopVariable} is less than ${end} THEN`);
+//                 for (let loopLine of loopBlock) {
+//                     // Prepend the original line number as a flag for each line in the loop
+//                     result.push(`    /*${loopLine.originalLineNumber}*/ ${loopLine.content}`);
+//                 }
+//                 // Add the line to increment the loop variable
+//                 result.push(`    /*${loopStartLine}*/ set ${loopVariable} to ${loopVariable} + 1`);
+//                 result.push(`/*${endLoopLineNumber}*/ END IF`);
+//             }
+//             // Clear the loop block after processing
+//             loopBlock = [];
+//             continue;
+//         }
+
+//         // If inside a loop block, accumulate the lines with their original line number
+//         if (insideLoop) {
+//             loopBlock.push({ content: line, originalLineNumber: currentLineNumber });
+//         } else {
+//             // If not inside a loop, add line to result as is
+//             result.push(`/*${currentLineNumber}*/ ${line}`);
+//         }
+//     }
+
+//     // Join the result array into a single string with Windows-style line breaks
+//     return result.join("\r\n");
+// }
   return (
     <Box>
       <Box display="flex" justifyContent="center">
@@ -311,6 +558,9 @@ function GuestIDE() {
           setPauseState={setPauseState}
           speedState={speedState}
           setSpeedState={setSpeedState}
+          killState = {killState}
+          indexState={indexState}
+          setOutput={setOutput}
         />
       </Box>
 

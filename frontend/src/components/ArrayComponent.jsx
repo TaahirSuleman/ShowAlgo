@@ -10,6 +10,7 @@ function ArrayComponent(
     movements,
     arrayState,
     arraysState,
+    setArraysState,
     speedState ,
     indexState,
     setIndexState,
@@ -47,8 +48,19 @@ function ArrayComponent(
             }
             setSwappedState([prevValues[movements[indexState].firstPosition],prevValues[movements[indexState].secondPosition]])
             setValues(prevValues);
+            for (let i = 0; i<arraysState.length;i++){
+              if (arraysState[i].name == arrayName){
+                let tempArrState = [... arraysState]
+                let updatedObject = {
+                  ...tempArrState[i], // Copy the existing object properties
+                  values: prevValues // Update the 'values' property with newValues
+                };
+                tempArrState[i] = updatedObject;
+                setArraysState(tempArrState)
+              }
+            }
+            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId1 = setTimeout(()=> {
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
               setIndexState((i)=>{return i+1})
               setSwappedState(["",""])
             }, speedState*1000) // This controls the time between SWAPPING and the next movement.
@@ -57,8 +69,9 @@ function ArrayComponent(
 
           case "add":
             addToArray(movements[indexState].value, movements[indexState].position);
+            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId2 = setTimeout(()=> {
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
+
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between INSERTING and the next movement.
             return () => clearTimeout(timeoutId2);
@@ -66,8 +79,9 @@ function ArrayComponent(
 
           case "remove":
             removeFromArray((movements[indexState].positionToRemove))
+            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId3 = setTimeout(()=> {
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
+
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between POPPING and the next movement.
             return () => clearTimeout(timeoutId3);
@@ -76,8 +90,10 @@ function ArrayComponent(
             case "get":
               setGotState(values[movements[indexState].index]);
               console.log(values[movements[indexState].index] + " This is the got state ")
+              setOutput((prev) => {return [...prev, movements[indexState].description]});
               const timeoutId4 = setTimeout(()=> {
-                setOutput((prev) => {return [...prev, movements[indexState].description]});
+                setGotState("")
+
                 setIndexState((i)=>{return i+1})
               }, speedState*1000) // This controls the time between POPPING and the next movement.
               return () => clearTimeout(timeoutId4);
@@ -86,8 +102,9 @@ function ArrayComponent(
             case "setArr":
               setValueInArray(movements[indexState].setValue, movements[indexState].index)
               console.log(values[movements[indexState].index] + " This is the changed state ")
+              setOutput((prev) => {return [...prev, movements[indexState].description]});
               const timeoutId5 = setTimeout(()=> {
-                setOutput((prev) => {return [...prev, movements[indexState].description]});
+
                 setChangedState("")
                 setIndexState((i)=>{return i+1})
               }, speedState*1000) // This controls the time between POPPING and the next movement.
@@ -111,6 +128,18 @@ function ArrayComponent(
     let previousLocations = [... locations]; //
     previousLocations.push(location); // This location stuff is deprecated and may not ever be used. This code may not make sense.
     setLocations(previousLocations); //
+    for (let i = 0; i<arraysState.length;i++){
+      if (arraysState[i].name == arrayName){
+        let tempArrState = [... arraysState]
+        let updatedObject = {
+          ...tempArrState[i], // Copy the existing object properties
+          values: newValues, // Update the 'values' property with newValues
+          locations: previousLocations
+        };
+        tempArrState[i] = updatedObject;
+        setArraysState(tempArrState)
+      }
+    }
     console.log(values)
     await delay(speedState*1000*0.66); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
     console.log("These are the locations: "+locations);
@@ -125,6 +154,18 @@ function ArrayComponent(
     let previousLocations = [... locations];
     previousLocations.push(location);
     setLocations(previousLocations);
+    for (let i = 0; i<arraysState.length;i++){
+      if (arraysState[i].name == arrayName){
+        let tempArrState = [... arraysState]
+        let updatedObject = {
+          ...tempArrState[i], // Copy the existing object properties
+          values: newValues, // Update the 'values' property with newValues
+          locations: previousLocations
+        };
+        tempArrState[i] = updatedObject;
+        setArraysState(tempArrState)
+      }
+    }
     console.log(values)
     await delay(speedState*1000*0.75); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
     console.log("These are the locations: "+locations);
@@ -147,6 +188,18 @@ function ArrayComponent(
     await delay(speedState*1000*0.75); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
     setLocations(newLocations);
     setRemovedState(-1);
+    for (let i = 0; i<arraysState.length;i++){
+      if (arraysState[i].name == arrayName){
+        let tempArrState = [... arraysState]
+        let updatedObject = {
+          ...tempArrState[i], // Copy the existing object properties
+          values: newValues, // Update the 'values' property with newValues
+          locations: newLocations
+        };
+        tempArrState[i] = updatedObject;
+        setArraysState(tempArrState)
+      }
+    }
     setValues(newValues);
   }
 

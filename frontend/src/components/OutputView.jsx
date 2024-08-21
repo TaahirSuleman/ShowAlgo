@@ -25,19 +25,25 @@ const OutputView = ({
       borderColor={isError ? "red.500" : "transparent"}
       overflow="auto"
     >
-      {Array.isArray(output) ? (
-        output.map((line, index) =>
-          line.includes("colour__") ? (
-            <Text color="red" key={index}>
-              {line.substring(8)}
-            </Text>
-          ) : (
-            <Text key={index}>{line}</Text>
-          )
+      {output.map((line, index) => (line.includes("colourRed__") ? (
+        <Text color="red" 
+              key={index} 
+              style={{
+                fontWeight:"bold",
+                textShadow: `
+                  -1px -1px 0 #fff,  
+                  1px -1px 0 #fff,
+                  -1px 1px 0 #fff,
+                  1px 1px 0 #fff`
+              }}
+        >{line.substring(11)}</Text>  
+      )
+      : (line.includes("colourYellow__") ? 
+          <Text color="yellow" key={index}>{line.substring(14)}</Text>
+          :
+          <Text key={index}>{line}</Text>
         )
-      ) : (
-        <Text>{output}</Text>
-      )}
+      ))}
     </Box>
   );
 };

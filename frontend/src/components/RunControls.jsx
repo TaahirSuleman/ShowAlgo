@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Text,
@@ -30,22 +30,45 @@ function RunControls({
   setPauseState,
   pauseAnimation,
   speedState,
-  setSpeedState
+  setSpeedState,
+  killState,
+  indexState,
+  setOutput
 }) {
-  const [isResuming, setIsResuming] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState(1);
   const speedOptions = [0.25, 0.5, 0.75, 1, 1.5, 2];
+  const [isFinished, setIsFinished] = useState(false)
 
-  //! Finish this function
+  useEffect(()=>{
+    if (killState === indexState){
+      setIsRunning(false)
+      setIsFinished(true)
+      setOutput((prev) => [...prev, `colourYellow__RUN COMPLETE.`]);
+    }
+    console.log("kill "+killState)
+  },[indexState])
+
   const handlePauseResume = () => {
     setPauseState(!pauseState);
   };
 
-  const handleRunStop = () => {
+
+  const handleRunStop = async () => {
     if (isRunning) {
       stopCode();
+      console.log("RAW STOP")
+    } else if (isFinished) {
+      console.log("FINISHED STOP AND START")
+      stopCode();
+      setIsFinished(false);
+      setIsRunning(true)
+      const timeout = setTimeout(() => {
+        runCode();
+      }, speedState + 2000 + 1000);
+      return () => timeout;
     } else {
+      console.log("FROM THE BENINGING")
       runCode();
     }
     setIsRunning(!isRunning);
@@ -70,13 +93,13 @@ function RunControls({
       <SimpleGrid columns={columns} spacing={4}>
         <Button
           variant="solid"
-          colorScheme={isRunning ? "red" : "green"}
+          colorScheme={isRunning ? "red" : "green" }
           isDisabled={value === ""}
           onClick={handleRunStop}
           isLoading={isRunLoading}
           width="100%"
         >
-          {isRunning ? <FaStop /> : <FaPlay />}
+          {isRunning ? <FaStop /> : <FaPlay /> }
           <Box as="span" ml={2}>
             {isRunning ? "Stop" : "Run"}
           </Box>
