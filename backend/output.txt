@@ -13621,3 +13621,3658 @@ Final JSON: {
     }
   ]
 }
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "sum",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 1
+      }
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "1",
+        "end": "3"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "sum",
+          "value": {
+            "type": "Expression",
+            "left": "sum",
+            "operator": "+",
+            "right": "i"
+          }
+        }
+      ]
+    },
+    {
+      "type": "PrintStatement",
+      "value": "sum"
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "sum",
+      "value": {
+        "type": "Expression",
+        "left": "sum",
+        "operator": "*",
+        "right": "2"
+      }
+    },
+    {
+      "type": "PrintStatement",
+      "value": "sum"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-08-20T12:32:50.406Z",
+      "description": "Set variable sum to 0."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:32:50.407Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "loop_from_to",
+      "condition": "i <= 3",
+      "timestamp": "2024-08-20T12:32:50.407Z",
+      "description": "loop from_to loop with condition i <= 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:32:50.409Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 1,
+      "timestamp": "2024-08-20T12:32:50.409Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:32:50.409Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 2,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 3,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": false,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "loop_end",
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "sum",
+      "literal": 6,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Printed sum."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 12,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Set variable sum to sum * 2."
+    },
+    {
+      "line": 8,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "sum",
+      "literal": 12,
+      "timestamp": "2024-08-20T12:32:50.410Z",
+      "description": "Printed sum."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "sum",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 1
+      }
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "1",
+        "end": "3"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "sum",
+          "value": {
+            "type": "Expression",
+            "left": "sum",
+            "operator": "+",
+            "right": "i"
+          }
+        }
+      ]
+    },
+    {
+      "type": "PrintStatement",
+      "value": "sum"
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "sum",
+      "value": {
+        "type": "Expression",
+        "left": "sum",
+        "operator": "*",
+        "right": "2"
+      }
+    },
+    {
+      "type": "PrintStatement",
+      "value": "sum"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-08-20T12:34:25.800Z",
+      "description": "Set variable sum to 0."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:34:25.800Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "loop_from_to",
+      "condition": "i <= 3",
+      "timestamp": "2024-08-20T12:34:25.800Z",
+      "description": "loop from_to loop with condition i <= 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:34:25.800Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 1,
+      "timestamp": "2024-08-20T12:34:25.800Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:34:25.800Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-20T12:34:25.800Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 2,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 3,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": false,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "loop_end",
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "sum",
+      "literal": 6,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Printed sum."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 12,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Set variable sum to sum * 2."
+    },
+    {
+      "line": 8,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "sum",
+      "literal": 12,
+      "timestamp": "2024-08-20T12:34:25.801Z",
+      "description": "Printed sum."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "sum",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 1
+      }
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "1",
+        "end": "3"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "sum",
+          "value": {
+            "type": "Expression",
+            "left": "sum",
+            "operator": "+",
+            "right": "i"
+          }
+        }
+      ]
+    },
+    {
+      "type": "PrintStatement",
+      "value": "sum"
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "sum",
+      "value": {
+        "type": "Expression",
+        "left": "sum",
+        "operator": "*",
+        "right": "2"
+      }
+    },
+    {
+      "type": "PrintStatement",
+      "value": "sum"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-08-20T12:34:48.081Z",
+      "description": "Set variable sum to 0."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "loop_from_to",
+      "condition": "i <= 3",
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "loop from_to loop with condition i <= 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 1,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 2,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T12:34:48.082Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 3,
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": false,
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "loop_end",
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "sum",
+      "literal": 6,
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "Printed sum."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 12,
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "Set variable sum to sum * 2."
+    },
+    {
+      "line": 8,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "sum",
+      "literal": 12,
+      "timestamp": "2024-08-20T12:34:48.083Z",
+      "description": "Printed sum."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "sum",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 1
+      }
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "1",
+        "end": "3"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "sum",
+          "value": {
+            "type": "Expression",
+            "left": "sum",
+            "operator": "+",
+            "right": "i"
+          }
+        }
+      ]
+    },
+    {
+      "type": "PrintStatement",
+      "value": "sum"
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "sum",
+      "value": {
+        "type": "Expression",
+        "left": "sum",
+        "operator": "*",
+        "right": "2"
+      }
+    },
+    {
+      "type": "PrintStatement",
+      "value": "sum"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Set variable sum to 0."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "loop_from_to",
+      "condition": "i <= 3",
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "loop from_to loop with condition i <= 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 1,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 2,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 3,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Set variable sum to sum + i."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-20T12:40:18.272Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": false,
+      "timestamp": "2024-08-20T12:40:18.273Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "loop_end",
+      "timestamp": "2024-08-20T12:40:18.273Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 6,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "sum",
+      "literal": 6,
+      "timestamp": "2024-08-20T12:40:18.273Z",
+      "description": "Printed sum."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "sum",
+      "type": "number",
+      "value": 12,
+      "timestamp": "2024-08-20T12:40:18.273Z",
+      "description": "Set variable sum to sum * 2."
+    },
+    {
+      "line": 8,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "sum",
+      "literal": 12,
+      "timestamp": "2024-08-20T12:40:18.273Z",
+      "description": "Printed sum."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:42:34.320Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-20T12:42:34.320Z",
+      "description": "Set variable i to 2."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:43:07.870Z",
+      "description": "Set variable i to 1."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T12:43:22.482Z",
+      "description": "Set variable i to 1."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "d",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "e",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "f",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "g",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "h",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 9
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "j",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 10
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:43:44.535Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "d",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "e",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "f",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "g",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "h",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 9
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "j",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 10
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:44:27.728Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "d",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "e",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "f",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "g",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "h",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 9
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "j",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 10
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:45:28.440Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "d",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "e",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "f",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "g",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "h",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 9
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "j",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 10
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:09.121Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "d",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "e",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "f",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "g",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "h",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 9
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "j",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 10
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:23.339Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "d",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "e",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "f",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "g",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "h",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 9
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "j",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 10
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:46:48.993Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "d",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "e",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "f",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "g",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "h",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 9
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "j",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 10
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:12.896Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "a",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "b",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "c",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "d",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "e",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "f",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "g",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "h",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 9
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "j",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 10
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "a",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable a to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "b",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable b to 10."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "c",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable c to 10."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "d",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable d to 10."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "e",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable e to 10."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "f",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable f to 10."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "g",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable g to 10."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "h",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable h to 10."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T12:48:20.250Z",
+      "description": "Set variable j to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-20T12:50:04.244Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-20T12:50:24.609Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T13:03:14.198Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": [
+        {
+          "type": "PrintStatement",
+          "value": "x is 5 or less"
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T13:03:31.303Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 5",
+      "result": true,
+      "timestamp": "2024-08-20T13:03:31.304Z",
+      "description": "Checked if x > 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-20T13:03:31.304Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 6,
+      "operation": "endif",
+      "timestamp": "2024-08-20T13:03:31.304Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": [
+        {
+          "type": "PrintStatement",
+          "value": "x is 5 or less"
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 7
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "letters",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "a",
+          "line": 8
+        },
+        {
+          "type": "StringLiteral",
+          "value": "b",
+          "line": 8
+        },
+        {
+          "type": "StringLiteral",
+          "value": "c",
+          "line": 8
+        },
+        {
+          "type": "StringLiteral",
+          "value": "d",
+          "line": 8
+        },
+        {
+          "type": "StringLiteral",
+          "value": "e",
+          "line": 8
+        },
+        {
+          "type": "StringLiteral",
+          "value": "f",
+          "line": 8
+        },
+        {
+          "type": "StringLiteral",
+          "value": "g",
+          "line": 8
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T13:03:48.972Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 5",
+      "result": true,
+      "timestamp": "2024-08-20T13:03:48.972Z",
+      "description": "Checked if x > 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-20T13:03:48.972Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 6,
+      "operation": "endif",
+      "timestamp": "2024-08-20T13:03:48.972Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 7,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-20T13:03:48.972Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 8,
+      "operation": "create_array",
+      "varName": "letters",
+      "value": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g"
+      ],
+      "timestamp": "2024-08-20T13:03:48.972Z",
+      "description": "Created array letters."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-08-20T13:11:45.349Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3
+      ],
+      "timestamp": "2024-08-20T13:11:50.782Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "0",
+        "end": "10"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-08-20T13:13:27.282Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 1,
+      "operation": "loop_from_to",
+      "condition": "i <= 10",
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "loop from_to loop with condition i <= 10."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 0,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 1,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 2,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 3,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 4,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Set variable i to 5."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 5,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-08-20T13:13:27.283Z",
+      "description": "Set variable i to 6."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 6,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 7,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Set variable i to 7."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 7,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 8,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Set variable i to 8."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 8,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 9,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Set variable i to 9."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 9,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Set variable i to 10."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": true,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 10,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Set variable i to 11."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 10",
+      "result": false,
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "Checked if i <= 10."
+    },
+    {
+      "line": 3,
+      "operation": "loop_end",
+      "timestamp": "2024-08-20T13:13:27.284Z",
+      "description": "End of loop from_to loop"
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      },
+      "position": "4"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "timestamp": "2024-08-20T13:14:36.123Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "nums",
+      "value": 5,
+      "position": 4,
+      "timestamp": "2024-08-20T13:14:36.123Z",
+      "description": "Added 5 to array nums at position 4."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      },
+      "position": "4"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "timestamp": "2024-08-20T13:15:25.049Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "nums",
+      "value": 5,
+      "position": 4,
+      "timestamp": "2024-08-20T13:15:25.049Z",
+      "description": "Added 5 to array nums at position 4."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "timestamp": "2024-08-20T13:21:36.795Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 2
+      },
+      "position": "4"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "timestamp": "2024-08-20T13:22:35.845Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "nums",
+      "value": 5,
+      "position": 4,
+      "timestamp": "2024-08-20T13:22:35.845Z",
+      "description": "Added 5 to array nums at position 4."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-21T09:41:15.391Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}

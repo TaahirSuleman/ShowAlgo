@@ -25,7 +25,7 @@ import '../styles/App.css'
   if (inserted){
     return (
       <motion.div className="square"
-      animate={{ backgroundColor: ['hsl(-120, 100, 50)','hsl(120, 100, 25)','hsl(120, 100, 25)', 'hsl(-120, 100, 50)'] }}
+      animate={{ backgroundColor: ['#1A365D','hsl(120, 100, 25)','hsl(120, 100, 25)', '#1A365D'] }}
       transition={{type: 'tween', times: [0, 0.33, 0.66, 1], duration: speedState* 0.66 }}
       layout
       >
@@ -37,7 +37,7 @@ import '../styles/App.css'
     return (
       <motion.div className="square"
       transition={{type: 'tween', times: [0, 0.33, 0.66, 1], duration: speedState* 0.66 }}
-      animate={{ backgroundColor: ['hsl(-120, 100, 50)','hsl(0, 100, 50)','hsl(0, 100, 50)', 'hsl(-120, 100, 50)'] }}
+      animate={{ backgroundColor: ['#1A365D','hsl(0, 100, 50)','hsl(0, 100, 50)', '#1A365D'] }}
       layout
       >
         {passedValue}
@@ -48,7 +48,7 @@ import '../styles/App.css'
     return (
       <motion.div className="square"
       transition={{type: 'tween', times: [0, 0.33, 0.66, 1], duration: speedState* 0.66 }}
-      animate={{ backgroundColor: ['hsl(-120, 100, 50)','hsl(48, 100, 67)','hsl(48, 100, 67)', 'hsl(-120, 100, 50)'],
+      animate={{ backgroundColor: ['#1A365D','hsl(48, 100, 67)','hsl(48, 100, 67)', '#1A365D'],
                  color: ['hsl(0, 0, 100)','hsl(0, 0, 0)','hsl(0, 0, 0)','hsl(0, 0, 100)'],
                  scale: [1, 1.25, 1.25, 1]}}
       layout
@@ -68,10 +68,10 @@ import '../styles/App.css'
         }}
         animate={{
           backgroundColor: [
-            'hsl(-120, 100, 50)',
+            '#1A365D',
             'hsl(120, 100, 75)',
             'hsl(120, 100, 75)',
-            'hsl(-120, 100, 50)',
+            '#1A365D',
           ],
           color: ['hsl(0, 0, 100)','hsl(0, 0, 0)','hsl(0, 0, 0)','hsl(0, 0, 100)'],
           scale: [1, 1.25, 1.25, 1],
@@ -88,7 +88,7 @@ import '../styles/App.css'
         <motion.div className="square"
         layout 
         transition={{ duration: speedState* 0.66 }}
-        animate={{ backgroundColor: ['hsl(-120, 100, 50)','hsl(0, 100, 50)','hsl(0, 100, 50)', 'hsl(-120, 100, 50)'],
+        animate={{ backgroundColor: ['#1A365D','hsl(0, 100, 50)','hsl(0, 100, 50)', '#1A365D'],
                    scale: [1,1.5,1.5,1]
                   }}
         >
