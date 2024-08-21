@@ -13999,3 +13999,1239 @@ Final JSON: {
     }
   ]
 }
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T08:54:01.596Z",
+      "description": "Set variable x to 5."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T08:55:23.618Z",
+      "description": "Set variable x to 5."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "X",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T08:57:30.086Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "X > 5",
+      "result": false,
+      "timestamp": "2024-08-21T08:57:30.088Z",
+      "description": "Checked if X > 5."
+    },
+    {
+      "line": 5,
+      "operation": "endif",
+      "timestamp": "2024-08-21T08:57:30.088Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "X",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T08:57:55.619Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "X > 5",
+      "result": false,
+      "timestamp": "2024-08-21T08:57:55.619Z",
+      "description": "Checked if X > 5."
+    },
+    {
+      "line": 5,
+      "operation": "endif",
+      "timestamp": "2024-08-21T08:57:55.619Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T08:58:13.686Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 5",
+      "result": false,
+      "timestamp": "2024-08-21T08:58:13.686Z",
+      "description": "Checked if x > 5."
+    },
+    {
+      "line": 5,
+      "operation": "endif",
+      "timestamp": "2024-08-21T08:58:13.686Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "x is greater than 5"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-21T08:58:28.041Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 5",
+      "result": true,
+      "timestamp": "2024-08-21T08:58:28.042Z",
+      "description": "Checked if x > 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "x is greater than 5",
+      "timestamp": "2024-08-21T08:58:28.042Z",
+      "description": "Printed x is greater than 5."
+    },
+    {
+      "line": 4,
+      "operation": "endif",
+      "timestamp": "2024-08-21T08:58:28.042Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 1
+      }
+    },
+    {
+      "type": "LoopUntil",
+      "condition": {
+        "left": "i",
+        "operator": ">",
+        "right": "5"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "i",
+          "value": {
+            "type": "Expression",
+            "left": "i",
+            "operator": "+",
+            "right": "1"
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-21T09:00:07.022Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "i <= 5",
+      "timestamp": "2024-08-21T09:00:07.024Z",
+      "description": "while loop with condition i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:00:07.032Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 1,
+      "timestamp": "2024-08-21T09:00:07.032Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-21T09:00:07.032Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:00:07.032Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 2,
+      "timestamp": "2024-08-21T09:00:07.032Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-21T09:00:07.032Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:00:07.032Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 3,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 4,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 5,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": false,
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 5,
+      "operation": "loop_end",
+      "timestamp": "2024-08-21T09:00:07.033Z",
+      "description": "End of while loop"
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "i",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 1
+      }
+    },
+    {
+      "type": "LoopUntil",
+      "condition": {
+        "left": "i",
+        "operator": ">",
+        "right": "3"
+      },
+      "body": [
+        {
+          "type": "VariableDeclaration",
+          "name": "j",
+          "value": {
+            "type": "NumberLiteral",
+            "value": "1",
+            "line": 3
+          }
+        },
+        {
+          "type": "LoopUntil",
+          "condition": {
+            "left": "j",
+            "operator": ">",
+            "right": "3"
+          },
+          "body": [
+            {
+              "type": "PrintStatement"
+            },
+            {
+              "type": "VariableDeclaration",
+              "name": "j",
+              "value": {
+                "type": "Expression",
+                "left": "j",
+                "operator": "+",
+                "right": "1"
+              }
+            }
+          ]
+        },
+        {
+          "type": "VariableDeclaration",
+          "name": "i",
+          "value": {
+            "type": "Expression",
+            "left": "i",
+            "operator": "+",
+            "right": "1"
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 2,
+      "operation": "while",
+      "condition": "i <= 3",
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "while loop with condition i <= 3."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Set variable j to 1."
+    },
+    {
+      "line": 4,
+      "operation": "while",
+      "condition": "j <= 3",
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "while loop with condition j <= 3."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Printed undefined."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Set variable j to j + 1."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Printed undefined."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Set variable j to j + 1."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Printed undefined."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Set variable j to j + 1."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": false,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 7,
+      "operation": "loop_end",
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "End of while loop"
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-21T09:01:00.266Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Set variable j to 1."
+    },
+    {
+      "line": 4,
+      "operation": "while",
+      "condition": "j > 3",
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "while loop with condition j > 3."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j > 3",
+      "result": false,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Checked if j > 3."
+    },
+    {
+      "line": 4,
+      "operation": "loop_end",
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "End of while loop"
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Set variable j to 1."
+    },
+    {
+      "line": 4,
+      "operation": "while",
+      "condition": "j <= 3",
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "while loop with condition j <= 3."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Printed undefined."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Set variable j to j + 1."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Printed undefined."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Set variable j to j + 1."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Printed undefined."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Set variable j to j + 1."
+    },
+    {
+      "line": 4,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": false,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 7,
+      "operation": "loop_end",
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "End of while loop"
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Set variable i to i + 1."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "i <= 3",
+      "result": false,
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "Checked if i <= 3."
+    },
+    {
+      "line": 9,
+      "operation": "loop_end",
+      "timestamp": "2024-08-21T09:01:00.267Z",
+      "description": "End of while loop"
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "1",
+        "end": "5"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-21T09:02:56.298Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 1,
+      "operation": "loop_from_to",
+      "condition": "i <= 5",
+      "timestamp": "2024-08-21T09:02:56.298Z",
+      "description": "loop from_to loop with condition i <= 5."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:02:56.298Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 1,
+      "timestamp": "2024-08-21T09:02:56.298Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-21T09:02:56.300Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:02:56.300Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 2,
+      "timestamp": "2024-08-21T09:02:56.300Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-21T09:02:56.300Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:02:56.300Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 3,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 4,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Set variable i to 5."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 5,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Set variable i to 6."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": false,
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 3,
+      "operation": "loop_end",
+      "timestamp": "2024-08-21T09:02:56.301Z",
+      "description": "End of loop from_to loop"
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "1",
+        "end": "5"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "i"
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 1,
+      "operation": "loop_from_to",
+      "condition": "i <= 5",
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "loop from_to loop with condition i <= 5."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 1,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 2,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 3,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 4,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T09:03:32.089Z",
+      "description": "Set variable i to 5."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-08-21T09:03:32.090Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "i",
+      "literal": 5,
+      "timestamp": "2024-08-21T09:03:32.090Z",
+      "description": "Printed i."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-08-21T09:03:32.090Z",
+      "description": "Set variable i to 6."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": false,
+      "timestamp": "2024-08-21T09:03:32.090Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 3,
+      "operation": "loop_end",
+      "timestamp": "2024-08-21T09:03:32.090Z",
+      "description": "End of loop from_to loop"
+    }
+  ]
+}
