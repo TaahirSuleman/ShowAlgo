@@ -12,6 +12,7 @@ import {
   useToast,
   IconButton,
   FormHelperText,
+  Box,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
@@ -22,16 +23,18 @@ function Register() {
   const [data, setData] = useState({
     username: "",
     password: "",
+    role: "user",
   });
 
   const registerUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
     // destructure data
-    const { username, password } = data;
+    const { username, password, role } = data;
     try {
       const { data } = await axios.post("/register", {
         username,
         password,
+        role,
       });
 
       if (data.error) {
@@ -39,7 +42,7 @@ function Register() {
           title: "Error",
           description: data.error,
           status: "error",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
         });
       } else {
@@ -50,7 +53,7 @@ function Register() {
           description:
             "Register Successful! Please login with your new credentials.",
           status: "success",
-          duration: 5000,
+          duration: 3000,
           isClosable: true,
         });
         // redirect to login page
@@ -62,10 +65,9 @@ function Register() {
   };
 
   return (
-    <div>
+    <Box>
       <Center
         p="10"
-        bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
         flexDirection="column"
       >
         <Stack boxShadow="md" bg="blackAlpha.900" p="20" rounded="md">
@@ -91,7 +93,7 @@ function Register() {
               <Input
                 type="text"
                 id="username"
-                placeholder="enter username..."
+                placeholder="Enter username..."
                 value={data.username}
                 onChange={(e) => setData({ ...data, username: e.target.value })}
                 border="1px solid gray"
@@ -145,7 +147,7 @@ function Register() {
           </Stack>
         </Stack>
       </Center>
-    </div>
+    </Box>
   );
 }
 

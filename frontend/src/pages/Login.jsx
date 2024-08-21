@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import {
+  Box,
   Button,
   Center,
   FormControl,
@@ -26,11 +27,12 @@ function Login() {
 
   const loginUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
-    const { username, password } = data;
+    const { username, password, role } = data;
     try {
       const { data } = await axios.post("/login", {
         username,
         password,
+        role,
       });
 
       if (data.error) {
@@ -38,7 +40,7 @@ function Login() {
           title: "Error",
           description: data.error,
           status: "error",
-          duration: 9000,
+          duration: 2500,
           isClosable: true,
         });
       } else {
@@ -46,13 +48,17 @@ function Login() {
         localStorage.setItem("user", JSON.stringify(data));
         // clear the form
         setData({});
-        // redirect to login page
-        navigate("/dashboard");
+        // redirect based on user role
+        if (data.role === "admin") {
+          navigate("/admin-dashboard");
+        } else {
+          navigate("/about");
+        }
         toast({
           title: "Success",
           description: "Login Successful! Welcome back!",
           status: "success",
-          duration: 9000,
+          duration: 2500,
           isClosable: true,
         });
       }
@@ -62,10 +68,9 @@ function Login() {
   };
 
   return (
-    <div>
+    <Box>
       <Center
         p="10"
-        bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
         flexDirection="column"
       >
         <Stack boxShadow="md" bg="blackAlpha.900" p="20" rounded="md">
@@ -91,7 +96,7 @@ function Login() {
               <Input
                 type="text"
                 id="username"
-                placeholder="enter username..."
+                placeholder="Enter username..."
                 value={data.username}
                 onChange={(e) => setData({ ...data, username: e.target.value })}
                 border="1px solid gray"
@@ -140,7 +145,7 @@ function Login() {
           </Stack>
         </Stack>
       </Center>
-    </div>
+    </Box>
   );
 }
 

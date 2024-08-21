@@ -1,0 +1,920 @@
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+function add_numbers(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+let sum = 0;
+for (let i = 1; i <= 3; i++) {
+console.log(i);
+sum = sum + i;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+let y = 5;
+let z = x + y;
+Final JavaScript: 'use strict';
+let x = 1;
+while (x < 5) {
+x = x + 1;
+}
+Final JavaScript: 'use strict';
+let x = 10;
+if (x > 5) {
+console.log("x is greater than 5");
+} else {
+console.log("x is 5 or less");
+}
+Final JavaScript: 'use strict';
+let nums = [1, 2, 3];
+for (const num of nums) {
+console.log(num);
+}
+Final JavaScript: 'use strict';
+console.log("Hello, World!");
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, Worl!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, Worl!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, Worl!";
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return 4;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function addNums(a, b) {
+return a + b;
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "a" + "b";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "a" + "b";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hell, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "YES";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}

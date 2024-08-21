@@ -1,42 +1,218 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.list-items {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin: 0;
+  border-radius: 3px;
+  border: 1px solid red;
+  margin-bottom: 2px;
+  justify-content: left;
+  align-items: center;
+  margin-right: 10px;
+  width: 300px;
+  height: fit-content;
+  font-weight: bold; /* This makes the text bold */
+  font-family: 'Arial', sans-serif;
+  white-space: normal;
+  word-wrap: break-word; /* Ensures long words break and wrap */
+  overflow-wrap: break-word; /* Same as word-wrap, for more consistency */
+  word-break: break-all; /* Breaks long words at arbitrary points */
+}
+
+.ul-variables {
+  display: flex;
+  flex-direction: column;
+  color: rgb(255, 255, 255);
+  list-style-type: none; /* Optional: remove bullet points */
+  padding: 0; /* Optional: remove default padding */
+  margin: 0; /* Optional: remove default margin */
+  text-align: left; /* Ensure text is left-aligned */
+  width:300px;
+}
+
+.App {
+  text-align: center;
+}
+.square {
+  flex: 1; /* Allow the blocks to grow and shrink evenly */
+  background-color: blue;
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  border: 1px solid white;
+  max-width: 50px; /* Set a maximum width for each block */
+  min-width: 30px; /* Optional: Set a minimum width for each block */
+  height: 80px; /* Set a fixed height for the blocks */
+  box-sizing: border-box; /* Include border in the element's width and height */
+}
+
+.inBlockText {
+  font-size: 50px; /* Make text larger */
+  text-align: center;
+  justify-content: center;
+  color: white;
+}
+
+.array-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Center the array blocks within the container */
+  width: 100%; /* Fixed width for the container */
+  max-width: 100%; /* Ensure it doesn't exceed the parent container width */
+  padding: 10px; /* Optional: Add some padding for aesthetics */
+  box-sizing: border-box;
+}
+
+.array-block {
+  width: 50px; /* Ensure consistent width */
+  height: 50px; /* Ensure consistent height */
+  margin: 0; /* Ensure no margin */
+  padding: 0; /* Ensure no padding */
+  border: 1px solid red; /* For visual debugging */
+}
+
+.variables-container {
+  display: flex;
+  flex-direction: column; /* Align items vertically */
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: relative; /* Ensure it respects document flow */
+  margin-right: 20px; /* Add space between the two components */
+}
+
+.focused-variable {
+  padding: 2px;
+  background-color: rgb(0, 0, 0); /* Optional: for visibility */
+  border-radius: 10px;
+  border: 1px solid blue;
+  margin-left: 10px;
+  align-self: flex-start; /* Align the focused variable to the top */
+  width: 300px;
+  height: fit-content;
+}
+
+.in-focus-text {
+  font-size: 20px; /* Make text larger */
+  text-align: center;
+  justify-content: center;
+  color: white;
+  height: fit-content;
+  font-weight: bold; /* This makes the text bold */
+  font-family: 'Arial', sans-serif;
+}
+
+.notification-blurb {
+  background: white;
+  width: 300px;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.notification-blurb[data-ischecking="green"] {
+  height: 200px;
+  border-radius: 50px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.notification-blurb[data-ischecking="red"] {
+  height: 200px;
+  border-radius: 50px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.if-vis-window {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.card {
-  padding: 2em;
+.for-loop-container {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  width: 300px;
+  border: 3px solid yellow;
+  align-items: center;
+  justify-content: center;
 }
 
-.read-the-docs {
-  color: #888;
+.MainVisualisationWindow{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* Align children at the top */
+  width: 100%;
+}
+
+.IfVisualisationComponent{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: 1px solid #ccc; /* Matching border for both components */
+  border-radius: 10px; /* Matching border-radius */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+  text-align: center;
+  height: 150px;
+}
+
+.ArrayComponent {
+  width: 100%; /* Take full width of the container */
+  border: 1px solid blue; /* Optional: for visual debugging */
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.if-array-container {
+  display: flex;
+  flex-direction: column; /* Align items vertically */
+  width: 100%; /* Ensure it takes full width of the parent container */
+  gap: 10px; /* Optional: add some space between rows */
+}
+
+.myLineHighlight {
+  background-color: rgba(255, 255, 0, 0.3); /* Light yellow background */
+}
+.myLineLowlight {
+  background-color: rgba(0,0,0,0); /* No background */
+}
+
+.loop-notification {
+  flex: 1; /* Take less space than IfVisualisationComponent */
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  align-content: center;
+  white-space: normal;
+  box-sizing: border-box;
+}
+
+.loop-title {
+  font-size: 24px; /* Large font size */
+  font-weight: bold; /* Bold text */
+  margin-bottom: 10px; /* Space between title and the rest */
+  color: #333; /* Text color */
+  align-items: center; /* Align text to the left */
+  justify-content: center; /* Center vertically */
+}
+
+.IfVisualisationComponent {
+  flex: 2; /* Take twice the space of LoopNotificationComponent */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: 150px;
+}
+
+.top-row {
+  display: flex;
+  flex-direction: row; /* Two columns, IfVisualisationComponent and LoopNotificationComponent */
+  width: 100%; /* Take full width of the parent container */
+  gap: 10px; /* Add some space between components */
 }
