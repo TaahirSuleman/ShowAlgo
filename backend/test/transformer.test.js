@@ -75,9 +75,9 @@ describe("Transformer", () => {
                             type: "ReturnStatement",
                             value: {
                                 type: "Expression",
-                                left: { value: "a" },
+                                left: "a",
                                 operator: "+",
-                                right: { value: "b" },
+                                right: "b",
                             },
                         },
                     ],
@@ -327,9 +327,9 @@ describe("Transformer", () => {
                             type: "ReturnStatement",
                             value: {
                                 type: "Expression",
-                                left: { value: "a" },
+                                left: "a",
                                 operator: "+",
-                                right: { value: "b" },
+                                right: "b",
                             },
                         },
                     ],

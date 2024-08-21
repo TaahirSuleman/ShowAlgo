@@ -28,9 +28,9 @@ class PseudocodeProcessor {
 
         const jsonConverter = new JsonConverter();
         const finalJson = jsonConverter.transformToFinalJSON(ir);
-        /*PseudocodeProcessor.writeToFile(
+        PseudocodeProcessor.writeToFile(
             "Final JSON: " + JSON.stringify(finalJson, null, 2)
-        );*/
+        );
 
         return finalJson;
     }

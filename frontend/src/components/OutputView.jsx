@@ -1,11 +1,17 @@
 import { Box, Text } from "@chakra-ui/react";
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 
-const OutputView = ({ output, isError, isLoading, className, height, width }) => {
-
-  useEffect(()=>{
-    console.log(output)
-  },[output])
+const OutputView = ({
+  output,
+  isError,
+  isLoading,
+  className,
+  height,
+  width,
+}) => {
+  useEffect(() => {
+    console.log(output);
+  }, [output]);
 
   return (
     <Box

@@ -122,9 +122,9 @@ class Transformer {
         if (expression.type === "Expression") {
             return {
                 type: "Expression",
-                left: { value: expression.left.value },
+                left: expression.left.value,
                 operator: expression.operator,
-                right: { value: expression.right.value },
+                right: expression.right.value,
             };
         } else {
             return this.transformExpression(expression);

@@ -7,6 +7,55 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should process a function declaration pseudocode and convert it to the final JSON format", () => {
+        const pseudocode = `
+        DEFINE add_numbers WITH PARAMETERS (a, b)
+            RETURN a + b
+        END FUNCTION
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "define",
+                    varName: "add_numbers",
+                    params: ["a", "b"],
+                    body: [
+                        {
+                            line: 2,
+                            operation: "return",
+                            value: {
+                                left: "a",
+                                operator: "+",
+                                right: "b",
+                            },
+                            timestamp: undefined,
+                            description: `Returned {"left":"a","operator":"+","right":"b"}.`,
+                        },
+                    ],
+                    timestamp: undefined,
+                    description:
+                        "Defined function add_numbers with parameters a, b.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+            if (frame.body) {
+                frame.body.forEach((subFrame, subIndex) => {
+                    subFrame.timestamp =
+                        result.actionFrames[index].body[subIndex].timestamp;
+                });
+            }
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
     it("should process a 'LOOP UNTIL' statement with a conditional update inside correctly", () => {
         const pseudocode = `
             SET x TO 1

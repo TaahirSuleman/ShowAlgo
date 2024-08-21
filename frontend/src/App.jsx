@@ -30,9 +30,11 @@ function App() {
     <ChakraProvider theme={theme}>
       <UserContextProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route element={<Layout navBar="none"/>}>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Route>
 
           <Route element={<Layout navBar="guest" />}>
             <Route path="/guest-ide" element={<GuestIDE />} />
@@ -59,7 +61,6 @@ function App() {
             />
           </Route>
 
-          {/* //! Change the navBar to admin */}
           <Route element={<Layout navBar="guest" />}>
             <Route
               path="/admin-dashboard"

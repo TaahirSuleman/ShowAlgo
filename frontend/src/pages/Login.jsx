@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import {
+  Box,
   Button,
   Center,
   FormControl,
@@ -67,10 +68,9 @@ function Login() {
   };
 
   return (
-    <div>
+    <Box>
       <Center
         p="10"
-        bgGradient="linear(to-br, teal.300, purple.400, pink.200)"
         flexDirection="column"
       >
         <Stack boxShadow="md" bg="blackAlpha.900" p="20" rounded="md">
@@ -145,7 +145,7 @@ function Login() {
           </Stack>
         </Stack>
       </Center>
-    </div>
+    </Box>
   );
 }
 

@@ -1,4 +1,9 @@
 import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
   AlertDialog,
   AlertDialogBody,
   AlertDialogContent,
@@ -25,10 +30,12 @@ import {
   PopoverBody,
   PopoverContent,
   PopoverTrigger,
+  Spinner,
   Text,
   UnorderedList,
   useBreakpointValue,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import {
   CheckIcon,
@@ -47,24 +54,42 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CodeEditorView from "../components/CodeEditorView";
 import OutputView from "../components/OutputView";
 import { IoMdHome } from "react-icons/io";
+import RunControls from "../components/RunControls";
+import MainVisualisationWindow from "../components/MainVisualisationWindow";
+import DocumentationComponent from "../components/DocumentationComponent";
+import CustomToast from "../components/CustomToast";
+import ConfettiExplosion from "react-confetti-explosion";
 
 function Level() {
+  const toast = useToast();
+  const [customToast, setCustomToast] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
   const [value, setValue] = useState("");
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef(null);
   const editorRef = useRef();
-  const [output, setOutput] = useState("Hello, World!");
+  const [output, setOutput] = useState([]);
   const [isError, setIsError] = useState(false);
   const [isRunLoading, setIsRunLoading] = useState(false);
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
+  const [isClearLoading, setIsClearLoading] = useState(false);
+  const [isClearOutputLoading, setIsClearOutputLoading] = useState(false);
+  const cancelClearRef = useRef();
+  const [speedState, setSpeedState] = useState(2);
+  const [movementsState, setMovementsState] = useState();
+  const [highlightState, setHighlightState] = useState();
+  const [indexState, setIndexState] = useState(-1);
+  const [pauseState, setPauseState] = useState(false);
+  const [savedIndexState, setSavedIndexState] = useState(-1);
+  const [bufferState, setBufferState] = useState(false);
+  const [key, setKey] = useState(0);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
-  const [isClearLoading, setIsClearLoading] = useState(false);
+  const [testResults, setTestResults] = useState([]);
+
+  // level states
   const [showHints, setShowHints] = useState(false);
   const [showTestCaseStatus, setShowTestCaseStatus] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef(null);
-  const cancelClearRef = useRef();
   const { sectionRoute, levelRoute } = useParams();
   const [user, setUser] = useState({
     username: "",
@@ -87,6 +112,7 @@ function Level() {
     solution: "",
     hints: [],
     difficulty: "",
+    starter_code: "",
     __v: 0,
     route: "",
   });
@@ -96,7 +122,6 @@ function Level() {
     sections: [
       {
         section_id: "",
-        completed: false,
         levels: [
           {
             level_id: "",
@@ -108,6 +133,311 @@ function Level() {
     ],
   });
 
+  // get user progress
+  useEffect(() => {
+    const fetchUserProgress = async () => {
+      if (!user._id) {
+        console.log("User ID is not defined");
+        return;
+      }
+      try {
+        const response = await axios.get(`/get-progress/${user._id}`);
+        setUserProgress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (user._id) {
+      fetchUserProgress();
+    }
+  }, [user._id]);
+
+  // update user progress
+  useEffect(() => {
+    const updateUserProgress = async () => {
+      try {
+        // Check if the level was already marked as completed
+        const section = UserProgress.sections.find(
+          (section) => section.section_id === level.section_id
+        );
+        const levelProgress = section
+          ? section.levels.find((lvl) => lvl.level_id === level._id)
+          : null;
+        const wasCompletedBefore = levelProgress
+          ? levelProgress.completed
+          : false;
+
+        // Update the progress on the backend
+        const response = await axios.put(`/update-progress/${user._id}`, {
+          levelId: level._id,
+        });
+
+        // If it wasn't completed before but is now, it's the first time
+        const isFirstTime = !wasCompletedBefore;
+
+        // Show appropriate toast message
+        setCustomToast({
+          title: isFirstTime ? "Level Completed!" : "Level Re-completed!",
+          description: isFirstTime
+            ? "Congratulations on completing this level for the first time!"
+            : "You've successfully completed this level again!",
+          status: "success",
+          duration: 5000,
+          isClosable: false,
+          position: "bottom",
+        });
+        
+
+        // update the UserProgress state to reflect the new progress
+        setUserProgress(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (user._id) {
+      updateUserProgress();
+    }
+  }, [testResults]);
+
+  // IDE functions
+
+  useEffect(() => {
+    setMovementsState([
+      {
+        line: 1,
+        operation: "if",
+        condition: "x > 5",
+        result: true,
+        timestamp: "2024-07-09T12:02:00Z",
+        description: "Checked if x is greater than 5.",
+      },
+      {
+        line: 2,
+        operation: "print",
+        isLiteral: true,
+        varName: null,
+        literal: "x is greater than 5",
+        timestamp: "2024-07-09T12:03:00Z",
+        description: "Printed 'x is greater than 5'.",
+      },
+      {
+        line: 3,
+        operation: "else",
+        timestamp: "2024-07-09T12:04:00Z",
+        description: "Else block not executed as condition was true.",
+      },
+      {
+        line: 6,
+        operation: "set",
+        varName: "x",
+        type: "number",
+        value: 10,
+        timestamp: "2024-07-09T12:01:00Z",
+        description: "Set variable x to number 10.",
+      },
+      {
+        line: 7,
+        operation: "create",
+        dataStructure: "array",
+        value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+        length: 9,
+        id: "abcd",
+        type: "int",
+        varName: "nums",
+        timestamp: "2024-07-09T12:01:00Z",
+        description:
+          "Created an array named nums with initial values [1, 2, 3, 4].",
+      },
+      {
+        line: 8,
+        operation: "create",
+        dataStructure: "array",
+        value: ["a", "b", "c", "d", "e", "f", "g"],
+        type: "string",
+        varName: "letters",
+        timestamp: "2024-07-09T12:01:00Z",
+        description:
+          "Created an array named letters with initial values [a,b,c,d,e,f,g].",
+      },
+      {
+        line: 9,
+        operation: "remove",
+        dataStructure: "array",
+        id: "abcd",
+        varName: "nums",
+        positionToRemove: 2,
+        description: "Removed value at position 2 in array nums",
+      },
+      {
+        line: 10,
+        operation: "remove",
+        dataStructure: "array",
+        id: "abcd",
+        varName: "letters",
+        positionToRemove: 4,
+        description: "Removed value at position 4 in array letters",
+      },
+      {
+        line: 11,
+        operation: "add",
+        dataStructure: "array",
+        value: 5,
+        varName: "nums",
+        position: 4,
+        timestamp: "2024-07-09T12:02:00Z",
+        description: "Inserted value 5 at position 4 in array nums.",
+      },
+      {
+        line: 12,
+        operation: "create",
+        dataStructure: "array",
+        value: ["g", "a", "n", "g", "s", "t", "a"],
+        length: 7,
+        id: "abcd",
+        type: "string",
+        varName: "gansterlicious",
+        timestamp: "2024-07-09T12:01:00Z",
+        description:
+          "Created an array named letters with initial values [a,b,c,d,e,f,g].",
+      },
+      {
+        line: 13,
+        operation: "add",
+        dataStructure: "array",
+        value: "z",
+        varName: "letters",
+        position: 0,
+        timestamp: "2024-07-09T12:02:00Z",
+        description: "Inserted value 'z' at position 0 in array nums.",
+      },
+      {
+        line: 14,
+        operation: "swap",
+        dataStructure: "array",
+        firstPosition: 1,
+        secondPosition: 3,
+        varName: "nums",
+        description: "Swapped values in position 1 and 3 in array nums.",
+      },
+      {
+        line: 15,
+        operation: "swap",
+        dataStructure: "array",
+        firstPosition: 1,
+        secondPosition: 3,
+        varName: "letters",
+        description: "Swapped values in position 1 and 3 in array letters.",
+      },
+      {
+        line: 16,
+        operation: "set",
+        varName: "wordString",
+        type: "string",
+        value: "Hello World",
+        timestamp: "2024-07-09T12:01:00Z",
+        description: "Set variable y to string 'Wagwan World'.",
+      },
+      {
+        line: 17,
+        operation: "set",
+        varName: "z",
+        type: "boolean",
+        value: "true",
+        timestamp: "2024-07-09T12:01:00Z",
+        description: "Set variable z to boolean true.",
+      },
+      {
+        line: 18,
+        operation: "set",
+        varName: "wordString",
+        type: "string",
+        value: "Hello Again World",
+        timestamp: "2024-07-09T12:01:00Z",
+        description: "Set variable y to string 'Hello Again World'.",
+      },
+    ]);
+  }, []);
+
+  // very long sample text
+
+  const pauseAnimation = () => {
+    setPauseState(!pauseState);
+  };
+
+  const runCode = async () => {
+    setIsRunLoading(true); // To show loading state on the button
+    const code = value; // Get code from the editor
+    console.log(code);
+    try {
+      let response = await axios.post(
+        "http://localhost:8000/api/pseudocode/run",
+        { code }
+      );
+      console.log(response.data.result);
+      let actionFrames = response.data.result.actionFrames;
+      //setOutput(response.data.result); // Assuming the response has the execution result
+      setMovementsState(actionFrames);
+      setIndexState(0);
+      setHighlightState(true);
+    } catch (error) {
+      console.error("Failed to run code:", error);
+      setIsError(true); // Handle error state
+    }
+    setIsRunLoading(false);
+  };
+
+  const stopCode = () => {
+    setPauseState(true);
+    const timeoutSetKey = setTimeout(() => {
+      setIndexState(-1);
+      setHighlightState(false);
+      setKey((prevKey) => prevKey + 1);
+      setPauseState(false);
+    }, speedState + 2000);
+    return () => timeoutSetKey;
+  };
+
+  const handleClearClick = () => {
+    setIsClearDialogOpen(true);
+  };
+
+  const handleClearConfirm = () => {
+    setIsClearDialogOpen(false);
+    clearCode();
+  };
+
+  const handleClearCancel = () => {
+    setIsClearDialogOpen(false);
+  };
+
+  const clearCode = () => {
+    setIsClearLoading(true);
+    setTimeout(() => {
+      setValue(level.starter_code);
+      setIsClearLoading(false);
+    }, 1000);
+  };
+
+  const clearOutput = () => {
+    setIsClearOutputLoading(true);
+    setTimeout(() => {
+      setOutput([]);
+      setIsClearOutputLoading(false);
+    }, 1000);
+  };
+
+  const gridTemplateColumns = useBreakpointValue({
+    base: "1fr", // Single column layout for small screens
+    md: "1fr 1fr", // Two columns layout for medium and larger screens
+  });
+
+  const gridTemplateRows = useBreakpointValue({
+    base: "auto", // Single row layout for small screens
+    md: "1fr 1fr", // Two rows layout for medium and larger screens
+  });
+
+  // Level functions
   useEffect(() => {
     // Retrieve user data from localStorage
     const storedUser = localStorage.getItem("user");
@@ -162,109 +492,93 @@ function Level() {
     setShowTestCaseStatus(!showTestCaseStatus);
   };
 
-  const checkTestCases = () => {
-    const testCases = level.test_cases.map((testCase) => {
-      console.log(testCase.output);
-      const result = output === testCase.output;
-      return { ...testCase, passed: result };
-    });
-    setLevel({ ...level, test_cases: testCases });
+  const checkTestCases = async (code, cases) => {
+    try {
+      console.log("code:", code);
+      console.log("cases:", cases);
+      const response = await axios.post("/test-code", {
+        userCode: code,
+        testCases: cases,
+      });
+
+      const results = response.data;
+      console.log("Test results:", results);
+      setTestResults(results);
+    } catch (error) {
+      console.error("Error testing code:", error);
+
+      toast({
+        title: "Error testing code",
+        description: "Failed to test code",
+        status: "error",
+        duration: 2500,
+        isClosable: true,
+      });
+    }
   };
 
-  const getStatusIcon = () => {
-    if (!submitClicked)
-      return <MinusIcon color="gray.500" boxSize={8} ml={1} />;
-    if (level.test_cases.every((tc) => tc.passed))
+  const getStatusIcon = (status) => {
+    if (!submitClicked) {
       return (
-        <CheckIcon
+        <MinusIcon
           color="white"
           boxSize={8}
-          bg="green.500"
+          bg="gray.500"
           borderRadius="50%"
           p={1}
           ml={1}
         />
       );
-    if (level.test_cases.every((tc) => !tc.passed))
-      return (
-        <CloseIcon
-          color="white"
-          boxSize={8}
-          bg="red.500"
-          borderRadius="50%"
-          p={1}
-          ml={1}
-        />
-      );
-    return (
-      <WarningIcon
-        boxSize={8}
-        borderRadius="50%"
-        ml={1}
-        color="yellow.500"
-        bg="white"
-      />
-    );
-  };
+    }
 
-  const runCode = () => {
-    setIsRunLoading(true);
-    setTimeout(() => {
-      setIsRunLoading(false);
-      setOutput("Hello, World!");
-    }, 2000);
+    switch (status) {
+      case "success":
+        return (
+          <CheckIcon
+            color="white"
+            boxSize={8}
+            bg="green.500"
+            borderRadius="50%"
+            p={1}
+            ml={1}
+          />
+        );
+      case "error":
+        return (
+          <CloseIcon
+            color="white"
+            boxSize={8}
+            bg="red.500"
+            borderRadius="50%"
+            p={1}
+            ml={1}
+          />
+        );
+      case "warning":
+        return (
+          <WarningIcon
+            boxSize={8}
+            borderRadius="50%"
+            ml={1}
+            color="yellow.500"
+            bg="white"
+          />
+        );
+    }
   };
 
   const submitCode = () => {
     setIsSubmitLoading(true);
     setSubmitClicked(true);
     setTimeout(() => {
+      checkTestCases(value, level.test_cases);
       setIsSubmitLoading(false);
-      setOutput("Hello, World!");
-      checkTestCases();
     }, 2000);
   };
 
-  const handleClearClick = () => {
-    setIsClearDialogOpen(true);
-  };
-
-  const handleClearConfirm = () => {
-    setIsClearDialogOpen(false);
-    clearCode();
-  };
-
-  const handleClearCancel = () => {
-    setIsClearDialogOpen(false);
-  };
-
-  const clearCode = () => {
-    setIsClearLoading(true);
-    setTimeout(() => {
-      setValue("");
-      setIsClearLoading(false);
-      setOutput("");
-    }, 1000);
-  };
-
-  const gridTemplateColumns = useBreakpointValue({
-    base: "1fr", // Single column layout for small screens
-    md: "1fr 1fr", // Two columns layout for medium and larger screens
-  });
-
-  const gridTemplateRows = useBreakpointValue({
-    base: "auto", // Single row layout for small screens
-    md: "auto 1fr", // Two rows layout for medium and larger screens
-  });
-
   return (
-    <Grid
-      templateColumns={gridTemplateColumns}
-      templateRows={gridTemplateRows}
-      gap={4}
-      p={4}
-    >
-      <GridItem colSpan={{ base: 1, md: 2 }} rowSpan={1}>
+    <Box>
+      <Box p={4}>
         <Box bg="blackAlpha.900" borderRadius={10} p={5}>
           <Box display="flex" justifyContent="center">
             <IconButton
@@ -322,270 +636,336 @@ function Level() {
           <Divider mt={4} />
 
           <Text fontWeight="bold" fontSize="xl" mt={2}>
-            Status: {getStatusIcon()}
+            Status:{" "}
+            {isSubmitLoading ? (
+              <Spinner ml={1} />
+            ) : (
+              getStatusIcon(testResults.status)
+            )}
           </Text>
 
-          <Button
-            onClick={toggleTestCaseStatus}
-            mt={4}
-            colorScheme="gray"
-            size="sm"
-          >
-            {showTestCaseStatus ? "Hide Test Cases" : "Show Test Cases"}
-          </Button>
-          {showTestCaseStatus && (
-            <UnorderedList mt={2} color="gray" listStyleType="none">
-              {level.test_cases.map((testCase, index) => (
-                <ListItem key={index} fontWeight="normal">
-                  Test Case {index + 1}: {testCase.output}
-                  {!submitClicked ? (
-                    <MinusIcon color="gray.500" boxSize={4} ml={2} />
-                  ) : testCase.passed ? (
-                    <CheckIcon color="green.500" boxSize={4} ml={2} />
-                  ) : (
-                    <CloseIcon color="red.500" boxSize={4} ml={2} />
-                  )}
-                </ListItem>
-              ))}
-            </UnorderedList>
-          )}
-        </Box>
-      </GridItem>
-
-      <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-        <Box
-          width={{ base: "94vw", md: "50vw" }}
-          boxShadow="md"
-          borderBottomRadius={10}
-          overflow="hidden"
-        >
-          <Box
-            bg="blackAlpha.900"
-            borderTopRadius={10}
-            display="flex"
-            justifyContent="space-between"
-            p={2}
-            alignItems="center"
-          >
-            <Button
-              variant="solid"
-              colorScheme="red"
-              isDisabled={value === ""}
-              onClick={handleClearClick}
-              isLoading={isClearLoading}
-              m={2}
-              pl={1}
-              width="85px"
-            >
-              <IoClose size="1.6em" />
-              <Box as="span">Clear</Box>
-            </Button>
-
-            <Heading
-              fontWeight="normal"
-              color="whiteAlpha.900"
-              textAlign="center"
-              fontSize="2xl"
-            >
-              Code Editor
-              <Popover trigger="hover">
-                <PopoverTrigger>
-                  <IconButton
-                    ref={btnRef}
-                    onClick={onOpen}
-                    icon={
-                      <InfoIcon
-                        color="blackAlpha.900"
-                        p={0.5}
-                        bg="blue.300"
-                        borderRadius="50%"
-                        borderColor="white"
-                        boxSize="0.8em"
-                      />
-                    }
-                    size="auto"
-                    bg="transparent"
-                    ml={2}
-                  />
-                </PopoverTrigger>
-
-                <PopoverContent bg="blue.400" width="auto" border="none">
-                  <PopoverArrow bg="blue.400" />
-                  <PopoverBody color="white" fontSize="sm">
-                    Show Documentation
-                  </PopoverBody>
-                </PopoverContent>
-              </Popover>
-              <Modal
-                onClose={onClose}
-                finalFocusRef={btnRef}
-                isOpen={isOpen}
-                scrollBehavior="inside"
-              >
-                <ModalOverlay />
-                <ModalContent bg="gray.900">
-                  <ModalHeader>Documentation</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Text>
-                      Documentation goes here... <br />
-                      <br />
-                      "Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                      sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum. Lorem ipsum
-                      dolor sit amet, consectetur adipiscing elit sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua. Ut
-                      enim ad minim veniam, quis nostrud exercitation ullamco
-                      laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                      irure dolor in reprehenderit in voluptate velit esse
-                      cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                      occaecat cupidatat non proident, sunt in culpa qui officia
-                      deserunt mollit anim id est laborum. Lorem ipsum dolor sit
-                      amet, consectetur adipiscing elit sed do eiusmod tempor
-                      incididunt ut labore et dolore magna aliqua. Ut enim ad
-                      minim veniam, quis nostrud exercitation ullamco laboris
-                      nisi ut aliquip ex ea commodo consequat. Duis aute irure
-                      dolor in reprehenderit in voluptate velit esse cillum
-                      dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                      cupidatat non proident, sunt in culpa qui officia deserunt
-                      mollit anim id est laborum."
-                    </Text>
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button onClick={onClose}>Close</Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-            </Heading>
-
+          {testResults.test_results && (
             <Box>
               <Button
-                variant="solid"
-                colorScheme="green"
-                isDisabled={value === ""}
-                onClick={runCode}
-                isLoading={isRunLoading}
-                m={2}
-                width="85px"
+                onClick={toggleTestCaseStatus}
+                mt={4}
+                colorScheme="gray"
+                size="sm"
               >
-                <FaPlay />
-                <Box as="span" ml={2}>
-                  Run
-                </Box>
+                {showTestCaseStatus ? "Hide Test Cases" : "Show Test Cases"}
               </Button>
-              <Button
-                variant="solid"
-                colorScheme="blue"
-                isDisabled={value === ""}
-                onClick={submitCode}
-                isLoading={isSubmitLoading}
-                m={2}
-                width="115px"
-              >
-                <FaCloudUploadAlt size="1.6em" />
-                <Box as="span" ml={2}>
-                  Submit
-                </Box>
-              </Button>
-            </Box>
 
-            <AlertDialog
-              isOpen={isClearDialogOpen}
-              leastDestructiveRef={cancelClearRef}
-              onClose={handleClearCancel}
-            >
-              <AlertDialogOverlay>
-                <AlertDialogContent>
-                  <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                    Confirm Clear
-                  </AlertDialogHeader>
-
-                  <AlertDialogBody>
-                    Are you sure you want to clear the code?
-                  </AlertDialogBody>
-
-                  <AlertDialogFooter>
-                    <Button ref={cancelClearRef} onClick={handleClearCancel}>
-                      Cancel
-                    </Button>
-                    <Button
-                      colorScheme="red"
-                      onClick={handleClearConfirm}
-                      ml={3}
+              {showTestCaseStatus && (
+                <Accordion allowToggle mt={2} color="gray">
+                  {testResults.test_results.map((result, index) => (
+                    <AccordionItem
+                      key={index}
+                      border="1px solid"
+                      borderColor="gray.200"
+                      borderRadius="md"
+                      mb={2}
                     >
-                      Clear
-                    </Button>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialogOverlay>
-            </AlertDialog>
-          </Box>
-          <CodeEditorView
-            height="50dvh"
-            width={{ base: "100%", md: "50vw" }}
-            theme="vs-dark"
+                      <AccordionButton>
+                        <Box
+                          flex="1"
+                          textAlign="left"
+                          fontWeight="bold"
+                          textColor="white"
+                        >
+                          Test Case {result.testCase}:
+                          {isSubmitLoading ? (
+                            <Spinner ml={1} />
+                          ) : result.passed ? (
+                            <CheckIcon color="green.500" boxSize={4} ml={2} />
+                          ) : (
+                            <CloseIcon color="red.500" boxSize={4} ml={2} />
+                          )}
+                        </Box>
+                        <AccordionIcon />
+                      </AccordionButton>
+                      <AccordionPanel pb={4}>
+                        <Text fontWeight="normal">
+                          Expected: {result.expectedOutput}
+                        </Text>
+                        <Text fontWeight="normal">
+                          Actual: {result.actualOutput}
+                        </Text>
+                      </AccordionPanel>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              )}
+            </Box>
+          )}
+        </Box>
+      </Box>
+
+      <Box>
+        <Box display="flex" justifyContent="center">
+          <RunControls
+            isClearLoading={isClearLoading}
+            isRunLoading={isRunLoading}
+            runCode={runCode}
+            stopCode={stopCode}
             value={value}
-            setValue={setValue}
+            pauseAnimation={pauseAnimation}
+            pauseState={pauseState}
+            setPauseState={setPauseState}
+            speedState={speedState}
+            setSpeedState={setSpeedState}
+            submitButton={true}
+            isSubmitLoading={isSubmitLoading}
+            submitCode={submitCode}
           />
         </Box>
 
-        <Box mt={4} borderBottomRadius={10} overflow="hidden">
-          <Box
-            bg="blackAlpha.900"
-            borderTopRadius={10}
-            p={2}
-            display="flex"
-            alignItems="center"
-            height="12dvh"
-            justifyContent="center"
-          >
-            <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="2xl">
-              Output View
-            </Heading>
-          </Box>
-          <Box
-            borderBottomRadius={4}
-            height={{ base: "auto", md: "50vh" }}
-            boxShadow="md"
-          >
-            <OutputView
-              height={{ base: "25vh", md: "50vh" }}
-              width="100%"
-              output={output}
-            />
-          </Box>
-        </Box>
-      </GridItem>
-
-      <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-        <Box
-          bg="blackAlpha.900"
-          borderTopRadius={10}
-          p={2}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          height="12dvh"
-        >
-          <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="2xl">
-            Visualisation View
-          </Heading>
-        </Box>
-
-        <Box
-          bg="blackAlpha.600"
-          borderBottomRadius={10}
-          boxShadow="md"
-          height={{ base: "75vh", md: "115vh" }}
+        <Grid
+          templateColumns={gridTemplateColumns}
+          templateRows={gridTemplateRows}
+          gap={4}
           p={4}
-        ></Box>
-      </GridItem>
-    </Grid>
+          overflow="auto"
+        >
+          <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
+            <Box
+              width={{ base: "94vw", md: "50vw" }}
+              boxShadow="md"
+              borderBottomRadius={10}
+              overflow="hidden"
+            >
+              <Box
+                bg="blackAlpha.900"
+                borderTopRadius={10}
+                p={2}
+                display="flex"
+                alignItems="center"
+                height="12dvh"
+                justifyContent="space-between"
+              >
+                <Button
+                  variant="solid"
+                  colorScheme="red"
+                  isDisabled={value === ""}
+                  onClick={handleClearClick}
+                  isLoading={isClearLoading}
+                  m={2}
+                  pl={1}
+                  width="85px"
+                >
+                  <IoClose size="1.6em" />
+                  <Box as="span">Clear</Box>
+                </Button>
+
+                <Box>
+                  <Heading
+                    fontWeight="normal"
+                    color="whiteAlpha.900"
+                    textAlign="center"
+                    fontSize="2xl"
+                  >
+                    Code Editor
+                    <Popover trigger="hover">
+                      <PopoverTrigger>
+                        <IconButton
+                          ref={btnRef}
+                          onClick={onOpen}
+                          icon={
+                            <InfoIcon
+                              color="blackAlpha.900"
+                              p={0.5}
+                              bg="blue.300"
+                              borderRadius="50%"
+                              borderColor="white"
+                              boxSize="0.8em"
+                            />
+                          }
+                          size="auto"
+                          bg="transparent"
+                          ml={2}
+                        />
+                      </PopoverTrigger>
+
+                      <PopoverContent bg="blue.400" width="auto" border="none">
+                        <PopoverArrow bg="blue.400" />
+                        <PopoverBody color="white" fontSize="sm">
+                          Show Documentation
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                    <Modal
+                      onClose={onClose}
+                      finalFocusRef={btnRef}
+                      isOpen={isOpen}
+                      scrollBehavior="inside"
+                    >
+                      <ModalOverlay />
+                      <ModalContent bg="gray.900" maxW="90vw" maxH="90vh">
+                        <ModalHeader>Documentation</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          <DocumentationComponent />
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button onClick={onClose}>Close</Button>
+                        </ModalFooter>
+                      </ModalContent>
+                    </Modal>
+                  </Heading>
+                </Box>
+
+                <Box width="84px" />
+
+                <AlertDialog
+                  isOpen={isClearDialogOpen}
+                  leastDestructiveRef={cancelClearRef}
+                  onClose={handleClearCancel}
+                >
+                  <AlertDialogOverlay>
+                    <AlertDialogContent>
+                      <AlertDialogHeader fontSize="lg" fontWeight="bold">
+                        Confirm Clear
+                      </AlertDialogHeader>
+
+                      <AlertDialogBody>
+                        Are you sure you want to clear the code?
+                      </AlertDialogBody>
+
+                      <AlertDialogFooter>
+                        <Button
+                          ref={cancelClearRef}
+                          onClick={handleClearCancel}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          colorScheme="red"
+                          onClick={handleClearConfirm}
+                          ml={3}
+                        >
+                          Clear
+                        </Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialogOverlay>
+                </AlertDialog>
+              </Box>
+
+              <CodeEditorView
+                speedState={speedState}
+                movementsState={movementsState}
+                height="50dvh"
+                width={{ base: "100%", md: "50vw" }}
+                theme="vs-dark"
+                value={value}
+                setValue={setValue}
+                highlightState={highlightState}
+                setHighlightState={setHighlightState}
+                pauseState={pauseState}
+                setPauseState={setPauseState}
+                defaultValue={level.starter_code}
+              />
+            </Box>
+
+            <Box mt={4} borderBottomRadius={10} overflow="hidden">
+              <Box
+                bg="blackAlpha.900"
+                borderTopRadius={10}
+                p={2}
+                display="flex"
+                alignItems="center"
+                height="12dvh"
+                justifyContent="space-between"
+              >
+                <Button
+                  variant="solid"
+                  colorScheme="red"
+                  isDisabled={output.length === 0}
+                  onClick={clearOutput}
+                  isLoading={isClearOutputLoading}
+                  m={2}
+                  pl={1}
+                  width="85px"
+                >
+                  <IoClose size="1.6em" />
+                  <Box as="span">Clear</Box>
+                </Button>
+
+                <Heading
+                  fontWeight="normal"
+                  color="whiteAlpha.900"
+                  fontSize="2xl"
+                >
+                  Output View
+                </Heading>
+
+                <Box width="84px" />
+              </Box>
+              <Box
+                borderBottomRadius={4}
+                height={{ base: "auto", md: "50vh" }}
+                boxShadow="md"
+              >
+                <OutputView
+                  height={{ base: "25vh", md: "50vh" }}
+                  width="100%"
+                  output={output}
+                />
+              </Box>
+            </Box>
+          </GridItem>
+
+          <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
+            <Box
+              bg="blackAlpha.900"
+              borderTopRadius={10}
+              p={2}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              height="12dvh"
+            >
+              <Heading
+                fontWeight="normal"
+                color="whiteAlpha.900"
+                fontSize="2xl"
+              >
+                Visualisation View
+              </Heading>
+            </Box>
+
+            <Box
+              bg="blackAlpha.600"
+              borderBottomRadius={10}
+              boxShadow="md"
+              height={{ base: "75vh", md: "115vh" }}
+              p={4}
+            >
+              <MainVisualisationWindow
+                key={key}
+                movementsState={movementsState}
+                output={output}
+                setOutput={setOutput}
+                speedState={speedState}
+                indexState={indexState}
+                setIndexState={setIndexState}
+                pauseState={pauseState}
+                setPauseState={setPauseState}
+                bufferState={bufferState}
+              ></MainVisualisationWindow>
+            </Box>
+          </GridItem>
+        </Grid>
+      </Box>
+
+      {customToast && (
+          <CustomToast
+            title={customToast.title}
+            description={customToast.description}
+            duration={customToast.duration}
+            onClose={() => setCustomToast(null)}
+          />
+      )}
+    </Box>
   );
 }
 

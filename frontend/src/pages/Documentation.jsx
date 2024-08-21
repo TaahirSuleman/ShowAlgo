@@ -1,14 +1,12 @@
-import { Center, Heading } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import React from 'react'
-import NavBar from '../components/NavBar'
+import DocumentationComponent from '../components/DocumentationComponent'
 
 function Documentation() {
   return (
-    <div>
-        <Heading>
-          Documentation goes here
-        </Heading>
-    </div>
+    <Box>
+      <DocumentationComponent />
+    </Box>
   )
 }
 
