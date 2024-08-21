@@ -15235,3 +15235,711 @@ Final JSON: {
     }
   ]
 }
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T10:55:35.021Z",
+      "description": "Set variable x to 5."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T10:55:57.649Z",
+      "description": "Set variable x to 5."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "X",
+        "operator": ">",
+        "right": "4"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "HELLO"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T10:56:24.063Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "X > 4",
+      "result": false,
+      "timestamp": "2024-08-21T10:56:24.064Z",
+      "description": "Checked if X > 4."
+    },
+    {
+      "line": 5,
+      "operation": "endif",
+      "timestamp": "2024-08-21T10:56:24.064Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": ">",
+        "right": "4"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "HELLO"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T10:56:40.469Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 4",
+      "result": true,
+      "timestamp": "2024-08-21T10:56:40.469Z",
+      "description": "Checked if x > 4."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "HELLO",
+      "timestamp": "2024-08-21T10:56:40.470Z",
+      "description": "Printed HELLO."
+    },
+    {
+      "line": 4,
+      "operation": "endif",
+      "timestamp": "2024-08-21T10:56:40.470Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": ">",
+        "right": "4"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "HELLO"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T10:57:09.003Z",
+      "description": "Set variable x to 5."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 4",
+      "result": true,
+      "timestamp": "2024-08-21T10:57:09.004Z",
+      "description": "Checked if x > 4."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "HELLO",
+      "timestamp": "2024-08-21T10:57:09.004Z",
+      "description": "Printed HELLO."
+    },
+    {
+      "line": 4,
+      "operation": "endif",
+      "timestamp": "2024-08-21T10:57:09.004Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T11:02:33.724Z",
+      "description": "Set variable x to 5."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-21T11:02:39.884Z",
+      "description": "Set variable x to 5."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "FunctionDeclaration",
+      "name": "HelloWorld",
+      "params": [],
+      "body": [
+        {
+          "type": "ReturnStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "Hello,",
+            "line": 2
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "define",
+      "varName": "HelloWorld",
+      "params": [],
+      "body": [
+        {
+          "line": 2,
+          "operation": "return",
+          "value": {
+            "value": "Hello,"
+          },
+          "timestamp": "2024-08-21T11:08:01.704Z",
+          "description": "Returned {\"value\":\"Hello,\"}."
+        }
+      ],
+      "timestamp": "2024-08-21T11:08:01.705Z",
+      "description": "Defined function HelloWorld with parameters ."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "FunctionDeclaration",
+      "name": "HelloWorld",
+      "params": [],
+      "body": [
+        {
+          "type": "ReturnStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "Hello,",
+            "line": 2
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "define",
+      "varName": "HelloWorld",
+      "params": [],
+      "body": [
+        {
+          "line": 2,
+          "operation": "return",
+          "value": {
+            "value": "Hello,"
+          },
+          "timestamp": "2024-08-21T11:08:45.873Z",
+          "description": "Returned {\"value\":\"Hello,\"}."
+        }
+      ],
+      "timestamp": "2024-08-21T11:08:45.873Z",
+      "description": "Defined function HelloWorld with parameters ."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "FunctionDeclaration",
+      "name": "HelloWorld",
+      "params": [],
+      "body": [
+        {
+          "type": "ReturnStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "Hello, World!",
+            "line": 2
+          }
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "define",
+      "varName": "HelloWorld",
+      "params": [],
+      "body": [
+        {
+          "line": 2,
+          "operation": "return",
+          "value": {
+            "value": "Hello, World!"
+          },
+          "timestamp": "2024-08-21T11:08:59.614Z",
+          "description": "Returned {\"value\":\"Hello, World!\"}."
+        }
+      ],
+      "timestamp": "2024-08-21T11:08:59.614Z",
+      "description": "Defined function HelloWorld with parameters ."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "+",
+        "right": "1"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "z",
+      "value": {
+        "type": "Expression",
+        "left": "y",
+        "operator": "*",
+        "right": "x"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-21T11:10:32.079Z",
+      "description": "Set variable x to 3."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-21T11:10:32.079Z",
+      "description": "Set variable y to x + 1."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "z",
+      "type": "number",
+      "value": 12,
+      "timestamp": "2024-08-21T11:10:32.079Z",
+      "description": "Set variable z to y * x."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "+",
+        "right": "1"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "z",
+      "value": {
+        "type": "Expression",
+        "left": "y",
+        "operator": "*",
+        "right": "x"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-08-21T11:10:48.534Z",
+      "description": "Set variable x to 3."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-08-21T11:10:48.534Z",
+      "description": "Set variable y to x + 1."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "z",
+      "type": "number",
+      "value": 12,
+      "timestamp": "2024-08-21T11:10:48.534Z",
+      "description": "Set variable z to y * x."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-08-21T11:26:45.151Z",
+      "description": "Set variable x to 10."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "timestamp": "2024-08-21T11:33:43.794Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "timestamp": "2024-08-21T11:34:12.843Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "timestamp": "2024-08-21T11:34:39.184Z",
+      "description": "Created array nums."
+    }
+  ]
+}

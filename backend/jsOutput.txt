@@ -918,3 +918,13 @@ Final JavaScript: 'use strict';
 function HelloWorld() {
 return "Hello, World!";
 }
+Final JavaScript: 'use strict';
+let x = 5;
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello,";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
