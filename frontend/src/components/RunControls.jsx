@@ -78,7 +78,7 @@ function RunControls({
     const currentIndex = speedOptions.indexOf(speed);
     const nextIndex = (currentIndex + 1) % speedOptions.length;
     setSpeed(speedOptions[nextIndex]);
-    setSpeedState(2/speedOptions[nextIndex]) // THE HARD CODED VALUE HERE IS THE STARTING SPEED STATE
+    setSpeedState(2/speedOptions[nextIndex]) // THE HARD CODED VALUE HERE (2) IS THE STARTING SPEED STATE
     
   };
 

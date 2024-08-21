@@ -430,15 +430,92 @@ function GuestIDE() {
     setIsRunLoading(false);
   };
 
+//   const runCode = async () => {
+//     setIsRunLoading(true); // To show loading state on the button
+//     let code = value; // Get code from the editor
+//     //setMovementsState(actionFrames);
+//     // setIndexState(0);
+//     // setHighlightState(true);
+//     setMovementsState([
+//       {
+//       line: 7,
+//       operation: "create_array",
+//       dataStructure: "array",
+//       value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+//       length: 9,
+//       id: "abcd",
+//       type: "int",
+//       varName: "nums",
+//       timestamp: "2024-07-09T12:01:00Z",
+//       description:
+//         "Created an array named nums with initial values [1, 2, 3, 4].",
+//       },
+//       {
+//         "line": 19,
+//         "operation": "get",
+//         "setName": "fetchedVar2", 
+//         "varName": "nums",
+//         "type": "number",  
+//         "index": 2,  
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set variable fetchedVar to nums[2]."
+//       },
+//       {
+//         "line": 19,
+//         "operation": "setArr",
+//         "varName": "nums",
+//         "index": 2,  
+//         "setValue" : 25,
+//         "timestamp": "2024-07-09T12:01:00Z",  
+//         "description": "Set nums[2] to 25."
+//       },
+//       {
+//         line: 11,
+//         operation: "add",
+//         dataStructure: "array",
+//         value: 99,
+//         varName: "nums",
+//         position: 2,
+//         timestamp: "2024-07-09T12:02:00Z",
+//         description: "Inserted value 5 at position 4 in array nums.",
+//       },
+//       {
+//         line: 9,
+//         operation: "remove",
+//         dataStructure: "array",
+//         id: "abcd",
+//         varName: "nums",
+//         positionToRemove: 2,
+//         description: "Removed value at position 2 in array nums",
+//       },
+//       {
+//         line: 14,
+//         operation: "swap",
+//         dataStructure: "array",
+//         firstPosition: 2,
+//         secondPosition: 6,
+//         varName: "nums",
+//         description: "Swapped values in position 1 and 3 in array nums.",
+//       },
+
+//     ])
+//     setIndexState(0);
+//     setIsRunLoading(false);
+//   };
+
   const stopCode = () => {
+    let startTime;
     setPauseState(true);
     const timeoutSetKey = setTimeout(() => {
+      console.log(`Time elapsed: ${(Date.now() - startTime) / 1000} seconds`);
+      console.log("THIS IS THE SPEED STATE WHEN KILL: "+speedState)
       setIndexState(-1);
       setHighlightState(false);
       setKey((prevKey) => prevKey + 1);
       setPauseState(false);
       setOutput((prev) => [...prev, `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`]);
-    }, speedState + 2000);
+    }, speedState*1000 + 1000);
+    startTime = Date.now(); // Start the timer
     return () => timeoutSetKey;
   };
 
