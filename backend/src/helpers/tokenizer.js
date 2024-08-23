@@ -1,10 +1,46 @@
+import {
+    KeywordStrategy,
+    NumberStrategy,
+    StringStrategy,
+    DelimiterStrategy,
+    OperatorStrategy,
+    ComparisonOperatorStrategy,
+} from "./TokenizationStrategies.js";
+
+/**
+ * Tokenizer class responsible for tokenizing pseudocode into individual tokens.
+ */
 class Tokenizer {
+    /**
+     * Constructs a new Tokenizer instance.
+     * @param {string} pseudocode - The pseudocode to tokenize.
+     */
     constructor(pseudocode) {
         this.pseudocode = pseudocode;
         this.currentIndex = 0;
         this.line = 1;
+        this.strategies = this.createStrategies();
     }
 
+    /**
+     * Creates a dictionary of strategies for different token types.
+     * @returns {Object} A dictionary mapping token types to their strategies.
+     */
+    createStrategies() {
+        return {
+            letter: new KeywordStrategy(),
+            digit: new NumberStrategy(),
+            string: new StringStrategy(),
+            delimiter: new DelimiterStrategy(),
+            operator: new OperatorStrategy(),
+            comparisonOperator: new ComparisonOperatorStrategy(),
+        };
+    }
+
+    /**
+     * Tokenizes the entire pseudocode into an array of tokens.
+     * @returns {Array<Object>} Array of tokens.
+     */
     tokenize() {
         const tokens = [];
         while (this.currentIndex < this.pseudocode.length) {
@@ -13,17 +49,17 @@ class Tokenizer {
             if (this.isWhitespace(char)) {
                 this.consumeWhitespace();
             } else if (this.isLetter(char)) {
-                tokens.push(this.consumeIdentifierOrKeyword());
+                tokens.push(this.strategies.letter.apply(this));
             } else if (this.isDigit(char)) {
-                tokens.push(this.consumeNumber());
+                tokens.push(this.strategies.digit.apply(this));
             } else if (char === '"') {
-                tokens.push(this.consumeString());
+                tokens.push(this.strategies.string.apply(this));
             } else if (this.isDelimiter(char)) {
-                tokens.push(this.consumeDelimiter());
+                tokens.push(this.strategies.delimiter.apply(this));
             } else if (this.isOperator(char)) {
-                tokens.push(this.consumeOperator());
+                tokens.push(this.strategies.operator.apply(this));
             } else if (this.isComparisonOperator(char)) {
-                tokens.push(this.consumeComparisonOperator());
+                tokens.push(this.strategies.comparisonOperator.apply(this));
             } else if (char === "\n") {
                 this.line++;
                 this.currentIndex++;
@@ -36,10 +72,18 @@ class Tokenizer {
         return tokens;
     }
 
+    /**
+     * Checks if the character is a whitespace.
+     * @param {string} char - The character to check.
+     * @returns {boolean} True if the character is a whitespace, false otherwise.
+     */
     isWhitespace(char) {
         return /\s/.test(char);
     }
 
+    /**
+     * Consumes whitespace characters, advancing the tokenizer's currentIndex.
+     */
     consumeWhitespace() {
         while (
             this.currentIndex < this.pseudocode.length &&
@@ -52,22 +96,47 @@ class Tokenizer {
         }
     }
 
+    /**
+     * Checks if the character is a letter.
+     * @param {string} char - The character to check.
+     * @returns {boolean} True if the character is a letter, false otherwise.
+     */
     isLetter(char) {
         return /[a-zA-Z_]/.test(char);
     }
 
+    /**
+     * Checks if the character is a digit.
+     * @param {string} char - The character to check.
+     * @returns {boolean} True if the character is a digit, false otherwise.
+     */
     isDigit(char) {
         return /\d/.test(char);
     }
 
+    /**
+     * Checks if the character is a delimiter.
+     * @param {string} char - The character to check.
+     * @returns {boolean} True if the character is a delimiter, false otherwise.
+     */
     isDelimiter(char) {
         return ["[", "]", "(", ")", ","].includes(char);
     }
 
+    /**
+     * Checks if the character is an operator.
+     * @param {string} char - The character to check.
+     * @returns {boolean} True if the character is an operator, false otherwise.
+     */
     isOperator(char) {
         return ["+", "-", "*", "/"].includes(char);
     }
 
+    /**
+     * Checks if the character is a comparison operator.
+     * @param {string} char - The character to check.
+     * @returns {boolean} True if the character is a comparison operator, false otherwise.
+     */
     isComparisonOperator(char) {
         return (
             [">", "<", "="].includes(char) ||
@@ -76,6 +145,10 @@ class Tokenizer {
         );
     }
 
+    /**
+     * Consumes a keyword or identifier from the pseudocode.
+     * @returns {Object} The token representing the keyword or identifier.
+     */
     consumeIdentifierOrKeyword() {
         let value = "";
         while (
@@ -148,6 +221,10 @@ class Tokenizer {
         }
     }
 
+    /**
+     * Consumes a numeric literal from the pseudocode.
+     * @returns {Object} The token representing the numeric literal.
+     */
     consumeNumber() {
         let value = "";
         while (
@@ -160,6 +237,10 @@ class Tokenizer {
         return { type: "Number", value, line: this.line };
     }
 
+    /**
+     * Consumes a string literal from the pseudocode.
+     * @returns {Object} The token representing the string literal.
+     */
     consumeString() {
         let str = "";
         this.currentIndex++; // Skip the initial quote
@@ -180,18 +261,30 @@ class Tokenizer {
         throw new Error(`Unexpected end of string at line ${this.line}`);
     }
 
+    /**
+     * Consumes a delimiter from the pseudocode.
+     * @returns {Object} The token representing the delimiter.
+     */
     consumeDelimiter() {
         const char = this.pseudocode[this.currentIndex];
         this.currentIndex++;
         return { type: "Delimiter", value: char, line: this.line };
     }
 
+    /**
+     * Consumes an operator character from the pseudocode.
+     * @returns {Object} The token representing the operator.
+     */
     consumeOperator() {
         const char = this.pseudocode[this.currentIndex];
         this.currentIndex++;
         return { type: "Operator", value: char, line: this.line };
     }
 
+    /**
+     * Consumes a comparison operator from the pseudocode.
+     * @returns {Object} The token representing the comparison operator.
+     */
     consumeComparisonOperator() {
         const char = this.pseudocode[this.currentIndex];
         let value = char;
@@ -209,7 +302,10 @@ class Tokenizer {
         return { type: "ComparisonOperator", value, line: this.line };
     }
 
-    // Helper method to peek next word without consuming it
+    /**
+     * Peeks at the next word in the pseudocode without consuming it.
+     * @returns {string} The next word in the pseudocode.
+     */
     peekNextWord() {
         let nextWord = "";
         let tempIndex = this.currentIndex;

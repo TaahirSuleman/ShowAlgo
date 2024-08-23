@@ -16,12 +16,25 @@ import Identifier from "./ast/Identifier.js";
 import LoopUntil from "./ast/LoopUntil.js";
 import LoopFromTo from "./ast/LoopFromTo.js";
 
+/**
+ * @class Parser
+ * @description Parses tokens into an Abstract Syntax Tree (AST) for further processing.
+ */
 class Parser {
+    /**
+     * @constructor
+     * @param {Array} tokens - Array of tokens to be parsed.
+     */
     constructor(tokens) {
         this.tokens = tokens;
         this.currentIndex = 0;
     }
 
+    /**
+     * @method parse
+     * @description Parses the entire token array into an AST.
+     * @returns {Program} The root node of the AST.
+     */
     parse() {
         const body = [];
         while (this.currentIndex < this.tokens.length) {
@@ -30,6 +43,12 @@ class Parser {
         return new Program(body);
     }
 
+    /**
+     * @method parseStatement
+     * @description Parses a single statement based on the current token.
+     * @returns {ASTNode} The parsed AST node.
+     * @throws {Error} Throws an error if an unexpected token is encountered.
+     */
     parseStatement() {
         const token = this.currentToken();
         switch (token.value.toLowerCase()) {
@@ -66,6 +85,11 @@ class Parser {
         }
     }
 
+    /**
+     * @method parseVariableDeclaration
+     * @description Parses a variable declaration statement.
+     * @returns {VariableDeclaration} The AST node representing the variable declaration.
+     */
     parseVariableDeclaration() {
         const line = this.currentToken().line;
         this.expect("Keyword", "set");
@@ -82,6 +106,11 @@ class Parser {
         return new VariableDeclaration(varName, varType, value, line);
     }
 
+    /**
+     * @method parsePrintStatement
+     * @description Parses a print statement.
+     * @returns {PrintStatement} The AST node representing the print statement.
+     */
     parsePrintStatement() {
         const line = this.currentToken().line;
         this.expect("Keyword", "print");
@@ -89,6 +118,11 @@ class Parser {
         return new PrintStatement(value, line);
     }
 
+    /**
+     * @method parseArrayCreation
+     * @description Parses an array creation statement.
+     * @returns {ArrayCreation} The AST node representing the array creation.
+     */
     parseArrayCreation() {
         const line = this.currentToken().line;
         this.expect("Keyword", "create");
@@ -102,6 +136,11 @@ class Parser {
         return new ArrayCreation(varName, values, line);
     }
 
+    /**
+     * @method parseArrayInsertion
+     * @description Parses an array insertion statement.
+     * @returns {ArrayInsertion} The AST node representing the array insertion.
+     */
     parseArrayInsertion() {
         const line = this.currentToken().line;
         this.expect("Keyword", "insert");
@@ -114,6 +153,11 @@ class Parser {
         return new ArrayInsertion(varName, value, position, line);
     }
 
+    /**
+     * @method parseIfStatement
+     * @description Parses an if statement with optional else clause.
+     * @returns {IfStatement} The AST node representing the if statement.
+     */
     parseIfStatement() {
         const line = this.currentToken().line;
         this.expect("Keyword", "if");
@@ -147,6 +191,11 @@ class Parser {
         return new IfStatement(condition, consequent, alternate, line);
     }
 
+    /**
+     * @method parseFunctionDeclaration
+     * @description Parses a function declaration statement.
+     * @returns {FunctionDeclaration} The AST node representing the function declaration.
+     */
     parseFunctionDeclaration() {
         const line = this.currentToken().line;
         this.expect("Keyword", "define");
@@ -170,6 +219,11 @@ class Parser {
         return new FunctionDeclaration(name, params, body, line);
     }
 
+    /**
+     * @method parseFunctionCall
+     * @description Parses a function call statement.
+     * @returns {FunctionCall} The AST node representing the function call.
+     */
     parseFunctionCall() {
         const line = this.currentToken().line;
         this.expect("Keyword", "call");
@@ -181,6 +235,11 @@ class Parser {
         return new FunctionCall(name, args, line);
     }
 
+    /**
+     * @method parseForOrLoop
+     * @description Parses a for loop or a generic loop.
+     * @returns {ForLoop|LoopFromTo} The AST node representing the loop.
+     */
     parseForOrLoop() {
         const line = this.currentToken().line;
         this.expect("Keyword", "for");
@@ -196,6 +255,12 @@ class Parser {
         );
     }
 
+    /**
+     * @method parseForEachLoop
+     * @description Parses a for-each loop.
+     * @param {number} line - The line number of the loop.
+     * @returns {ForLoop} The AST node representing the for-each loop.
+     */
     parseForEachLoop(line) {
         this.expect("Keyword", "each");
         const iterator = this.consume("Identifier").value;
@@ -215,10 +280,15 @@ class Parser {
         return new ForLoop(iterator, collection, body, line);
     }
 
+    /**
+     * @method parseGenericLoop
+     * @description Parses a generic loop, which could be a loop until or a loop from-to.
+     * @param {number} line - The line number of the loop.
+     * @returns {LoopUntil|LoopFromTo} The AST node representing the loop.
+     */
     parseGenericLoop(line = this.currentToken().line) {
         this.expect("Keyword", "loop");
 
-        // If the next token is an identifier, it's a loop variable for a 'from-to' loop
         if (this.currentToken().type === "Identifier") {
             return this.parseLoopFromTo(line);
         }
@@ -234,6 +304,12 @@ class Parser {
         );
     }
 
+    /**
+     * @method parseLoopUntil
+     * @description Parses a loop-until statement.
+     * @param {number} line - The line number of the loop.
+     * @returns {LoopUntil} The AST node representing the loop.
+     */
     parseLoopUntil(line) {
         this.expect("Keyword", "until");
         const condition = this.parseCondition();
@@ -251,8 +327,14 @@ class Parser {
         return new LoopUntil(condition, body, line);
     }
 
+    /**
+     * @method parseLoopFromTo
+     * @description Parses a loop-from-to statement.
+     * @param {number} line - The line number of the loop.
+     * @returns {VariableDeclaration|LoopFromTo} The AST node representing the loop.
+     */
     parseLoopFromTo(line) {
-        const loopVariable = this.consume("Identifier").value; // Expect and consume the loop variable (e.g., 'i')
+        const loopVariable = this.consume("Identifier").value;
         this.expect("Keyword", "from");
         const start = this.parseExpression();
         if (this.currentToken().value.toLowerCase() === "up") {
@@ -264,7 +346,6 @@ class Parser {
         const end = this.parseExpression();
         const body = [];
 
-        // Create a variable declaration node for the loop variable
         const variableDeclarationNode = new VariableDeclaration(
             loopVariable,
             "number",
@@ -272,7 +353,6 @@ class Parser {
             line
         );
 
-        // Parse the loop body
         while (
             !(
                 this.currentToken().value.toLowerCase() === "end" &&
@@ -284,13 +364,16 @@ class Parser {
         this.expect("Keyword", "end");
         this.expect("Keyword", "loop");
 
-        // Create the loop node
         const loopNode = new LoopFromTo(loopVariable, start, end, body, line);
 
-        // Return the variable declaration node first, then the loop node
         return variableDeclarationNode, loopNode;
     }
 
+    /**
+     * @method parseWhileLoop
+     * @description Parses a while loop statement.
+     * @returns {WhileLoop} The AST node representing the while loop.
+     */
     parseWhileLoop() {
         const line = this.currentToken().line;
         this.expect("Keyword", "while");
@@ -309,6 +392,11 @@ class Parser {
         return new WhileLoop(condition, body, line);
     }
 
+    /**
+     * @method parseReturnStatement
+     * @description Parses a return statement.
+     * @returns {ReturnStatement} The AST node representing the return statement.
+     */
     parseReturnStatement() {
         const line = this.currentToken().line;
         this.expect("Keyword", "return");
@@ -316,6 +404,11 @@ class Parser {
         return new ReturnStatement(value, line);
     }
 
+    /**
+     * @method parseCondition
+     * @description Parses a condition for control structures.
+     * @returns {Expression} The AST node representing the condition.
+     */
     parseCondition() {
         const line = this.currentToken().line;
         const left = this.consume("Identifier").value;
@@ -343,15 +436,20 @@ class Parser {
         }
     }
 
+    /**
+     * @method parseExpression
+     * @description Parses an expression, potentially with operators.
+     * @returns {Expression|ASTNode} The AST node representing the expression.
+     */
     parseExpression() {
         let left;
         if (
             this.currentToken().type === "Delimiter" &&
             this.currentToken().value === "("
         ) {
-            this.consume("Delimiter"); // consume "("
-            left = this.parseExpression(); // parse the sub-expression
-            this.expect("Delimiter", ")"); // expect ")"
+            this.consume("Delimiter");
+            left = this.parseExpression();
+            this.expect("Delimiter", ")");
         } else {
             left = this.parseValue();
         }
@@ -371,6 +469,11 @@ class Parser {
         return left;
     }
 
+    /**
+     * @method parseValueList
+     * @description Parses a list of values, typically for array initialization.
+     * @returns {Array<ASTNode>} An array of AST nodes representing the values.
+     */
     parseValueList() {
         const values = [];
         values.push(this.parseValue());
@@ -381,22 +484,26 @@ class Parser {
         return values;
     }
 
+    /**
+     * @method parseValue
+     * @description Parses a single value (number, identifier, string).
+     * @returns {ASTNode} The AST node representing the value.
+     * @throws {Error} Throws an error if an unexpected value type is encountered.
+     */
     parseValue() {
         const token = this.currentToken();
 
-        // Handle negative numbers as a unary operator
         if (token.type === "Operator" && token.value === "-") {
             this.consume("Operator");
             const right = this.parseValue();
             return new Expression(
-                new NumberLiteral(0, token.line), // Implicitly represent as 0 - number
+                new NumberLiteral(0, token.line),
                 "-",
                 right,
                 token.line
             );
         }
 
-        // Handle normal numbers and identifiers
         if (token.type === "Number") {
             return new NumberLiteral(this.consume("Number").value, token.line);
         } else if (token.type === "Identifier") {
@@ -417,6 +524,11 @@ class Parser {
         }
     }
 
+    /**
+     * @method parseParameterList
+     * @description Parses a list of parameters for function declarations.
+     * @returns {Array<string>} An array of parameter names.
+     */
     parseParameterList() {
         const params = [];
         while (this.currentToken().type === "Identifier") {
@@ -428,6 +540,11 @@ class Parser {
         return params;
     }
 
+    /**
+     * @method parseArgumentList
+     * @description Parses a list of arguments for function calls.
+     * @returns {Array<ASTNode>} An array of AST nodes representing the arguments.
+     */
     parseArgumentList() {
         const args = [];
         while (
@@ -442,6 +559,13 @@ class Parser {
         return args;
     }
 
+    /**
+     * @method expect
+     * @description Ensures the current token matches the expected type and value, then consumes it.
+     * @param {string} type - The expected token type.
+     * @param {string} value - The expected token value.
+     * @throws {Error} Throws an error if the expected token is not found.
+     */
     expect(type, value) {
         const token = this.currentToken();
         if (
@@ -455,6 +579,13 @@ class Parser {
         this.currentIndex++;
     }
 
+    /**
+     * @method consume
+     * @description Consumes the current token if it matches the expected type.
+     * @param {string} type - The expected token type.
+     * @returns {Object} The consumed token.
+     * @throws {Error} Throws an error if the token type does not match.
+     */
     consume(type) {
         const token = this.currentToken();
         if (token.type !== type) {
@@ -466,6 +597,11 @@ class Parser {
         return token;
     }
 
+    /**
+     * @method currentToken
+     * @description Returns the current token.
+     * @returns {Object} The current token.
+     */
     currentToken() {
         if (this.currentIndex < this.tokens.length) {
             return this.tokens[this.currentIndex];
@@ -474,10 +610,15 @@ class Parser {
                 type: "EOF",
                 value: "EOF",
                 line: this.tokens[this.tokens.length - 1]?.line || 0,
-            }; // End of file token
+            };
         }
     }
 
+    /**
+     * @method peekNextToken
+     * @description Returns the next token without consuming it.
+     * @returns {Object|null} The next token or null if there are no more tokens.
+     */
     peekNextToken() {
         if (this.currentIndex + 1 < this.tokens.length) {
             return this.tokens[this.currentIndex + 1];
