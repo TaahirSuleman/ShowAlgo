@@ -1,14 +1,29 @@
 class Transformer {
+    /**
+     * Transforms the AST to an intermediate representation.
+     * @param {Object} ast - The abstract syntax tree.
+     * @returns {Object} The transformed program.
+     */
     transform(ast) {
         return {
             program: this.transformNodes(ast.body),
         };
     }
 
+    /**
+     * Transforms an array of nodes.
+     * @param {Array} nodes - The array of AST nodes.
+     * @returns {Array} The array of transformed nodes.
+     */
     transformNodes(nodes) {
         return nodes.map((node) => this.transformNode(node));
     }
 
+    /**
+     * Transforms a single node.
+     * @param {Object} node - The AST node.
+     * @returns {Object} The transformed node.
+     */
     transformNode(node) {
         switch (node.type) {
             case "Program":
@@ -77,11 +92,31 @@ class Transformer {
                     value: this.transformExpression(node.value),
                     position: this.transformExpression(node.position).value,
                 };
+            case "NumberLiteral":
+                return {
+                    type: "Literal",
+                    value: node.value,
+                };
+            case "StringLiteral":
+                return {
+                    type: "Literal",
+                    value: node.value,
+                };
+            case "Identifier":
+                return {
+                    type: "Identifier",
+                    value: node.value,
+                };
             default:
                 throw new Error(`Unknown node type: ${node.type}`);
         }
     }
 
+    /**
+     * Transforms a condition node.
+     * @param {Object} condition - The condition node.
+     * @returns {Object} The transformed condition.
+     */
     transformCondition(condition) {
         return {
             left: condition.left,
@@ -90,34 +125,42 @@ class Transformer {
         };
     }
 
+    /**
+     * Transforms an expression node.
+     * @param {Object} expression - The expression node.
+     * @returns {Object} The transformed expression.
+     */
     transformExpression(expression) {
         if (expression.type === "Expression") {
-            let leftExp =
+            const leftExp =
                 expression.left.type === "Expression"
                     ? this.transformExpression(expression.left)
                     : this.transformExpression(expression.left).value;
-            let rightExp =
+            const rightExp =
                 expression.right.type === "Expression"
                     ? this.transformExpression(expression.right)
                     : this.transformExpression(expression.right).value;
-            const result = {
+            return {
                 type: "Expression",
                 left: leftExp,
                 operator: expression.operator,
                 right: rightExp,
             };
-            return result;
         } else if (
             expression.type === "Identifier" ||
             expression.type === "Literal"
         ) {
-            const result = { value: expression.value };
-            return result;
+            return { value: expression.value };
         } else {
             return expression;
         }
     }
 
+    /**
+     * Transforms a return value node.
+     * @param {Object} expression - The expression node.
+     * @returns {Object} The transformed return value.
+     */
     transformReturnValue(expression) {
         if (expression.type === "Expression") {
             return {
@@ -131,6 +174,11 @@ class Transformer {
         }
     }
 
+    /**
+     * Transforms a LoopUntil node.
+     * @param {Object} node - The LoopUntil node.
+     * @returns {Object} The transformed LoopUntil node.
+     */
     transformLoopUntil(node) {
         return {
             type: "LoopUntil",
@@ -139,6 +187,11 @@ class Transformer {
         };
     }
 
+    /**
+     * Transforms a LoopFromTo node.
+     * @param {Object} node - The LoopFromTo node.
+     * @returns {Object} The transformed LoopFromTo node.
+     */
     transformLoopFromTo(node) {
         return {
             type: "LoopFromTo",

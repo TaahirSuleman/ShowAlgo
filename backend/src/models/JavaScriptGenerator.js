@@ -1,9 +1,16 @@
-class JavaScriptGenerator {
+import Converter from "./Converter.js";
+class JavaScriptGenerator extends Converter {
     constructor(ir) {
+        super();
         this.ir = ir;
         this.jsCode = "";
         this.declaredVariables = new Set();
         //this.variables = {};
+    }
+
+    convert(ir) {
+        this.ir = ir;
+        return this.generate();
     }
 
     generate() {

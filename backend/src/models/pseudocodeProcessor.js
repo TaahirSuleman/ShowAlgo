@@ -18,19 +18,19 @@ class PseudocodeProcessor {
 
         const parser = new Parser(tokens);
         const ast = parser.parse();
-        //PseudocodeProcessor.writeToFile("AST: " + JSON.stringify(ast, null, 2));
+        PseudocodeProcessor.writeToFile("AST: " + JSON.stringify(ast, null, 2));
 
         const transformer = new Transformer();
         const ir = transformer.transform(ast);
-        PseudocodeProcessor.writeToFile(
+        /*PseudocodeProcessor.writeToFile(
             "Intermediate Representation: " + JSON.stringify(ir, null, 2)
-        );
+        );*/
 
         const jsonConverter = new JsonConverter();
         const finalJson = jsonConverter.transformToFinalJSON(ir);
-        PseudocodeProcessor.writeToFile(
+        /*PseudocodeProcessor.writeToFile(
             "Final JSON: " + JSON.stringify(finalJson, null, 2)
-        );
+        );*/
 
         return finalJson;
     }

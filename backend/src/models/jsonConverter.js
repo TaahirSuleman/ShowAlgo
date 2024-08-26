@@ -1,9 +1,15 @@
-class JsonConverter {
+import Converter from "./Converter.js";
+class JsonConverter extends Converter {
     constructor() {
+        super();
         this.variables = {};
         this.declaredVariables = new Set();
         this.initializedArrays = new Set();
         this.currentLine = 1;
+    }
+
+    convert(ir) {
+        return this.transformToFinalJSON(ir);
     }
 
     transformToFinalJSON(ir) {

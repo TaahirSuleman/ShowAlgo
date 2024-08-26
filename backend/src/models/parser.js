@@ -1,20 +1,4 @@
-import Program from "./ast/Program.js";
-import VariableDeclaration from "./ast/VariableDeclaration.js";
-import PrintStatement from "./ast/PrintStatement.js";
-import ArrayCreation from "./ast/ArrayCreation.js";
-import ArrayInsertion from "./ast/ArrayInsertion.js";
-import IfStatement from "./ast/IfStatement.js";
-import FunctionDeclaration from "./ast/FunctionDeclaration.js";
-import FunctionCall from "./ast/FunctionCall.js";
-import ForLoop from "./ast/ForLoop.js";
-import WhileLoop from "./ast/WhileLoop.js";
-import ReturnStatement from "./ast/ReturnStatement.js";
-import Expression from "./ast/Expression.js";
-import NumberLiteral from "./ast/NumberLiteral.js";
-import StringLiteral from "./ast/StringLiteral.js";
-import Identifier from "./ast/Identifier.js";
-import LoopUntil from "./ast/LoopUntil.js";
-import LoopFromTo from "./ast/LoopFromTo.js";
+import ASTNodeFactory from "./ASTNodeFactory.js";
 
 /**
  * @class Parser
@@ -28,6 +12,7 @@ class Parser {
     constructor(tokens) {
         this.tokens = tokens;
         this.currentIndex = 0;
+        this.factory = new ASTNodeFactory();
     }
 
     /**
@@ -40,7 +25,7 @@ class Parser {
         while (this.currentIndex < this.tokens.length) {
             body.push(this.parseStatement());
         }
-        return new Program(body);
+        return this.factory.createNode("Program", body);
     }
 
     /**
@@ -103,7 +88,13 @@ class Parser {
         }
         this.expect("Keyword", "to");
         const value = this.parseExpression();
-        return new VariableDeclaration(varName, varType, value, line);
+        return this.factory.createNode(
+            "VariableDeclaration",
+            varName,
+            varType,
+            value,
+            line
+        );
     }
 
     /**
@@ -115,7 +106,7 @@ class Parser {
         const line = this.currentToken().line;
         this.expect("Keyword", "print");
         const value = this.parseExpression();
-        return new PrintStatement(value, line);
+        return this.factory.createNode("PrintStatement", value, line);
     }
 
     /**
@@ -133,7 +124,7 @@ class Parser {
         this.expect("Delimiter", "[");
         const values = this.parseValueList();
         this.expect("Delimiter", "]");
-        return new ArrayCreation(varName, values, line);
+        return this.factory.createNode("ArrayCreation", varName, values, line);
     }
 
     /**
@@ -150,7 +141,13 @@ class Parser {
         this.expect("Keyword", "at");
         this.expect("Keyword", "position");
         const position = this.parseExpression();
-        return new ArrayInsertion(varName, value, position, line);
+        return this.factory.createNode(
+            "ArrayInsertion",
+            varName,
+            value,
+            position,
+            line
+        );
     }
 
     /**
@@ -188,7 +185,13 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "if");
-        return new IfStatement(condition, consequent, alternate, line);
+        return this.factory.createNode(
+            "IfStatement",
+            condition,
+            consequent,
+            alternate,
+            line
+        );
     }
 
     /**
@@ -216,7 +219,13 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "function");
-        return new FunctionDeclaration(name, params, body, line);
+        return this.factory.createNode(
+            "FunctionDeclaration",
+            name,
+            params,
+            body,
+            line
+        );
     }
 
     /**
@@ -232,7 +241,7 @@ class Parser {
         this.expect("Delimiter", "(");
         const args = this.parseArgumentList();
         this.expect("Delimiter", ")");
-        return new FunctionCall(name, args, line);
+        return this.factory.createNode("FunctionCall", name, args, line);
     }
 
     /**
@@ -277,7 +286,13 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "for");
-        return new ForLoop(iterator, collection, body, line);
+        return this.factory.createNode(
+            "ForLoop",
+            iterator,
+            collection,
+            body,
+            line
+        );
     }
 
     /**
@@ -324,7 +339,7 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "loop");
-        return new LoopUntil(condition, body, line);
+        return this.factory.createNode("LoopUntil", condition, body, line);
     }
 
     /**
@@ -346,7 +361,8 @@ class Parser {
         const end = this.parseExpression();
         const body = [];
 
-        const variableDeclarationNode = new VariableDeclaration(
+        const variableDeclarationNode = this.factory.createNode(
+            "VariableDeclaration",
             loopVariable,
             "number",
             start,
@@ -364,7 +380,14 @@ class Parser {
         this.expect("Keyword", "end");
         this.expect("Keyword", "loop");
 
-        const loopNode = new LoopFromTo(loopVariable, start, end, body, line);
+        const loopNode = this.factory.createNode(
+            "LoopFromTo",
+            loopVariable,
+            start,
+            end,
+            body,
+            line
+        );
 
         return variableDeclarationNode, loopNode;
     }
@@ -389,7 +412,7 @@ class Parser {
         }
         this.expect("Keyword", "end");
         this.expect("Keyword", "while");
-        return new WhileLoop(condition, body, line);
+        return this.factory.createNode("WhileLoop", condition, body, line);
     }
 
     /**
@@ -401,7 +424,7 @@ class Parser {
         const line = this.currentToken().line;
         this.expect("Keyword", "return");
         const value = this.parseExpression();
-        return new ReturnStatement(value, line);
+        return this.factory.createNode("ReturnStatement", value, line);
     }
 
     /**
@@ -415,7 +438,13 @@ class Parser {
         if (this.currentToken().type === "ComparisonOperator") {
             const operator = this.consume("ComparisonOperator").value;
             const right = this.parseExpression();
-            return new Expression(left, operator, right, line);
+            return this.factory.createNode(
+                "Expression",
+                left,
+                operator,
+                right,
+                line
+            );
         } else {
             this.expect("Keyword", "is");
             const operator = this.consume("Keyword").value;
@@ -432,7 +461,13 @@ class Parser {
             }
             this.expect("Keyword", "than");
             const right = this.parseExpression();
-            return new Expression(left, operator, right, line);
+            return this.factory.createNode(
+                "Expression",
+                left,
+                operator,
+                right,
+                line
+            );
         }
     }
 
@@ -459,7 +494,8 @@ class Parser {
         ) {
             const operator = this.consume(this.currentToken().type).value;
             const right = this.parseValue();
-            left = new Expression(
+            left = this.factory.createNode(
+                "Expression",
                 left,
                 operator,
                 right,
@@ -496,8 +532,9 @@ class Parser {
         if (token.type === "Operator" && token.value === "-") {
             this.consume("Operator");
             const right = this.parseValue();
-            return new Expression(
-                new NumberLiteral(0, token.line),
+            return this.factory.createNode(
+                "Expression",
+                this.factory.createNode("NumberLiteral", 0, token.line),
                 "-",
                 right,
                 token.line
@@ -505,11 +542,23 @@ class Parser {
         }
 
         if (token.type === "Number") {
-            return new NumberLiteral(this.consume("Number").value, token.line);
+            return this.factory.createNode(
+                "NumberLiteral",
+                this.consume("Number").value,
+                token.line
+            );
         } else if (token.type === "Identifier") {
-            return new Identifier(this.consume("Identifier").value, token.line);
+            return this.factory.createNode(
+                "Identifier",
+                this.consume("Identifier").value,
+                token.line
+            );
         } else if (token.type === "String") {
-            return new StringLiteral(this.consume("String").value, token.line);
+            return this.factory.createNode(
+                "StringLiteral",
+                this.consume("String").value,
+                token.line
+            );
         } else if (
             token.type === "Keyword" &&
             (token.value.toLowerCase() === "number" ||
