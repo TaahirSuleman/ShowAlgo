@@ -55,6 +55,7 @@ function testUserCode(userSPLCode, testCases) {
       const passed = actualOutput === expectedOutput;
       results.push({
         testCase: index + 1,
+        inputs,
         passed,
         actualOutput,
         expectedOutput,
@@ -63,6 +64,7 @@ function testUserCode(userSPLCode, testCases) {
       // If there's an error in execution, mark the test case as failed
       results.push({
         testCase: index + 1,
+        inputs,
         passed: false,
         error: error.message,
       });
@@ -91,23 +93,5 @@ function testUserCode(userSPLCode, testCases) {
     test_results: results
   };
 }
-
-// // Example usage with dummy data matching your schema
-// const exampleUserCode = `DEFINE addNumsWIth5 WITH PARAMETERS (a, b)
-//     SET x to a + b
-//     SET y to x + 5
-//     RETURN y
-// END FUNCTION
-// `;
-
-// const testCases = [
-//   { inputs: ["1", "2"], output: "8" },
-//   { inputs: ["5", "5"], output: "15" },
-//   { inputs: ["-1", "1"], output: "0" },
-// ];
-
-// const testResults = testUserCode(exampleUserCode, testCases);
-
-// console.log(testResults);
 
 export default testUserCode;

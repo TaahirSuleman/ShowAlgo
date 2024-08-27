@@ -503,6 +503,14 @@ function AdminLevel() {
                         <AccordionIcon />
                       </AccordionButton>
                       <AccordionPanel pb={4}>
+                      {result.inputs.length > 1 ? (
+                          <Text fontWeight="normal">
+                            Input:{" "}
+                            {Array.isArray(result.inputs)
+                              ? result.inputs.join(", ")
+                              : result.inputs}
+                          </Text>
+                        ) : null}
                         <Text fontWeight="normal">
                           Expected: {result.expectedOutput}
                         </Text>
