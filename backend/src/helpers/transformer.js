@@ -1,4 +1,10 @@
+import NodeTransformerFactory from "./NodeTransformerFactory.js";
+
 class Transformer {
+    constructor() {
+        this.factory = new NodeTransformerFactory();
+    }
+
     /**
      * Transforms the AST to an intermediate representation.
      * @param {Object} ast - The abstract syntax tree.
@@ -25,91 +31,7 @@ class Transformer {
      * @returns {Object} The transformed node.
      */
     transformNode(node) {
-        switch (node.type) {
-            case "Program":
-                return {
-                    program: this.transformNodes(node.body),
-                };
-            case "FunctionDeclaration":
-                return {
-                    type: "FunctionDeclaration",
-                    name: node.name,
-                    params: node.params,
-                    body: this.transformNodes(node.body),
-                };
-            case "VariableDeclaration":
-                return {
-                    type: "VariableDeclaration",
-                    name: node.varName,
-                    value: this.transformExpression(node.value),
-                };
-            case "PrintStatement":
-                return {
-                    type: "PrintStatement",
-                    value: this.transformExpression(node.value).value,
-                };
-            case "IfStatement":
-                return {
-                    type: "IfStatement",
-                    condition: this.transformCondition(node.condition),
-                    consequent: this.transformNodes(node.consequent),
-                    alternate: node.alternate
-                        ? this.transformNodes(node.alternate)
-                        : null,
-                };
-            case "ForLoop":
-                return {
-                    type: "ForLoop",
-                    iterator: node.iterator,
-                    collection: node.collection,
-                    body: this.transformNodes(node.body),
-                };
-            case "WhileLoop":
-                return {
-                    type: "WhileLoop",
-                    condition: this.transformCondition(node.condition),
-                    body: this.transformNodes(node.body),
-                };
-            case "LoopUntil":
-                return this.transformLoopUntil(node);
-            case "LoopFromTo":
-                return this.transformLoopFromTo(node);
-            case "ReturnStatement":
-                return {
-                    type: "ReturnStatement",
-                    value: this.transformReturnValue(node.value),
-                };
-            case "ArrayCreation":
-                return {
-                    type: "ArrayCreation",
-                    varName: node.varName,
-                    values: node.values,
-                };
-            case "ArrayInsertion":
-                return {
-                    type: "ArrayInsertion",
-                    varName: node.varName,
-                    value: this.transformExpression(node.value),
-                    position: this.transformExpression(node.position).value,
-                };
-            case "NumberLiteral":
-                return {
-                    type: "Literal",
-                    value: node.value,
-                };
-            case "StringLiteral":
-                return {
-                    type: "Literal",
-                    value: node.value,
-                };
-            case "Identifier":
-                return {
-                    type: "Identifier",
-                    value: node.value,
-                };
-            default:
-                throw new Error(`Unknown node type: ${node.type}`);
-        }
+        return this.factory.createTransformedNode(node.type, this, node);
     }
 
     /**
@@ -118,10 +40,17 @@ class Transformer {
      * @returns {Object} The transformed condition.
      */
     transformCondition(condition) {
+        // Ensure we handle both UnaryExpression and Expression types
+        const rightTransformed = this.transformExpression(condition.right);
+
         return {
             left: condition.left,
             operator: condition.operator,
-            right: this.transformExpression(condition.right).value,
+            right:
+                rightTransformed.type === "UnaryExpression" ||
+                rightTransformed.type === "Expression"
+                    ? rightTransformed
+                    : rightTransformed.value,
         };
     }
 
@@ -132,14 +61,26 @@ class Transformer {
      */
     transformExpression(expression) {
         if (expression.type === "Expression") {
+            // Handle unary expressions by delegating to the appropriate function
+            if (expression.left === null && expression.operator === "not") {
+                return this.transformUnaryExpression(expression);
+            }
+
+            // Handle binary expressions
             const leftExp =
-                expression.left.type === "Expression"
+                expression.left && expression.left.type === "Expression"
                     ? this.transformExpression(expression.left)
-                    : this.transformExpression(expression.left).value;
+                    : expression.left
+                    ? expression.left.value || expression.left
+                    : null;
+
             const rightExp =
-                expression.right.type === "Expression"
+                expression.right && expression.right.type === "Expression"
                     ? this.transformExpression(expression.right)
-                    : this.transformExpression(expression.right).value;
+                    : expression.right
+                    ? expression.right.value || expression.right
+                    : null;
+
             return {
                 type: "Expression",
                 left: leftExp,
@@ -154,6 +95,24 @@ class Transformer {
         } else {
             return expression;
         }
+    }
+
+    /**
+     * Transforms a unary expression node.
+     * @param {Object} expression - The unary expression node.
+     * @returns {Object} The transformed unary expression.
+     */
+    transformUnaryExpression(expression) {
+        const rightExp =
+            expression.right.type === "Expression"
+                ? this.transformExpression(expression.right)
+                : expression.right.value || expression.right;
+
+        return {
+            type: "UnaryExpression",
+            operator: expression.operator,
+            argument: rightExp,
+        };
     }
 
     /**

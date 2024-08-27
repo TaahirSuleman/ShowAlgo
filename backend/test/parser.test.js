@@ -2,13 +2,51 @@ import { expect } from "chai";
 import Tokenizer from "../src/helpers/tokenizer.js";
 import Parser from "../src/models/parser.js";
 
-describe("Tokenizer and Parser", () => {
+describe("Parser", () => {
     function tokenizeAndParse(pseudocode) {
         const tokenizer = new Tokenizer(pseudocode);
         const tokens = tokenizer.tokenize();
         const parser = new Parser(tokens);
         return parser.parse();
     }
+
+    it("should handle complex boolean logic correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue OR (isFalse AND NOT isTrue) THEN 
+                PRINT "Complex Condition Met" 
+            OTHERWISE 
+                PRINT "Complex Condition Not Met" 
+            END IF
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(3);
+
+        const ifStatement = ast.body[2];
+        expect(ifStatement.type).to.equal("IfStatement");
+        expect(ifStatement.condition.left).to.equal("isTrue");
+        expect(ifStatement.condition.operator).to.equal("or");
+
+        const innerCondition = ifStatement.condition.right;
+        expect(innerCondition.left).to.equal("isFalse");
+        expect(innerCondition.operator).to.equal("and");
+        expect(innerCondition.right.operator).to.equal("not");
+        expect(innerCondition.right.right.value).to.equal("isTrue");
+
+        expect(ifStatement.consequent).to.have.lengthOf(1);
+        const consequentPrint = ifStatement.consequent[0];
+        expect(consequentPrint.type).to.equal("PrintStatement");
+        expect(consequentPrint.value.value).to.equal("Complex Condition Met");
+
+        expect(ifStatement.alternate).to.have.lengthOf(1);
+        const alternatePrint = ifStatement.alternate[0];
+        expect(alternatePrint.type).to.equal("PrintStatement");
+        expect(alternatePrint.value.value).to.equal(
+            "Complex Condition Not Met"
+        );
+        expect(ifStatement.line).to.equal(4);
+    });
 
     it("should tokenize and parse function definitions correctly", () => {
         const pseudocode = `DEFINE add_numbers WITH PARAMETERS (a, b)

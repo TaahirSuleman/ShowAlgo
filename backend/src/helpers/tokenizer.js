@@ -2,9 +2,11 @@ import {
     KeywordStrategy,
     NumberStrategy,
     StringStrategy,
+    BooleanStrategy,
     DelimiterStrategy,
     OperatorStrategy,
     ComparisonOperatorStrategy,
+    LogicalOperatorStrategy,
 } from "./TokenizationStrategies.js";
 
 /**
@@ -31,9 +33,11 @@ class Tokenizer {
             letter: new KeywordStrategy(),
             digit: new NumberStrategy(),
             string: new StringStrategy(),
+            boolean: new BooleanStrategy(),
             delimiter: new DelimiterStrategy(),
             operator: new OperatorStrategy(),
             comparisonOperator: new ComparisonOperatorStrategy(),
+            logicalOperator: new LogicalOperatorStrategy(),
         };
     }
 
@@ -49,7 +53,15 @@ class Tokenizer {
             if (this.isWhitespace(char)) {
                 this.consumeWhitespace();
             } else if (this.isLetter(char)) {
-                tokens.push(this.strategies.letter.apply(this));
+                const lookahead = this.peekNextWord().toLowerCase();
+                if (lookahead === "true" || lookahead === "false") {
+                    tokens.push(this.strategies.boolean.apply(this));
+                } else if (["and", "or", "not"].includes(lookahead)) {
+                    // Check for logical operators
+                    tokens.push(this.strategies.logicalOperator.apply(this)); // Use the new strategy
+                } else {
+                    tokens.push(this.strategies.letter.apply(this));
+                }
             } else if (this.isDigit(char)) {
                 tokens.push(this.strategies.digit.apply(this));
             } else if (char === '"') {
@@ -259,6 +271,35 @@ class Tokenizer {
             this.currentIndex++;
         }
         throw new Error(`Unexpected end of string at line ${this.line}`);
+    }
+
+    /**
+     * Consumes a boolean literal from the pseudocode.
+     * @returns {Object} The token representing the boolean literal.
+     */
+    consumeBoolean() {
+        const startIndex = this.currentIndex;
+        let value = "";
+
+        while (
+            this.currentIndex < this.pseudocode.length &&
+            this.isLetter(this.pseudocode[this.currentIndex])
+        ) {
+            value += this.pseudocode[this.currentIndex];
+            this.currentIndex++;
+        }
+
+        if (value.toLowerCase() === "true" || value.toLowerCase() === "false") {
+            return {
+                type: "Boolean",
+                value: value.toLowerCase(),
+                line: this.line,
+            };
+        } else {
+            // Reset the index if it's not a boolean literal and let other strategies handle it
+            this.currentIndex = startIndex;
+            return this.consumeIdentifierOrKeyword();
+        }
     }
 
     /**

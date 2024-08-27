@@ -434,10 +434,85 @@ class Parser {
      */
     parseCondition() {
         const line = this.currentToken().line;
-        const left = this.consume("Identifier").value;
+        let left;
+
+        // Handle NOT operator at the start of the condition
+        if (
+            this.currentToken().type === "LogicalOperator" &&
+            this.currentToken().value.toLowerCase() === "not"
+        ) {
+            const operator = this.consume("LogicalOperator").value;
+            const right = this.parseValue();
+            return this.factory.createNode(
+                "Expression",
+                null,
+                operator,
+                right,
+                line
+            );
+        }
+
+        // Parse the left side of the condition
+        if (
+            this.currentToken().type === "Delimiter" &&
+            this.currentToken().value === "("
+        ) {
+            this.consume("Delimiter");
+            left = this.parseCondition(); // Recursively parse the inner condition
+            this.expect("Delimiter", ")");
+        } else {
+            left = this.consume("Identifier").value;
+        }
+
         if (this.currentToken().type === "ComparisonOperator") {
             const operator = this.consume("ComparisonOperator").value;
             const right = this.parseExpression();
+            return this.factory.createNode(
+                "Expression",
+                left,
+                operator,
+                right,
+                line
+            );
+        } else if (this.currentToken().type === "LogicalOperator") {
+            const operator = this.consume("LogicalOperator").value;
+
+            // Specific case: handle "NOT" after a logical operator
+            if (
+                operator.toLowerCase() !== "not" &&
+                this.currentToken().type === "LogicalOperator" &&
+                this.currentToken().value.toLowerCase() === "not"
+            ) {
+                const notOperator = this.consume("LogicalOperator").value;
+                const right = this.parseValue();
+                const notExpression = this.factory.createNode(
+                    "Expression",
+                    null,
+                    notOperator,
+                    right,
+                    line
+                );
+                return this.factory.createNode(
+                    "Expression",
+                    left,
+                    operator,
+                    notExpression,
+                    line
+                );
+            }
+
+            let right;
+            if (
+                this.currentToken().type === "Delimiter" &&
+                this.currentToken().value === "("
+            ) {
+                this.consume("Delimiter");
+                right = this.parseCondition(); // Recursively parse the inner condition
+                this.expect("Delimiter", ")");
+            } else {
+                right = this.parseExpression();
+            }
+
             return this.factory.createNode(
                 "Expression",
                 left,
@@ -478,6 +553,7 @@ class Parser {
      */
     parseExpression() {
         let left;
+
         if (
             this.currentToken().type === "Delimiter" &&
             this.currentToken().value === "("
@@ -488,12 +564,24 @@ class Parser {
         } else {
             left = this.parseValue();
         }
+
         while (
             this.currentToken().type === "Operator" ||
-            this.currentToken().type === "ComparisonOperator"
+            this.currentToken().type === "ComparisonOperator" ||
+            this.currentToken().type === "LogicalOperator" // Handle logical operators
         ) {
             const operator = this.consume(this.currentToken().type).value;
-            const right = this.parseValue();
+            let right;
+
+            if (
+                this.currentToken().type === "Delimiter" &&
+                this.currentToken().value === "("
+            ) {
+                right = this.parseExpression();
+            } else {
+                right = this.parseValue();
+            }
+
             left = this.factory.createNode(
                 "Expression",
                 left,
@@ -502,6 +590,7 @@ class Parser {
                 this.currentToken().line
             );
         }
+
         return left;
     }
 
@@ -557,6 +646,12 @@ class Parser {
             return this.factory.createNode(
                 "StringLiteral",
                 this.consume("String").value,
+                token.line
+            );
+        } else if (token.type === "Boolean") {
+            return this.factory.createNode(
+                "BooleanLiteral",
+                this.consume("Boolean").value,
                 token.line
             );
         } else if (

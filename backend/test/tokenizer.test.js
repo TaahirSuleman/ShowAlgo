@@ -7,6 +7,114 @@ describe("Tokenizer", () => {
         return tokenizer.tokenize();
     }
 
+    it("should tokenize mixed logical operators correctly", () => {
+        const input = `
+            SET isTrue TO true
+            IF isTrue AND NOT isFalse THEN 
+                PRINT "Correct" 
+            OTHERWISE 
+                PRINT "Incorrect" 
+            END IF
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "isTrue", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Boolean", value: "true", line: 2 },
+            { type: "Keyword", value: "if", line: 3 },
+            { type: "Identifier", value: "isTrue", line: 3 },
+            { type: "LogicalOperator", value: "and", line: 3 },
+            { type: "LogicalOperator", value: "not", line: 3 },
+            { type: "Identifier", value: "isFalse", line: 3 },
+            { type: "Keyword", value: "then", line: 3 },
+            { type: "Keyword", value: "print", line: 4 },
+            { type: "String", value: "Correct", line: 4 },
+            { type: "Keyword", value: "otherwise", line: 5 },
+            { type: "Keyword", value: "print", line: 6 },
+            { type: "String", value: "Incorrect", line: 6 },
+            { type: "Keyword", value: "end", line: 7 },
+            { type: "Keyword", value: "if", line: 7 },
+        ]);
+    });
+
+    it("should tokenize boolean literals correctly", () => {
+        const input = "SET isTrue TO true\nSET isFalse TO false";
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "isTrue", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Boolean", value: "true", line: 1 },
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "isFalse", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Boolean", value: "false", line: 2 },
+        ]);
+    });
+
+    it("should tokenize boolean expressions correctly", () => {
+        const input = `
+            SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue AND isFalse THEN PRINT "Both are booleans" END IF
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "isTrue", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Boolean", value: "true", line: 2 },
+            { type: "Keyword", value: "set", line: 3 },
+            { type: "Identifier", value: "isFalse", line: 3 },
+            { type: "Keyword", value: "to", line: 3 },
+            { type: "Boolean", value: "false", line: 3 },
+            { type: "Keyword", value: "if", line: 4 },
+            { type: "Identifier", value: "isTrue", line: 4 },
+            { type: "LogicalOperator", value: "and", line: 4 },
+            { type: "Identifier", value: "isFalse", line: 4 },
+            { type: "Keyword", value: "then", line: 4 },
+            { type: "Keyword", value: "print", line: 4 },
+            { type: "String", value: "Both are booleans", line: 4 },
+            { type: "Keyword", value: "end", line: 4 },
+            { type: "Keyword", value: "if", line: 4 },
+        ]);
+    });
+
+    it("should tokenize NOT operator correctly", () => {
+        const input = `
+            SET isTrue TO true
+            IF NOT isTrue THEN PRINT "isTrue is false" END IF
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "isTrue", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Boolean", value: "true", line: 2 },
+            { type: "Keyword", value: "if", line: 3 },
+            { type: "LogicalOperator", value: "not", line: 3 },
+            { type: "Identifier", value: "isTrue", line: 3 },
+            { type: "Keyword", value: "then", line: 3 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "String", value: "isTrue is false", line: 3 },
+            { type: "Keyword", value: "end", line: 3 },
+            { type: "Keyword", value: "if", line: 3 },
+        ]);
+    });
+    it("should tokenize boolean comparisons correctly", () => {
+        const input = "SET result TO isTrue = false";
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "result", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Identifier", value: "isTrue", line: 1 },
+            { type: "ComparisonOperator", value: "=", line: 1 },
+            { type: "Boolean", value: "false", line: 1 },
+        ]);
+    });
+
     it("should tokenize keywords correctly", () => {
         const input = "SET x TO 10";
         const tokens = tokenize(input);

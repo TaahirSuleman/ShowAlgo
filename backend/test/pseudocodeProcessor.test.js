@@ -7,6 +7,482 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should process complex boolean logic correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue OR (isFalse AND NOT isTrue) THEN 
+                PRINT "Complex Condition Met" 
+            OTHERWISE 
+                PRINT "Complex Condition Not Met" 
+            END IF
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: undefined,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "isFalse",
+                    type: "boolean",
+                    value: false,
+                    timestamp: undefined,
+                    description: "Set variable isFalse to false.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: {
+                        left: "isTrue",
+                        operator: "or",
+                        right: {
+                            left: "isFalse",
+                            operator: "and",
+                            right: {
+                                operator: "not",
+                                right: "isTrue",
+                            },
+                        },
+                    },
+                    result: true, // Assuming the condition evaluates to true
+                    timestamp: undefined,
+                    description:
+                        "Checked if complex boolean condition is true.",
+                },
+                {
+                    line: 5,
+                    operation: "print",
+                    isLiteral: true,
+                    varName: null,
+                    literal: "Complex Condition Met",
+                    timestamp: undefined,
+                    description: "Printed 'Complex Condition Met'.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        // Update timestamps in expectedJson to match those in the result
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should handle boolean expressions with mixed operators correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue AND NOT isFalse THEN 
+                PRINT "Correct" 
+            OTHERWISE 
+                PRINT "Incorrect" 
+            END IF
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: undefined,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "isFalse",
+                    type: "boolean",
+                    value: false,
+                    timestamp: undefined,
+                    description: "Set variable isFalse to false.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: {
+                        left: "isTrue",
+                        operator: "and",
+                        right: {
+                            left: null,
+                            operator: "not",
+                            right: "isFalse",
+                        },
+                    },
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if isTrue and not isFalse is true.",
+                },
+                {
+                    line: 5,
+                    operation: "print",
+                    isLiteral: true,
+                    varName: null,
+                    literal: "Correct",
+                    timestamp: undefined,
+                    description: "Printed 'Correct'.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should process arithmetic with negative numbers", () => {
+        const pseudocode = `
+        SET a to number -5
+        SET b to a + 10
+        SET c to b * -2
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "a",
+                    type: "number",
+                    value: -5,
+                    timestamp: undefined,
+                    description: "Set variable a to -5.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "b",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable b to a + 10.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "c",
+                    type: "number",
+                    value: -10,
+                    timestamp: undefined,
+                    description: "Set variable c to b * -2.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process boolean comparisons correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET result TO isTrue === false
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: undefined,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "result",
+                    type: "boolean",
+                    value: false,
+                    timestamp: undefined,
+                    description:
+                        "Set variable result to the result of isTrue = false.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should process setting a variable to a boolean", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: undefined,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "isFalse",
+                    type: "boolean",
+                    value: false,
+                    timestamp: undefined,
+                    description: "Set variable isFalse to false.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process boolean expressions correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue AND isFalse THEN PRINT "Both are booleans" END IF
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: undefined,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "isFalse",
+                    type: "boolean",
+                    value: false,
+                    timestamp: undefined,
+                    description: "Set variable isFalse to false.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: {
+                        left: "isTrue",
+                        operator: "and",
+                        right: "isFalse",
+                    },
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if isTrue and isFalse is true.",
+                },
+                {
+                    line: 4,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process NOT operator correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            IF NOT isTrue THEN PRINT "isTrue is false" END IF
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: undefined,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: {
+                        left: null,
+                        operator: "not",
+                        right: "isTrue",
+                    },
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if not isTrue is true.",
+                },
+                {
+                    line: 3,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process setting a variable to a string and print it", () => {
+        writeTestNumber(1);
+
+        const pseudocode = `
+        SET myVar TO "Hello, World!"
+        PRINT myVar
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "myVar",
+                    type: "string",
+                    value: "Hello, World!",
+                    timestamp: undefined,
+                    description: "Set variable myVar to Hello, World!.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "myVar",
+                    literal: "Hello, World!",
+                    timestamp: undefined,
+                    description: "Printed myVar.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it.skip("should process setting a variable to a boolean and using it in a conditional", () => {
+        writeTestNumber(2);
+
+        const pseudocode = `
+        SET isTrue TO true
+        IF isTrue THEN
+            PRINT "Boolean is true"
+        OTHERWISE
+            PRINT "Boolean is false"
+        END IF
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: undefined,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "isTrue",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if isTrue is true.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: true,
+                    varName: null,
+                    literal: "Boolean is true",
+                    timestamp: undefined,
+                    description: "Printed 'Boolean is true'.",
+                },
+                {
+                    line: 6,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
     it("should process a function declaration pseudocode and convert it to the final JSON format", () => {
         const pseudocode = `
         DEFINE add_numbers WITH PARAMETERS (a, b)
@@ -2980,54 +3456,6 @@ describe("PseudocodeProcessor", () => {
                     value: Infinity,
                     timestamp: undefined,
                     description: "Set variable y to x / 0.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process arithmetic with negative numbers", () => {
-        const pseudocode = `
-        SET a to number -5
-        SET b to a + 10
-        SET c to b * -2
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "a",
-                    type: "number",
-                    value: -5,
-                    timestamp: undefined,
-                    description: "Set variable a to -5.",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "b",
-                    type: "number",
-                    value: 5,
-                    timestamp: undefined,
-                    description: "Set variable b to a + 10.",
-                },
-                {
-                    line: 3,
-                    operation: "set",
-                    varName: "c",
-                    type: "number",
-                    value: -10,
-                    timestamp: undefined,
-                    description: "Set variable c to b * -2.",
                 },
             ],
         };

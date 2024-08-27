@@ -512,4 +512,412 @@ describe("Transformer", () => {
         const result = transformer.transform(ast);
         expect(result).to.deep.equal(expectedIR);
     });
+
+    it("should transform boolean literals correctly", () => {
+        const ast = new Program([
+            new VariableDeclaration("isTrue", null, {
+                type: "BooleanLiteral",
+                value: "true",
+                line: 2,
+            }),
+            new VariableDeclaration("isFalse", null, {
+                type: "BooleanLiteral",
+                value: "false",
+                line: 3,
+            }),
+        ]);
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "true",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "isFalse",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "false",
+                        line: 3,
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should transform boolean expressions correctly", () => {
+        const ast = new Program([
+            new VariableDeclaration("isTrue", null, {
+                type: "BooleanLiteral",
+                value: "true",
+                line: 2,
+            }),
+            new VariableDeclaration("isFalse", null, {
+                type: "BooleanLiteral",
+                value: "false",
+                line: 3,
+            }),
+            new IfStatement(
+                new Expression("isTrue", "and", {
+                    type: "Identifier",
+                    value: "isFalse",
+                    line: 4,
+                }),
+                [
+                    new PrintStatement({
+                        type: "StringLiteral",
+                        value: "Both are booleans",
+                        line: 4,
+                    }),
+                ],
+                null
+            ),
+        ]);
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "true",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "isFalse",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "false",
+                        line: 3,
+                    },
+                },
+                {
+                    type: "IfStatement",
+                    condition: {
+                        left: "isTrue",
+                        operator: "and",
+                        right: "isFalse",
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: "Both are booleans",
+                        },
+                    ],
+                    alternate: null,
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should transform NOT operator correctly", () => {
+        const ast = new Program([
+            new VariableDeclaration("isTrue", null, {
+                type: "BooleanLiteral",
+                value: "true",
+                line: 2,
+            }),
+            new IfStatement(
+                new Expression(null, "not", {
+                    type: "Identifier",
+                    value: "isTrue",
+                    line: 3,
+                }),
+                [
+                    new PrintStatement({
+                        type: "StringLiteral",
+                        value: "isTrue is false",
+                        line: 3,
+                    }),
+                ],
+                null
+            ),
+        ]);
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "true",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "IfStatement",
+                    condition: {
+                        left: null,
+                        operator: "not",
+                        right: "isTrue",
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: "isTrue is false",
+                        },
+                    ],
+                    alternate: null,
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should transform boolean comparisons correctly", () => {
+        const ast = new Program([
+            new VariableDeclaration("isTrue", null, {
+                type: "BooleanLiteral",
+                value: "true",
+                line: 2,
+            }),
+            new VariableDeclaration(
+                "result",
+                null,
+                new Expression("isTrue", "=", {
+                    type: "BooleanLiteral",
+                    value: "false",
+                    line: 3,
+                })
+            ),
+        ]);
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "true",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "result",
+                    value: {
+                        type: "Expression",
+                        left: "isTrue",
+                        operator: "=",
+                        right: "false",
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should handle boolean expressions with mixed operators correctly", () => {
+        const ast = new Program([
+            new VariableDeclaration("isTrue", null, {
+                type: "BooleanLiteral",
+                value: "true",
+                line: 2,
+            }),
+            new VariableDeclaration("isFalse", null, {
+                type: "BooleanLiteral",
+                value: "false",
+                line: 3,
+            }),
+            new IfStatement(
+                new Expression(
+                    "isTrue",
+                    "and",
+                    new Expression(null, "not", {
+                        type: "Identifier",
+                        value: "isFalse",
+                        line: 4,
+                    })
+                ),
+                [
+                    new PrintStatement({
+                        type: "StringLiteral",
+                        value: "Correct",
+                        line: 5,
+                    }),
+                ],
+                [
+                    new PrintStatement({
+                        type: "StringLiteral",
+                        value: "Incorrect",
+                        line: 7,
+                    }),
+                ]
+            ),
+        ]);
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "true",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "isFalse",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "false",
+                        line: 3,
+                    },
+                },
+                {
+                    type: "IfStatement",
+                    condition: {
+                        left: "isTrue",
+                        operator: "and",
+                        right: {
+                            type: "UnaryExpression",
+                            operator: "not",
+                            argument: "isFalse",
+                        },
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: "Correct",
+                        },
+                    ],
+                    alternate: [
+                        {
+                            type: "PrintStatement",
+                            value: "Incorrect",
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+    it("should handle complex boolean logic correctly", () => {
+        const ast = new Program([
+            new VariableDeclaration("isTrue", null, {
+                type: "BooleanLiteral",
+                value: "true",
+                line: 2,
+            }),
+            new VariableDeclaration("isFalse", null, {
+                type: "BooleanLiteral",
+                value: "false",
+                line: 3,
+            }),
+            new IfStatement(
+                new Expression(
+                    "isTrue",
+                    "or",
+                    new Expression(
+                        "isFalse",
+                        "and",
+                        new Expression(
+                            null,
+                            "not",
+                            {
+                                type: "Identifier",
+                                value: "isTrue",
+                                line: 4,
+                            },
+                            4
+                        )
+                    )
+                ),
+                [
+                    new PrintStatement({
+                        type: "StringLiteral",
+                        value: "Complex Condition Met",
+                        line: 5,
+                    }),
+                ],
+                [
+                    new PrintStatement({
+                        type: "StringLiteral",
+                        value: "Complex Condition Not Met",
+                        line: 7,
+                    }),
+                ]
+            ),
+        ]);
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "true",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "isFalse",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: "false",
+                        line: 3,
+                    },
+                },
+                {
+                    type: "IfStatement",
+                    condition: {
+                        left: "isTrue",
+                        operator: "or",
+                        right: {
+                            type: "Expression",
+                            left: "isFalse",
+                            operator: "and",
+                            right: {
+                                type: "UnaryExpression",
+                                operator: "not",
+                                argument: "isTrue",
+                            },
+                        },
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: "Complex Condition Met",
+                        },
+                    ],
+                    alternate: [
+                        {
+                            type: "PrintStatement",
+                            value: "Complex Condition Not Met",
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
 });

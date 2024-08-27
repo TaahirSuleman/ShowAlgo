@@ -68,7 +68,7 @@ class JsonConverter extends Converter {
         const buildExpressionString = (expr) => {
             if (expr.type === "Expression") {
                 // Check if this is a subtraction from zero (negative number)
-                if (expr.operator === "-" && expr.left === 0) {
+                if (expr.operator === "-" && expr.left.value === 0) {
                     return `-${buildExpressionString(expr.right)}`;
                 } else {
                     return `(${buildExpressionString(expr.left)} ${
@@ -85,7 +85,6 @@ class JsonConverter extends Converter {
             node.value.type === "Expression"
                 ? buildExpressionString(node.value)
                 : String(value);
-
         // Remove outer parentheses for top-level expression
         if (
             typeof returnVal === "string" &&
@@ -94,7 +93,6 @@ class JsonConverter extends Converter {
         ) {
             returnVal = returnVal.slice(1, -1);
         }
-
         return {
             line: node.line,
             operation: "set",
@@ -135,7 +133,7 @@ class JsonConverter extends Converter {
     }
 
     transformPrintStatement(node) {
-        console.log("Print vars " + this.variables["i"]);
+        //console.log("Print vars " + this.variables["i"]);
         const value = node.value;
         const isLiteral = !this.declaredVariables.has(value);
         return {
@@ -224,7 +222,7 @@ class JsonConverter extends Converter {
         };
     }
     transformGenericLoop(node, loopType, conditionString) {
-        console.log(conditionString);
+        //console.log(conditionString);
         const loopLine = node.line;
         const actionFrames = [
             {
@@ -240,7 +238,7 @@ class JsonConverter extends Converter {
         ];
 
         // Debugging: Print the initial condition
-        console.log(`Initial condition for ${loopType}:`, node.condition);
+        //console.log(`Initial condition for ${loopType}:`, node.condition);
         let bodyLineStart = node.line; // Line where loop body starts
         let bodyLineCount = 0; // Track the number of lines in the loop body
 
@@ -250,8 +248,8 @@ class JsonConverter extends Converter {
             let z = 0;
             this.currentLine = node.line + 1;
             if (this.variables["x"] == 0) {
-                console.log("TRUE!");
-                console.log(this.variables);
+                //console.log("TRUE!");
+                //(this.variables);
                 z += 1;
             }
             actionFrames.push({
@@ -300,7 +298,7 @@ class JsonConverter extends Converter {
             timestamp: new Date().toISOString(),
             description: `End of ${loopType.replace("_", " ")} loop`,
         });
-        console.log(this.currentLine);
+        //console.log(this.currentLine);
         return actionFrames;
     }
 
@@ -397,7 +395,7 @@ class JsonConverter extends Converter {
     }
 
     transformLoopFromTo(node) {
-        console.log(this.currentLine);
+        //console.log(this.currentLine);
         const startValue = this.convertValue(node.range.start);
         const endValue = this.convertValue(node.range.end);
         const loopVariable = node.loopVariable;
@@ -418,7 +416,7 @@ class JsonConverter extends Converter {
         this.declaredVariables.add(loopVariable);
         // Generate the condition string for the loop
         const conditionString = `${loopVariable} <= ${endValue}`;
-        console.log("end val " + endValue);
+        //console.log("end val " + endValue);
         // Set the node.condition to the associated condition
         node.condition = {
             left: loopVariable,
@@ -475,7 +473,7 @@ class JsonConverter extends Converter {
             ? this.variables[condition.right]
             : parseFloat(condition.right);
         if (this.variables[condition.left] == 0) console.log(left);
-        console.log(right);
+        //console.log(right);
         const operatorsMap = {
             greater: ">",
             less: "<",
