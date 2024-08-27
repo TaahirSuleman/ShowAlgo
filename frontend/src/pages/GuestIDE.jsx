@@ -145,7 +145,7 @@ function GuestIDE() {
         pauseState={pauseState}
         setPauseState={setPauseState}
         bufferState={bufferState}
-        key={key}
+        keyValue={key}
         isClearLoading={isClearLoading}
         isClearOutputLoading={isClearOutputLoading}
         setIsClearOutputLoading={setIsClearOutputLoading}
