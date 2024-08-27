@@ -48,12 +48,13 @@ function IDEComponent({
   pauseState,
   setPauseState,
   bufferState,
-  key,
+  keyValue,
   isClearLoading,
   isClearOutputLoading,
   setIsClearLoading,
   setIsClearOutputLoading,
   defaultValue,
+  level = false,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
@@ -72,7 +73,7 @@ function IDEComponent({
   const clearCode = () => {
     setIsClearLoading(true);
     setTimeout(() => {
-      setValue("");
+      level ? setValue(defaultValue) : setValue("");
       setIsClearLoading(false);
     }, 1000);
   };
@@ -310,7 +311,7 @@ function IDEComponent({
           width={{ base: "94dvw", md: "55dvw" }}
         >
           <MainVisualisationWindow
-            key={key}
+            key={keyValue}
             movementsState={movementsState}
             output={output}
             setOutput={setOutput}
