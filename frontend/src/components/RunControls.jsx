@@ -65,7 +65,7 @@ function RunControls({
       setIsRunning(true)
       const timeout = setTimeout(() => {
         runCode();
-      }, speedState + 2000 + 1000);
+      }, speedState*1000 +500);
       return () => timeout;
     } else {
       console.log("FROM THE BENINGING")
