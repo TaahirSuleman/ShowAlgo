@@ -28,24 +28,31 @@ const CustomToast = ({ title, description, duration, onClose }) => {
       />
       <Box
         bg="blueviolet"
+        border="4px solid white"
         color="white"
-        p={6}
-        borderRadius="lg"
-        boxShadow="2xl"
+        p={[4, 6, 8]}
+        borderRadius={15}
+        boxShadow="lg white"
         textAlign="center"
-        maxW="sm"
+        width="50dvw"
         mx="auto"
       >
-        <Text fontWeight="extrabold" fontSize="2xl" mb={2}>
+        <CloseButton
+          position="absolute"
+          top="10px"
+          right="10px"
+          onClick={onClose}
+        />
+        <Text fontWeight="extrabold" fontSize={["lg", "3xl", "4xl"]} mb={2}>
           🎉 Congratulations! 🎉
         </Text>
-        <Text fontWeight="bold" fontSize="lg">
+        <Text fontWeight="bold" fontSize={["md", "lg", "xl"]}>
           {title}
         </Text>
-        <Text mt={2} fontSize="md">
+        <Text mt={2} fontSize={["sm", "md", "lg"]}>
           {description}
         </Text>
-        <Text mt={4} fontSize="lg" fontStyle="italic">
+        <Text mt={4} fontSize={["md", "lg", "xl"]} fontStyle="italic">
           Keep up the great work and continue to shine! 🌟
         </Text>
       </Box>

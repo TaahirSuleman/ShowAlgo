@@ -59,6 +59,7 @@ import MainVisualisationWindow from "../components/MainVisualisationWindow";
 import DocumentationComponent from "../components/DocumentationComponent";
 
 function AdminLevel() {
+  const toast = useToast();
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -82,7 +83,6 @@ function AdminLevel() {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
   const [testResults, setTestResults] = useState([]);
-  const [testResultsLoading, setTestResultsLoading] = useState(false);
 
   // level states
   const [showHints, setShowHints] = useState(false);
@@ -425,7 +425,6 @@ function AdminLevel() {
 
   const checkTestCases = async (code, cases) => {
     try {
-      setTestResultsLoading(true);
       console.log("code:", code);
       console.log("cases:", cases);
       const response = await axios.post("/test-code", {
@@ -446,8 +445,6 @@ function AdminLevel() {
         duration: 2500,
         isClosable: true,
       });
-    } finally {
-      setTestResultsLoading(false);
     }
   };
 
@@ -501,13 +498,46 @@ function AdminLevel() {
     }
   };
 
-  const submitCode = () => {
-    setIsSubmitLoading(true);
+  const submitCode = async () => {
     setSubmitClicked(true);
-    setTimeout(() => {
-      checkTestCases(value, level.test_cases);
+
+    try {
+      let response = await axios.post(
+        "http://localhost:8000/api/pseudocode/run",
+        { code: value }
+      );
+
+      console.log(response);
+
+      if (response.status === 200) {
+        setIsSubmitLoading(true);
+        setTimeout(() => {
+          checkTestCases(value, level.test_cases);
+          setIsSubmitLoading(false);
+        }, 2000);
+      } else {
+        setIsSubmitLoading(false);
+        setTestResults([]);
+        toast({
+          title: "Code Execution Failed",
+          description: "The code did not pass the execution.",
+          status: "error",
+          duration: 2500,
+          isClosable: true,
+        });
+      }
+    } catch (error) {
+      setTestResults([]);
+      console.error("Failed to run code:", error);
+      toast({
+        title: "Error running code",
+        description: "Failed to run code",
+        status: "error",
+        duration: 2500,
+        isClosable: true,
+      });
       setIsSubmitLoading(false);
-    }, 2000);
+    }
   };
 
   return (

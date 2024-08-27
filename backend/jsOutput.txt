@@ -706,3 +706,215 @@ Final JavaScript: 'use strict';
 function HelloWorld() {
 return "Hello, World!";
 }
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "a" + "b";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "a" + "b";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hell, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "YES";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
+Final JavaScript: 'use strict';
+function HelloWorld() {
+return "Hello, World!";
+}
