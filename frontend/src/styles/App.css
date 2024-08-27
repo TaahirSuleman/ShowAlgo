@@ -4,7 +4,7 @@
   display: flex;
   margin: 0;
   border-radius: 3px;
-  border: 1px solid red;
+  border: 1px solid #9AE6B4;
   margin-bottom: 2px;
   justify-content: left;
   align-items: center;
@@ -35,7 +35,7 @@
 }
 .square {
   flex: 1; /* Allow the blocks to grow and shrink evenly */
-  background-color: blue;
+  background-color: #1A365D;
   display: flex;
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
@@ -44,6 +44,8 @@
   min-width: 30px; /* Optional: Set a minimum width for each block */
   height: 80px; /* Set a fixed height for the blocks */
   box-sizing: border-box; /* Include border in the element's width and height */
+  font-weight: bold;
+  border-radius: 2px;
 }
 
 .inBlockText {
@@ -62,14 +64,6 @@
   max-width: 100%; /* Ensure it doesn't exceed the parent container width */
   padding: 10px; /* Optional: Add some padding for aesthetics */
   box-sizing: border-box;
-}
-
-.array-block {
-  width: 50px; /* Ensure consistent width */
-  height: 50px; /* Ensure consistent height */
-  margin: 0; /* Ensure no margin */
-  padding: 0; /* Ensure no padding */
-  border: 1px solid red; /* For visual debugging */
 }
 
 .variables-container {
