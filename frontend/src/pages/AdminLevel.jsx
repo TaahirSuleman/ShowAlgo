@@ -57,9 +57,12 @@ import { IoMdHome } from "react-icons/io";
 import RunControls from "../components/RunControls";
 import MainVisualisationWindow from "../components/MainVisualisationWindow";
 import DocumentationComponent from "../components/DocumentationComponent";
+import IDEComponent from "../components/IDEComponent";
+import CustomToast from "../components/CustomToast";
 
 function AdminLevel() {
   const toast = useToast();
+  const [customToast, setCustomToast] = useState(false);
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -80,6 +83,7 @@ function AdminLevel() {
   const [savedIndexState, setSavedIndexState] = useState(-1);
   const [bufferState, setBufferState] = useState(false);
   const [key, setKey] = useState(0);
+  const [killState, setKillState] = useState(-2);
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
   const [testResults, setTestResults] = useState([]);
@@ -133,173 +137,18 @@ function AdminLevel() {
 
   // IDE functions
 
-  useEffect(() => {
-    setMovementsState([
-      {
-        line: 1,
-        operation: "if",
-        condition: "x > 5",
-        result: true,
-        timestamp: "2024-07-09T12:02:00Z",
-        description: "Checked if x is greater than 5.",
-      },
-      {
-        line: 2,
-        operation: "print",
-        isLiteral: true,
-        varName: null,
-        literal: "x is greater than 5",
-        timestamp: "2024-07-09T12:03:00Z",
-        description: "Printed 'x is greater than 5'.",
-      },
-      {
-        line: 3,
-        operation: "else",
-        timestamp: "2024-07-09T12:04:00Z",
-        description: "Else block not executed as condition was true.",
-      },
-      {
-        line: 6,
-        operation: "set",
-        varName: "x",
-        type: "number",
-        value: 10,
-        timestamp: "2024-07-09T12:01:00Z",
-        description: "Set variable x to number 10.",
-      },
-      {
-        line: 7,
-        operation: "create",
-        dataStructure: "array",
-        value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-        length: 9,
-        id: "abcd",
-        type: "int",
-        varName: "nums",
-        timestamp: "2024-07-09T12:01:00Z",
-        description:
-          "Created an array named nums with initial values [1, 2, 3, 4].",
-      },
-      {
-        line: 8,
-        operation: "create",
-        dataStructure: "array",
-        value: ["a", "b", "c", "d", "e", "f", "g"],
-        type: "string",
-        varName: "letters",
-        timestamp: "2024-07-09T12:01:00Z",
-        description:
-          "Created an array named letters with initial values [a,b,c,d,e,f,g].",
-      },
-      {
-        line: 9,
-        operation: "remove",
-        dataStructure: "array",
-        id: "abcd",
-        varName: "nums",
-        positionToRemove: 2,
-        description: "Removed value at position 2 in array nums",
-      },
-      {
-        line: 10,
-        operation: "remove",
-        dataStructure: "array",
-        id: "abcd",
-        varName: "letters",
-        positionToRemove: 4,
-        description: "Removed value at position 4 in array letters",
-      },
-      {
-        line: 11,
-        operation: "add",
-        dataStructure: "array",
-        value: 5,
-        varName: "nums",
-        position: 4,
-        timestamp: "2024-07-09T12:02:00Z",
-        description: "Inserted value 5 at position 4 in array nums.",
-      },
-      {
-        line: 12,
-        operation: "create",
-        dataStructure: "array",
-        value: ["g", "a", "n", "g", "s", "t", "a"],
-        length: 7,
-        id: "abcd",
-        type: "string",
-        varName: "gansterlicious",
-        timestamp: "2024-07-09T12:01:00Z",
-        description:
-          "Created an array named letters with initial values [a,b,c,d,e,f,g].",
-      },
-      {
-        line: 13,
-        operation: "add",
-        dataStructure: "array",
-        value: "z",
-        varName: "letters",
-        position: 0,
-        timestamp: "2024-07-09T12:02:00Z",
-        description: "Inserted value 'z' at position 0 in array nums.",
-      },
-      {
-        line: 14,
-        operation: "swap",
-        dataStructure: "array",
-        firstPosition: 1,
-        secondPosition: 3,
-        varName: "nums",
-        description: "Swapped values in position 1 and 3 in array nums.",
-      },
-      {
-        line: 15,
-        operation: "swap",
-        dataStructure: "array",
-        firstPosition: 1,
-        secondPosition: 3,
-        varName: "letters",
-        description: "Swapped values in position 1 and 3 in array letters.",
-      },
-      {
-        line: 16,
-        operation: "set",
-        varName: "wordString",
-        type: "string",
-        value: "Hello World",
-        timestamp: "2024-07-09T12:01:00Z",
-        description: "Set variable y to string 'Wagwan World'.",
-      },
-      {
-        line: 17,
-        operation: "set",
-        varName: "z",
-        type: "boolean",
-        value: "true",
-        timestamp: "2024-07-09T12:01:00Z",
-        description: "Set variable z to boolean true.",
-      },
-      {
-        line: 18,
-        operation: "set",
-        varName: "wordString",
-        type: "string",
-        value: "Hello Again World",
-        timestamp: "2024-07-09T12:01:00Z",
-        description: "Set variable y to string 'Hello Again World'.",
-      },
-    ]);
-  }, []);
-
-  // very long sample text
-
   const pauseAnimation = () => {
     setPauseState(!pauseState);
   };
 
   const runCode = async () => {
     setIsRunLoading(true); // To show loading state on the button
-    const code = value; // Get code from the editor
+    let code = value; // Get code from the editor
+    //setMovementsState(actionFrames);
+    // setIndexState(0);
+    // setHighlightState(true);
     console.log(code);
+    console.log("I oath im ran");
     try {
       let response = await axios.post(
         "http://localhost:8000/api/pseudocode/run",
@@ -307,8 +156,10 @@ function AdminLevel() {
       );
       console.log(response.data.result);
       let actionFrames = response.data.result.actionFrames;
+      setKillState(actionFrames.length);
       //setOutput(response.data.result); // Assuming the response has the execution result
       setMovementsState(actionFrames);
+      setOutput((prev) => [...prev, `colourYellow__RUN STARTING.`]);
       setIndexState(0);
       setHighlightState(true);
     } catch (error) {
@@ -325,6 +176,10 @@ function AdminLevel() {
       setHighlightState(false);
       setKey((prevKey) => prevKey + 1);
       setPauseState(false);
+      setOutput((prev) => [
+        ...prev,
+        `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
+      ]);
     }, speedState + 2000);
     return () => timeoutSetKey;
   };
@@ -677,13 +532,38 @@ function AdminLevel() {
             setPauseState={setPauseState}
             speedState={speedState}
             setSpeedState={setSpeedState}
+            killState={killState}
+            indexState={indexState}
+            setOutput={setOutput}
             submitButton={true}
             isSubmitLoading={isSubmitLoading}
             submitCode={submitCode}
           />
         </Box>
 
-        <Grid
+        <IDEComponent
+          value={value}
+          defaultValue={level.starter_code}
+          setValue={setValue}
+          output={output}
+          setOutput={setOutput}
+          speedState={speedState}
+          movementsState={movementsState}
+          highlightState={highlightState}
+          setHighlightState={setHighlightState}
+          indexState={indexState}
+          setIndexState={setIndexState}
+          pauseState={pauseState}
+          setPauseState={setPauseState}
+          bufferState={bufferState}
+          key={key}
+          isClearLoading={isClearLoading}
+          isClearOutputLoading={isClearOutputLoading}
+          setIsClearOutputLoading={setIsClearOutputLoading}
+          setIsClearLoading={setIsClearLoading}
+        />
+
+        {/* <Grid
           templateColumns={gridTemplateColumns}
           templateRows={gridTemplateRows}
           gap={4}
@@ -918,8 +798,17 @@ function AdminLevel() {
               ></MainVisualisationWindow>
             </Box>
           </GridItem>
-        </Grid>
+        </Grid> */}
       </Box>
+
+      {customToast && (
+        <CustomToast
+          title={customToast.title}
+          description={customToast.description}
+          duration={customToast.duration}
+          onClose={() => setCustomToast(null)}
+        />
+      )}
     </Box>
   );
 }
