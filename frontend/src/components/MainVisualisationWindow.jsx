@@ -29,7 +29,7 @@ function MainVisualisationWindow({
         const performOperations = () => {
             if (indexState > -1 && indexState < movementsState.length && !pauseState) {
                 const movement = movementsState[indexState];
-                if (movement.operation === "create") {
+                if (movement.operation === "create_array") {
                     const valuesArr = movement.value.map((value, i) =>
                         `${movement.varName}++${value}-${i}`
                     );

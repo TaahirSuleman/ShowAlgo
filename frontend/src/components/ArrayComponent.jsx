@@ -227,7 +227,7 @@ function ArrayComponent(
     }
     return (
       <div style={{display: 'flex', flexDirection:'column'}}>
-      <p>{arrayName}</p>
+      <p style={{fontWeight: "bold", fontSize: "larger"}}>{arrayName}</p>
         <motion.div className="array-container">
           {values.map((value, index) => {
             return (

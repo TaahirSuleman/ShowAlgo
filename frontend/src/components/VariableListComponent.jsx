@@ -73,7 +73,7 @@ function VariableListComponent({
         return(
         <div className="variables-container" style={{width:"300px"}}>
             <ul className="ul-variables">
-                <li style={{backgroundColor: "hsla(120, 50%, 20%, 1)"}} className="list-items">
+                <li style={{backgroundColor: "#276749"}} className="list-items">
                     <p>VARIABLES WILL APPEAR HERE</p>
                 </li>
             </ul>
@@ -87,8 +87,8 @@ function VariableListComponent({
           <motion.li className="list-items"
             layout
             key={variable.name + counter}
-            style={{ borderRadius: updating === variable.name ? "8px": "3px",
-                     border: updating === variable.name ? "5px solid black": "1px solid red"
+            style={{ borderRadius: updating === variable.name ? "8px": "5px",
+                     border: updating === variable.name ? "5px solid black": "2px solid #9AE6B4"
              }}
             animate={updating === variable.name ? { backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
             transition={{ duration: speedState }}
