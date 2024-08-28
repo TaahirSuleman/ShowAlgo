@@ -107,7 +107,7 @@ function IDE() {
         ...prev,
         `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
       ]);
-    }, speedState + 2000);
+    }, speedState*1000 + 1000);
     return () => timeoutSetKey;
   };
 
@@ -145,7 +145,7 @@ function IDE() {
         pauseState={pauseState}
         setPauseState={setPauseState}
         bufferState={bufferState}
-        key={key}
+        keyValue={key}
         isClearLoading={isClearLoading}
         isClearOutputLoading={isClearOutputLoading}
         setIsClearOutputLoading={setIsClearOutputLoading}

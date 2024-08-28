@@ -9,14 +9,11 @@
   justify-content: left;
   align-items: center;
   margin-right: 10px;
-  width: 300px;
+  width: 200px;
   height: fit-content;
   font-weight: bold; /* This makes the text bold */
   font-family: 'Arial', sans-serif;
   white-space: normal;
-  word-wrap: break-word; /* Ensures long words break and wrap */
-  overflow-wrap: break-word; /* Same as word-wrap, for more consistency */
-  word-break: break-all; /* Breaks long words at arbitrary points */
 }
 
 .ul-variables {
@@ -27,7 +24,7 @@
   padding: 0; /* Optional: remove default padding */
   margin: 0; /* Optional: remove default margin */
   text-align: left; /* Ensure text is left-aligned */
-  width:300px;
+  width:200px;
 }
 
 .App {
@@ -97,24 +94,17 @@
 }
 
 .notification-blurb {
-  background: white;
-  width: 300px;
-  height: 230px;
+  flex: 1;
+  width: 215px;
+  max-width: 215px;
+  min-height: 200px;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-}
-
-.notification-blurb[data-ischecking="green"] {
-  height: 200px;
-  border-radius: 50px;
-}
-
-.notification-blurb[data-ischecking="red"] {
-  height: 200px;
-  border-radius: 50px;
+  border: 2px solid #E2E8F0;
 }
 
 .if-vis-window {
@@ -177,21 +167,15 @@
 .loop-notification {
   flex: 1; /* Take less space than IfVisualisationComponent */
   padding: 10px;
+  width: 215px;
+  max-width:215px;
   border-radius: 10px;
-  border: 1px solid #ccc;
+  border: 2px solid #E2E8F0;
   text-align: center;
   align-content: center;
   white-space: normal;
   box-sizing: border-box;
-}
-
-.loop-title {
-  font-size: 24px; /* Large font size */
-  font-weight: bold; /* Bold text */
-  margin-bottom: 10px; /* Space between title and the rest */
-  color: #333; /* Text color */
-  align-items: center; /* Align text to the left */
-  justify-content: center; /* Center vertically */
+  background-color: #2D3748;
 }
 
 .IfVisualisationComponent {

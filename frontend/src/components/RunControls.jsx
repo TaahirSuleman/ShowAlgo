@@ -33,7 +33,9 @@ function RunControls({
   setSpeedState,
   killState,
   indexState,
-  setOutput
+  setOutput,
+  setHighlightState,
+  isRestarting
 }) {
   const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState(1);
@@ -44,6 +46,7 @@ function RunControls({
     if (killState === indexState){
       setIsRunning(false)
       setIsFinished(true)
+      setHighlightState(false)
       setOutput((prev) => [...prev, `colourYellow__RUN COMPLETE.`]);
     }
     console.log("kill "+killState)
@@ -55,10 +58,10 @@ function RunControls({
 
 
   const handleRunStop = async () => {
-    if (isRunning) {
+    if (isRunning) { // Stopping in the middle of an animation
       stopCode();
       console.log("RAW STOP")
-    } else if (isFinished) {
+    } else if (isFinished) { // Basically restarting after a run has completed.
       console.log("FINISHED STOP AND START")
       stopCode();
       setIsFinished(false);
@@ -67,7 +70,7 @@ function RunControls({
         runCode();
       }, speedState*1000 + 1000);
       return () => timeout;
-    } else {
+    } else { // The first start for the application.
       console.log("FROM THE BENINGING")
       runCode();
     }
@@ -96,7 +99,7 @@ function RunControls({
           colorScheme={isRunning ? "red" : "green" }
           isDisabled={value === ""}
           onClick={handleRunStop}
-          isLoading={isRunLoading}
+          isLoading={isRunLoading || isRestarting}
           width="100%"
           height="33px"
         >
@@ -109,7 +112,7 @@ function RunControls({
         <Button
           variant="outline"
           colorScheme={pauseState ? "green" : "red"}
-          isDisabled={value === ""}
+          isDisabled={indexState < -1 || indexState >= killState}
           onClick={handlePauseResume}
           width="100%"
           height="33px"

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, useForceUpdate } from 'framer-motion';
 import '../styles/App.css'
 
@@ -17,6 +17,7 @@ function VariableListComponent({
     let [updating, setUpdating] = useState("");
     let [variablesState, setVariablesState] = useState([]);
     const [counter, setCounter] = useState(0);
+    const varRef = useRef();
 
     const delay = ms  => new Promise(res => setTimeout(res, ms));
 
@@ -24,6 +25,7 @@ function VariableListComponent({
       const performOperations = () => {
       if (indexState > -1 && indexState < movements.length && !pauseState){
           if (movements[indexState].operation == "set"){
+              varRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
               updateVariablesState(movements[indexState].type, movements[indexState].value, movements[indexState].varName);
               setOutput((prev) => {return [...prev, movements[indexState].description]});
               const timeoutId2 = setTimeout(() => {
@@ -33,6 +35,7 @@ function VariableListComponent({
           }
 
           else if (movements[indexState].operation == "get"){
+            varRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             arraysState.forEach((currentValue) => {
               if (currentValue.name == movements[indexState].varName){
                 updateVariablesState(movements[indexState].type, (currentValue.values)[movements[indexState].index].substring((currentValue.values)[movements[indexState].index].indexOf("++")+2,(currentValue.values)[movements[indexState].index].indexOf("-")), movements[indexState].setName);
@@ -71,9 +74,9 @@ function VariableListComponent({
 
     if (variablesState.length == 0){
         return(
-        <div className="variables-container" style={{width:"300px"}}>
+        <div className="variables-container" style={{width:"200px"}} ref={varRef}>
             <ul className="ul-variables">
-                <li style={{backgroundColor: "#276749"}} className="list-items">
+                <li style={{backgroundColor: "#276749",textAlign:"center"}} className="list-items">
                     <p>VARIABLES WILL APPEAR HERE</p>
                 </li>
             </ul>
@@ -81,19 +84,20 @@ function VariableListComponent({
         )
     }
     return(
-        <div className="variables-container">
+        <div className="variables-container" ref={varRef}>
       <ul className="ul-variables">
         {variablesState.map((variable) => (
           <motion.li className="list-items"
             layout
             key={variable.name + counter}
-            style={{ borderRadius: updating === variable.name ? "8px": "5px",
-                     border: updating === variable.name ? "5px solid black": "2px solid #9AE6B4"
+            style={{ borderRadius: updating === variable.name ? "7px": "5px",
+                     border: updating === variable.name ? "4px solid rgba(0, 0, 0, 0.80)": "2px solid #9AE6B4",
+                     wordWrap: 'break-word', overflowWrap: 'break-word', wordBreak: 'break-all'
              }}
-            animate={updating === variable.name ? { backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
+            animate={updating === variable.name ? { color: ['white', 'rgba(0, 0, 0, 0.80)', 'rgba(0, 0, 0, 0.80)'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {color: ['white', 'white', 'white'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
             transition={{ duration: speedState }}
           >
-            <p>{"(" + variable.type + ") " + variable.name + " = " + variable.value}</p>
+            <p style={{fontSize: '13px'}}>{"(" + variable.type + ") " + variable.name + " = " + variable.value}</p>
           </motion.li>
         ))}
       </ul>

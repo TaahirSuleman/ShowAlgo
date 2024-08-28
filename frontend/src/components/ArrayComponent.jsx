@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/App.css'
 import ArrayBlockComponent from './ArrayBlockComponent';
@@ -26,11 +26,12 @@ function ArrayComponent(
   const [swappedState, setSwappedState] = useState(["",""])
   const [changedState, setChangedState] = useState("")
   const [gotState, setGotState] = useState("")
+  const arrayRef = useRef();
 
   
 
   useEffect(() => {
-    const operations = ["get","swap","add","remove","setArr"]
+    const operations = ["get","swap","add","remove","setArr","create_array","swapped"]
     const performOperations = () => {
       if (indexState > -1 && indexState < movements.length && !pauseState) {
         //console.log(movements[indexState].varName + " _________ " +arrayName)
@@ -39,8 +40,18 @@ function ArrayComponent(
           return;
         }
         switch (movements[indexState].operation){
-
+          case "swapped":
+            arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            break;
+            //Should scroll to center of array instead of to swapping element. Would be inefficient in most cases to focus on either one of the two blocks being swapped.
+            //as in most use cases, the arrays will not be large enough for that to be an issue.
+          case "create_array":
+            arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            console.log("whoop whoop")
+            break;
+            // No index incremention here. Done in mainvisualisationwindow
           case "swap":
+            //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             console.log("Its a swap");
             let prevValues = [...values];
             if (movements[indexState].firstPosition && movements[indexState].secondPosition){
@@ -68,6 +79,7 @@ function ArrayComponent(
             break;
 
           case "add":
+           // arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             addToArray(movements[indexState].value, movements[indexState].position);
             setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId2 = setTimeout(()=> {
@@ -78,6 +90,7 @@ function ArrayComponent(
             break;
 
           case "remove":
+           // arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             removeFromArray((movements[indexState].positionToRemove))
             setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId3 = setTimeout(()=> {
@@ -88,6 +101,7 @@ function ArrayComponent(
             break;
 
             case "get":
+              //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
               setGotState(values[movements[indexState].index]);
               console.log(values[movements[indexState].index] + " This is the got state ")
               setOutput((prev) => {return [...prev, movements[indexState].description]});
@@ -100,11 +114,11 @@ function ArrayComponent(
               break;
 
             case "setArr":
+              //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
               setValueInArray(movements[indexState].setValue, movements[indexState].index)
               console.log(values[movements[indexState].index] + " This is the changed state ")
               setOutput((prev) => {return [...prev, movements[indexState].description]});
               const timeoutId5 = setTimeout(()=> {
-
                 setChangedState("")
                 setIndexState((i)=>{return i+1})
               }, speedState*1000) // This controls the time between POPPING and the next movement.
@@ -226,7 +240,7 @@ function ArrayComponent(
       )
     }
     return (
-      <div style={{display: 'flex', flexDirection:'column'}}>
+      <div ref={arrayRef} style={{display: 'flex', flexDirection:'column'}}>
       <p style={{fontWeight: "bold", fontSize: "larger"}}>{arrayName}</p>
         <motion.div className="array-container">
           {values.map((value, index) => {

@@ -48,7 +48,7 @@ function IDEComponent({
   pauseState,
   setPauseState,
   bufferState,
-  key,
+  keyValue,
   isClearLoading,
   isClearOutputLoading,
   setIsClearLoading,
@@ -310,7 +310,7 @@ function IDEComponent({
           width={{ base: "94dvw", md: "55dvw" }}
         >
           <MainVisualisationWindow
-            key={key}
+            key={keyValue}
             movementsState={movementsState}
             output={output}
             setOutput={setOutput}
