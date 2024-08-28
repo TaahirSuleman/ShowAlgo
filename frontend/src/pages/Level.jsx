@@ -388,8 +388,12 @@ function Level() {
   };
 
   const findError = (e) => {
-    let errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
-
+    let errorLine = 0;
+    try {
+      errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+    } catch (error) {
+      errorLine = 0;
+    }
     const newErrorData = {
       error: e.error,
       message: e.message,

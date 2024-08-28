@@ -76,9 +76,13 @@ function GuestIDE() {
   };
 
   const findError = (e) => {
-    
-    let errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
-    
+    let errorLine = 0;
+    try {
+      errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+    } catch (error) {
+      errorLine = 0;
+    }
+
     const newErrorData = {
       error: e.error,
       message: e.message,
@@ -99,7 +103,7 @@ function GuestIDE() {
       duration: 3000,
       isClosable: true,
     });
-  }
+  };
 
   const runCode = async () => {
     setIsRunLoading(true); // To show loading state on the button
@@ -182,7 +186,6 @@ function GuestIDE() {
         setIsClearLoading={setIsClearLoading}
         isError={isError}
       />
-
     </Box>
   );
 }

@@ -93,7 +93,6 @@ function AdminLevel() {
     errorLine: 0,
   });
 
-
   // level states
   const [showHints, setShowHints] = useState(false);
   const [showTestCaseStatus, setShowTestCaseStatus] = useState(false);
@@ -360,7 +359,12 @@ function AdminLevel() {
   };
 
   const findError = (e) => {
-    let errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+    let errorLine = 0;
+    try {
+      errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+    } catch (error) {
+      errorLine = 0;
+    }
 
     const newErrorData = {
       error: e.error,
@@ -530,7 +534,7 @@ function AdminLevel() {
                         <AccordionIcon />
                       </AccordionButton>
                       <AccordionPanel pb={4}>
-                      {result.inputs.length > 1 ? (
+                        {result.inputs.length > 1 ? (
                           <Text fontWeight="normal">
                             Input:{" "}
                             {Array.isArray(result.inputs)
