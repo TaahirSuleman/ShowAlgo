@@ -87,6 +87,12 @@ function AdminLevel() {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
   const [testResults, setTestResults] = useState([]);
+  const [errorData, setErrorData] = useState({
+    error: "",
+    message: "",
+    errorLine: 0,
+  });
+
 
   // level states
   const [showHints, setShowHints] = useState(false);
@@ -353,6 +359,31 @@ function AdminLevel() {
     }
   };
 
+  const findError = (e) => {
+    let errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+
+    const newErrorData = {
+      error: e.error,
+      message: e.message,
+      errorLine: errorLine,
+    };
+    setErrorData(newErrorData);
+    console.log(newErrorData);
+
+    setOutput((prev) => [
+      ...prev,
+      `colourRed__ERROR: ${newErrorData.message}. ${newErrorData.error}`,
+    ]);
+
+    toast({
+      title: `${newErrorData.message}`,
+      description: `${newErrorData.error}`,
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   const submitCode = async () => {
     setSubmitClicked(true);
 
@@ -365,6 +396,7 @@ function AdminLevel() {
       console.log(response);
 
       if (response.status === 200) {
+        setIsError(false);
         setIsSubmitLoading(true);
         setTimeout(() => {
           checkTestCases(value, level.test_cases);
@@ -384,13 +416,8 @@ function AdminLevel() {
     } catch (error) {
       setTestResults([]);
       console.error("Failed to run code:", error);
-      toast({
-        title: "Error running code",
-        description: "Failed to run code",
-        status: "error",
-        duration: 2500,
-        isClosable: true,
-      });
+      setIsError(true); // Handle error state
+      findError(error.response.data);
       setIsSubmitLoading(false);
     }
   };
@@ -570,6 +597,7 @@ function AdminLevel() {
           setIsClearOutputLoading={setIsClearOutputLoading}
           setIsClearLoading={setIsClearLoading}
           level={true}
+          isError={isError}
         />
       </Box>
 

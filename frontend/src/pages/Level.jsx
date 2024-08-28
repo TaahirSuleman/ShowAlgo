@@ -82,6 +82,11 @@ function Level() {
   const [bufferState, setBufferState] = useState(false);
   const [key, setKey] = useState(0);
   const [killState, setKillState] = useState(-2);
+  const [errorData, setErrorData] = useState({
+    error: "",
+    message: "",
+    errorLine: 0,
+  });
 
   // level states
   const toast = useToast();
@@ -180,7 +185,7 @@ function Level() {
         if (testResults.status === "success") {
           // Show appropriate toast message
           setCustomToast({
-            title: isFirstTime ? "Level Completed!" : "Level Re-completed!",
+            title: isFirstTime ? "Level Completed!" : "Level Completed Again!",
             description: isFirstTime
               ? "Congratulations on completing this level for the first time!"
               : "You've successfully completed this level again!",
@@ -251,45 +256,6 @@ function Level() {
     }, speedState + 2000);
     return () => timeoutSetKey;
   };
-
-  // const handleClearClick = () => {
-  //   setIsClearDialogOpen(true);
-  // };
-
-  // const handleClearConfirm = () => {
-  //   setIsClearDialogOpen(false);
-  //   clearCode();
-  // };
-
-  // const handleClearCancel = () => {
-  //   setIsClearDialogOpen(false);
-  // };
-
-  // const clearCode = () => {
-  //   setIsClearLoading(true);
-  //   setTimeout(() => {
-  //     setValue(level.starter_code);
-  //     setIsClearLoading(false);
-  //   }, 1000);
-  // };
-
-  // // const clearOutput = () => {
-  // //   setIsClearOutputLoading(true);
-  // //   setTimeout(() => {
-  // //     setOutput([]);
-  // //     setIsClearOutputLoading(false);
-  // //   }, 1000);
-  // // };
-
-  // const gridTemplateColumns = useBreakpointValue({
-  //   base: "1fr", // Single column layout for small screens
-  //   md: "1fr 1fr", // Two columns layout for medium and larger screens
-  // });
-
-  // const gridTemplateRows = useBreakpointValue({
-  //   base: "auto", // Single row layout for small screens
-  //   md: "1fr 1fr", // Two rows layout for medium and larger screens
-  // });
 
   // Level functions
   useEffect(() => {
@@ -421,6 +387,31 @@ function Level() {
     }
   };
 
+  const findError = (e) => {
+    let errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+
+    const newErrorData = {
+      error: e.error,
+      message: e.message,
+      errorLine: errorLine,
+    };
+    setErrorData(newErrorData);
+    console.log(newErrorData);
+
+    setOutput((prev) => [
+      ...prev,
+      `colourRed__ERROR: ${newErrorData.message}. ${newErrorData.error}`,
+    ]);
+
+    toast({
+      title: `${newErrorData.message}`,
+      description: `${newErrorData.error}`,
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   const submitCode = async () => {
     setSubmitClicked(true);
 
@@ -433,6 +424,7 @@ function Level() {
       console.log(response);
 
       if (response.status === 200) {
+        setIsError(false);
         setIsSubmitLoading(true);
         setTimeout(() => {
           checkTestCases(value, level.test_cases);
@@ -452,13 +444,8 @@ function Level() {
     } catch (error) {
       setTestResults([]);
       console.error("Failed to run code:", error);
-      toast({
-        title: "Error running code",
-        description: "Failed to run code",
-        status: "error",
-        duration: 2500,
-        isClosable: true,
-      });
+      setIsError(true); // Handle error state
+      findError(error.response.data);
       setIsSubmitLoading(false);
     }
   };
@@ -638,6 +625,7 @@ function Level() {
           setIsClearOutputLoading={setIsClearOutputLoading}
           setIsClearLoading={setIsClearLoading}
           level={true}
+          isError={isError}
         />
       </Box>
 
