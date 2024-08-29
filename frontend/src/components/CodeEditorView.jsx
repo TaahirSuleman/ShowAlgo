@@ -25,22 +25,655 @@ const CodeEditorView = ({
 
   useEffect(() => {
     if (monaco) {
+      // Register and define your custom language
+      monaco.languages.register({ id: "customLanguage" });
+
+      monaco.languages.setMonarchTokensProvider("customLanguage", {
+        tokenizer: {
+          root: [
+            // Explicitly define case-insensitive keywords
+            [/\bset\b|\bSET\b/i, "keyword"],
+            [/".*?"/, "string"], // String literals
+            [/\bto\b|\bTO\b|\bup\b|\bUP\b/i, "keyword"],
+            [
+              /\bnumber\b|\bNUMBER\b|\bstring\b|\bSTRING\b|\bboolean\b|\bBOOLEAN\b/i,
+              "type",
+            ],
+            [
+              /\bcreate\b|\bCREATE\b|\bas\b|\bAS\b|\bwith\b|\bWITH\b|\badd\b|\bADD\b|\binsert\b|\bINSERT\b|\bdelete\b|\bDELETE\b|\bremove\b|\bREMOVE\b|\binto\b|\bINTO\b|\bfrom\b|\bFROM\b|\barray\b|\bARRAY\b|\blinkedlist\b|\bLINKEDLIST\b|\breturn\b|\bRETURN\b|\bvalues\b|\bVALUES\b/i,
+              "keyword.methods",
+            ],
+            [
+              /\bif\b|\bIF\b|\bIS\b|\bis\b|\bequal\b|\bEQUAL\b|\bgreater\b|\bGREATER\b|\bless\b|\bLESS\b|\bthan\b|\bTHAN\b|\bthen\b|\bTHEN\b|\botherwise\b|\bOTHERWISE\b|\bend\s*if\b|\bEND\s*IF\b|\bswitch\b|\bSWITCH\b|\bcase\b|\bCASE\b|\bend switch\b|\bEND SWITCH\b/i,
+              "keyword.control",
+            ],
+            [
+              /\bloop\b|\bLOOP\b|\buntil\b|\bUNTIL\b|\bend\s*loop\b|\bEND\s*LOOP\b|\bfor each\b|\bFOR EACH\b|\bin\b|\bIN\b/i,
+              "keyword.control",
+            ],
+            [/\btrue\b|\bTRUE\b|\bfalse\b|\bFALSE\b/i, "keyword.boolean"],
+            [
+              /\band\b|\bAND\b|\bor\b|\bOR\b|\bnot\b|\bNOT\b/i,
+              "keyword.operator",
+            ],
+            [
+              /\bdefine\b|\bDEFINE\b|\bparameters\b|\bPARAMETERS\b|\bend\s*function\b|\bEND\s*FUNCTION\b/i,
+              "keyword.function",
+            ],
+            [/\bsize\b|\bSIZE\b/i, "keyword"],
+            [/\bprint\b|\bPRINT\b|\bdisplay\b|\bDISPLAY\b/i, "keyword"],
+            // [/\/\/.*/, "comment"],  // Single-line comments with //
+            // [/#.*/, "comment"],     // Single-line comments with #
+          ],
+        },
+      });
+
       monaco.editor.defineTheme("myCustomTheme", {
         base: "vs-dark",
         inherit: true,
         rules: [
           {
-            token: "comment",
-            foreground: "ffa500",
-            fontStyle: "italic underline",
+            token: "keyword",
+            foreground: "C678DD", // Purple, commonly used for keywords in One Dark Pro
           },
-          { token: "keyword", foreground: "ff0000", fontStyle: "bold" },
+          {
+            token: "keyword.control",
+            foreground: "E06C75", // A soft red, often used for control structures
+          },
+          {
+            token: "keyword.methods",
+            foreground: "61AFEF", // A light blue for method names
+          },
+          {
+            token: "type",
+            foreground: "E5C07B", // A warm yellow, often used for types and classes
+          },
+          {
+            token: "keyword.boolean",
+            foreground: "D19A66", // A warm orange for boolean values
+          },
+          {
+            token: "keyword.operator",
+            foreground: "56B6C2",
+          },
+          {
+            token: "keyword.function",
+            foreground: "61AFEF",
+          },
+          {
+            token: "string",
+            foreground: "98C379", // A green color for strings, typical in One Dark Pro
+          },
+
+          // { token: "comment", foreground: "808080", fontStyle: "italic" },
         ],
         colors: {
           "editor.foreground": "#FFFFFF",
           "editor.background": "#0000004C",
           "editor.lineHighlightBorder": "#00000000",
           "editor.lineHighlightBackground": "#0000001C",
+        },
+      });
+
+      // Register the autocomplete provider
+      monaco.languages.registerCompletionItemProvider("customLanguage", {
+        provideCompletionItems: () => {
+          const suggestions = [
+            // Autocomplete suggestions for both lower and uppercase
+            {
+              label: "set",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "set",
+              detail: "Keyword: set",
+            },
+            {
+              label: "SET",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "SET",
+              detail: "Keyword: SET",
+            },
+            {
+              label: "to",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "to",
+              detail: "Keyword: to",
+            },
+            {
+              label: "TO",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "TO",
+              detail: "Keyword: TO",
+            },
+            {
+              label: "number",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "number",
+              detail: "Data type: number",
+            },
+            {
+              label: "NUMBER",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "NUMBER",
+              detail: "Data type: NUMBER",
+            },
+            {
+              label: "string",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "string",
+              detail: "Data type: string",
+            },
+            {
+              label: "STRING",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "STRING",
+              detail: "Data type: STRING",
+            },
+            {
+              label: "boolean",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "boolean",
+              detail: "Data type: boolean",
+            },
+            {
+              label: "BOOLEAN",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "BOOLEAN",
+              detail: "Data type: BOOLEAN",
+            },
+            {
+              label: "create",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "create",
+              detail: "Keyword: create",
+            },
+            {
+              label: "CREATE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "CREATE",
+              detail: "Keyword: CREATE",
+            },
+            {
+              label: "as",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "as",
+              detail: "Keyword: as",
+            },
+            {
+              label: "AS",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "AS",
+              detail: "Keyword: AS",
+            },
+            {
+              label: "with",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "with",
+              detail: "Keyword: with",
+            },
+            {
+              label: "WITH",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "WITH",
+              detail: "Keyword: WITH",
+            },
+            {
+              label: "add",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "add",
+              detail: "Keyword: add",
+            },
+            {
+              label: "ADD",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "ADD",
+              detail: "Keyword: ADD",
+            },
+            {
+              label: "insert",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "insert",
+              detail: "Keyword: insert",
+            },
+            {
+              label: "INSERT",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "INSERT",
+              detail: "Keyword: INSERT",
+            },
+            {
+              label: "delete",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "delete",
+              detail: "Keyword: delete",
+            },
+            {
+              label: "DELETE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "DELETE",
+              detail: "Keyword: DELETE",
+            },
+            {
+              label: "remove",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "remove",
+              detail: "Keyword: remove",
+            },
+            {
+              label: "REMOVE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "REMOVE",
+              detail: "Keyword: REMOVE",
+            },
+            {
+              label: "into",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "into",
+              detail: "Keyword: into",
+            },
+            {
+              label: "INTO",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "INTO",
+              detail: "Keyword: INTO",
+            },
+            {
+              label: "from",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "from",
+              detail: "Keyword: from",
+            },
+            {
+              label: "FROM",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "FROM",
+              detail: "Keyword: FROM",
+            },
+            {
+              label: "size",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "size",
+              detail: "Keyword: size",
+            },
+            {
+              label: "SIZE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "SIZE",
+              detail: "Keyword: SIZE",
+            },
+            {
+              label: "if",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "if",
+              detail: "Control structure: if",
+            },
+            {
+              label: "IF",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "IF",
+              detail: "Control structure: IF",
+            },
+            {
+              label: "then",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "then",
+              detail: "Control structure: then",
+            },
+            {
+              label: "THEN",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "THEN",
+              detail: "Control structure: THEN",
+            },
+            {
+              label: "otherwise",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "otherwise",
+              detail: "Control structure: otherwise",
+            },
+            {
+              label: "OTHERWISE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "OTHERWISE",
+              detail: "Control structure: OTHERWISE",
+            },
+            {
+              label: "end if",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "end if",
+              detail: "Control structure: end if",
+            },
+            {
+              label: "END IF",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "END IF",
+              detail: "Control structure: END IF",
+            },
+            {
+              label: "loop",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "loop",
+              detail: "Control structure: loop",
+            },
+            {
+              label: "LOOP",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "LOOP",
+              detail: "Control structure: LOOP",
+            },
+            {
+              label: "until",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "until",
+              detail: "Control structure: until",
+            },
+            {
+              label: "UNTIL",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "UNTIL",
+              detail: "Control structure: UNTIL",
+            },
+            {
+              label: "end loop",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "end loop",
+              detail: "Control structure: end loop",
+            },
+            {
+              label: "END LOOP",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "END LOOP",
+              detail: "Control structure: END LOOP",
+            },
+            {
+              label: "for each",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "for each",
+              detail: "Control structure: for each",
+            },
+            {
+              label: "FOR EACH",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "FOR EACH",
+              detail: "Control structure: FOR EACH",
+            },
+            {
+              label: "in",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "in",
+              detail: "Control structure: in",
+            },
+            {
+              label: "IN",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "IN",
+              detail: "Control structure: IN",
+            },
+            {
+              label: "true",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "true",
+              detail: "Boolean value: true",
+            },
+            {
+              label: "TRUE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "TRUE",
+              detail: "Boolean value: TRUE",
+            },
+            {
+              label: "false",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "false",
+              detail: "Boolean value: false",
+            },
+            {
+              label: "FALSE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "FALSE",
+              detail: "Boolean value: FALSE",
+            },
+            {
+              label: "and",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "and",
+              detail: "Logical operator: and",
+            },
+            {
+              label: "AND",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "AND",
+              detail: "Logical operator: AND",
+            },
+            {
+              label: "or",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "or",
+              detail: "Logical operator: or",
+            },
+            {
+              label: "OR",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "OR",
+              detail: "Logical operator: OR",
+            },
+            {
+              label: "not",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "not",
+              detail: "Logical operator: not",
+            },
+            {
+              label: "NOT",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "NOT",
+              detail: "Logical operator: NOT",
+            },
+            {
+              label: "define",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "define",
+              detail: "Function definition: define",
+            },
+            {
+              label: "DEFINE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "DEFINE",
+              detail: "Function definition: DEFINE",
+            },
+            {
+              label: "parameters",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "parameters",
+              detail: "Function definition: parameters",
+            },
+            {
+              label: "PARAMETERS",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "PARAMETERS",
+              detail: "Function definition: PARAMETERS",
+            },
+            {
+              label: "end function",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "end function",
+              detail: "Function definition: end function",
+            },
+            {
+              label: "END FUNCTION",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "END FUNCTION",
+              detail: "Function definition: END FUNCTION",
+            },
+            {
+              label: "print",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "print",
+              detail: "Output: print",
+            },
+            {
+              label: "PRINT",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "PRINT",
+              detail: "Output: PRINT",
+            },
+            {
+              label: "display",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "display",
+              detail: "Output: display",
+            },
+            {
+              label: "DISPLAY",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "DISPLAY",
+              detail: "Output: DISPLAY",
+            },
+            {
+              label: "equal",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "equal",
+              detail: "Comparison operator: equal",
+            },
+            {
+              label: "EQUAL",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "EQUAL",
+              detail: "Comparison operator: EQUAL",
+            },
+            {
+              label: "greater",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "greater",
+              detail: "Comparison operator: greater",
+            },
+            {
+              label: "GREATER",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "GREATER",
+              detail: "Comparison operator: GREATER",
+            },
+            {
+              label: "less",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "less",
+              detail: "Comparison operator: less",
+            },
+            {
+              label: "LESS",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "LESS",
+              detail: "Comparison operator: LESS",
+            },
+            {
+              label: "than",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "than",
+              detail: "Comparison operator: than",
+            },
+            {
+              label: "THAN",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "THAN",
+              detail: "Comparison operator: THAN",
+            },
+            {
+              label: "up",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "up",
+              detail: "Range: up",
+            },
+            {
+              label: "UP",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "UP",
+              detail: "Range: UP",
+            },
+            {
+              label: "array",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "array",
+              detail: "Data structure: array",
+            },
+            {
+              label: "ARRAY",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "ARRAY",
+              detail: "Data structure: ARRAY",
+            },
+            {
+              label: "linkedlist",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "linkedlist",
+              detail: "Data structure: linkedlist",
+            },
+            {
+              label: "LINKEDLIST",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "LINKEDLIST",
+              detail: "Data structure: LINKEDLIST",
+            },
+            {
+              label: "return",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "return",
+              detail: "Keyword: return",
+            },
+            {
+              label: "RETURN",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "RETURN",
+              detail: "Keyword: RETURN",
+            },
+            {
+              label: "values",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "values",
+              detail: "Keyword: values",
+            },
+            {
+              label: "VALUES",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "VALUES",
+              detail: "Keyword: VALUES",
+            },
+            {
+              label: "switch",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "switch",
+              detail: "Control structure: switch",
+            },
+            {
+              label: "SWITCH",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "SWITCH",
+              detail: "Control structure: SWITCH",
+            },
+            {
+              label: "case",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "case",
+              detail: "Control structure: case",
+            },
+            {
+              label: "CASE",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "CASE",
+              detail: "Control structure: CASE",
+            },
+            {
+              label: "end switch",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "end switch",
+              detail: "Control structure: end switch",
+            },
+            {
+              label: "END SWITCH",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "END SWITCH",
+              detail: "Control structure: END SWITCH",
+            },
+          ];
+          return { suggestions: suggestions };
         },
       });
     }
@@ -147,7 +780,7 @@ const CodeEditorView = ({
             height={height}
             width={width}
             theme="myCustomTheme"
-            language={language}
+            language="customLanguage"
             defaultValue={defaultValue}
             value={value}
             onChange={(value) => setValue(value)}

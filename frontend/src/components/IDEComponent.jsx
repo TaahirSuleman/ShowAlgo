@@ -55,6 +55,7 @@ function IDEComponent({
   setIsClearOutputLoading,
   defaultValue,
   level = false,
+  isError,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
@@ -109,7 +110,9 @@ function IDEComponent({
           width={{ base: "94dvw", md: "40dvw" }}
           boxShadow="md"
           borderBottomRadius={10}
+          borderTopRadius={11}
           overflow="hidden"
+          bg={isError ? "red.400" : "none"}
         >
           <Box
             bg="blackAlpha.900"

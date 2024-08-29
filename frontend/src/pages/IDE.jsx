@@ -27,6 +27,7 @@ import {
   PopoverContent,
   PopoverArrow,
   PopoverBody,
+  useToast,
 } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect } from "react";
 import CodeEditorView from "../components/CodeEditorView";
@@ -46,7 +47,6 @@ function IDE() {
   const btnRef = React.useRef(null);
   const editorRef = useRef();
   const [output, setOutput] = useState([]);
-  const [isError, setIsError] = useState(false);
   const [isRunLoading, setIsRunLoading] = useState(false);
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearLoading, setIsClearLoading] = useState(false);
@@ -61,6 +61,13 @@ function IDE() {
   const [bufferState, setBufferState] = useState(false);
   const [key, setKey] = useState(0);
   const [killState, setKillState] = useState(-2);
+  const toast = useToast();
+  const [isError, setIsError] = useState(false);
+  const [errorData, setErrorData] = useState({
+    error: "",
+    message: "",
+    errorLine: 0,
+  });
 
   let savedIndex = -1;
 
@@ -68,14 +75,39 @@ function IDE() {
     setPauseState(!pauseState);
   };
 
+  const findError = (e) => {
+    let errorLine = 0;
+    try {
+      errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+    } catch (error) {
+      errorLine = 0;
+    }
+
+    const newErrorData = {
+      error: e.error,
+      message: e.message,
+      errorLine: errorLine,
+    };
+    setErrorData(newErrorData);
+    console.log(newErrorData);
+
+    setOutput((prev) => [
+      ...prev,
+      `colourRed__ERROR: ${newErrorData.message}. ${newErrorData.error}`,
+    ]);
+
+    toast({
+      title: `${newErrorData.message}`,
+      description: `${newErrorData.error}`,
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   const runCode = async () => {
     setIsRunLoading(true); // To show loading state on the button
     let code = value; // Get code from the editor
-    //setMovementsState(actionFrames);
-    // setIndexState(0);
-    // setHighlightState(true);
-    console.log(code);
-    console.log("I oath im ran");
     try {
       let response = await axios.post(
         "http://localhost:8000/api/pseudocode/run",
@@ -83,6 +115,7 @@ function IDE() {
       );
       console.log(response.data.result);
       let actionFrames = response.data.result.actionFrames;
+      setIsError(false); // Reset error state
       setKillState(actionFrames.length);
       //setOutput(response.data.result); // Assuming the response has the execution result
       setMovementsState(actionFrames);
@@ -92,6 +125,7 @@ function IDE() {
     } catch (error) {
       console.error("Failed to run code:", error);
       setIsError(true); // Handle error state
+      findError(error.response.data);
     }
     setIsRunLoading(false);
   };
@@ -150,8 +184,8 @@ function IDE() {
         isClearOutputLoading={isClearOutputLoading}
         setIsClearOutputLoading={setIsClearOutputLoading}
         setIsClearLoading={setIsClearLoading}
+        isError={isError}
       />
-
     </Box>
   );
 }
