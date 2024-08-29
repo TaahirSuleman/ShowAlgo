@@ -65,7 +65,7 @@ function RunControls({
       setIsRunning(true)
       const timeout = setTimeout(() => {
         runCode();
-      }, speedState*1000 +500);
+      }, speedState*1000 +1000);
       return () => timeout;
     } else {
       console.log("FROM THE BENINGING")
@@ -89,8 +89,8 @@ function RunControls({
   });
 
   return (
-    <Box bg="blackAlpha.900" width="auto" mt={4} borderRadius={10} p={4}>
-      <SimpleGrid columns={columns} spacing={4}>
+    <Box bg="blackAlpha.900" width="auto" mt={3} borderRadius={10} p={3}>
+      <SimpleGrid columns={columns} spacing={3}>
         <Button
           variant="solid"
           colorScheme={isRunning ? "red" : "green" }
@@ -98,6 +98,7 @@ function RunControls({
           onClick={handleRunStop}
           isLoading={isRunLoading}
           width="100%"
+          height="33px"
         >
           {isRunning ? <FaStop /> : <FaPlay /> }
           <Box as="span" ml={2}>
@@ -111,6 +112,7 @@ function RunControls({
           isDisabled={value === ""}
           onClick={handlePauseResume}
           width="100%"
+          height="33px"
         >
           {pauseState ? <FaPlayCircle size="1.6em" /> : <FaPause size="1em" />}
           <Box as="span" ml={2}>
@@ -123,6 +125,7 @@ function RunControls({
           colorScheme="purple"
           onClick={handleSpeedChange}
           width="100%"
+          height="33px"
         >
           <Box as="span">Speed: {speed}x</Box>
         </Button>
@@ -135,7 +138,8 @@ function RunControls({
             onClick={submitCode}
             isLoading={isSubmitLoading}
             width="100%"
-          >
+            height="33px"
+            >
             <FaCloudUploadAlt size="1.6em" />
             <Box as="span" ml={2}>
               Submit
