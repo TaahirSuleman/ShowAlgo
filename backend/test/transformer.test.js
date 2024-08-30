@@ -20,6 +20,677 @@ describe("Transformer", () => {
         transformer = new Transformer();
     });
 
+    it("should correctly transform a simple length operation on a string", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "lengthOfString",
+                    value: {
+                        type: "LengthExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "lengthOfString",
+                    value: {
+                        type: "LengthExpression",
+                        source: "myString",
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a length operation on a variable within an expression", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "halfLength",
+                    value: {
+                        type: "Expression",
+                        left: {
+                            type: "LengthExpression",
+                            source: {
+                                type: "Identifier",
+                                value: "myString",
+                                line: 3,
+                            },
+                            line: 3,
+                        },
+                        operator: "/",
+                        right: {
+                            type: "NumberLiteral",
+                            value: "2",
+                            line: 3,
+                        },
+                        line: 3,
+                    },
+                    line: 3,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "halfLength",
+                    value: {
+                        type: "Expression",
+                        left: {
+                            type: "LengthExpression",
+                            source: "myString",
+                        },
+                        operator: "/",
+                        right: "2",
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a length operation in a conditional statement", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "IfStatement",
+                    condition: {
+                        type: "Expression",
+                        left: {
+                            type: "LengthExpression",
+                            source: {
+                                type: "Identifier",
+                                value: "myString",
+                                line: 4,
+                            },
+                            line: 4,
+                        },
+                        operator: ">",
+                        right: {
+                            type: "NumberLiteral",
+                            value: "10",
+                            line: 4,
+                        },
+                        line: 4,
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: {
+                                type: "StringLiteral",
+                                value: "String is longer than 10 characters",
+                                line: 5,
+                            },
+                            line: 5,
+                        },
+                    ],
+                    alternate: null,
+                    line: 4,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "IfStatement",
+                    condition: {
+                        left: {
+                            type: "LengthExpression",
+                            source: "myString",
+                        },
+                        operator: ">",
+                        right: "10",
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: "String is longer than 10 characters",
+                        },
+                    ],
+                    alternate: null,
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a length operation with undeclared variable", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "lengthOfSomething",
+                    value: {
+                        type: "LengthExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "undeclaredVar",
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "lengthOfSomething",
+                    value: {
+                        type: "LengthExpression",
+                        source: "undeclaredVar",
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform nested length operations", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "lengthSum",
+                    value: {
+                        type: "Expression",
+                        left: {
+                            type: "LengthExpression",
+                            source: {
+                                type: "Identifier",
+                                value: "stringOne",
+                                line: 3,
+                            },
+                            line: 3,
+                        },
+                        operator: "+",
+                        right: {
+                            type: "LengthExpression",
+                            source: {
+                                type: "Identifier",
+                                value: "stringTwo",
+                                line: 3,
+                            },
+                            line: 3,
+                        },
+                        line: 3,
+                    },
+                    line: 3,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "lengthSum",
+                    value: {
+                        type: "Expression",
+                        left: {
+                            type: "LengthExpression",
+                            source: "stringOne",
+                        },
+                        operator: "+",
+                        right: {
+                            type: "LengthExpression",
+                            source: "stringTwo",
+                        },
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a LENGTH OF operation with a string", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "myString",
+                    varType: "string",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 2,
+                    },
+                    line: 2,
+                },
+                {
+                    type: "VariableDeclaration",
+                    varName: "lengthOfString",
+                    varType: "number",
+                    value: {
+                        type: "LengthExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 3,
+                        },
+                        line: 3,
+                    },
+                    line: 3,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        line: 2,
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "lengthOfString",
+                    value: {
+                        type: "LengthExpression",
+                        source: "myString",
+                    }, // The length of "Hello, World!" is 13
+                },
+            ],
+        };
+
+        const transformer = new Transformer();
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a substring operation that covers the entire string", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "subStr",
+                    varType: null,
+                    value: {
+                        type: "SubstringExpression",
+                        string: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 3,
+                        },
+                        start: {
+                            type: "NumberLiteral",
+                            value: "0",
+                            line: 3,
+                        },
+                        end: {
+                            type: "NumberLiteral",
+                            value: "12",
+                            line: 3,
+                        },
+                        line: 3,
+                    },
+                    line: 3,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: "0",
+                        end: "12",
+                    },
+                },
+            ],
+        };
+
+        const transformer = new Transformer();
+        const result = transformer.transform(ast);
+
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a substring operation with hardcoded start and end indices", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "subStr",
+                    varType: null,
+                    value: {
+                        type: "SubstringExpression",
+                        string: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 3,
+                        },
+                        start: {
+                            type: "NumberLiteral",
+                            value: "0",
+                            line: 3,
+                        },
+                        end: {
+                            type: "NumberLiteral",
+                            value: "5",
+                            line: 3,
+                        },
+                        line: 3,
+                    },
+                    line: 3,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: "0",
+                        end: "5",
+                    },
+                },
+            ],
+        };
+
+        const transformer = new Transformer();
+        const result = transformer.transform(ast);
+
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a substring operation with nested expressions", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "subStr",
+                    varType: null,
+                    value: {
+                        type: "SubstringExpression",
+                        string: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 3,
+                        },
+                        start: {
+                            type: "Expression",
+                            left: {
+                                type: "Identifier",
+                                value: "startIndex",
+                                line: 3,
+                            },
+                            operator: "+",
+                            right: {
+                                type: "NumberLiteral",
+                                value: "2",
+                                line: 3,
+                            },
+                            line: 3,
+                        },
+                        end: {
+                            type: "Identifier",
+                            value: "endIndex",
+                            line: 3,
+                        },
+                        line: 3,
+                    },
+                    line: 3,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: {
+                            type: "Expression",
+                            left: "startIndex",
+                            operator: "+",
+                            right: "2",
+                        },
+                        end: "endIndex",
+                    },
+                },
+            ],
+        };
+
+        const transformer = new Transformer();
+        const result = transformer.transform(ast);
+
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a substring operation with variable start and end", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "myString",
+                    varType: null,
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                    line: 1,
+                },
+                {
+                    type: "VariableDeclaration",
+                    varName: "startIndex",
+                    varType: null,
+                    value: {
+                        type: "NumberLiteral",
+                        value: "7",
+                        line: 2,
+                    },
+                    line: 2,
+                },
+                {
+                    type: "VariableDeclaration",
+                    varName: "endIndex",
+                    varType: null,
+                    value: {
+                        type: "NumberLiteral",
+                        value: "12",
+                        line: 3,
+                    },
+                    line: 3,
+                },
+                {
+                    type: "VariableDeclaration",
+                    varName: "subStr",
+                    varType: null,
+                    value: {
+                        type: "SubstringExpression",
+                        string: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 4,
+                        },
+                        start: {
+                            type: "Identifier",
+                            value: "startIndex",
+                            line: 4,
+                        },
+                        end: {
+                            type: "Identifier",
+                            value: "endIndex",
+                            line: 4,
+                        },
+                        line: 4,
+                    },
+                    line: 4,
+                },
+                {
+                    type: "PrintStatement",
+                    value: {
+                        type: "Identifier",
+                        value: "subStr",
+                        line: 5,
+                    },
+                    line: 5,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "startIndex",
+                    value: {
+                        type: "NumberLiteral",
+                        value: "7",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "endIndex",
+                    value: {
+                        type: "NumberLiteral",
+                        value: "12",
+                        line: 3,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: "startIndex",
+                        end: "endIndex",
+                    },
+                },
+                {
+                    type: "PrintStatement",
+                    value: "subStr",
+                },
+            ],
+        };
+
+        const transformer = new Transformer();
+        const result = transformer.transform(ast);
+
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform a simple substring operation", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "subStr",
+                    varType: null,
+                    value: {
+                        type: "SubstringExpression",
+                        string: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 3,
+                        },
+                        start: {
+                            type: "NumberLiteral",
+                            value: "7",
+                            line: 3,
+                        },
+                        end: {
+                            type: "NumberLiteral",
+                            value: "12",
+                            line: 3,
+                        },
+                        line: 3,
+                    },
+                    line: 3,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: "7",
+                        end: "12",
+                    },
+                },
+            ],
+        };
+
+        const transformer = new Transformer();
+        const result = transformer.transform(ast);
+
+        expect(result).to.deep.equal(expectedIR);
+    });
+
     it("should transform a VariableDeclaration node", () => {
         const ast = new Program([
             new VariableDeclaration("x", null, {
@@ -911,6 +1582,69 @@ describe("Transformer", () => {
                         {
                             type: "PrintStatement",
                             value: "Complex Condition Not Met",
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+    it("should transform a variable set to a boolean and use it in a conditional", () => {
+        const ast = new Program([
+            new VariableDeclaration("isTrue", null, {
+                type: "BooleanLiteral",
+                value: true,
+                line: 2,
+            }),
+            new IfStatement(
+                { type: "Identifier", value: "isTrue", line: 3 },
+                [
+                    new PrintStatement({
+                        type: "StringLiteral",
+                        value: "Boolean is true",
+                        line: 4,
+                    }),
+                ],
+                [
+                    new PrintStatement({
+                        type: "StringLiteral",
+                        value: "Boolean is false",
+                        line: 6,
+                    }),
+                ],
+                3
+            ),
+        ]);
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: true,
+                        line: 2,
+                    },
+                },
+                {
+                    type: "IfStatement",
+                    condition: {
+                        type: "Identifier",
+                        value: "isTrue",
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: "Boolean is true",
+                        },
+                    ],
+                    alternate: [
+                        {
+                            type: "PrintStatement",
+                            value: "Boolean is false",
                         },
                     ],
                 },

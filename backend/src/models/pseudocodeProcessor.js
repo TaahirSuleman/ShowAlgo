@@ -12,13 +12,13 @@ class PseudocodeProcessor {
     static process(pseudocode) {
         const tokenizer = new Tokenizer(pseudocode);
         const tokens = tokenizer.tokenize();
-        /*PseudocodeProcessor.writeToFile(
-            "Tokens: " + JSON.stringify(tokens, null, 2)
-        );*/
+        // PseudocodeProcessor.writeToFile(
+        //     "Tokens: " + JSON.stringify(tokens, null, 2)
+        // );
 
         const parser = new Parser(tokens);
         const ast = parser.parse();
-        PseudocodeProcessor.writeToFile("AST: " + JSON.stringify(ast, null, 2));
+        // PseudocodeProcessor.writeToFile("AST: " + JSON.stringify(ast, null, 2));
 
         const transformer = new Transformer();
         const ir = transformer.transform(ast);
@@ -28,9 +28,9 @@ class PseudocodeProcessor {
 
         const jsonConverter = new JsonConverter();
         const finalJson = jsonConverter.transformToFinalJSON(ir);
-        /*PseudocodeProcessor.writeToFile(
+        PseudocodeProcessor.writeToFile(
             "Final JSON: " + JSON.stringify(finalJson, null, 2)
-        );*/
+        );
 
         return finalJson;
     }

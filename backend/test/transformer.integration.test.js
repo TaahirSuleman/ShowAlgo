@@ -24,7 +24,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isTrue",
                         value: {
                             type: "BooleanLiteral",
-                            value: "true",
+                            value: true,
                             line: 2,
                         },
                     },
@@ -33,7 +33,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isFalse",
                         value: {
                             type: "BooleanLiteral",
-                            value: "false",
+                            value: false,
                             line: 3,
                         },
                     },
@@ -54,7 +54,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isTrue",
                         value: {
                             type: "BooleanLiteral",
-                            value: "true",
+                            value: true,
                             line: 2,
                         },
                     },
@@ -63,7 +63,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isFalse",
                         value: {
                             type: "BooleanLiteral",
-                            value: "false",
+                            value: false,
                             line: 3,
                         },
                     },
@@ -98,7 +98,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isTrue",
                         value: {
                             type: "BooleanLiteral",
-                            value: "true",
+                            value: true,
                             line: 2,
                         },
                     },
@@ -133,7 +133,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isTrue",
                         value: {
                             type: "BooleanLiteral",
-                            value: "true",
+                            value: true,
                             line: 2,
                         },
                     },
@@ -144,7 +144,11 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                             type: "Expression",
                             left: "isTrue",
                             operator: "=",
-                            right: "false",
+                            right: {
+                                type: "BooleanLiteral",
+                                value: false,
+                                line: 3,
+                            },
                         },
                     },
                 ],
@@ -169,7 +173,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isTrue",
                         value: {
                             type: "BooleanLiteral",
-                            value: "true",
+                            value: true,
                             line: 2,
                         },
                     },
@@ -178,7 +182,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isFalse",
                         value: {
                             type: "BooleanLiteral",
-                            value: "false",
+                            value: false,
                             line: 3,
                         },
                     },
@@ -227,7 +231,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isTrue",
                         value: {
                             type: "BooleanLiteral",
-                            value: "true",
+                            value: true,
                             line: 2,
                         },
                     },
@@ -236,7 +240,7 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
                         name: "isFalse",
                         value: {
                             type: "BooleanLiteral",
-                            value: "false",
+                            value: false,
                             line: 3,
                         },
                     },

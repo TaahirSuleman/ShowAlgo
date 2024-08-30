@@ -21,13 +21,13 @@ describe("Tokenizer and Parser", () => {
         const firstVar = ast.body[0];
         expect(firstVar.type).to.equal("VariableDeclaration");
         expect(firstVar.varName).to.equal("isTrue");
-        expect(firstVar.value.value).to.equal("true");
+        expect(firstVar.value.value).to.equal(true);
         expect(firstVar.line).to.equal(2);
 
         const secondVar = ast.body[1];
         expect(secondVar.type).to.equal("VariableDeclaration");
         expect(secondVar.varName).to.equal("isFalse");
-        expect(secondVar.value.value).to.equal("false");
+        expect(secondVar.value.value).to.equal(false);
         expect(secondVar.line).to.equal(3);
     });
 
@@ -86,7 +86,7 @@ describe("Tokenizer and Parser", () => {
         expect(varDecl.varName).to.equal("result");
         expect(varDecl.value.left.value).to.equal("isTrue");
         expect(varDecl.value.operator).to.equal("=");
-        expect(varDecl.value.right.value).to.equal("false");
+        expect(varDecl.value.right.value).to.equal(false);
         expect(varDecl.line).to.equal(3);
     });
 
@@ -129,13 +129,13 @@ describe("Tokenizer and Parser", () => {
         const firstVar = ast.body[0];
         expect(firstVar.type).to.equal("VariableDeclaration");
         expect(firstVar.varName).to.equal("isTrue");
-        expect(firstVar.value.value).to.equal("true");
+        expect(firstVar.value.value).to.equal(true);
         expect(firstVar.line).to.equal(2);
 
         const secondVar = ast.body[1];
         expect(secondVar.type).to.equal("VariableDeclaration");
         expect(secondVar.varName).to.equal("isFalse");
-        expect(secondVar.value.value).to.equal("false");
+        expect(secondVar.value.value).to.equal(false);
         expect(secondVar.line).to.equal(3);
     });
 
@@ -194,7 +194,7 @@ describe("Tokenizer and Parser", () => {
         expect(varDecl.varName).to.equal("result");
         expect(varDecl.value.left.value).to.equal("isTrue");
         expect(varDecl.value.operator).to.equal("=");
-        expect(varDecl.value.right.value).to.equal("false");
+        expect(varDecl.value.right.value).to.equal(false);
         expect(varDecl.line).to.equal(3);
     });
 

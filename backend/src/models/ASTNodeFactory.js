@@ -16,6 +16,9 @@ import Identifier from "./ast/Identifier.js";
 import LoopUntil from "./ast/LoopUntil.js";
 import LoopFromTo from "./ast/LoopFromTo.js";
 import BooleanLiteral from "./ast/BooleanLiteral.js";
+import EndIf from "./ast/EndIf.js";
+import SubstringExpression from "./ast/SubstringExpression.js";
+import LengthExpression from "./ast/LengthExpression.js";
 
 /**
  * ASTNodeFactory class responsible for creating instances of AST nodes.
@@ -41,6 +44,9 @@ class ASTNodeFactory {
             LoopUntil,
             LoopFromTo,
             BooleanLiteral,
+            EndIf,
+            SubstringExpression,
+            LengthExpression,
         };
     }
 

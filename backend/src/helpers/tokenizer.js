@@ -180,6 +180,9 @@ class Tokenizer {
             "to",
             "number",
             "string",
+            "substring",
+            "of",
+            "boolean",
             "create",
             "array",
             "as",
@@ -206,8 +209,13 @@ class Tokenizer {
             "less",
             "equal",
             "than",
+            "length",
             // New combined keywords can be added here if needed
         ];
+
+        if (value.toLowerCase() === "display") {
+            value = "print";
+        }
 
         // Check if the next word might form a recognized keyword combination
         if (value.toLowerCase() === "for") {

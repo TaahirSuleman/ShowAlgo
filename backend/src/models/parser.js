@@ -13,6 +13,7 @@ class Parser {
         this.tokens = tokens;
         this.currentIndex = 0;
         this.factory = new ASTNodeFactory();
+        this.bools = new Set();
     }
 
     /**
@@ -78,6 +79,13 @@ class Parser {
     parseVariableDeclaration() {
         const line = this.currentToken().line;
         this.expect("Keyword", "set");
+        if (this.currentToken().type === "Keyword") {
+            throw new Error(
+                `Reserved keywords such as ${
+                    this.currentToken().value
+                } cannot be used as a variable name.`
+            );
+        }
         const varName = this.consume("Identifier").value;
         let varType = null;
         if (
@@ -86,8 +94,11 @@ class Parser {
         ) {
             varType = this.consume("Keyword").value;
         }
+
         this.expect("Keyword", "to");
         const value = this.parseExpression();
+        if (value.type === "BooleanLiteral") this.bools.add(varName);
+        console.log(this.bools);
         return this.factory.createNode(
             "VariableDeclaration",
             varName,
@@ -158,7 +169,12 @@ class Parser {
     parseIfStatement() {
         const line = this.currentToken().line;
         this.expect("Keyword", "if");
-        const condition = this.parseCondition();
+        const condition =
+            this.peekNextToken().value === "then"
+                ? this.parseBool(line)
+                : this.parseCondition();
+        console.log(this.currentToken().value);
+        while (this.currentToken().value != "then") this.parseCondition();
         this.expect("Keyword", "then");
         const consequent = [];
         while (
@@ -190,6 +206,14 @@ class Parser {
             condition,
             consequent,
             alternate,
+            line
+        );
+    }
+
+    parseBool(line) {
+        return this.factory.createNode(
+            "Identifier",
+            this.consume("Identifier").value,
             line
         );
     }
@@ -442,7 +466,11 @@ class Parser {
             this.currentToken().value.toLowerCase() === "not"
         ) {
             const operator = this.consume("LogicalOperator").value;
-            const right = this.parseValue();
+            console.log(`next token is ${this.peekNextToken().value}`);
+            const right =
+                this.peekNextToken().value.toLowerCase() === "then"
+                    ? this.parseValue()
+                    : this.parseCondition();
             return this.factory.createNode(
                 "Expression",
                 null,
@@ -451,12 +479,16 @@ class Parser {
                 line
             );
         }
-
-        // Parse the left side of the condition
         if (
+            this.currentToken().type === "Keyword" &&
+            this.currentToken().value.toLowerCase() === "length"
+        ) {
+            left = this.parseLengthExpression();
+        } else if (
             this.currentToken().type === "Delimiter" &&
             this.currentToken().value === "("
         ) {
+            // Parse the left side of the condition
             this.consume("Delimiter");
             left = this.parseCondition(); // Recursively parse the inner condition
             this.expect("Delimiter", ")");
@@ -520,6 +552,12 @@ class Parser {
                 right,
                 line
             );
+        } else if (
+            this.currentToken.type === "Identifier" &&
+            this.peekNextToken().value.toLowerCase() === "then"
+        ) {
+            left = this.consume(this.currentToken()).value;
+            return this.factory.createNode("Identifier", left, line);
         } else {
             this.expect("Keyword", "is");
             const operator = this.consume("Keyword").value;
@@ -534,7 +572,9 @@ class Parser {
                     }`
                 );
             }
-            this.expect("Keyword", "than");
+            operator.toLowerCase() == "equal"
+                ? this.expect("Keyword", "to")
+                : this.expect("Keyword", "than");
             const right = this.parseExpression();
             return this.factory.createNode(
                 "Expression",
@@ -561,6 +601,18 @@ class Parser {
             this.consume("Delimiter");
             left = this.parseExpression();
             this.expect("Delimiter", ")");
+        } else if (
+            this.currentToken().type === "Keyword" &&
+            this.currentToken().value.toLowerCase() === "substring"
+        ) {
+            // Handle substring operation
+            left = this.parseSubstringExpression();
+        } else if (
+            this.currentToken().type === "Keyword" &&
+            this.currentToken().value.toLowerCase() === "length"
+        ) {
+            // Handle LENGTH OF operation
+            left = this.parseLengthExpression();
         } else {
             left = this.parseValue();
         }
@@ -592,6 +644,53 @@ class Parser {
         }
 
         return left;
+    }
+
+    /**
+     * @method parseSubstringExpression
+     * @description Parses a substring operation.
+     * @returns {SubstringExpression} The AST node representing the substring operation.
+     */
+    parseSubstringExpression() {
+        const line = this.currentToken().line;
+
+        this.expect("Keyword", "substring");
+        this.expect("Keyword", "of");
+
+        const stringIdentifier = this.factory.createNode(
+            "Identifier",
+            this.consume("Identifier").value,
+            line
+        );
+        console.log(stringIdentifier);
+        this.expect("Keyword", "from");
+        const startIndex = this.parseExpression();
+        console.log(startIndex);
+        this.expect("Keyword", "to");
+        const endIndex = this.parseExpression();
+        console.log(endIndex);
+
+        // Create the SubstringExpression node with correct structure
+        return this.factory.createNode(
+            "SubstringExpression",
+            stringIdentifier,
+            startIndex,
+            endIndex,
+            line
+        );
+    }
+
+    parseLengthExpression() {
+        const line = this.currentToken().line;
+        this.expect("Keyword", "length");
+        this.expect("Keyword", "of");
+        const source = this.consume("Identifier");
+
+        return this.factory.createNode(
+            "LengthExpression",
+            this.factory.createNode("Identifier", source.value, line),
+            line
+        );
     }
 
     /**
@@ -657,7 +756,8 @@ class Parser {
         } else if (
             token.type === "Keyword" &&
             (token.value.toLowerCase() === "number" ||
-                token.value.toLowerCase() === "string")
+                token.value.toLowerCase() === "string" ||
+                token.value.toLowerCase() === "boolean")
         ) {
             this.consume("Keyword");
             return this.parseValue();

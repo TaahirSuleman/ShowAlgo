@@ -87,6 +87,14 @@ class NodeTransformerFactory {
                     type: "Identifier",
                     value: node.value,
                 };
+            case "LengthExpression":
+                return {
+                    type: "LengthExpression",
+                    source: node.source.value, // Extract the variable name directly
+                };
+            case "SubstringExpression":
+                return transformer.transformSubstringExpression(node);
+
             default:
                 throw new Error(`Unknown node type: ${type}`);
         }

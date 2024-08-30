@@ -41,10 +41,33 @@ class Transformer {
      */
     transformCondition(condition) {
         // Ensure we handle both UnaryExpression and Expression types
+        if (condition.type === "Identifier") {
+            return {
+                type: condition.type,
+                value: condition.value,
+            };
+        }
+        let leftVal = condition.left;
+        if (condition.left != null) {
+            if (condition.left.type === "LengthExpression")
+                leftVal = this.factory.createTransformedNode(
+                    condition.left.type,
+                    this,
+                    condition.left
+                );
+            else if (condition.left.type === "Expression") {
+                leftVal = this.transformExpression(condition.left);
+                leftVal =
+                    leftVal.type === "UnaryExpression" ||
+                    leftVal.type === "Expression"
+                        ? leftVal
+                        : leftVal.value;
+            }
+        }
         const rightTransformed = this.transformExpression(condition.right);
 
         return {
-            left: condition.left,
+            left: leftVal,
             operator: condition.operator,
             right:
                 rightTransformed.type === "UnaryExpression" ||
@@ -60,6 +83,16 @@ class Transformer {
      * @returns {Object} The transformed expression.
      */
     transformExpression(expression) {
+        if (expression.type === "SubstringExpression") {
+            return this.transformSubstringExpression(expression);
+        }
+        if (expression.type === "LengthExpression")
+            return this.factory.createTransformedNode(
+                expression.type,
+                this,
+                expression
+            );
+
         if (expression.type === "Expression") {
             // Handle unary expressions by delegating to the appropriate function
             if (expression.left === null && expression.operator === "not") {
@@ -68,14 +101,26 @@ class Transformer {
 
             // Handle binary expressions
             const leftExp =
-                expression.left && expression.left.type === "Expression"
+                expression.left.type === "LengthExpression"
+                    ? this.factory.createTransformedNode(
+                          expression.left.type,
+                          this,
+                          expression.left
+                      )
+                    : expression.left && expression.left.type === "Expression"
                     ? this.transformExpression(expression.left)
                     : expression.left
                     ? expression.left.value || expression.left
                     : null;
 
             const rightExp =
-                expression.right && expression.right.type === "Expression"
+                expression.right.type === "LengthExpression"
+                    ? this.factory.createTransformedNode(
+                          expression.right.type,
+                          this,
+                          expression.right
+                      )
+                    : expression.right && expression.right.type === "Expression"
                     ? this.transformExpression(expression.right)
                     : expression.right
                     ? expression.right.value || expression.right
@@ -87,14 +132,36 @@ class Transformer {
                 operator: expression.operator,
                 right: rightExp,
             };
-        } else if (
-            expression.type === "Identifier" ||
-            expression.type === "Literal"
-        ) {
+        } else if (expression.type === "Literal") {
             return { value: expression.value };
         } else {
             return expression;
         }
+    }
+
+    transformSubstringExpression(expression) {
+        let start = this.transformExpression(expression.start);
+        let end = this.transformExpression(expression.end);
+        if (
+            (start.type === "StringLiteral" &&
+                typeof this.convertValue(start.value) != "number") ||
+            (end.type === "StringLiteral" &&
+                typeof this.convertValue(end.value) != "number")
+        ) {
+            throw new Error(
+                `Invalid substring operation: 'start' and 'end' indices must be numeric.`
+            );
+        } else {
+            start = start.type === "Expression" ? start : start.value;
+            end = end.type === "Expression" ? end : end.value;
+        }
+
+        return {
+            type: "SubstringExpression",
+            string: expression.string.value, // Flattening the string part
+            start: start, // Properly handle the start expression
+            end: end, // Properly handle the end expression
+        };
     }
 
     /**
@@ -161,6 +228,14 @@ class Transformer {
             },
             body: this.transformNodes(node.body),
         };
+    }
+
+    convertValue(value) {
+        console.log(value.value);
+        if (typeof value === "string" && value.trim() !== "" && !isNaN(value)) {
+            return Number(value);
+        }
+        return value;
     }
 }
 
