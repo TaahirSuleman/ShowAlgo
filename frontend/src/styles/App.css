@@ -31,36 +31,32 @@
   text-align: center;
 }
 .square {
-  flex: 1; /* Allow the blocks to grow and shrink evenly */
+  /*flex: 1;  /*Allow the blocks to grow and shrink evenly */
   background-color: #1A365D;
   display: flex;
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
   border: 1px solid white;
-  max-width: 50px; /* Set a maximum width for each block */
-  min-width: 30px; /* Optional: Set a minimum width for each block */
+  width: auto;
+  min-width: 50px; /* Optional: Set a minimum width for each block */
   height: 80px; /* Set a fixed height for the blocks */
   box-sizing: border-box; /* Include border in the element's width and height */
   font-weight: bold;
   border-radius: 2px;
+  flex-shrink: 0; /* Prevent the squares from shrinking */
 }
 
-.inBlockText {
-  font-size: 50px; /* Make text larger */
-  text-align: center;
-  justify-content: center;
-  color: white;
-}
 
 .array-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center; /* Center the array blocks within the container */
+  justify-content: flex-start; /* Center the array blocks within the container */
   width: 100%; /* Fixed width for the container */
   max-width: 100%; /* Ensure it doesn't exceed the parent container width */
   padding: 10px; /* Optional: Add some padding for aesthetics */
   box-sizing: border-box;
+ /* flex-wrap: wrap;*/
 }
 
 .variables-container {

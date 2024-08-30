@@ -87,6 +87,7 @@ function AdminLevel() {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
   const [testResults, setTestResults] = useState([]);
+  const [isRestarting, setIsRestarting] = useState(false);
 
   // level states
   const [showHints, setShowHints] = useState(false);
@@ -180,7 +181,9 @@ function AdminLevel() {
         ...prev,
         `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
       ]);
-    }, speedState + 2000);
+      setIsRestarting(false);
+    }, speedState*1000 + 1000);
+    setIsRestarting(true)
     return () => timeoutSetKey;
   };
 
@@ -538,6 +541,8 @@ function AdminLevel() {
             submitButton={true}
             isSubmitLoading={isSubmitLoading}
             submitCode={submitCode}
+            setHighlightState={setHighlightState}
+            isRestarting={isRestarting} 
           />
         </Box>
 
@@ -556,7 +561,7 @@ function AdminLevel() {
           pauseState={pauseState}
           setPauseState={setPauseState}
           bufferState={bufferState}
-          key={key}
+          keyValue={key}
           isClearLoading={isClearLoading}
           isClearOutputLoading={isClearOutputLoading}
           setIsClearOutputLoading={setIsClearOutputLoading}

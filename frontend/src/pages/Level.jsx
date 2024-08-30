@@ -82,6 +82,7 @@ function Level() {
   const [bufferState, setBufferState] = useState(false);
   const [key, setKey] = useState(0);
   const [killState, setKillState] = useState(-2);
+  const [isRestarting, setIsRestarting] = useState(false);
 
   // level states
   const toast = useToast();
@@ -248,7 +249,9 @@ function Level() {
         ...prev,
         `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
       ]);
-    }, speedState + 2000);
+      setIsRestarting(false);
+    }, speedState*1000 + 1000);
+    setIsRestarting(true)
     return () => timeoutSetKey;
   };
 
@@ -606,6 +609,8 @@ function Level() {
             submitButton={true}
             isSubmitLoading={isSubmitLoading}
             submitCode={submitCode}
+            setHighlightState={setHighlightState}
+            isRestarting={isRestarting} 
           />
         </Box>
 
@@ -624,7 +629,7 @@ function Level() {
           pauseState={pauseState}
           setPauseState={setPauseState}
           bufferState={bufferState}
-          key={key}
+          keyValue={key}
           isClearLoading={isClearLoading}
           isClearOutputLoading={isClearOutputLoading}
           setIsClearOutputLoading={setIsClearOutputLoading}

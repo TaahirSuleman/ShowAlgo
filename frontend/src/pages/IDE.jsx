@@ -61,6 +61,7 @@ function IDE() {
   const [bufferState, setBufferState] = useState(false);
   const [key, setKey] = useState(0);
   const [killState, setKillState] = useState(-2);
+  const [isRestarting, setIsRestarting] = useState(false);
 
   let savedIndex = -1;
 
@@ -107,7 +108,9 @@ function IDE() {
         ...prev,
         `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
       ]);
+      setIsRestarting(false);
     }, speedState*1000 + 1000);
+    setIsRestarting(true) 
     return () => timeoutSetKey;
   };
 
@@ -128,6 +131,8 @@ function IDE() {
           killState={killState}
           indexState={indexState}
           setOutput={setOutput}
+          setHighlightState={setHighlightState}
+          isRestarting={isRestarting} 
         />
       </Box>
 
