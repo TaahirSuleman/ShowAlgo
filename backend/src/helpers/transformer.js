@@ -93,6 +93,12 @@ class Transformer {
                 expression
             );
 
+        if (expression.type === "IndexExpression")
+            return this.factory.createTransformedNode(
+                expression.type,
+                this,
+                expression
+            );
         if (expression.type === "Expression") {
             // Handle unary expressions by delegating to the appropriate function
             if (expression.left === null && expression.operator === "not") {
@@ -161,6 +167,19 @@ class Transformer {
             string: expression.string.value, // Flattening the string part
             start: start, // Properly handle the start expression
             end: end, // Properly handle the end expression
+        };
+    }
+
+    /**
+     * Transforms an index expression node.
+     * @param {Object} expression - The index expression node.
+     * @returns {Object} The transformed index expression.
+     */
+    transformIndexExpression(expression) {
+        return {
+            type: "IndexExpression",
+            source: expression.source.value,
+            index: expression.index.value,
         };
     }
 

@@ -64,6 +64,8 @@ class JsonConverter extends Converter {
         if (node.value.type === "SubstringExpression") {
             return this.handleSubstringExpression(node);
         }
+        if (node.value.type === "IndexExpression")
+            return this.transformIndexExpression(node);
         let typeBool = false;
         let length;
         if (node.value.type === "LengthExpression") {
@@ -125,6 +127,68 @@ class JsonConverter extends Converter {
             value: value,
             timestamp: new Date().toISOString(),
             description: `Set variable ${node.name} to ${returnVal}.`,
+        };
+    }
+
+    transformIndexExpression(node) {
+        const { varName, value } = node;
+        const source = value.source; // The name of the variable being indexed
+
+        // Evaluate the index using evaluateExpression
+        const index = this.evaluateExpression(value.index);
+
+        if (index < 0) {
+            throw new Error(
+                `Invalid index operation: index (${index}) cannot be negative.`
+            );
+        }
+
+        // Retrieve the actual value of the source (string or array)
+        const sourceValue = this.getVariableValue(source);
+
+        // Determine the type (string or array) and retrieve the result
+        let result;
+        let type;
+        if (typeof sourceValue === "string") {
+            if (index > sourceValue.length) {
+                throw new Error(
+                    `Index out of bounds: string length is ${sourceValue.length}, but index is ${index}.`
+                );
+            }
+            type = "string";
+            result = sourceValue.charAt(index);
+        } else if (Array.isArray(sourceValue)) {
+            if (index > sourceValue.length) {
+                throw new Error(
+                    `Index out of bounds: array length is ${sourceValue.length}, but index is ${index}.`
+                );
+            }
+            type = "array";
+            result = sourceValue[index];
+        } else {
+            throw new Error(
+                `Unsupported type for indexing: ${typeof sourceValue}`
+            );
+        }
+
+        // Update the variables with the indexing result
+        this.variables[varName] = result;
+        this.declaredVariables.add(varName);
+
+        return {
+            line: node.line,
+            operation: "set",
+            varName: node.name,
+            type: type,
+            value: {
+                operation: "get",
+                type: type,
+                varName: source,
+                index: index,
+                result: result,
+            },
+            timestamp: new Date().toISOString(),
+            description: `Set variable ${node.name} to ${source}[${index}].`,
         };
     }
 
@@ -733,7 +797,9 @@ class JsonConverter extends Converter {
     }
 
     transformExpression(expression) {
-        if (expression.type === "Expression") {
+        if (expression.type === "IndexExpression") {
+            return this.transformIndexExpression(expression);
+        } else if (expression.type === "Expression") {
             // Recursively transform the left and right parts of the expression
             const left = this.transformExpression(expression.left);
             const right = this.transformExpression(expression.right);

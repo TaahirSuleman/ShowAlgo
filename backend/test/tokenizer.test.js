@@ -7,6 +7,117 @@ describe("Tokenizer", () => {
         return tokenizer.tokenize();
     }
 
+    it("should tokenize a basic indexing operation", () => {
+        const code = `Set firstCharacter to character at 0 of myString`;
+        const tokens = tokenize(code);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "firstCharacter", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Keyword", value: "character", line: 1 },
+            { type: "Keyword", value: "at", line: 1 },
+            { type: "Number", value: "0", line: 1 },
+            { type: "Keyword", value: "of", line: 1 },
+            { type: "Identifier", value: "myString", line: 1 },
+        ]);
+    });
+
+    it("should tokenize indexing with a variable index", () => {
+        const code = `Set characterAtIndex to character at index of myString`;
+        const tokens = tokenize(code);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "characterAtIndex", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Keyword", value: "character", line: 1 },
+            { type: "Keyword", value: "at", line: 1 },
+            { type: "Identifier", value: "index", line: 1 },
+            { type: "Keyword", value: "of", line: 1 },
+            { type: "Identifier", value: "myString", line: 1 },
+        ]);
+    });
+
+    it("should tokenize indexing at the end of the string", () => {
+        const code = `Set lastCharacter to character at length of myString - 1 of myString`;
+        const tokens = tokenize(code);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "lastCharacter", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Keyword", value: "character", line: 1 },
+            { type: "Keyword", value: "at", line: 1 },
+            { type: "Keyword", value: "length", line: 1 },
+            { type: "Keyword", value: "of", line: 1 },
+            { type: "Identifier", value: "myString", line: 1 },
+            { type: "Operator", value: "-", line: 1 },
+            { type: "Number", value: "1", line: 1 },
+            { type: "Keyword", value: "of", line: 1 },
+            { type: "Identifier", value: "myString", line: 1 },
+        ]);
+    });
+
+    it("should tokenize indexing with a negative index", () => {
+        const code = `Set invalidCharacter to character at -1 of myString`;
+        const tokens = tokenize(code);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "invalidCharacter", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Keyword", value: "character", line: 1 },
+            { type: "Keyword", value: "at", line: 1 },
+            { type: "Operator", value: "-", line: 1 },
+            { type: "Number", value: "1", line: 1 },
+            { type: "Keyword", value: "of", line: 1 },
+            { type: "Identifier", value: "myString", line: 1 },
+        ]);
+    });
+
+    it("should tokenize indexing an empty string", () => {
+        const code = `Set emptyIndex to character at 0 of emptyString`;
+        const tokens = tokenize(code);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "emptyIndex", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Keyword", value: "character", line: 1 },
+            { type: "Keyword", value: "at", line: 1 },
+            { type: "Number", value: "0", line: 1 },
+            { type: "Keyword", value: "of", line: 1 },
+            { type: "Identifier", value: "emptyString", line: 1 },
+        ]);
+    });
+
+    // Additional test cases for traditional syntax
+    it("should tokenize traditional syntax for a basic indexing operation", () => {
+        const code = `Set firstCharacter to character at 0 of myString`;
+        const tokens = tokenize(code);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "firstCharacter", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Keyword", value: "character", line: 1 },
+            { type: "Keyword", value: "at", line: 1 },
+            { type: "Number", value: "0", line: 1 },
+            { type: "Keyword", value: "of", line: 1 },
+            { type: "Identifier", value: "myString", line: 1 },
+        ]);
+    });
+
+    it("should tokenize traditional syntax for indexing with a variable index", () => {
+        const code = `Set characterAtIndex to character at index of myString`;
+        const tokens = tokenize(code);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "characterAtIndex", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Keyword", value: "character", line: 1 },
+            { type: "Keyword", value: "at", line: 1 },
+            { type: "Identifier", value: "index", line: 1 },
+            { type: "Keyword", value: "of", line: 1 },
+            { type: "Identifier", value: "myString", line: 1 },
+        ]);
+    });
+
     it("should tokenize a LENGTH OF operation followed by a print statement correctly", () => {
         const pseudocode = `
             SET greeting TO string "Good Morning"

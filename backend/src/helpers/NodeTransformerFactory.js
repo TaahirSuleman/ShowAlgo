@@ -94,7 +94,18 @@ class NodeTransformerFactory {
                 };
             case "SubstringExpression":
                 return transformer.transformSubstringExpression(node);
-
+            case "IndexExpression":
+                const transformedIndex = transformer.transformExpression(
+                    node.index
+                );
+                return {
+                    type: "IndexExpression",
+                    source: node.source.value,
+                    index:
+                        transformedIndex.type === "Expression"
+                            ? transformedIndex
+                            : transformedIndex.value,
+                };
             default:
                 throw new Error(`Unknown node type: ${type}`);
         }
