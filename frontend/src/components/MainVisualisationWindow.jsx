@@ -2,6 +2,7 @@ import VariableListComponent from "./VariableListComponent";
 import IfVisualisationComponent from "./IfVisualisationComponent";
 import LoopNotificationComponent from "./LoopNotificationComponent";
 import ArrayComponent from "./ArrayComponent";
+import StringVisualisationComponent from "./StringVisualisationComponent"
 import { useState, useEffect } from 'react';
 import '../styles/App.css';
 import { Box } from "@chakra-ui/react";
@@ -24,6 +25,7 @@ function MainVisualisationWindow({
         console.log("ACTUAL SPEED STATE: "+speedState)
     }, [indexState,speedState])
     const [arraysState, setArraysState] = useState([]); // {name, values, locations}
+    const [variablesState, setVariablesState] = useState([]);
     const genericOperations = ["else","print"];
 
     useEffect(() => {
@@ -87,6 +89,8 @@ function MainVisualisationWindow({
             arraysState={arraysState}
             setOutput={setOutput}
             bufferState={bufferState}
+            variablesState={variablesState}
+            setVariablesState={setVariablesState}
           />
           <div className="if-array-container">
             <div className="top-row">
@@ -112,6 +116,18 @@ function MainVisualisationWindow({
                 bufferState={bufferState}
               />
             </div>
+            <StringVisualisationComponent
+              movements={movementsState}
+                speedState={speedState}
+                indexState={indexState}
+                setIndexState={setIndexState}
+                pauseState={pauseState}
+                setPauseState={setPauseState}
+                arraysState={arraysState}
+                setOutput={setOutput}
+                variablesState={variablesState}
+                setVariablesState={setVariablesState}
+            />
             {arraysState.map((array, i) => (
               <ArrayComponent
                 key={array.name}

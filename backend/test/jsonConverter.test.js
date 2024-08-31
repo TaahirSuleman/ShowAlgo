@@ -8,6 +8,242 @@ describe("JsonConverter", () => {
         converter = new JsonConverter();
     });
 
+    it("should correctly convert a LENGTH OF operation on a string", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "lengthOfString",
+                    value: {
+                        type: "LengthExpression",
+                        source: "myString",
+                        line: 2,
+                    },
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "myString",
+                    type: "string",
+                    value: "Hello, World!",
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable myString to Hello, World!.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "lengthOfString",
+                    type: "number",
+                    value: 13,
+                    timestamp: result.actionFrames[1].timestamp,
+                    description: "Set variable lengthOfString to 13.",
+                },
+            ],
+        });
+    });
+
+    it("should correctly convert a LENGTH OF operation used within an expression", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "halfLength",
+                    value: {
+                        type: "Expression",
+                        left: {
+                            type: "LengthExpression",
+                            source: "myString",
+                            line: 2,
+                        },
+                        operator: "/",
+                        right: "2",
+                        line: 2,
+                    },
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "myString",
+                    type: "string",
+                    value: "Hello, World!",
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable myString to Hello, World!.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "halfLength",
+                    type: "number",
+                    value: 6.5,
+                    timestamp: result.actionFrames[1].timestamp,
+                    description: "Set variable halfLength to 13 / 2.",
+                },
+            ],
+        });
+    });
+
+    it("should correctly handle a LENGTH OF operation on an empty string", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "emptyString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "lengthOfEmptyString",
+                    value: {
+                        type: "LengthExpression",
+                        source: "emptyString",
+                        line: 2,
+                    },
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "emptyString",
+                    type: "string",
+                    value: "",
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable emptyString to .",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "lengthOfEmptyString",
+                    type: "number",
+                    value: 0,
+                    timestamp: result.actionFrames[1].timestamp,
+                    description: "Set variable lengthOfEmptyString to 0.",
+                },
+            ],
+        });
+    });
+
+    it("should correctly handle a LENGTH OF operation on an undeclared variable", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "undeclaredVarLength",
+                    value: {
+                        type: "LengthExpression",
+                        source: "undeclaredVar",
+                        line: 1,
+                    },
+                },
+            ],
+        };
+
+        expect(() => converter.transformToFinalJSON(ir)).to.throw(
+            "Variable 'undeclaredVar' is not declared."
+        );
+    });
+
+    it("should correctly convert a LENGTH OF operation followed by a print statement", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "lengthOfString",
+                    value: {
+                        type: "LengthExpression",
+                        source: "myString",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "PrintStatement",
+                    value: "lengthOfString",
+                    line: 3,
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "myString",
+                    type: "string",
+                    value: "Hello",
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable myString to Hello.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "lengthOfString",
+                    type: "number",
+                    value: 5,
+                    timestamp: result.actionFrames[1].timestamp,
+                    description: "Set variable lengthOfString to 5.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "lengthOfString",
+                    literal: 5,
+                    timestamp: result.actionFrames[2].timestamp,
+                    description: "Printed lengthOfString.",
+                },
+            ],
+        });
+    });
+
     it("should convert a variable declaration", () => {
         const ir = {
             program: [
@@ -1302,6 +1538,456 @@ describe("JsonConverter", () => {
                     },
                 ],
             });
+        });
+    });
+    it("should convert boolean literals correctly", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: true,
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "isFalse",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: false,
+                        line: 2,
+                    },
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "isFalse",
+                    type: "boolean",
+                    value: false,
+                    timestamp: result.actionFrames[1].timestamp,
+                    description: "Set variable isFalse to false.",
+                },
+            ],
+        });
+    });
+    it("should convert a variable set to a boolean and use it in a conditional", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: true,
+                        line: 1,
+                    },
+                },
+                {
+                    type: "IfStatement",
+                    condition: {
+                        type: "Identifier",
+                        value: "isTrue",
+                        line: 2,
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: "Boolean is true",
+                            line: 3,
+                        },
+                    ],
+                    alternate: [
+                        {
+                            type: "PrintStatement",
+                            value: "Boolean is false",
+                            line: 5,
+                        },
+                    ],
+                    line: 2,
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "isTrue",
+                    result: true,
+                    timestamp: result.actionFrames[1].timestamp,
+                    description: "Checked if isTrue.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: true,
+                    varName: null,
+                    literal: "Boolean is true",
+                    timestamp: result.actionFrames[2].timestamp,
+                    description: "Printed Boolean is true.",
+                },
+                {
+                    line: 6,
+                    operation: "endif",
+                    timestamp: result.actionFrames[3].timestamp,
+                    description: "End of if statement.",
+                },
+            ],
+        });
+    });
+    it("should convert a NOT operator correctly", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "isTrue",
+                    value: {
+                        type: "BooleanLiteral",
+                        value: true,
+                        line: 1,
+                    },
+                },
+                {
+                    type: "IfStatement",
+                    condition: {
+                        left: null,
+                        operator: "not",
+                        right: "isTrue",
+                    },
+                    consequent: [
+                        {
+                            type: "PrintStatement",
+                            value: "isTrue is false",
+                            line: 3,
+                        },
+                    ],
+                    alternate: null,
+                    line: 2,
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: true,
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable isTrue to true.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "!isTrue",
+                    result: false,
+                    timestamp: result.actionFrames[1].timestamp,
+                    description: "Checked if !isTrue.",
+                },
+                {
+                    line: 4,
+                    operation: "endif",
+                    timestamp: result.actionFrames[2].timestamp,
+                    description: "End of if statement.",
+                },
+            ],
+        });
+    });
+    it("should convert a simple substring operation to JSON correctly", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: "7",
+                        end: "12",
+                        line: 2,
+                    },
+                },
+                {
+                    type: "PrintStatement",
+                    value: "subStr",
+                    line: 3,
+                },
+            ],
+        };
+
+        const expectedResult = "World"; // The substring from index 7 to 12 in "Hello, World!" is "World"
+
+        const result = converter.transformToFinalJSON(ir);
+
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "myString",
+                    type: "string",
+                    value: "Hello, World!",
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable myString to Hello, World!.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "subStr",
+                    type: "string",
+                    value: {
+                        operation: "substring",
+                        source: "myString",
+                        start: 7,
+                        end: 12,
+                        result: expectedResult,
+                    },
+                    timestamp: result.actionFrames[1].timestamp,
+                    description:
+                        "Set variable subStr to a substring of myString from index 7 to 12.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    varName: "subStr",
+                    isLiteral: false,
+                    literal: expectedResult,
+                    timestamp: result.actionFrames[2].timestamp,
+                    description: `Printed subStr.`,
+                },
+            ],
+        });
+    });
+
+    it("should convert a nested substring operation correctly", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: "7",
+                        end: "12",
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "nestedSubStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "subStr",
+                        start: "1",
+                        end: "3",
+                    },
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "myString",
+                    type: "string",
+                    value: "Hello, World!",
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable myString to Hello, World!.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "subStr",
+                    type: "string",
+                    value: {
+                        operation: "substring",
+                        source: "myString",
+                        start: 7,
+                        end: 12,
+                        result: "World",
+                    },
+                    timestamp: result.actionFrames[1].timestamp,
+                    description:
+                        "Set variable subStr to a substring of myString from index 7 to 12.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "nestedSubStr",
+                    type: "string",
+                    value: {
+                        operation: "substring",
+                        source: "subStr",
+                        start: 1,
+                        end: 3,
+                        result: "or",
+                    },
+                    timestamp: result.actionFrames[2].timestamp,
+                    description:
+                        "Set variable nestedSubStr to a substring of subStr from index 1 to 3.",
+                },
+            ],
+        });
+    });
+
+    it("should throw an error if the variable used in substring operation is not declared", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "undeclaredVar",
+                        start: "7",
+                        end: "12",
+                    },
+                },
+            ],
+        };
+
+        expect(() => converter.transformToFinalJSON(ir)).to.throw(
+            "Variable 'undeclaredVar' is not declared."
+        );
+    });
+
+    it("should throw an error when the start index is greater than the end index in substring", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: "12",
+                        end: "7",
+                    },
+                },
+            ],
+        };
+
+        expect(() => converter.transformToFinalJSON(ir)).to.throw(
+            "Invalid substring operation: 'start' index (12) cannot be greater than 'end' index (7)."
+        );
+    });
+
+    it("should handle a substring operation where start equals end (empty result)", () => {
+        const ir = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "subStr",
+                    value: {
+                        type: "SubstringExpression",
+                        string: "myString",
+                        start: "7",
+                        end: "7",
+                    },
+                },
+            ],
+        };
+
+        const result = converter.transformToFinalJSON(ir);
+        expect(result).to.deep.equal({
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "myString",
+                    type: "string",
+                    value: "Hello, World!",
+                    timestamp: result.actionFrames[0].timestamp,
+                    description: "Set variable myString to Hello, World!.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "subStr",
+                    type: "string",
+                    value: {
+                        operation: "substring",
+                        source: "myString",
+                        start: 7,
+                        end: 7,
+                        result: "",
+                    },
+                    timestamp: result.actionFrames[1].timestamp,
+                    description:
+                        "Set variable subStr to an empty string as start and end indices are identical.",
+                },
+            ],
         });
     });
 });

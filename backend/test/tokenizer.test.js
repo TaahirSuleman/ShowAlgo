@@ -7,6 +7,348 @@ describe("Tokenizer", () => {
         return tokenizer.tokenize();
     }
 
+    it("should tokenize a LENGTH OF operation followed by a print statement correctly", () => {
+        const pseudocode = `
+            SET greeting TO string "Good Morning"
+            SET greetingLength TO LENGTH OF greeting
+            PRINT greetingLength
+        `;
+        const tokens = tokenize(pseudocode);
+
+        const expectedTokens = [
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "greeting", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "string", line: 2 },
+            { type: "String", value: "Good Morning", line: 2 },
+            { type: "Keyword", value: "set", line: 3 },
+            { type: "Identifier", value: "greetingLength", line: 3 },
+            { type: "Keyword", value: "to", line: 3 },
+            { type: "Keyword", value: "length", line: 3 },
+            { type: "Keyword", value: "of", line: 3 },
+            { type: "Identifier", value: "greeting", line: 3 },
+            { type: "Keyword", value: "print", line: 4 },
+            { type: "Identifier", value: "greetingLength", line: 4 },
+        ];
+
+        expect(tokens).to.deep.equal(expectedTokens);
+    });
+
+    // Test case 3: LENGTH OF operation with an undeclared variable
+    it("should tokenize a LENGTH OF operation with an undeclared variable correctly", () => {
+        const pseudocode = `
+            SET nameLength TO LENGTH OF unknownVariable
+        `;
+        const tokens = tokenize(pseudocode);
+
+        const expectedTokens = [
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "nameLength", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "length", line: 2 },
+            { type: "Keyword", value: "of", line: 2 },
+            { type: "Identifier", value: "unknownVariable", line: 2 },
+        ];
+
+        expect(tokens).to.deep.equal(expectedTokens);
+    });
+
+    it("should tokenize a LENGTH OF operation correctly", () => {
+        const pseudocode = `
+            SET fullName TO string "John Doe"
+            SET len TO LENGTH OF fullName
+            PRINT len
+        `;
+        const tokens = tokenize(pseudocode);
+
+        const expectedTokens = [
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "fullName", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "string", line: 2 },
+            { type: "String", value: "John Doe", line: 2 },
+            { type: "Keyword", value: "set", line: 3 },
+            { type: "Identifier", value: "len", line: 3 },
+            { type: "Keyword", value: "to", line: 3 },
+            { type: "Keyword", value: "length", line: 3 },
+            { type: "Keyword", value: "of", line: 3 },
+            { type: "Identifier", value: "fullName", line: 3 },
+            { type: "Keyword", value: "print", line: 4 },
+            { type: "Identifier", value: "len", line: 4 },
+        ];
+
+        expect(tokens).to.deep.equal(expectedTokens);
+    });
+
+    it("should tokenize a basic substring operation", () => {
+        const input = `
+            SET subStr TO substring of myString from 7 to 12
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "subStr", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "substring", line: 2 },
+            { type: "Keyword", value: "of", line: 2 },
+            { type: "Identifier", value: "myString", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "7", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Number", value: "12", line: 2 },
+        ]);
+    });
+
+    it("should tokenize a substring operation with variable indices", () => {
+        const input = `
+            SET subStr TO substring of myString from startIndex to endIndex
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "subStr", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "substring", line: 2 },
+            { type: "Keyword", value: "of", line: 2 },
+            { type: "Identifier", value: "myString", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Identifier", value: "startIndex", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Identifier", value: "endIndex", line: 2 },
+        ]);
+    });
+
+    it("should tokenize a substring operation with zero-based index", () => {
+        const input = `
+            SET subStr TO substring of myString from 0 to 5
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "subStr", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "substring", line: 2 },
+            { type: "Keyword", value: "of", line: 2 },
+            { type: "Identifier", value: "myString", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "0", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Number", value: "5", line: 2 },
+        ]);
+    });
+
+    it("should tokenize a substring operation with the same start and end indices", () => {
+        const input = `
+            SET subStr TO substring of myString from 3 to 3
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "subStr", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "substring", line: 2 },
+            { type: "Keyword", value: "of", line: 2 },
+            { type: "Identifier", value: "myString", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "3", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Number", value: "3", line: 2 },
+        ]);
+    });
+
+    it("should tokenize a substring operation with negative indices", () => {
+        const input = `
+            SET subStr TO substring of myString from -3 to -1
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "subStr", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "substring", line: 2 },
+            { type: "Keyword", value: "of", line: 2 },
+            { type: "Identifier", value: "myString", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Operator", value: "-", line: 2 },
+            { type: "Number", value: "3", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Operator", value: "-", line: 2 },
+            { type: "Number", value: "1", line: 2 },
+        ]);
+    });
+
+    it("should tokenize a substring operation with a start index only", () => {
+        const input = `
+            SET subStr TO substring of myString from 5
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "subStr", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "substring", line: 2 },
+            { type: "Keyword", value: "of", line: 2 },
+            { type: "Identifier", value: "myString", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "5", line: 2 },
+        ]);
+    });
+
+    it("should tokenize a substring operation followed by another operation", () => {
+        const input = `
+            SET subStr TO substring of myString from 5 to 10
+            PRINT subStr
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "subStr", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "substring", line: 2 },
+            { type: "Keyword", value: "of", line: 2 },
+            { type: "Identifier", value: "myString", line: 2 },
+            { type: "Keyword", value: "from", line: 2 },
+            { type: "Number", value: "5", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Number", value: "10", line: 2 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "Identifier", value: "subStr", line: 3 },
+        ]);
+    });
+
+    it("should tokenize substring operation correctly", () => {
+        const input = `
+            SET myString TO string "Hello, World!"
+            SET subStr TO substring of myString FROM 7 TO 12
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "myString", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Keyword", value: "string", line: 2 },
+            { type: "String", value: "Hello, World!", line: 2 },
+            { type: "Keyword", value: "set", line: 3 },
+            { type: "Identifier", value: "subStr", line: 3 },
+            { type: "Keyword", value: "to", line: 3 },
+            { type: "Keyword", value: "substring", line: 3 },
+            { type: "Keyword", value: "of", line: 3 },
+            { type: "Identifier", value: "myString", line: 3 },
+            { type: "Keyword", value: "from", line: 3 },
+            { type: "Number", value: "7", line: 3 },
+            { type: "Keyword", value: "to", line: 3 },
+            { type: "Number", value: "12", line: 3 },
+        ]);
+    });
+
+    it("should tokenize mixed logical operators correctly", () => {
+        const input = `
+            SET isTrue TO true
+            IF isTrue AND NOT isFalse THEN 
+                PRINT "Correct" 
+            OTHERWISE 
+                PRINT "Incorrect" 
+            END IF
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "isTrue", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Boolean", value: "true", line: 2 },
+            { type: "Keyword", value: "if", line: 3 },
+            { type: "Identifier", value: "isTrue", line: 3 },
+            { type: "LogicalOperator", value: "and", line: 3 },
+            { type: "LogicalOperator", value: "not", line: 3 },
+            { type: "Identifier", value: "isFalse", line: 3 },
+            { type: "Keyword", value: "then", line: 3 },
+            { type: "Keyword", value: "print", line: 4 },
+            { type: "String", value: "Correct", line: 4 },
+            { type: "Keyword", value: "otherwise", line: 5 },
+            { type: "Keyword", value: "print", line: 6 },
+            { type: "String", value: "Incorrect", line: 6 },
+            { type: "Keyword", value: "end", line: 7 },
+            { type: "Keyword", value: "if", line: 7 },
+        ]);
+    });
+
+    it("should tokenize boolean literals correctly", () => {
+        const input = "SET isTrue TO true\nSET isFalse TO false";
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "isTrue", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Boolean", value: "true", line: 1 },
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "isFalse", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Boolean", value: "false", line: 2 },
+        ]);
+    });
+
+    it("should tokenize boolean expressions correctly", () => {
+        const input = `
+            SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue AND isFalse THEN PRINT "Both are booleans" END IF
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "isTrue", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Boolean", value: "true", line: 2 },
+            { type: "Keyword", value: "set", line: 3 },
+            { type: "Identifier", value: "isFalse", line: 3 },
+            { type: "Keyword", value: "to", line: 3 },
+            { type: "Boolean", value: "false", line: 3 },
+            { type: "Keyword", value: "if", line: 4 },
+            { type: "Identifier", value: "isTrue", line: 4 },
+            { type: "LogicalOperator", value: "and", line: 4 },
+            { type: "Identifier", value: "isFalse", line: 4 },
+            { type: "Keyword", value: "then", line: 4 },
+            { type: "Keyword", value: "print", line: 4 },
+            { type: "String", value: "Both are booleans", line: 4 },
+            { type: "Keyword", value: "end", line: 4 },
+            { type: "Keyword", value: "if", line: 4 },
+        ]);
+    });
+
+    it("should tokenize NOT operator correctly", () => {
+        const input = `
+            SET isTrue TO true
+            IF NOT isTrue THEN PRINT "isTrue is false" END IF
+        `;
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 2 },
+            { type: "Identifier", value: "isTrue", line: 2 },
+            { type: "Keyword", value: "to", line: 2 },
+            { type: "Boolean", value: "true", line: 2 },
+            { type: "Keyword", value: "if", line: 3 },
+            { type: "LogicalOperator", value: "not", line: 3 },
+            { type: "Identifier", value: "isTrue", line: 3 },
+            { type: "Keyword", value: "then", line: 3 },
+            { type: "Keyword", value: "print", line: 3 },
+            { type: "String", value: "isTrue is false", line: 3 },
+            { type: "Keyword", value: "end", line: 3 },
+            { type: "Keyword", value: "if", line: 3 },
+        ]);
+    });
+    it("should tokenize boolean comparisons correctly", () => {
+        const input = "SET result TO isTrue = false";
+        const tokens = tokenize(input);
+        expect(tokens).to.deep.equal([
+            { type: "Keyword", value: "set", line: 1 },
+            { type: "Identifier", value: "result", line: 1 },
+            { type: "Keyword", value: "to", line: 1 },
+            { type: "Identifier", value: "isTrue", line: 1 },
+            { type: "ComparisonOperator", value: "=", line: 1 },
+            { type: "Boolean", value: "false", line: 1 },
+        ]);
+    });
+
     it("should tokenize keywords correctly", () => {
         const input = "SET x TO 10";
         const tokens = tokenize(input);

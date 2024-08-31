@@ -88,6 +88,12 @@ function AdminLevel() {
   const [submitClicked, setSubmitClicked] = useState(false);
   const [testResults, setTestResults] = useState([]);
   const [isRestarting, setIsRestarting] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
+  const [errorData, setErrorData] = useState({
+    error: "",
+    message: "",
+    errorLine: 0,
+  });
 
   // level states
   const [showHints, setShowHints] = useState(false);
@@ -164,8 +170,17 @@ function AdminLevel() {
       setIndexState(0);
       setHighlightState(true);
     } catch (error) {
+      setHighlightState(false);
+      setIsRunning(false);
       console.error("Failed to run code:", error);
-      setIsError(true); // Handle error state
+      setIsError(true)
+      let errorTimeout = setTimeout(()=>{
+        setIsError(false)
+      }, 2000)
+      //setIsError(true); // Handle error state
+      findError(error.response.data);
+      setIsRunLoading(false);
+      return () => {clearTimeout(errorTimeout)}
     }
     setIsRunLoading(false);
   };
@@ -356,6 +371,36 @@ function AdminLevel() {
     }
   };
 
+  const findError = (e) => {
+    let errorLine = 0;
+    try {
+      errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+    } catch (error) {
+      errorLine = 0;
+    }
+
+    const newErrorData = {
+      error: e.error,
+      message: e.message,
+      errorLine: errorLine,
+    };
+    setErrorData(newErrorData);
+    console.log(newErrorData);
+
+    setOutput((prev) => [
+      ...prev,
+      `colourRed__ERROR: ${newErrorData.message}. ${newErrorData.error}`,
+    ]);
+
+    toast({
+      title: `${newErrorData.message}`,
+      description: `${newErrorData.error}`,
+      status: "error",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
   const submitCode = async () => {
     setSubmitClicked(true);
 
@@ -368,6 +413,7 @@ function AdminLevel() {
       console.log(response);
 
       if (response.status === 200) {
+        setIsError(false);
         setIsSubmitLoading(true);
         setTimeout(() => {
           checkTestCases(value, level.test_cases);
@@ -387,13 +433,8 @@ function AdminLevel() {
     } catch (error) {
       setTestResults([]);
       console.error("Failed to run code:", error);
-      toast({
-        title: "Error running code",
-        description: "Failed to run code",
-        status: "error",
-        duration: 2500,
-        isClosable: true,
-      });
+      setIsError(true); // Handle error state
+      findError(error.response.data);
       setIsSubmitLoading(false);
     }
   };
@@ -506,6 +547,14 @@ function AdminLevel() {
                         <AccordionIcon />
                       </AccordionButton>
                       <AccordionPanel pb={4}>
+                        {result.inputs.length > 1 ? (
+                          <Text fontWeight="normal">
+                            Input:{" "}
+                            {Array.isArray(result.inputs)
+                              ? result.inputs.join(", ")
+                              : result.inputs}
+                          </Text>
+                        ) : null}
                         <Text fontWeight="normal">
                           Expected: {result.expectedOutput}
                         </Text>
@@ -543,6 +592,8 @@ function AdminLevel() {
             submitCode={submitCode}
             setHighlightState={setHighlightState}
             isRestarting={isRestarting} 
+            isRunning = {isRunning}
+            setIsRunning ={setIsRunning}
           />
         </Box>
 
@@ -562,248 +613,14 @@ function AdminLevel() {
           setPauseState={setPauseState}
           bufferState={bufferState}
           keyValue={key}
+          keyValue={key}
           isClearLoading={isClearLoading}
           isClearOutputLoading={isClearOutputLoading}
           setIsClearOutputLoading={setIsClearOutputLoading}
           setIsClearLoading={setIsClearLoading}
+          level={true}
+          isError={isError}
         />
-
-        {/* <Grid
-          templateColumns={gridTemplateColumns}
-          templateRows={gridTemplateRows}
-          gap={4}
-          p={4}
-          overflow="auto"
-        >
-          <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-            <Box
-              width={{ base: "94vw", md: "50vw" }}
-              boxShadow="md"
-              borderBottomRadius={10}
-              overflow="hidden"
-            >
-              <Box
-                bg="blackAlpha.900"
-                borderTopRadius={10}
-                p={2}
-                display="flex"
-                alignItems="center"
-                height="12dvh"
-                justifyContent="space-between"
-              >
-                <Button
-                  variant="solid"
-                  colorScheme="red"
-                  isDisabled={value === ""}
-                  onClick={handleClearClick}
-                  isLoading={isClearLoading}
-                  m={2}
-                  pl={1}
-                  width="85px"
-                >
-                  <IoClose size="1.6em" />
-                  <Box as="span">Clear</Box>
-                </Button>
-
-                <Box>
-                  <Heading
-                    fontWeight="normal"
-                    color="whiteAlpha.900"
-                    textAlign="center"
-                    fontSize="2xl"
-                  >
-                    Code Editor
-                    <Popover trigger="hover">
-                      <PopoverTrigger>
-                        <IconButton
-                          ref={btnRef}
-                          onClick={onOpen}
-                          icon={
-                            <InfoIcon
-                              color="blackAlpha.900"
-                              p={0.5}
-                              bg="blue.300"
-                              borderRadius="50%"
-                              borderColor="white"
-                              boxSize="0.8em"
-                            />
-                          }
-                          size="auto"
-                          bg="transparent"
-                          ml={2}
-                        />
-                      </PopoverTrigger>
-
-                      <PopoverContent bg="blue.400" width="auto" border="none">
-                        <PopoverArrow bg="blue.400" />
-                        <PopoverBody color="white" fontSize="sm">
-                          Show Documentation
-                        </PopoverBody>
-                      </PopoverContent>
-                    </Popover>
-                    <Modal
-                      onClose={onClose}
-                      finalFocusRef={btnRef}
-                      isOpen={isOpen}
-                      scrollBehavior="inside"
-                    >
-                      <ModalOverlay />
-                      <ModalContent bg="gray.900" maxW="90vw" maxH="90vh">
-                        <ModalHeader>Documentation</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                          <DocumentationComponent />
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button onClick={onClose}>Close</Button>
-                        </ModalFooter>
-                      </ModalContent>
-                    </Modal>
-                  </Heading>
-                </Box>
-
-                <Box width="84px" />
-
-                <AlertDialog
-                  isOpen={isClearDialogOpen}
-                  leastDestructiveRef={cancelClearRef}
-                  onClose={handleClearCancel}
-                >
-                  <AlertDialogOverlay>
-                    <AlertDialogContent>
-                      <AlertDialogHeader fontSize="lg" fontWeight="bold">
-                        Confirm Clear
-                      </AlertDialogHeader>
-
-                      <AlertDialogBody>
-                        Are you sure you want to clear the code?
-                      </AlertDialogBody>
-
-                      <AlertDialogFooter>
-                        <Button
-                          ref={cancelClearRef}
-                          onClick={handleClearCancel}
-                        >
-                          Cancel
-                        </Button>
-                        <Button
-                          colorScheme="red"
-                          onClick={handleClearConfirm}
-                          ml={3}
-                        >
-                          Clear
-                        </Button>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialogOverlay>
-                </AlertDialog>
-              </Box>
-
-              <CodeEditorView
-                speedState={speedState}
-                movementsState={movementsState}
-                height="50dvh"
-                width={{ base: "100%", md: "50vw" }}
-                theme="vs-dark"
-                value={value}
-                setValue={setValue}
-                highlightState={highlightState}
-                setHighlightState={setHighlightState}
-                pauseState={pauseState}
-                setPauseState={setPauseState}
-                defaultValue={level.starter_code}
-              />
-            </Box>
-
-            <Box mt={4} borderBottomRadius={10} overflow="hidden">
-              <Box
-                bg="blackAlpha.900"
-                borderTopRadius={10}
-                p={2}
-                display="flex"
-                alignItems="center"
-                height="12dvh"
-                justifyContent="space-between"
-              >
-                <Button
-                  variant="solid"
-                  colorScheme="red"
-                  isDisabled={output.length === 0}
-                  onClick={clearOutput}
-                  isLoading={isClearOutputLoading}
-                  m={2}
-                  pl={1}
-                  width="85px"
-                >
-                  <IoClose size="1.6em" />
-                  <Box as="span">Clear</Box>
-                </Button>
-
-                <Heading
-                  fontWeight="normal"
-                  color="whiteAlpha.900"
-                  fontSize="2xl"
-                >
-                  Output View
-                </Heading>
-
-                <Box width="84px" />
-              </Box>
-              <Box
-                borderBottomRadius={4}
-                height={{ base: "auto", md: "50vh" }}
-                boxShadow="md"
-              >
-                <OutputView
-                  height={{ base: "25vh", md: "50vh" }}
-                  width="100%"
-                  output={output}
-                />
-              </Box>
-            </Box>
-          </GridItem>
-
-          <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
-            <Box
-              bg="blackAlpha.900"
-              borderTopRadius={10}
-              p={2}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              height="12dvh"
-            >
-              <Heading
-                fontWeight="normal"
-                color="whiteAlpha.900"
-                fontSize="2xl"
-              >
-                Visualisation View
-              </Heading>
-            </Box>
-
-            <Box
-              bg="blackAlpha.600"
-              borderBottomRadius={10}
-              boxShadow="md"
-              height={{ base: "75vh", md: "115vh" }}
-              p={4}
-            >
-              <MainVisualisationWindow
-                key={key}
-                movementsState={movementsState}
-                output={output}
-                setOutput={setOutput}
-                speedState={speedState}
-                indexState={indexState}
-                setIndexState={setIndexState}
-                pauseState={pauseState}
-                setPauseState={setPauseState}
-                bufferState={bufferState}
-              ></MainVisualisationWindow>
-            </Box>
-          </GridItem>
-        </Grid> */}
       </Box>
 
       {customToast && (

@@ -11,11 +11,13 @@ function VariableListComponent({
     setOutput,
     bufferState,
     setPauseState,
-    arraysState
+    arraysState,
+    variablesState,
+    setVariablesState
     }){
 
     let [updating, setUpdating] = useState("");
-    let [variablesState, setVariablesState] = useState([]);
+    
     const [counter, setCounter] = useState(0);
     const varRef = useRef();
 
@@ -23,39 +25,73 @@ function VariableListComponent({
 
     useEffect(() => {
       const performOperations = () => {
-      if (indexState > -1 && indexState < movements.length && !pauseState){
-          if (movements[indexState].operation == "set"){
-              varRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-              updateVariablesState(movements[indexState].type, movements[indexState].value, movements[indexState].varName);
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
-              const timeoutId2 = setTimeout(() => {
-                  setIndexState((i)=>{return i+1});
-              }, speedState*1000 );
-              return () => clearTimeout(timeoutId2);
-          }
-
-          else if (movements[indexState].operation == "get"){
-            varRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        if (indexState > -1 && indexState < movements.length && !pauseState) {
+          if (movements[indexState].operation == "set") {
+            if (typeof movements[indexState].value != "object") {
+              varRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+                inline: "center",
+              });
+              updateVariablesState(
+                movements[indexState].type,
+                movements[indexState].value,
+                movements[indexState].varName
+              );
+            }
+            else {
+              let innerMovement = movements[indexState].value
+              updateVariablesState(
+                "string",
+                innerMovement.result,
+                movements[indexState].varName
+              )
+            }
+            setOutput((prev) => {
+              return [...prev, movements[indexState].description];
+            });
+            const timeoutId2 = setTimeout(() => {
+              setIndexState((i) => {
+                return i + 1;
+              });
+            }, speedState * 1000);
+            return () => clearTimeout(timeoutId2);
+          } else if (movements[indexState].operation == "get") {
+            varRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "center",
+            });
             arraysState.forEach((currentValue) => {
-              if (currentValue.name == movements[indexState].varName){
-                updateVariablesState(movements[indexState].type, (currentValue.values)[movements[indexState].index].substring((currentValue.values)[movements[indexState].index].indexOf("++")+2,(currentValue.values)[movements[indexState].index].indexOf("-")), movements[indexState].setName);
-                return
+              if (currentValue.name == movements[indexState].varName) {
+                updateVariablesState(
+                  movements[indexState].type,
+                  currentValue.values[movements[indexState].index].substring(
+                    currentValue.values[movements[indexState].index].indexOf(
+                      "++"
+                    ) + 2,
+                    currentValue.values[movements[indexState].index].indexOf(
+                      "-"
+                    )
+                  ),
+                  movements[indexState].setName
+                );
+                return;
               }
-            })
+            });
           }
-      }
-    }
-    performOperations();
-      
-  }, [indexState, pauseState])
+        }
+      };
+      performOperations();
+    }, [indexState, pauseState]);
 
     let updateVariablesState = async (type , value , name) => {
         setVariablesState((prevVariablesState) => {
             let variables = [...prevVariablesState];
-            const indexState = variables.findIndex(variable => variable.name === name);
-            if (indexState !== -1) {
-                variables[indexState] = {
-                    ...variables[indexState],
+            const index = variables.findIndex(variable => variable.name === name);
+            if (index !== -1) {
+                variables[index] = {
+                    ...variables[index],
                     value: (type === "string" ? "'"+value+"'" : value),
                 };                
             } else {

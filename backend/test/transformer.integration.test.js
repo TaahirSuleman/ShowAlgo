@@ -12,6 +12,271 @@ describe("Tokenizer, Parser, and Transformer Integration", () => {
 
     const testCases = [
         {
+            description: "should process boolean literals correctly",
+            pseudocode: `
+                SET isTrue TO true
+                SET isFalse TO false
+            `,
+            expectedIR: {
+                program: [
+                    {
+                        type: "VariableDeclaration",
+                        name: "isTrue",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: true,
+                            line: 2,
+                        },
+                    },
+                    {
+                        type: "VariableDeclaration",
+                        name: "isFalse",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: false,
+                            line: 3,
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            description: "should process boolean expressions correctly",
+            pseudocode: `
+                SET isTrue TO true
+                SET isFalse TO false
+                IF isTrue AND isFalse THEN PRINT "Both are booleans" END IF
+            `,
+            expectedIR: {
+                program: [
+                    {
+                        type: "VariableDeclaration",
+                        name: "isTrue",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: true,
+                            line: 2,
+                        },
+                    },
+                    {
+                        type: "VariableDeclaration",
+                        name: "isFalse",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: false,
+                            line: 3,
+                        },
+                    },
+                    {
+                        type: "IfStatement",
+                        condition: {
+                            left: "isTrue",
+                            operator: "and",
+                            right: "isFalse",
+                        },
+                        consequent: [
+                            {
+                                type: "PrintStatement",
+                                value: "Both are booleans",
+                            },
+                        ],
+                        alternate: null,
+                    },
+                ],
+            },
+        },
+        {
+            description: "should process NOT operator correctly",
+            pseudocode: `
+                SET isTrue TO true
+                IF NOT isTrue THEN PRINT "isTrue is false" END IF
+            `,
+            expectedIR: {
+                program: [
+                    {
+                        type: "VariableDeclaration",
+                        name: "isTrue",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: true,
+                            line: 2,
+                        },
+                    },
+                    {
+                        type: "IfStatement",
+                        condition: {
+                            left: null,
+                            operator: "not",
+                            right: "isTrue",
+                        },
+                        consequent: [
+                            {
+                                type: "PrintStatement",
+                                value: "isTrue is false",
+                            },
+                        ],
+                        alternate: null,
+                    },
+                ],
+            },
+        },
+        {
+            description: "should process boolean comparisons correctly",
+            pseudocode: `
+                SET isTrue TO true
+                SET result TO isTrue = false
+            `,
+            expectedIR: {
+                program: [
+                    {
+                        type: "VariableDeclaration",
+                        name: "isTrue",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: true,
+                            line: 2,
+                        },
+                    },
+                    {
+                        type: "VariableDeclaration",
+                        name: "result",
+                        value: {
+                            type: "Expression",
+                            left: "isTrue",
+                            operator: "=",
+                            right: {
+                                type: "BooleanLiteral",
+                                value: false,
+                                line: 3,
+                            },
+                        },
+                    },
+                ],
+            },
+        },
+        {
+            description:
+                "should handle boolean expressions with mixed operators correctly",
+            pseudocode: `
+                SET isTrue TO true
+                SET isFalse TO false
+                IF isTrue AND NOT isFalse THEN 
+                    PRINT "Correct" 
+                OTHERWISE 
+                    PRINT "Incorrect" 
+                END IF
+            `,
+            expectedIR: {
+                program: [
+                    {
+                        type: "VariableDeclaration",
+                        name: "isTrue",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: true,
+                            line: 2,
+                        },
+                    },
+                    {
+                        type: "VariableDeclaration",
+                        name: "isFalse",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: false,
+                            line: 3,
+                        },
+                    },
+                    {
+                        type: "IfStatement",
+                        condition: {
+                            left: "isTrue",
+                            operator: "and",
+                            right: {
+                                type: "UnaryExpression",
+                                operator: "not",
+                                argument: "isFalse",
+                            },
+                        },
+                        consequent: [
+                            {
+                                type: "PrintStatement",
+                                value: "Correct",
+                            },
+                        ],
+                        alternate: [
+                            {
+                                type: "PrintStatement",
+                                value: "Incorrect",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+        {
+            description: "should handle complex boolean logic correctly",
+            pseudocode: `
+                SET isTrue TO true
+                SET isFalse TO false
+                IF isTrue OR (isFalse AND NOT isTrue) THEN 
+                    PRINT "Complex Condition Met" 
+                OTHERWISE 
+                    PRINT "Complex Condition Not Met" 
+                END IF
+            `,
+            expectedIR: {
+                program: [
+                    {
+                        type: "VariableDeclaration",
+                        name: "isTrue",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: true,
+                            line: 2,
+                        },
+                    },
+                    {
+                        type: "VariableDeclaration",
+                        name: "isFalse",
+                        value: {
+                            type: "BooleanLiteral",
+                            value: false,
+                            line: 3,
+                        },
+                    },
+                    {
+                        type: "IfStatement",
+                        condition: {
+                            left: "isTrue",
+                            operator: "or",
+                            right: {
+                                type: "Expression",
+                                left: "isFalse",
+                                operator: "and",
+                                right: {
+                                    type: "UnaryExpression",
+                                    operator: "not",
+                                    argument: "isTrue",
+                                },
+                            },
+                        },
+                        consequent: [
+                            {
+                                type: "PrintStatement",
+                                value: "Complex Condition Met",
+                            },
+                        ],
+                        alternate: [
+                            {
+                                type: "PrintStatement",
+                                value: "Complex Condition Not Met",
+                            },
+                        ],
+                    },
+                ],
+            },
+        },
+        {
             description: "should process variable declarations correctly",
             pseudocode: `SET x TO 10`,
             expectedIR: {

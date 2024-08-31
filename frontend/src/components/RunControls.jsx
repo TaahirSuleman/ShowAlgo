@@ -35,9 +35,10 @@ function RunControls({
   indexState,
   setOutput,
   setHighlightState,
-  isRestarting
+  isRestarting,
+  isRunning,
+  setIsRunning
 }) {
-  const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState(1);
   const speedOptions = [0.25, 0.5, 0.75, 1, 1.5, 2];
   const [isFinished, setIsFinished] = useState(false)
