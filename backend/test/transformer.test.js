@@ -20,6 +20,282 @@ describe("Transformer", () => {
         transformer = new Transformer();
     });
 
+    it("should correctly transform a basic indexing operation", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "myString",
+                    value: {
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                        line: 1,
+                    },
+                    line: 1,
+                },
+                {
+                    type: "VariableDeclaration",
+                    varName: "firstCharacter",
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "NumberLiteral",
+                            value: 0,
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "myString",
+                    value: {
+                        line: 1,
+                        type: "StringLiteral",
+                        value: "Hello, World!",
+                    },
+                },
+                {
+                    type: "VariableDeclaration",
+                    name: "firstCharacter",
+                    value: {
+                        type: "IndexExpression",
+                        source: "myString",
+                        index: 0,
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform indexing with a variable index", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "characterAtIndex",
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "Identifier",
+                            value: "index",
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "characterAtIndex",
+                    value: {
+                        type: "IndexExpression",
+                        source: "myString",
+                        index: "index",
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform indexing at the end of the string", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "lastCharacter",
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "Expression",
+                            left: {
+                                type: "LengthExpression",
+                                source: {
+                                    type: "Identifier",
+                                    value: "myString",
+                                    line: 2,
+                                },
+                                line: 2,
+                            },
+                            operator: "-",
+                            right: {
+                                type: "NumberLiteral",
+                                value: "1",
+                                line: 2,
+                            },
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "lastCharacter",
+                    value: {
+                        type: "IndexExpression",
+                        source: "myString",
+                        index: {
+                            type: "Expression",
+                            left: {
+                                type: "LengthExpression",
+                                source: "myString",
+                            },
+                            operator: "-",
+                            right: "1",
+                        },
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform indexing with a negative index", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "invalidCharacter",
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "Expression",
+                            left: {
+                                type: "NumberLiteral",
+                                value: "0",
+                                line: 2,
+                            },
+                            operator: "-",
+                            right: {
+                                type: "NumberLiteral",
+                                value: "1",
+                                line: 2,
+                            },
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "invalidCharacter",
+                    value: {
+                        type: "IndexExpression",
+                        source: "myString",
+                        index: {
+                            type: "Expression",
+                            left: "0",
+                            operator: "-",
+                            right: "1",
+                        },
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
+    it("should correctly transform indexing an empty string", () => {
+        const ast = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "emptyIndex",
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "emptyString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "NumberLiteral",
+                            value: "0",
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const expectedIR = {
+            program: [
+                {
+                    type: "VariableDeclaration",
+                    name: "emptyIndex",
+                    value: {
+                        type: "IndexExpression",
+                        source: "emptyString",
+                        index: "0",
+                    },
+                },
+            ],
+        };
+
+        const result = transformer.transform(ast);
+        expect(result).to.deep.equal(expectedIR);
+    });
+
     it("should correctly transform a simple length operation on a string", () => {
         const ast = {
             type: "Program",

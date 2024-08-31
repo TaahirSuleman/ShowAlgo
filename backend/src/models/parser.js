@@ -96,7 +96,15 @@ class Parser {
         }
 
         this.expect("Keyword", "to");
-        const value = this.parseExpression();
+        let value;
+        //console.log("before");
+        if (
+            this.currentToken().type === "Identifier" &&
+            this.peekNextToken().value === "["
+        ) {
+            console.log("in");
+            value = this.parseIndexExpression();
+        } else value = this.parseExpression();
         if (value.type === "BooleanLiteral") this.bools.add(varName);
         console.log(this.bools);
         return this.factory.createNode(
@@ -613,6 +621,11 @@ class Parser {
         ) {
             // Handle LENGTH OF operation
             left = this.parseLengthExpression();
+        } else if (
+            this.currentToken().type === "Keyword" &&
+            this.currentToken().value.toLowerCase() === "character"
+        ) {
+            left = this.parseIndexExpression(); // Handle high-level syntax
         } else {
             left = this.parseValue();
         }
@@ -689,6 +702,39 @@ class Parser {
         return this.factory.createNode(
             "LengthExpression",
             this.factory.createNode("Identifier", source.value, line),
+            line
+        );
+    }
+
+    parseIndexExpression() {
+        const line = this.currentToken().line;
+
+        let source;
+        let index;
+
+        // Determine if it's traditional or high-level syntax
+        if (
+            this.currentToken().type === "Keyword" &&
+            this.currentToken().value.toLowerCase() === "character"
+        ) {
+            // High-level syntax: CHARACTER AT index OF stringVariable
+            this.expect("Keyword", "character");
+            this.expect("Keyword", "at");
+            index = this.parseExpression(); // Parse the index expression
+            this.expect("Keyword", "of");
+            source = this.consume("Identifier").value;
+        } else {
+            // Traditional syntax: stringVariable[index]
+            source = this.consume("Identifier").value;
+            this.expect("Delimiter", "[");
+            index = this.parseExpression(); // Parse the index expression
+            this.expect("Delimiter", "]");
+        }
+
+        return this.factory.createNode(
+            "IndexExpression",
+            this.factory.createNode("Identifier", source, line),
+            index,
             line
         );
     }

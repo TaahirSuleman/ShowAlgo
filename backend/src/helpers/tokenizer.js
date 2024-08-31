@@ -210,6 +210,7 @@ class Tokenizer {
             "equal",
             "than",
             "length",
+            "character",
             // New combined keywords can be added here if needed
         ];
 

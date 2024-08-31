@@ -10,6 +10,240 @@ describe("Parser", () => {
         return parser.parse();
     }
 
+    it("should correctly parse a basic indexing operation", () => {
+        const pseudocode = `
+            SET firstCharacter TO CHARACTER AT 0 OF myString
+        `;
+
+        const expectedAST = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "firstCharacter",
+                    varType: null,
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "NumberLiteral",
+                            value: "0",
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const result = tokenizeAndParse(pseudocode);
+        expect(result).to.deep.equal(expectedAST);
+    });
+
+    it("should correctly parse indexing with a variable index", () => {
+        const pseudocode = `
+            SET characterAtIndex TO CHARACTER AT index OF myString
+        `;
+
+        const expectedAST = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "characterAtIndex",
+                    varType: null,
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "Identifier",
+                            value: "index",
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const result = tokenizeAndParse(pseudocode);
+        expect(result).to.deep.equal(expectedAST);
+    });
+
+    it("should correctly parse indexing at the end of the string", () => {
+        const pseudocode = `
+            SET lastCharacter TO CHARACTER AT LENGTH OF myString - 1 OF myString
+        `;
+
+        const expectedAST = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "lastCharacter",
+                    varType: null,
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "Expression",
+                            left: {
+                                type: "LengthExpression",
+                                source: {
+                                    type: "Identifier",
+                                    value: "myString",
+                                    line: 2,
+                                },
+                                line: 2,
+                            },
+                            operator: "-",
+                            right: {
+                                type: "NumberLiteral",
+                                value: "1",
+                                line: 2,
+                            },
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const result = tokenizeAndParse(pseudocode);
+        expect(result).to.deep.equal(expectedAST);
+    });
+
+    it("should correctly parse indexing with a negative index", () => {
+        const pseudocode = `
+            SET invalidCharacter TO CHARACTER AT -1 OF myString
+        `;
+
+        const expectedAST = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "invalidCharacter",
+                    varType: null,
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "Expression",
+                            left: {
+                                type: "NumberLiteral",
+                                value: 0,
+                                line: 2,
+                            },
+                            operator: "-",
+                            right: {
+                                type: "NumberLiteral",
+                                value: "1",
+                                line: 2,
+                            },
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const result = tokenizeAndParse(pseudocode);
+        expect(result).to.deep.equal(expectedAST);
+    });
+
+    it("should correctly parse indexing an empty string", () => {
+        const pseudocode = `
+            SET emptyIndex TO CHARACTER AT 0 OF emptyString
+        `;
+
+        const expectedAST = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "emptyIndex",
+                    varType: null,
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "emptyString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "NumberLiteral",
+                            value: "0",
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const result = tokenizeAndParse(pseudocode);
+        expect(result).to.deep.equal(expectedAST);
+    });
+
+    it("should correctly parse traditional syntax for a basic indexing operation", () => {
+        const pseudocode = `
+            SET firstCharacter TO myString[0]
+        `;
+
+        const expectedAST = {
+            type: "Program",
+            body: [
+                {
+                    type: "VariableDeclaration",
+                    varName: "firstCharacter",
+                    varType: null,
+                    value: {
+                        type: "IndexExpression",
+                        source: {
+                            type: "Identifier",
+                            value: "myString",
+                            line: 2,
+                        },
+                        index: {
+                            type: "NumberLiteral",
+                            value: "0",
+                            line: 2,
+                        },
+                        line: 2,
+                    },
+                    line: 2,
+                },
+            ],
+        };
+
+        const result = tokenizeAndParse(pseudocode);
+        expect(result).to.deep.equal(expectedAST);
+    });
+
     it("should correctly parse a LENGTH OF operation with a string containing special characters", () => {
         const pseudocode = `
             SET specialString TO string "@#$%^&*()"
