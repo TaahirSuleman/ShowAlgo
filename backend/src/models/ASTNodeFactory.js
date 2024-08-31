@@ -4,6 +4,7 @@ import PrintStatement from "./ast/PrintStatement.js";
 import ArrayCreation from "./ast/ArrayCreation.js";
 import ArrayInsertion from "./ast/ArrayInsertion.js";
 import IfStatement from "./ast/IfStatement.js";
+import OtherwiseIfStatement from "./ast/OtherwiseIfStatement.js";
 import FunctionDeclaration from "./ast/FunctionDeclaration.js";
 import FunctionCall from "./ast/FunctionCall.js";
 import ForLoop from "./ast/ForLoop.js";
@@ -33,6 +34,7 @@ class ASTNodeFactory {
             ArrayCreation,
             ArrayInsertion,
             IfStatement,
+            OtherwiseIfStatement,
             FunctionDeclaration,
             FunctionCall,
             ForLoop,

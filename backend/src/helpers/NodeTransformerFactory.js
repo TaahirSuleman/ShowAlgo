@@ -40,6 +40,20 @@ class NodeTransformerFactory {
                         ? transformer.transformNodes(node.alternate)
                         : null,
                 };
+            case "OtherwiseIfStatement":
+                return {
+                    type: "OtherwiseIfStatement",
+                    line: node.condition.line,
+                    endLine: node.line,
+                    otherwiseLine: node.alternate
+                        ? node.alternate[0].line
+                        : null,
+                    condition: transformer.transformCondition(node.condition),
+                    consequent: transformer.transformNodes(node.consequent),
+                    alternate: node.alternate
+                        ? transformer.transformNodes(node.alternate)
+                        : null,
+                };
             case "ForLoop":
                 return {
                     type: "ForLoop",

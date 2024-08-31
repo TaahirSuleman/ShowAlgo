@@ -7,6 +7,723 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it.skip("should correctly evaluate arithmetic and comparison expressions in otherwise if conditions", () => {
+        const pseudocode = `SET x TO number 5
+            IF x * 2 > 20 THEN
+                SET output TO string "Double x is greater than 20"
+            OTHERWISE IF x + 10 > 10 THEN
+                SET output TO string "x plus 10 is greater than 10"
+            OTHERWISE IF x - 3 < 5 THEN
+                SET output TO string "x minus 3 is less than 5"
+            OTHERWISE
+                SET output TO string "All conditions failed"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable x to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x * 2 > 20",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if double x > 20.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x + 10 > 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x plus 10 > 10.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "output",
+                    type: "string",
+                    value: "x plus 10 is greater than 10",
+                    timestamp: undefined,
+                    description:
+                        "Set output to 'x plus 10 is greater than 10'.",
+                },
+                {
+                    line: 10,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should handle multiple otherwise if conditions that all evaluate to false and execute a long otherwise block", () => {
+        const pseudocode = `SET age TO number 10
+            IF age > 65 THEN
+                SET status TO string "Senior"
+                SET discount TO string "20% on all items"
+                SET membership TO string "Gold"
+            OTHERWISE IF age > 40 THEN
+                SET status TO string "Adult"
+                SET discount TO string "10% on select items"
+                SET membership TO string "Silver"
+            OTHERWISE IF age > 18 THEN
+                SET status TO string "Young Adult"
+                SET discount TO string "5% on books"
+                SET membership TO string "Bronze"
+            OTHERWISE
+                SET status TO string "Child"
+                SET discount TO string "No discount"
+                SET membership TO string "None"
+                SET note TO string "Parental supervision required"
+                SET activity TO string "Eligible for children's events"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "age",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable age to 10.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "age > 65",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if age > 65.",
+                },
+                {
+                    line: 6,
+                    operation: "if",
+                    condition: "age > 40",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if age > 40.",
+                },
+                {
+                    line: 10,
+                    operation: "if",
+                    condition: "age > 18",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if age > 18.",
+                },
+                {
+                    line: 15,
+                    operation: "set",
+                    varName: "status",
+                    type: "string",
+                    value: "Child",
+                    timestamp: undefined,
+                    description: "Set variable status to Child.",
+                },
+                {
+                    line: 16,
+                    operation: "set",
+                    varName: "discount",
+                    type: "string",
+                    value: "No discount",
+                    timestamp: undefined,
+                    description: "Set variable discount to No discount.",
+                },
+                {
+                    line: 17,
+                    operation: "set",
+                    varName: "membership",
+                    type: "string",
+                    value: "None",
+                    timestamp: undefined,
+                    description: "Set variable membership to None.",
+                },
+                {
+                    line: 18,
+                    operation: "set",
+                    varName: "note",
+                    type: "string",
+                    value: "Parental supervision required",
+                    timestamp: undefined,
+                    description:
+                        "Set variable note to Parental supervision required.",
+                },
+                {
+                    line: 19,
+                    operation: "set",
+                    varName: "activity",
+                    type: "string",
+                    value: "Eligible for children's events",
+                    timestamp: undefined,
+                    description:
+                        "Set variable activity to Eligible for children's events.",
+                },
+                {
+                    line: 20,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should evaluate multiple otherwise if with a long if block", () => {
+        const pseudocode = `SET temp TO number 15
+            IF temp > 30 THEN
+                SET state TO string "Hot"
+                SET action TO string "Turn on AC"
+            OTHERWISE IF temp > 20 THEN
+                SET state TO string "Warm"
+                SET action TO string "Open windows"
+            OTHERWISE IF temp > 10 THEN
+                SET state TO string "Cool"
+                SET action TO string "Do nothing"
+            OTHERWISE
+                SET state TO string "Cold"
+                SET action TO string "Turn on heater"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "temp",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Set variable temp to 15.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "temp > 30",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if temp > 30.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "temp > 20",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if temp > 20.",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "temp > 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if temp > 10.",
+                },
+                {
+                    line: 9,
+                    operation: "set",
+                    varName: "state",
+                    type: "string",
+                    value: "Cool",
+                    timestamp: undefined,
+                    description: "Set variable state to Cool.",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "action",
+                    type: "string",
+                    value: "Do nothing",
+                    timestamp: undefined,
+                    description: "Set variable action to Do nothing.",
+                },
+                {
+                    line: 14,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should handle if with no true condition and no otherwise block", () => {
+        const pseudocode = `SET score TO number 65
+            IF score > 90 THEN
+                SET grade TO string "A"
+            OTHERWISE IF score > 80 THEN
+                SET grade TO string "B"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "score",
+                    type: "number",
+                    value: 65,
+                    timestamp: undefined,
+                    description: "Set variable score to 65.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "score > 90",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if score > 90.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "score > 80",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if score > 80.",
+                },
+                {
+                    line: 6,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly evaluate if with multiple otherwise if conditions and a big otherwise block", () => {
+        const pseudocode = `SET x TO number 25
+            IF x > 50 THEN
+                SET response TO string "Greater than 50"
+                SET detail TO string "High range"
+            OTHERWISE IF x > 30 THEN
+                SET response TO string "Greater than 30 but less than or equal to 50"
+                SET detail TO string "Mid range"
+            OTHERWISE
+                SET response TO string "30 or less"
+                SET detail TO string "Low range"
+                SET note TO string "Consideration needed"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 25,
+                    timestamp: undefined,
+                    description: "Set variable x to 25.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 50",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 50.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "x > 30",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 30.",
+                },
+                {
+                    line: 9,
+                    operation: "set",
+                    varName: "response",
+                    type: "string",
+                    value: "30 or less",
+                    timestamp: undefined,
+                    description: "Set variable response to 30 or less.",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "detail",
+                    type: "string",
+                    value: "Low range",
+                    timestamp: undefined,
+                    description: "Set variable detail to Low range.",
+                },
+                {
+                    line: 11,
+                    operation: "set",
+                    varName: "note",
+                    type: "string",
+                    value: "Consideration needed",
+                    timestamp: undefined,
+                    description: "Set variable note to Consideration needed.",
+                },
+                {
+                    line: 12,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should handle simple if condition", () => {
+        const pseudocode = `SET x TO number 5
+            IF x < 10 THEN
+                SET result TO string "Less than 10"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable x to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x < 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x < 10.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "result",
+                    type: "string",
+                    value: "Less than 10",
+                    timestamp: undefined,
+                    description: "Set variable result to Less than 10.",
+                },
+                {
+                    line: 4,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should evaluate nested if conditions", () => {
+        const pseudocode = `SET num TO number 15
+            IF num > 10 THEN
+                IF num < 20 THEN
+                    SET range TO string "Between 10 and 20"
+                END IF
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Set variable num to 15.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "num > 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if num > 10.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "num < 20",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if num < 20.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "range",
+                    type: "string",
+                    value: "Between 10 and 20",
+                    timestamp: undefined,
+                    description: "Set variable range to Between 10 and 20.",
+                },
+                {
+                    line: 5,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+                {
+                    line: 6,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should handle if with no true condition and an otherwise", () => {
+        const pseudocode = `SET value TO number 5
+            IF value > 10 THEN
+                SET response TO string "Greater than 10"
+            OTHERWISE
+                SET response TO string "10 or less"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "value",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable value to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "value > 10",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if value > 10.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "response",
+                    type: "string",
+                    value: "10 or less",
+                    timestamp: undefined,
+                    description: "Set variable response to 10 or less.",
+                },
+                {
+                    line: 6,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly evaluate if with multiple otherwise if conditions", () => {
+        const pseudocode = `SET x TO number 10
+            IF x > 20 THEN
+                SET y TO string "Greater than 20"
+            OTHERWISE IF x > 15 THEN
+                SET y TO string "Greater than 15 but less than or equal to 20"
+            OTHERWISE IF x > 10 THEN
+                SET y TO string "Greater than 10 but less than or equal to 15"
+            OTHERWISE
+                SET y TO string "10 or less"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable x to 10.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 20",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 20.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x > 15",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 15.",
+                },
+                {
+                    line: 6,
+                    operation: "if",
+                    condition: "x > 10",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 10.",
+                },
+                {
+                    line: 9,
+                    operation: "set",
+                    varName: "y",
+                    type: "string",
+                    value: "10 or less",
+                    timestamp: undefined,
+                    description: "Set variable y to 10 or less.",
+                },
+                {
+                    line: 10,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp; // Assigning timestamps from results to expected to match dynamically generated timestamps.
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly evaluate if with otherwise if conditions", () => {
+        const pseudocode = `SET x TO number 10
+            IF x > 15 THEN
+                SET y TO string "Greater than 15"
+            OTHERWISE IF x > 5 THEN
+                SET y TO string "Greater than 5 but less than or equal to 15"
+            OTHERWISE
+                SET y TO string "5 or less"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable x to 10.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 15",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 15.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x > 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 5.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "y",
+                    type: "string",
+                    value: "Greater than 5 but less than or equal to 15",
+                    timestamp: undefined,
+                    description:
+                        "Set variable y to Greater than 5 but less than or equal to 15.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
     it("should correctly evaluate a basic indexing operation", () => {
         const pseudocode = `SET myString TO "Hello, World!"
             SET firstCharacter TO CHARACTER AT 0 OF myString

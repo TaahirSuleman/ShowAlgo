@@ -19,6 +19,7 @@ class Tokenizer {
      */
     constructor(pseudocode) {
         this.pseudocode = pseudocode;
+        this.pseudocodeLines = pseudocode.split("\n"); // Split the pseudocode by lines
         this.currentIndex = 0;
         this.line = 1;
         this.strategies = this.createStrategies();
@@ -211,8 +212,27 @@ class Tokenizer {
             "than",
             "length",
             "character",
+            "otherwiseif",
             // New combined keywords can be added here if needed
         ];
+        if (value.toLowerCase() === "otherwise") {
+            console.log("line at:" + this.pseudocodeLines[this.line - 1]);
+            let lookaheadSpace = this.peekNextWord();
+            let lookahead = this.peekNextWord();
+            if (
+                String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("otherwise if")
+            ) {
+                this.consumeWhitespace(); // Consume any space between 'otherwise' and 'if'
+                for (let i = 0; i < lookahead.length; i++) {
+                    // Move currentIndex past 'if'
+                    this.currentIndex++;
+                }
+                console.log("after " + value);
+                value += "if"; // Combine 'otherwise' and 'if' to 'otherwise if'
+            }
+        }
 
         if (value.toLowerCase() === "display") {
             value = "print";
@@ -222,7 +242,6 @@ class Tokenizer {
         if (value.toLowerCase() === "for") {
             let peekValue = this.peekNextWord();
             if (peekValue.toLowerCase() === "loop") {
-                this.consumeWhitespace(); // Consume any space between 'for' and 'loop'
                 for (let i = 0; i < peekValue.length; i++) {
                     // Move currentIndex past 'loop'
                     this.currentIndex++;
@@ -231,11 +250,17 @@ class Tokenizer {
             }
         }
 
-        if (keywords.includes(value.toLowerCase())) {
+        if (
+            keywords.includes(value.toLowerCase()) ||
+            value.toLowerCase() === "otherwiseif"
+        ) {
             return {
                 type: "Keyword",
                 value: value.toLowerCase(),
-                line: this.line,
+                line:
+                    value.toLowerCase() === "otherwise"
+                        ? this.line - 1
+                        : this.line,
             };
         } else {
             return { type: "Identifier", value, line: this.line };

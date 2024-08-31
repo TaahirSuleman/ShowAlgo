@@ -187,6 +187,7 @@ class Parser {
         const consequent = [];
         while (
             this.currentToken().value.toLowerCase() !== "otherwise" &&
+            this.currentToken().value.toLowerCase() !== "otherwiseif" &&
             !(
                 this.currentToken().value.toLowerCase() === "end" &&
                 this.peekNextToken().value.toLowerCase() === "if"
@@ -195,6 +196,11 @@ class Parser {
             consequent.push(this.parseStatement());
         }
         let alternate = null;
+        if (this.currentToken().value.toLowerCase() === "otherwiseif") {
+            this.expect("Keyword", "otherwiseif");
+            alternate = [];
+            alternate.push(this.parseOtherwiseIfChain());
+        }
         if (this.currentToken().value.toLowerCase() === "otherwise") {
             this.expect("Keyword", "otherwise");
             alternate = [];
@@ -215,6 +221,50 @@ class Parser {
             consequent,
             alternate,
             line
+        );
+    }
+
+    parseOtherwiseIfChain() {
+        const condition = this.parseCondition();
+        this.expect("Keyword", "then");
+
+        const consequent = [];
+        while (
+            this.currentToken().value.toLowerCase() !== "otherwise" &&
+            this.currentToken().value.toLowerCase() !== "otherwiseif" &&
+            !(
+                this.currentToken().value.toLowerCase() === "end" &&
+                this.peekNextToken().value.toLowerCase() === "if"
+            )
+        ) {
+            consequent.push(this.parseStatement());
+        }
+
+        let alternate = null;
+
+        if (this.currentToken().value.toLowerCase() === "otherwiseif") {
+            this.expect("Keyword", "otherwiseif");
+            alternate = [];
+            alternate.push(this.parseOtherwiseIfChain());
+        } else if (this.currentToken().value.toLowerCase() === "otherwise") {
+            this.expect("Keyword", "otherwise");
+            alternate = [];
+            while (
+                !(
+                    this.currentToken().value.toLowerCase() === "end" &&
+                    this.peekNextToken().value.toLowerCase() === "if"
+                )
+            ) {
+                alternate.push(this.parseStatement());
+            }
+        }
+
+        return this.factory.createNode(
+            "OtherwiseIfStatement",
+            condition,
+            consequent,
+            alternate,
+            this.currentToken().line
         );
     }
 
