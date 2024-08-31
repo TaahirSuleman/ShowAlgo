@@ -117824,3 +117824,2911 @@ Final JSON: {
     }
   ]
 }
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 3
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums1",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums2",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "89",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 5
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "nums1",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "9",
+        "line": 6
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums1",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 7
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 7
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Learn the fundamentals and start building on AWS. Find best practices to help you launch your first application and get to know the AWS Management Console",
+        "line": 8
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "wordSubstring",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "10",
+        "end": "20"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "characterOfWord",
+      "value": {
+        "type": "IndexExpression",
+        "source": "words",
+        "index": "10"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "AnotherChar",
+      "value": {
+        "type": "IndexExpression",
+        "source": "words",
+        "index": "11"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-31T16:59:26.273Z",
+      "description": "Set variable x to 1."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        4,
+        5
+      ],
+      "timestamp": "2024-08-31T16:59:26.279Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "nums",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-31T16:59:26.279Z",
+      "description": "Set variable nums to 5."
+    },
+    {
+      "line": 4,
+      "operation": "create_array",
+      "varName": "nums1",
+      "value": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "timestamp": "2024-08-31T16:59:26.286Z",
+      "description": "Created array nums1."
+    },
+    {
+      "line": 5,
+      "operation": "create_array",
+      "varName": "nums2",
+      "value": [
+        8,
+        9,
+        8,
+        89,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-31T16:59:26.286Z",
+      "description": "Created array nums2."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "nums1",
+      "type": "number",
+      "value": 9,
+      "timestamp": "2024-08-31T16:59:26.286Z",
+      "description": "Set variable nums1 to 9."
+    },
+    {
+      "line": 7,
+      "operation": "create_array",
+      "varName": "nums1",
+      "value": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "timestamp": "2024-08-31T16:59:26.286Z",
+      "description": "Created array nums1."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "Learn the fundamentals and start building on AWS. Find best practices to help you launch your first application and get to know the AWS Management Console",
+      "timestamp": "2024-08-31T16:59:26.286Z",
+      "description": "Set variable words to Learn the fundamentals and start building on AWS. Find best practices to help you launch your first application and get to know the AWS Management Console."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "wordSubstring",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 10,
+        "end": 20,
+        "result": "fundamenta"
+      },
+      "timestamp": "2024-08-31T16:59:26.287Z",
+      "description": "Set variable wordSubstring to a substring of words from index 10 to 20."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "characterOfWord",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "string",
+        "varName": "words",
+        "index": 10,
+        "result": "f"
+      },
+      "timestamp": "2024-08-31T16:59:26.288Z",
+      "description": "Set variable characterOfWord to words[10]."
+    },
+    {
+      "line": 11,
+      "operation": "set",
+      "varName": "AnotherChar",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "string",
+        "varName": "words",
+        "index": 11,
+        "result": "u"
+      },
+      "timestamp": "2024-08-31T16:59:26.288Z",
+      "description": "Set variable AnotherChar to words[11]."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 3
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums1",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 4
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums2",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "89",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 5
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 5
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "nums1",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "9",
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Learn the fundamentals and start building on AWS. Find best practices to help you launch your first application and get to know the AWS Management Console",
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "wordSubstring",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "10",
+        "end": "20"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "characterOfWord",
+      "value": {
+        "type": "IndexExpression",
+        "source": "words",
+        "index": "10"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "AnotherChar",
+      "value": {
+        "type": "IndexExpression",
+        "source": "words",
+        "index": "11"
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums1",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 11
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 11
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 11
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 11
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 11
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-08-31T17:00:18.837Z",
+      "description": "Set variable x to 1."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        4,
+        5
+      ],
+      "timestamp": "2024-08-31T17:00:18.837Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "nums",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-08-31T17:00:18.837Z",
+      "description": "Set variable nums to 5."
+    },
+    {
+      "line": 4,
+      "operation": "create_array",
+      "varName": "nums1",
+      "value": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ],
+      "timestamp": "2024-08-31T17:00:18.839Z",
+      "description": "Created array nums1."
+    },
+    {
+      "line": 5,
+      "operation": "create_array",
+      "varName": "nums2",
+      "value": [
+        8,
+        9,
+        8,
+        89,
+        8,
+        9
+      ],
+      "timestamp": "2024-08-31T17:00:18.840Z",
+      "description": "Created array nums2."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "nums1",
+      "type": "number",
+      "value": 9,
+      "timestamp": "2024-08-31T17:00:18.840Z",
+      "description": "Set variable nums1 to 9."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "Learn the fundamentals and start building on AWS. Find best practices to help you launch your first application and get to know the AWS Management Console",
+      "timestamp": "2024-08-31T17:00:18.840Z",
+      "description": "Set variable words to Learn the fundamentals and start building on AWS. Find best practices to help you launch your first application and get to know the AWS Management Console."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "wordSubstring",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 10,
+        "end": 20,
+        "result": "fundamenta"
+      },
+      "timestamp": "2024-08-31T17:00:18.840Z",
+      "description": "Set variable wordSubstring to a substring of words from index 10 to 20."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "characterOfWord",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "string",
+        "varName": "words",
+        "index": 10,
+        "result": "f"
+      },
+      "timestamp": "2024-08-31T17:00:18.840Z",
+      "description": "Set variable characterOfWord to words[10]."
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "AnotherChar",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "string",
+        "varName": "words",
+        "index": 11,
+        "result": "u"
+      },
+      "timestamp": "2024-08-31T17:00:18.840Z",
+      "description": "Set variable AnotherChar to words[11]."
+    },
+    {
+      "line": 11,
+      "operation": "create_array",
+      "varName": "nums1",
+      "value": [
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "timestamp": "2024-08-31T17:00:18.840Z",
+      "description": "Created array nums1."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:14:18.762Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:14:18.762Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:19:09.973Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:19:09.973Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:21:24.047Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:21:24.048Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:27:17.446Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:27:17.446Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:33:09.592Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:33:09.592Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:33:40.790Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:33:40.790Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:34:49.095Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:34:49.095Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:38:21.569Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:38:21.569Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1000",
+        "line": 2
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:38:35.902Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 1000,
+      "timestamp": "2024-08-31T17:38:35.903Z",
+      "description": "Set variable x to 1000."
+    },
+    {
+      "line": 3,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:38:35.903Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1000",
+        "line": 2
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:40:26.135Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 1000,
+      "timestamp": "2024-08-31T17:40:26.135Z",
+      "description": "Set variable x to 1000."
+    },
+    {
+      "line": 3,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:40:26.135Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:42:25.896Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-08-31T17:42:25.896Z",
+      "description": "Set variable x to 11."
+    },
+    {
+      "line": 3,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:42:25.896Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:42:46.172Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-08-31T17:42:46.172Z",
+      "description": "Set variable x to 11."
+    },
+    {
+      "line": 3,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:42:46.172Z",
+      "description": "Created array nums."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "100",
+        "line": 4
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:43:34.025Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-08-31T17:43:34.025Z",
+      "description": "Set variable x to 11."
+    },
+    {
+      "line": 3,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:43:34.025Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "nums",
+      "type": "number",
+      "value": 100,
+      "timestamp": "2024-08-31T17:43:34.025Z",
+      "description": "Set variable nums to 100."
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        }
+      ]
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "100",
+        "line": 4
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "timestamp": "2024-08-31T17:44:27.939Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-08-31T17:44:27.939Z",
+      "description": "Set variable x to 11."
+    },
+    {
+      "line": 3,
+      "operation": "create_array",
+      "varName": "nums",
+      "value": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "timestamp": "2024-08-31T17:44:27.939Z",
+      "description": "Created array nums."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "nums",
+      "type": "number",
+      "value": 100,
+      "timestamp": "2024-08-31T17:44:27.940Z",
+      "description": "Set variable nums to 100."
+    }
+  ]
+}

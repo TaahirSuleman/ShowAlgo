@@ -27,8 +27,18 @@ function ArrayComponent(
   const [changedState, setChangedState] = useState("")
   const [gotState, setGotState] = useState("")
   const arrayRef = useRef();
+  const [arrayUpdating, setArrayUpdating] = useState(false)
 
-  
+  useEffect(() => {
+    // Update component state whenever arrayState prop changes
+    setValues(arrayState.values);
+    setLocations(arrayState.locations);
+    setArrayUpdating(true);
+    let timer = setTimeout(()=>{
+      setArrayUpdating(false);
+    },speedState*1000*0.80)
+    return () => clearTimeout(timer)
+}, [arrayState]);
 
   useEffect(() => {
     const operations = ["get","swap","add","remove","setArr","create_array","swapped"]
@@ -240,58 +250,46 @@ function ArrayComponent(
       )
     }
     return (
-      <div ref={arrayRef} style={{display: 'flex', flexDirection:'column'}}>
-      <p style={{fontWeight: "bold", fontSize: "larger"}}>{arrayName}</p>
-        <motion.div className="array-container" 
-        transition={{
-          type: "tween",
-          times: [0, 0.33, 0.66, 1],
-          duration: speedState,
-        }}
-        animate={{
-            borderColor: [
-            "#E2E8F0",
-            "#48BB78",
-            "#48BB78",
-            "#E2E8F0",
-          ],
-          borderLeftWidth: [
-            "10px",
-            "20px",
-            "20px",
-            "10px"
-          ]
-        }}
-        exit={{
-          borderLeftColor: "#F56565",
-          opacity: 0,
-          transition: { duration: speedState }
-        }}
+      <div ref={arrayRef} style={{ display: 'flex', flexDirection: 'column' }}>
+        <p style={{ fontWeight: "bold", fontSize: "larger" }}>{arrayName}</p>
+        <motion.div
+          className="array-container"
+          transition={{
+            type: "tween",
+            duration: speedState,
+          }}
+          animate={{
+            borderColor: arrayUpdating ? "#48BB78" : "#E2E8F0",
+            borderLeftWidth: arrayUpdating ? "20px" : "8px", // Animate the left border width change
+          }}
+          layout
+          exit={{
+            borderLeftColor: "#F56565",
+            opacity: 0,
+            transition: { duration: speedState }
+          }}
         >
-          {values.map((value, index) => {
-            return (
-              <ArrayBlockComponent
-                key = {value}
-                keyProp = {value}
-                id = {parseInt(value.substring(value.indexOf("-")+1))}
-                passedValue={value.substring(value.indexOf("++")+2,value.indexOf("-"))} 
-                movements={movements}
-                locations = {locations}
-                speedState= {speedState}
-                updateLocations = {updateLocations}
-                indexState = {indexState}
-                inserted = {addedState == value}
-                removed = {removedState == index} // Make removedState be a string, do this same matching.
-                swapped = {swappedState}
-                changed = {changedState == value}
-                got = {gotState == value}
-                setSwappedState={setSwappedState}
-              />
-            );
-          })}
-      </motion.div>
+          {values.map((value, index) => (
+            <ArrayBlockComponent
+              key={value}
+              keyProp={value}
+              id={parseInt(value.substring(value.indexOf("-") + 1))}
+              passedValue={value.substring(value.indexOf("++") + 2, value.indexOf("-"))}
+              movements={movements}
+              locations={locations}
+              speedState={speedState}
+              updateLocations={updateLocations}
+              indexState={indexState}
+              inserted={addedState === value}
+              removed={removedState === index}
+              swapped={swappedState}
+              changed={changedState === value}
+              got={gotState === value}
+              setSwappedState={setSwappedState}
+            />
+          ))}
+        </motion.div>
       </div>
-        
     );
   }
   
