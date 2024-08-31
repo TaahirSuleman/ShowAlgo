@@ -56,7 +56,8 @@
   max-width: 100%; /* Ensure it doesn't exceed the parent container width */
   padding: 10px; /* Optional: Add some padding for aesthetics */
   box-sizing: border-box;
- /* flex-wrap: wrap;*/
+  border-left: 10px solid #E2E8F0;
+  border-radius: 10px;
 }
 
 .variables-container {

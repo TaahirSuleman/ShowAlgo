@@ -12,13 +12,14 @@ function VariableListComponent({
     bufferState,
     setPauseState,
     arraysState,
+    setArraysState,
     variablesState,
-    setVariablesState
+    setVariablesState,
     }){
 
     let [updating, setUpdating] = useState("");
-    
     const [counter, setCounter] = useState(0);
+    
     const varRef = useRef();
 
     const delay = ms  => new Promise(res => setTimeout(res, ms));
@@ -38,8 +39,27 @@ function VariableListComponent({
                 movements[indexState].value,
                 movements[indexState].varName
               );
+              let arrayIndexCheck = arraysState.findIndex((obj) => obj.name === movements[indexState].varName);
+              if (arrayIndexCheck != -1){
+                console.log(arrayIndexCheck+" ARRAY INDEX CHECK")
+                setArraysState( (arrState)=>{
+                  let newArrs = [...arrState];
+                  newArrs.splice(arrayIndexCheck, 1);
+                  console.log(newArrs); // Logging the updated array after deletion
+                  return newArrs; 
+                })
+              }
+              setOutput((prev) => {
+                return [...prev, movements[indexState].description];
+              });
+              const timeoutId2 = setTimeout(() => {
+                setIndexState((i) => {
+                  return i + 1;
+                });
+              }, speedState * 1000);
+              return () => clearTimeout(timeoutId2);
             }
-            else {
+            else {// Only accounts for strings at the moment
               let innerMovement = movements[indexState].value
               updateVariablesState(
                 "string",
@@ -47,15 +67,6 @@ function VariableListComponent({
                 movements[indexState].varName
               )
             }
-            setOutput((prev) => {
-              return [...prev, movements[indexState].description];
-            });
-            const timeoutId2 = setTimeout(() => {
-              setIndexState((i) => {
-                return i + 1;
-              });
-            }, speedState * 1000);
-            return () => clearTimeout(timeoutId2);
           } else if (movements[indexState].operation == "get") {
             varRef.current.scrollIntoView({
               behavior: "smooth",

@@ -242,7 +242,32 @@ function ArrayComponent(
     return (
       <div ref={arrayRef} style={{display: 'flex', flexDirection:'column'}}>
       <p style={{fontWeight: "bold", fontSize: "larger"}}>{arrayName}</p>
-        <motion.div className="array-container">
+        <motion.div className="array-container" 
+        transition={{
+          type: "tween",
+          times: [0, 0.33, 0.66, 1],
+          duration: speedState,
+        }}
+        animate={{
+            borderColor: [
+            "#E2E8F0",
+            "#48BB78",
+            "#48BB78",
+            "#E2E8F0",
+          ],
+          borderLeftWidth: [
+            "10px",
+            "20px",
+            "20px",
+            "10px"
+          ]
+        }}
+        exit={{
+          borderLeftColor: "#F56565",
+          opacity: 0,
+          transition: { duration: speedState }
+        }}
+        >
           {values.map((value, index) => {
             return (
               <ArrayBlockComponent

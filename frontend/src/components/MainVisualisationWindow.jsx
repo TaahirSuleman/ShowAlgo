@@ -6,6 +6,7 @@ import StringVisualisationComponent from "./StringVisualisationComponent"
 import { useState, useEffect } from 'react';
 import '../styles/App.css';
 import { Box } from "@chakra-ui/react";
+import { AnimatePresence, motion } from 'framer-motion';
 
 
 function MainVisualisationWindow({
@@ -33,6 +34,17 @@ function MainVisualisationWindow({
             if (indexState > -1 && indexState < movementsState.length && !pauseState) {
                 const movement = movementsState[indexState];
                 if (movement.operation === "create_array") {
+                  let varCheck = variablesState.findIndex((obj) => obj.name === movement.varName);
+                  console.log(varCheck+" THE VAR CHECK")
+                  if (varCheck != -1){
+                    setVariablesState( (varState)=>{
+                      let newVars = [...varState];
+                      // Remove the element at the found index
+                      newVars.splice(varCheck, 1);
+                      console.log(newVars); // Logging the updated array after deletion
+                      return newVars; 
+                    })
+                  }
                     const valuesArr = movement.value.map((value, i) =>
                         `${movement.varName}++${value}-${i}`
                     );
@@ -87,6 +99,7 @@ function MainVisualisationWindow({
             pauseState={pauseState}
             setPauseState={setPauseState}
             arraysState={arraysState}
+            setArraysState={setArraysState}
             setOutput={setOutput}
             bufferState={bufferState}
             variablesState={variablesState}
@@ -128,6 +141,7 @@ function MainVisualisationWindow({
                 variablesState={variablesState}
                 setVariablesState={setVariablesState}
             />
+            <AnimatePresence>
             {arraysState.map((array, i) => (
               <ArrayComponent
                 key={array.name}
@@ -145,6 +159,7 @@ function MainVisualisationWindow({
                 bufferState={bufferState}
               />
             ))}
+            </AnimatePresence>
           </div>
         </Box>
       );
