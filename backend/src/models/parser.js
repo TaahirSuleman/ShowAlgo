@@ -38,6 +38,8 @@ class Parser {
     parseStatement() {
         const token = this.currentToken();
         switch (token.value.toLowerCase()) {
+            case "set_array":
+                return this.parseArraySetValue();
             case "set":
                 return this.parseVariableDeclaration();
             case "print":
@@ -46,6 +48,8 @@ class Parser {
                 return this.parseArrayCreation();
             case "insert":
                 return this.parseArrayInsertion();
+            case "remove":
+                return this.parseRemoveOperation();
             case "if":
                 return this.parseIfStatement();
             case "define":
@@ -97,8 +101,14 @@ class Parser {
 
         this.expect("Keyword", "to");
         let value;
-        //console.log("before");
+        // Check if the next token indicates a function call
         if (
+            this.currentToken().type === "Keyword" &&
+            this.currentToken().value.toLowerCase() === "call"
+        ) {
+            // Parse the function call
+            value = this.parseFunctionCall();
+        } else if (
             this.currentToken().type === "Identifier" &&
             this.peekNextToken().value === "["
         ) {
@@ -136,14 +146,65 @@ class Parser {
     parseArrayCreation() {
         const line = this.currentToken().line;
         this.expect("Keyword", "create");
+        const arrayType = this.consume("Keyword").value; // Capture the array type (number, string, etc.)
         this.expect("Keyword", "array");
         this.expect("Keyword", "as");
         const varName = this.consume("Identifier").value;
         this.expect("Keyword", "with");
-        this.expect("Delimiter", "[");
-        const values = this.parseValueList();
-        this.expect("Delimiter", "]");
-        return this.factory.createNode("ArrayCreation", varName, values, line);
+
+        let values = [];
+        let unInitialised = false;
+        if (this.currentToken().value.toLowerCase() === "values") {
+            this.consume("Keyword", "values");
+            this.expect("Delimiter", "[");
+            values = this.parseValueList(arrayType);
+            this.expect("Delimiter", "]");
+        } else if (this.currentToken().value.toLowerCase() === "size") {
+            this.consume("Keyword", "size");
+            const size = parseInt(this.consume("Number").value);
+            values = this.initializeArrayWithDefaultValues(arrayType, size);
+            unInitialised = true;
+        } else {
+            throw new Error(
+                `Expected 'values' or 'size', but found ${
+                    this.currentToken().value
+                } at line ${line}`
+            );
+        }
+
+        return this.factory.createNode(
+            "ArrayCreation",
+            varName,
+            arrayType,
+            values,
+            unInitialised,
+            line
+        );
+    }
+
+    /**
+     * @method initializeArrayWithDefaultValues
+     * @description Initializes an array with default values based on the specified type.
+     * @param {string} arrayType - The type of the array (number, string, boolean).
+     * @param {number} size - The size of the array.
+     * @returns {Array} An array of the specified size with default values.
+     */
+    initializeArrayWithDefaultValues(arrayType, size) {
+        let defaultValue;
+        switch (arrayType.toLowerCase()) {
+            case "number":
+                defaultValue = 0;
+                break;
+            case "string":
+                defaultValue = "";
+                break;
+            case "boolean":
+                defaultValue = false;
+                break;
+            default:
+                throw new Error(`Unknown array type: ${arrayType}`);
+        }
+        return Array(size).fill(defaultValue);
     }
 
     /**
@@ -170,6 +231,51 @@ class Parser {
     }
 
     /**
+     * @method parseArraySetValue
+     * @description Parses a statement that sets a specific value in an array.
+     * @returns {ArraySetValue} The AST node representing the array set value operation.
+     */
+    parseArraySetValue() {
+        const line = this.currentToken().line;
+        this.expect("Identifier", "set_array"); // Expect the 'set_array' identifier
+        this.expect("Keyword", "element");
+        const position = this.parseExpression(); // Parse the index
+        this.expect("Keyword", "of");
+        const varName = this.consume("Identifier").value; // The array variable name
+        this.expect("Keyword", "to");
+        const newValue = this.parseExpression(); // The new value to set
+
+        return this.factory.createNode(
+            "ArraySetValue",
+            varName,
+            position,
+            newValue,
+            line
+        );
+    }
+
+    /**
+     * @method parseRemoveOperation
+     * @description Parses a remove operation for arrays or collections.
+     * @returns {RemoveOperation} The AST node representing the remove operation.
+     */
+    parseRemoveOperation() {
+        const line = this.currentToken().line;
+        this.expect("Keyword", "remove");
+        this.expect("Keyword", "element");
+        const positionToRemove = this.parseExpression(); // Parse the index or position to remove
+        this.expect("Keyword", "from");
+        const varName = this.consume("Identifier").value; // The array or collection variable name
+
+        return this.factory.createNode(
+            "RemoveOperation",
+            varName,
+            positionToRemove,
+            line
+        );
+    }
+
+    /**
      * @method parseIfStatement
      * @description Parses an if statement with optional else clause.
      * @returns {IfStatement} The AST node representing the if statement.
@@ -187,6 +293,7 @@ class Parser {
         const consequent = [];
         while (
             this.currentToken().value.toLowerCase() !== "otherwise" &&
+            this.currentToken().value.toLowerCase() !== "otherwiseif" &&
             !(
                 this.currentToken().value.toLowerCase() === "end" &&
                 this.peekNextToken().value.toLowerCase() === "if"
@@ -195,6 +302,11 @@ class Parser {
             consequent.push(this.parseStatement());
         }
         let alternate = null;
+        if (this.currentToken().value.toLowerCase() === "otherwiseif") {
+            this.expect("Keyword", "otherwiseif");
+            alternate = [];
+            alternate.push(this.parseOtherwiseIfChain());
+        }
         if (this.currentToken().value.toLowerCase() === "otherwise") {
             this.expect("Keyword", "otherwise");
             alternate = [];
@@ -215,6 +327,50 @@ class Parser {
             consequent,
             alternate,
             line
+        );
+    }
+
+    parseOtherwiseIfChain() {
+        const condition = this.parseCondition();
+        this.expect("Keyword", "then");
+
+        const consequent = [];
+        while (
+            this.currentToken().value.toLowerCase() !== "otherwise" &&
+            this.currentToken().value.toLowerCase() !== "otherwiseif" &&
+            !(
+                this.currentToken().value.toLowerCase() === "end" &&
+                this.peekNextToken().value.toLowerCase() === "if"
+            )
+        ) {
+            consequent.push(this.parseStatement());
+        }
+
+        let alternate = null;
+
+        if (this.currentToken().value.toLowerCase() === "otherwiseif") {
+            this.expect("Keyword", "otherwiseif");
+            alternate = [];
+            alternate.push(this.parseOtherwiseIfChain());
+        } else if (this.currentToken().value.toLowerCase() === "otherwise") {
+            this.expect("Keyword", "otherwise");
+            alternate = [];
+            while (
+                !(
+                    this.currentToken().value.toLowerCase() === "end" &&
+                    this.peekNextToken().value.toLowerCase() === "if"
+                )
+            ) {
+                alternate.push(this.parseStatement());
+            }
+        }
+
+        return this.factory.createNode(
+            "OtherwiseIfStatement",
+            condition,
+            consequent,
+            alternate,
+            this.currentToken().line
         );
     }
 
@@ -742,16 +898,60 @@ class Parser {
     /**
      * @method parseValueList
      * @description Parses a list of values, typically for array initialization.
+     *              Checks each value to ensure it matches the expected type.
+     * @param {string} expectedType - The expected type of the array elements (e.g., "number", "string", "boolean").
      * @returns {Array<ASTNode>} An array of AST nodes representing the values.
+     * @throws {Error} If a value does not match the expected type.
      */
-    parseValueList() {
+    parseValueList(expectedType) {
         const values = [];
-        values.push(this.parseValue());
+        values.push(this.parseAndValidateValue(expectedType));
+
         while (this.currentToken().value === ",") {
             this.consume("Delimiter", ",");
-            values.push(this.parseValue());
+            values.push(this.parseAndValidateValue(expectedType));
         }
+
         return values;
+    }
+
+    /**
+     * @method parseAndValidateValue
+     * @description Parses a single value and validates that it matches the expected type.
+     * @param {string} expectedType - The expected type of the value (e.g., "number", "string", "boolean").
+     * @returns {ASTNode} The AST node representing the value.
+     * @throws {Error} If the value does not match the expected type.
+     */
+    parseAndValidateValue(expectedType) {
+        const valueNode = this.parseValue();
+        const valueType = this.determineValueType(valueNode);
+
+        if (valueType !== expectedType) {
+            throw new Error(
+                `Array type mismatch: Expected ${expectedType} but found ${valueType} at line ${valueNode.line}`
+            );
+        }
+
+        return valueNode;
+    }
+
+    /**
+     * @method determineValueType
+     * @description Determines the type of a value based on the AST node.
+     * @param {ASTNode} valueNode - The AST node representing the value.
+     * @returns {string} The type of the value (e.g., "number", "string", "boolean").
+     */
+    determineValueType(valueNode) {
+        switch (valueNode.type) {
+            case "NumberLiteral":
+                return "number";
+            case "StringLiteral":
+                return "string";
+            case "BooleanLiteral":
+                return "boolean";
+            default:
+                throw new Error(`Unknown value type: ${valueNode.type}`);
+        }
     }
 
     /**

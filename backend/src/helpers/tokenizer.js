@@ -19,6 +19,7 @@ class Tokenizer {
      */
     constructor(pseudocode) {
         this.pseudocode = pseudocode;
+        this.pseudocodeLines = pseudocode.split("\n"); // Split the pseudocode by lines
         this.currentIndex = 0;
         this.line = 1;
         this.strategies = this.createStrategies();
@@ -185,6 +186,9 @@ class Tokenizer {
             "boolean",
             "create",
             "array",
+            "size",
+            "values",
+            "element",
             "as",
             "with",
             "insert",
@@ -211,8 +215,46 @@ class Tokenizer {
             "than",
             "length",
             "character",
+            "otherwiseif",
+            "remove",
             // New combined keywords can be added here if needed
         ];
+        if (value.toLowerCase() === "set") {
+            if (
+                String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("set element")
+            )
+                value = "set_array";
+        } else if (value.toLowerCase() === "element") {
+            if (
+                String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("element at")
+            )
+                value = "character"; // treat array indexing the same as substring - making it transparent for the subsequent stages while allowing differentiation within the SPL between 'ELEMENT AT' for arrays and 'CHARACTER AT' for strings.
+        }
+        if (value.toLowerCase() === "else") value = "otherwise";
+        if (value.toLowerCase() === "otherwise") {
+            let lookaheadSpace = this.peekNextWord();
+            let lookahead = this.peekNextWord();
+            if (
+                String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("otherwise if") ||
+                String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("else if")
+            ) {
+                this.consumeWhitespace(); // Consume any space between 'otherwise' and 'if'
+                for (let i = 0; i < lookahead.length; i++) {
+                    // Move currentIndex past 'if'
+                    this.currentIndex++;
+                }
+                console.log("after " + value);
+                value += "if"; // Combine 'otherwise' and 'if' to 'otherwise if'
+            }
+        }
 
         if (value.toLowerCase() === "display") {
             value = "print";
@@ -222,7 +264,6 @@ class Tokenizer {
         if (value.toLowerCase() === "for") {
             let peekValue = this.peekNextWord();
             if (peekValue.toLowerCase() === "loop") {
-                this.consumeWhitespace(); // Consume any space between 'for' and 'loop'
                 for (let i = 0; i < peekValue.length; i++) {
                     // Move currentIndex past 'loop'
                     this.currentIndex++;
@@ -231,11 +272,17 @@ class Tokenizer {
             }
         }
 
-        if (keywords.includes(value.toLowerCase())) {
+        if (
+            keywords.includes(value.toLowerCase()) ||
+            value.toLowerCase() === "otherwiseif"
+        ) {
             return {
                 type: "Keyword",
                 value: value.toLowerCase(),
-                line: this.line,
+                line:
+                    value.toLowerCase() === "otherwise"
+                        ? this.line - 1
+                        : this.line,
             };
         } else {
             return { type: "Identifier", value, line: this.line };

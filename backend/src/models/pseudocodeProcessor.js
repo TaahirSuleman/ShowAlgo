@@ -18,7 +18,7 @@ class PseudocodeProcessor {
 
         const parser = new Parser(tokens);
         const ast = parser.parse();
-        //PseudocodeProcessor.writeToFile("AST: " + JSON.stringify(ast, null, 2));
+        PseudocodeProcessor.writeToFile("AST: " + JSON.stringify(ast, null, 2));
 
         const transformer = new Transformer();
         const ir = transformer.transform(ast);

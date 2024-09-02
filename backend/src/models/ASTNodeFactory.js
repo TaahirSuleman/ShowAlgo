@@ -4,6 +4,7 @@ import PrintStatement from "./ast/PrintStatement.js";
 import ArrayCreation from "./ast/ArrayCreation.js";
 import ArrayInsertion from "./ast/ArrayInsertion.js";
 import IfStatement from "./ast/IfStatement.js";
+import OtherwiseIfStatement from "./ast/OtherwiseIfStatement.js";
 import FunctionDeclaration from "./ast/FunctionDeclaration.js";
 import FunctionCall from "./ast/FunctionCall.js";
 import ForLoop from "./ast/ForLoop.js";
@@ -20,7 +21,8 @@ import EndIf from "./ast/EndIf.js";
 import SubstringExpression from "./ast/SubstringExpression.js";
 import LengthExpression from "./ast/LengthExpression.js";
 import IndexExpression from "./ast/IndexExpression.js";
-
+import RemoveOperation from "./ast/RemoveOperation.js";
+import ArraySetValue from "./ast/ArraySetValue.js";
 /**
  * ASTNodeFactory class responsible for creating instances of AST nodes.
  */
@@ -33,6 +35,7 @@ class ASTNodeFactory {
             ArrayCreation,
             ArrayInsertion,
             IfStatement,
+            OtherwiseIfStatement,
             FunctionDeclaration,
             FunctionCall,
             ForLoop,
@@ -49,6 +52,8 @@ class ASTNodeFactory {
             SubstringExpression,
             LengthExpression,
             IndexExpression,
+            RemoveOperation,
+            ArraySetValue,
         };
     }
 

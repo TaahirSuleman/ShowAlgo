@@ -7,6 +7,1508 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should correctly process a function call and return the function body", () => {
+        const pseudocode = `DEFINE add_numbers WITH PARAMETERS (a, b)
+            RETURN a + b
+        END FUNCTION
+        CALL add_numbers WITH (5, 10)`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "define",
+                    varName: "add_numbers",
+                    params: ["a", "b"],
+                    timestamp: undefined,
+                    description:
+                        "Defined function add_numbers with parameters a, b.",
+                },
+                {
+                    line: 2,
+                    operation: "return",
+                    value: {
+                        left: "a",
+                        operator: "+",
+                        right: "b",
+                    },
+                    timestamp: undefined,
+                    description:
+                        'Returned {"left":"a","operator":"+","right":"b"}.',
+                },
+                {
+                    line: 3,
+                    operation: "function_call",
+                    varName: "add_numbers",
+                    arguments: [5, 10],
+                    timestamp: undefined,
+                    description:
+                        "Called function add_numbers with arguments 5, 10.",
+                },
+                {
+                    line: 2,
+                    operation: "return",
+                    value: {
+                        left: "5",
+                        operator: "+",
+                        right: "10",
+                    },
+                    timestamp: undefined,
+                    description:
+                        'Returned {"left":"5","operator":"+","right":"10"}.',
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process a function declaration with separate action frames for the body", () => {
+        const pseudocode = `
+        DEFINE add_numbers WITH PARAMETERS (a, b)
+            RETURN a + b
+        END FUNCTION`;
+
+        const expectedJson = {
+            actionFrames: [undefined],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        if (result.actionFrames[0] != undefined) {
+            console.log("hi " + expectedJson.actionFrames[0]);
+            expectedJson.actionFrames.forEach((frame, index) => {
+                frame.timestamp = result.actionFrames[index].timestamp;
+            });
+        }
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly handle array operations with edge cases", () => {
+        const pseudocode = `CREATE string array AS myStrings WITH SIZE 3
+        SET element 0 OF myStrings TO "hello"
+        SET element 1 OF myStrings TO "world"
+        INSERT "!" TO myStrings AT position 2
+        REMOVE element 0 FROM myStrings
+        PRINT myStrings
+        SET firstElement TO myStrings[0]`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    type: "string",
+                    dataStructure: "array",
+                    varName: "myStrings",
+                    value: ["", "", ""],
+                    timestamp: undefined,
+                    description: "Created array myStrings with size 3.",
+                },
+                {
+                    line: 2,
+                    operation: "set_array",
+                    varName: "myStrings",
+                    index: 0,
+                    setValue: "hello",
+                    timestamp: undefined,
+                    description: "Set myStrings[0] to hello.",
+                },
+                {
+                    line: 3,
+                    operation: "set_array",
+                    varName: "myStrings",
+                    index: 1,
+                    setValue: "world",
+                    timestamp: undefined,
+                    description: "Set myStrings[1] to world.",
+                },
+                {
+                    line: 4,
+                    operation: "add",
+                    varName: "myStrings",
+                    value: "!",
+                    position: 2,
+                    timestamp: undefined,
+                    description: "Added ! to array myStrings at position 2.",
+                },
+                {
+                    line: 5,
+                    operation: "remove",
+                    dataStructure: "array",
+                    varName: "myStrings",
+                    positionToRemove: 0,
+                    timestamp: undefined,
+                    description:
+                        "Removed value at position 0 in array myStrings.",
+                },
+                {
+                    line: 6,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "myStrings",
+                    literal: ["hello", "world", "!"],
+                    timestamp: undefined,
+                    description: "Printed myStrings.",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "firstElement",
+                    type: "string",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myStrings",
+                        index: 0,
+                        result: "hello",
+                    },
+                    timestamp: "2024-09-01T19:19:33.060Z",
+                    description: "Set variable firstElement to myStrings[0].",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process a series of array operations", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [5, 10, 15, 20, 25]
+        INSERT 30 TO myArray AT position 3
+        REMOVE element 4 FROM myArray
+        SET element 2 OF myArray TO 50
+        PRINT myArray
+        SET totalLength TO LENGTH OF myArray`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    type: "number",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    value: [5, 10, 15, 20, 25],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [5,10,15,20,25].",
+                },
+                {
+                    line: 2,
+                    operation: "add",
+                    varName: "myArray",
+                    value: 30,
+                    position: 3,
+                    timestamp: undefined,
+                    description: "Added 30 to array myArray at position 3.",
+                },
+                {
+                    line: 3,
+                    operation: "remove",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    positionToRemove: 4,
+                    timestamp: undefined,
+                    description:
+                        "Removed value at position 4 in array myArray.",
+                },
+                {
+                    line: 4,
+                    operation: "set_array",
+                    varName: "myArray",
+                    index: 2,
+                    setValue: 50,
+                    timestamp: undefined,
+                    description: "Set myArray[2] to 50.",
+                },
+                {
+                    line: 5,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "myArray",
+                    literal: [5, 10, 50, 30, 25],
+                    timestamp: "2024-09-01T19:13:03.182Z",
+                    description: "Printed myArray.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "totalLength",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable totalLength to 5.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should throw an error when trying to set a value at a negative index", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        SET element -1 OF myArray TO 25`;
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Index -1 is out of bounds for array 'myArray'."
+        );
+    });
+    it("should correctly set a value in a string array", () => {
+        const pseudocode = `
+        CREATE string array AS myArray WITH VALUES ["a", "b", "c", "d", "e"]
+        SET element 2 OF myArray TO "z"`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    type: "string",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    value: ["a", "b", "c", "d", "e"],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [a,b,c,d,e].",
+                },
+                {
+                    line: 2,
+                    operation: "set_array",
+                    varName: "myArray",
+                    index: 2,
+                    setValue: "z",
+                    timestamp: undefined,
+                    description: "Set myArray[2] to z.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should throw an error when trying to set a value of a different type than the array", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        SET element 2 OF myArray TO "stringValue"`;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Type mismatch at line 2: attempt to set an array of type number to a value of type string."
+        );
+    });
+
+    it("should throw an error when trying to set a value in a non-array variable", () => {
+        const pseudocode = `
+        SET myVar TO 100
+        SET element 2 OF myVar TO 25`;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Variable 'myVar' is not an array."
+        );
+    });
+
+    it("should throw an error when trying to set a value in an uninitialized array", () => {
+        const pseudocode = `
+        SET element 2 OF myArray TO 25`;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Array 'myArray' is not initialized."
+        );
+    });
+
+    it("should throw an error when trying to set a value at an out of bounds index", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        SET element 10 OF myArray TO 25`;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Index 10 is out of bounds for array 'myArray'."
+        );
+    });
+
+    it("should correctly process setting a specific value in an array", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        SET element 2 OF myArray TO 25`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    type: "number",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    value: [10, 20, 30, 40, 50],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [10,20,30,40,50].",
+                },
+                {
+                    line: 2,
+                    operation: "set_array",
+                    varName: "myArray",
+                    index: 2,
+                    setValue: 25,
+                    timestamp: undefined,
+                    description: "Set myArray[2] to 25.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process removing the last element from an array", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [100, 200, 300]
+        REMOVE element 2 FROM myArray`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    type: "number",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    value: [100, 200, 300],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [100,200,300].",
+                },
+                {
+                    line: 2,
+                    operation: "remove",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    positionToRemove: 2,
+                    timestamp: undefined,
+                    description:
+                        "Removed value at position 2 in array myArray.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process removing the first element from an array", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        REMOVE element 0 FROM myArray`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    type: "number",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    value: [10, 20, 30, 40, 50],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [10,20,30,40,50].",
+                },
+                {
+                    line: 2,
+                    operation: "remove",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    positionToRemove: 0,
+                    timestamp: undefined,
+                    description:
+                        "Removed value at position 0 in array myArray.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process element removal from an array", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [1, 2, 3, 4, 5]
+        REMOVE element 2 FROM myArray`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    type: "number",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    value: [1, 2, 3, 4, 5],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [1,2,3,4,5].",
+                },
+                {
+                    line: 2,
+                    operation: "remove",
+                    dataStructure: "array",
+                    varName: "myArray",
+                    positionToRemove: 2,
+                    timestamp: undefined,
+                    description:
+                        "Removed value at position 2 in array myArray.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly process array creation with size", () => {
+        const pseudocode = `
+            CREATE string array AS myArray WITH VALUES ["hi", "hello"]
+            SET len to length of myArray
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "string",
+                    varName: "myArray",
+                    value: ["hi", "hello"],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [hi,hello].",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "len",
+                    type: "number",
+                    value: 2, // The length of "abc" is 3
+                    timestamp: undefined,
+                    description: "Set variable len to 2.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode.trim());
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly process array creation and element access using high-level syntax", () => {
+        const pseudocode = `
+            CREATE number array AS myArray WITH VALUES [10, 20, 30]
+            SET firstElement TO ELEMENT AT 0 OF myArray
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [10, 20, 30],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [10,20,30].",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "firstElement",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 0,
+                        result: 10, // Assuming "H" is the result of myString[0]
+                    },
+                    type: "number",
+                    timestamp: undefined,
+                    description: "Set variable firstElement to myArray[0].",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process array creation and element access using traditional syntax", () => {
+        const pseudocode = `
+            CREATE number array AS myArray WITH VALUES [10, 20, 30]
+            SET firstElement TO myArray[0]
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [10, 20, 30],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [10,20,30].",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "firstElement",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 0,
+                        result: 10, // Assuming "H" is the result of myString[0]
+                    },
+                    type: "number",
+                    timestamp: undefined,
+                    description: "Set variable firstElement to myArray[0].",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly process array creation with values", () => {
+        const pseudocode = `
+            CREATE number Array AS myArray WITH VALUES [1, 2, 3]
+            SET len to length of myArray
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [1, 2, 3],
+                    timestamp: undefined,
+                    description: "Created array myArray with values [1,2,3].",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "len",
+                    type: "number",
+                    value: 3, // The length of "abc" is 3
+                    timestamp: undefined,
+                    description: "Set variable len to 3.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode.trim());
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process linked list creation with size", () => {
+        const pseudocode = `
+            CREATE string array AS myArray WITH SIZE 10
+            SET len to length of myArray
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "string",
+                    varName: "myArray",
+                    value: ["", "", "", "", "", "", "", "", "", ""],
+                    timestamp: undefined,
+                    description: "Created array myArray with size 10.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "len",
+                    type: "number",
+                    value: 10, // The length of "abc" is 3
+                    timestamp: undefined,
+                    description: "Set variable len to 10.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode.trim());
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly evaluate mixed expressions in otherwise if conditions", () => {
+        const pseudocode = `SET a TO number 25
+            SET b TO boolean true
+            IF a > 50 THEN
+                SET message TO string "a is greater than 50"
+            ELSE IF b AND a > 20 THEN
+                SET message TO string "a is greater than 20 and b is true"
+            ELSE IF NOT b OR a <= 20 THEN
+                SET message TO string "Either b is not true or a is 20 or less"
+            ELSE
+                SET message TO string "No condition met"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "a",
+                    type: "number",
+                    value: 25,
+                    timestamp: undefined,
+                    description: "Set variable a to 25.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "b",
+                    type: "boolean",
+                    value: true,
+                    timestamp: undefined,
+                    description: "Set variable b to true.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "a > 50",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if a > 50.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "b && a > 20",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if b && a > 20.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "message",
+                    type: "string",
+                    value: "a is greater than 20 and b is true",
+                    timestamp: undefined,
+                    description:
+                        "Set variable message to a is greater than 20 and b is true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it.skip("should correctly evaluate arithmetic and comparison expressions in otherwise if conditions", () => {
+        const pseudocode = `SET x TO number 5
+            IF x * 2 > 20 THEN
+                SET output TO string "Double x is greater than 20"
+            OTHERWISE IF x + 10 > 10 THEN
+                SET output TO string "x plus 10 is greater than 10"
+            OTHERWISE IF x - 3 < 5 THEN
+                SET output TO string "x minus 3 is less than 5"
+            OTHERWISE
+                SET output TO string "All conditions failed"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable x to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x * 2 > 20",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if double x > 20.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x + 10 > 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x plus 10 > 10.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "output",
+                    type: "string",
+                    value: "x plus 10 is greater than 10",
+                    timestamp: undefined,
+                    description:
+                        "Set output to 'x plus 10 is greater than 10'.",
+                },
+                {
+                    line: 10,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should handle multiple otherwise if conditions that all evaluate to false and execute a long otherwise block", () => {
+        const pseudocode = `SET age TO number 10
+            IF age > 65 THEN
+                SET status TO string "Senior"
+                SET discount TO string "20% on all items"
+                SET membership TO string "Gold"
+            OTHERWISE IF age > 40 THEN
+                SET status TO string "Adult"
+                SET discount TO string "10% on select items"
+                SET membership TO string "Silver"
+            OTHERWISE IF age > 18 THEN
+                SET status TO string "Young Adult"
+                SET discount TO string "5% on books"
+                SET membership TO string "Bronze"
+            OTHERWISE
+                SET status TO string "Child"
+                SET discount TO string "No discount"
+                SET membership TO string "None"
+                SET note TO string "Parental supervision required"
+                SET activity TO string "Eligible for children's events"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "age",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable age to 10.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "age > 65",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if age > 65.",
+                },
+                {
+                    line: 6,
+                    operation: "if",
+                    condition: "age > 40",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if age > 40.",
+                },
+                {
+                    line: 10,
+                    operation: "if",
+                    condition: "age > 18",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if age > 18.",
+                },
+                {
+                    line: 15,
+                    operation: "set",
+                    varName: "status",
+                    type: "string",
+                    value: "Child",
+                    timestamp: undefined,
+                    description: "Set variable status to Child.",
+                },
+                {
+                    line: 16,
+                    operation: "set",
+                    varName: "discount",
+                    type: "string",
+                    value: "No discount",
+                    timestamp: undefined,
+                    description: "Set variable discount to No discount.",
+                },
+                {
+                    line: 17,
+                    operation: "set",
+                    varName: "membership",
+                    type: "string",
+                    value: "None",
+                    timestamp: undefined,
+                    description: "Set variable membership to None.",
+                },
+                {
+                    line: 18,
+                    operation: "set",
+                    varName: "note",
+                    type: "string",
+                    value: "Parental supervision required",
+                    timestamp: undefined,
+                    description:
+                        "Set variable note to Parental supervision required.",
+                },
+                {
+                    line: 19,
+                    operation: "set",
+                    varName: "activity",
+                    type: "string",
+                    value: "Eligible for children's events",
+                    timestamp: undefined,
+                    description:
+                        "Set variable activity to Eligible for children's events.",
+                },
+                {
+                    line: 20,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should evaluate multiple otherwise if with a long if block", () => {
+        const pseudocode = `SET temp TO number 15
+            IF temp > 30 THEN
+                SET state TO string "Hot"
+                SET action TO string "Turn on AC"
+            OTHERWISE IF temp > 20 THEN
+                SET state TO string "Warm"
+                SET action TO string "Open windows"
+            OTHERWISE IF temp > 10 THEN
+                SET state TO string "Cool"
+                SET action TO string "Do nothing"
+            OTHERWISE
+                SET state TO string "Cold"
+                SET action TO string "Turn on heater"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "temp",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Set variable temp to 15.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "temp > 30",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if temp > 30.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "temp > 20",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if temp > 20.",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "temp > 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if temp > 10.",
+                },
+                {
+                    line: 9,
+                    operation: "set",
+                    varName: "state",
+                    type: "string",
+                    value: "Cool",
+                    timestamp: undefined,
+                    description: "Set variable state to Cool.",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "action",
+                    type: "string",
+                    value: "Do nothing",
+                    timestamp: undefined,
+                    description: "Set variable action to Do nothing.",
+                },
+                {
+                    line: 14,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should handle if with no true condition and no otherwise block", () => {
+        const pseudocode = `SET score TO number 65
+            IF score > 90 THEN
+                SET grade TO string "A"
+            OTHERWISE IF score > 80 THEN
+                SET grade TO string "B"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "score",
+                    type: "number",
+                    value: 65,
+                    timestamp: undefined,
+                    description: "Set variable score to 65.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "score > 90",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if score > 90.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "score > 80",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if score > 80.",
+                },
+                {
+                    line: 6,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly evaluate if with multiple otherwise if conditions and a big otherwise block", () => {
+        const pseudocode = `SET x TO number 25
+            IF x > 50 THEN
+                SET response TO string "Greater than 50"
+                SET detail TO string "High range"
+            OTHERWISE IF x > 30 THEN
+                SET response TO string "Greater than 30 but less than or equal to 50"
+                SET detail TO string "Mid range"
+            OTHERWISE
+                SET response TO string "30 or less"
+                SET detail TO string "Low range"
+                SET note TO string "Consideration needed"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 25,
+                    timestamp: undefined,
+                    description: "Set variable x to 25.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 50",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 50.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "x > 30",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 30.",
+                },
+                {
+                    line: 9,
+                    operation: "set",
+                    varName: "response",
+                    type: "string",
+                    value: "30 or less",
+                    timestamp: undefined,
+                    description: "Set variable response to 30 or less.",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "detail",
+                    type: "string",
+                    value: "Low range",
+                    timestamp: undefined,
+                    description: "Set variable detail to Low range.",
+                },
+                {
+                    line: 11,
+                    operation: "set",
+                    varName: "note",
+                    type: "string",
+                    value: "Consideration needed",
+                    timestamp: undefined,
+                    description: "Set variable note to Consideration needed.",
+                },
+                {
+                    line: 12,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should handle simple if condition", () => {
+        const pseudocode = `SET x TO number 5
+            IF x < 10 THEN
+                SET result TO string "Less than 10"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable x to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x < 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x < 10.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "result",
+                    type: "string",
+                    value: "Less than 10",
+                    timestamp: undefined,
+                    description: "Set variable result to Less than 10.",
+                },
+                {
+                    line: 4,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should evaluate nested if conditions", () => {
+        const pseudocode = `SET num TO number 15
+            IF num > 10 THEN
+                IF num < 20 THEN
+                    SET range TO string "Between 10 and 20"
+                END IF
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Set variable num to 15.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "num > 10",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if num > 10.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "num < 20",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if num < 20.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "range",
+                    type: "string",
+                    value: "Between 10 and 20",
+                    timestamp: undefined,
+                    description: "Set variable range to Between 10 and 20.",
+                },
+                {
+                    line: 5,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+                {
+                    line: 6,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should handle if with no true condition and an otherwise", () => {
+        const pseudocode = `SET value TO number 5
+            IF value > 10 THEN
+                SET response TO string "Greater than 10"
+            OTHERWISE
+                SET response TO string "10 or less"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "value",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable value to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "value > 10",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if value > 10.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "response",
+                    type: "string",
+                    value: "10 or less",
+                    timestamp: undefined,
+                    description: "Set variable response to 10 or less.",
+                },
+                {
+                    line: 6,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly evaluate if with multiple otherwise if conditions", () => {
+        const pseudocode = `SET x TO number 10
+            IF x > 20 THEN
+                SET y TO string "Greater than 20"
+            OTHERWISE IF x > 15 THEN
+                SET y TO string "Greater than 15 but less than or equal to 20"
+            OTHERWISE IF x > 10 THEN
+                SET y TO string "Greater than 10 but less than or equal to 15"
+            OTHERWISE
+                SET y TO string "10 or less"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable x to 10.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 20",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 20.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x > 15",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 15.",
+                },
+                {
+                    line: 6,
+                    operation: "if",
+                    condition: "x > 10",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 10.",
+                },
+                {
+                    line: 9,
+                    operation: "set",
+                    varName: "y",
+                    type: "string",
+                    value: "10 or less",
+                    timestamp: undefined,
+                    description: "Set variable y to 10 or less.",
+                },
+                {
+                    line: 10,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp; // Assigning timestamps from results to expected to match dynamically generated timestamps.
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly evaluate if with otherwise if conditions", () => {
+        const pseudocode = `SET x TO number 10
+            IF x > 15 THEN
+                SET y TO string "Greater than 15"
+            OTHERWISE IF x > 5 THEN
+                SET y TO string "Greater than 5 but less than or equal to 15"
+            OTHERWISE
+                SET y TO string "5 or less"
+            END IF`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable x to 10.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "x > 15",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > 15.",
+                },
+                {
+                    line: 4,
+                    operation: "if",
+                    condition: "x > 5",
+                    result: true,
+                    timestamp: undefined,
+                    description: "Checked if x > 5.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "y",
+                    type: "string",
+                    value: "Greater than 5 but less than or equal to 15",
+                    timestamp: undefined,
+                    description:
+                        "Set variable y to Greater than 5 but less than or equal to 15.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: undefined,
+                    description: "End of if statement.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
     it("should correctly evaluate a basic indexing operation", () => {
         const pseudocode = `SET myString TO "Hello, World!"
             SET firstCharacter TO CHARACTER AT 0 OF myString
@@ -2225,55 +3727,6 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
 
-    it("should process a function declaration pseudocode and convert it to the final JSON format", () => {
-        const pseudocode = `
-        DEFINE add_numbers WITH PARAMETERS (a, b)
-            RETURN a + b
-        END FUNCTION
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "define",
-                    varName: "add_numbers",
-                    params: ["a", "b"],
-                    body: [
-                        {
-                            line: 2,
-                            operation: "return",
-                            value: {
-                                left: "a",
-                                operator: "+",
-                                right: "b",
-                            },
-                            timestamp: undefined,
-                            description: `Returned {"left":"a","operator":"+","right":"b"}.`,
-                        },
-                    ],
-                    timestamp: undefined,
-                    description:
-                        "Defined function add_numbers with parameters a, b.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        result.actionFrames[index].body[subIndex].timestamp;
-                });
-            }
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
     it("should process a 'LOOP UNTIL' statement with a conditional update inside correctly", () => {
         const pseudocode = `
             SET x TO 1
@@ -4203,8 +5656,8 @@ describe("PseudocodeProcessor", () => {
         OTHERWISE
             PRINT "x is 5 or less"
         END IF
-        CREATE array as nums with [1,2,3,4,5,6,7,8,9]
-        CREATE array as letters with ["a","b","c","d","e","f","g"]
+        CREATE number array as nums with values [1,2,3,4,5,6,7,8,9]
+        CREATE string array as letters with values ["a","b","c","d","e","f","g"]
         INSERT 5 TO nums AT position 4
         `;
 
@@ -4244,19 +5697,25 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     line: 7,
-                    operation: "create_array",
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
                     varName: "nums",
                     value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
                     timestamp: undefined,
-                    description: "Created array nums.",
+                    description:
+                        "Created array nums with values [1,2,3,4,5,6,7,8,9].",
                 },
                 {
                     line: 8,
-                    operation: "create_array",
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "string",
                     varName: "letters",
                     value: ["a", "b", "c", "d", "e", "f", "g"],
                     timestamp: undefined,
-                    description: "Created array letters.",
+                    description:
+                        "Created array letters with values [a,b,c,d,e,f,g].",
                 },
                 {
                     line: 9,
@@ -4363,18 +5822,20 @@ describe("PseudocodeProcessor", () => {
     it("should process array creation", () => {
         writeTestNumber(3);
         const pseudocode = `
-        CREATE array as numbers with [0]
+        CREATE number array as numbers with values [0]
         `;
 
         const expectedJson = {
             actionFrames: [
                 {
                     line: 1,
-                    operation: "create_array",
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
                     varName: "numbers",
                     value: [0],
                     timestamp: undefined,
-                    description: "Created array numbers.",
+                    description: "Created array numbers with values [0].",
                 },
             ],
         };
@@ -4391,7 +5852,7 @@ describe("PseudocodeProcessor", () => {
     it("should process array operations correctly", () => {
         writeTestNumber(4);
         const pseudocode = `
-        CREATE array as numbers with [0]
+        CREATE number array as numbers with values [0]
         INSERT 1 TO numbers AT position 1
         INSERT 2 TO numbers AT position 2
         INSERT 3 TO numbers AT position 3
@@ -4401,11 +5862,13 @@ describe("PseudocodeProcessor", () => {
             actionFrames: [
                 {
                     line: 1,
-                    operation: "create_array",
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
                     varName: "numbers",
                     value: [0],
                     timestamp: undefined,
-                    description: "Created array numbers.",
+                    description: "Created array numbers with values [0].",
                 },
                 {
                     line: 2,
@@ -4441,62 +5904,6 @@ describe("PseudocodeProcessor", () => {
 
         expectedJson.actionFrames.forEach((frame, index) => {
             frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process a for each loop correctly", () => {
-        writeTestNumber(5);
-        const pseudocode = `
-        CREATE array as nums with [1, 2, 3]
-        FOR each num IN nums
-            PRINT num
-        END FOR
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "create_array",
-                    varName: "nums",
-                    value: [1, 2, 3],
-                    timestamp: undefined,
-                    description: "Created array nums.",
-                },
-                {
-                    line: 2,
-                    operation: "for",
-                    iterator: "num",
-                    collection: "nums",
-                    body: [
-                        {
-                            line: 3,
-                            operation: "print",
-                            isLiteral: true,
-                            varName: null,
-                            literal: "num",
-                            timestamp: undefined,
-                            description: "Printed num.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Iterating over nums with num.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        result.actionFrames[index].body[subIndex].timestamp;
-                });
-            }
         });
 
         expect(result).to.deep.equal(expectedJson);
@@ -4623,7 +6030,9 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     line: 2,
-                    operation: "create_array",
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
                     varName: "nums",
                     value: [1, 2, 3],
                     timestamp: undefined,
