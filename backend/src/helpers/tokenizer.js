@@ -186,6 +186,9 @@ class Tokenizer {
             "boolean",
             "create",
             "array",
+            "size",
+            "values",
+            "element",
             "as",
             "with",
             "insert",
@@ -213,16 +216,35 @@ class Tokenizer {
             "length",
             "character",
             "otherwiseif",
+            "remove",
             // New combined keywords can be added here if needed
         ];
+        if (value.toLowerCase() === "set") {
+            if (
+                String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("set element")
+            )
+                value = "set_array";
+        } else if (value.toLowerCase() === "element") {
+            if (
+                String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("element at")
+            )
+                value = "character"; // treat array indexing the same as substring - making it transparent for the subsequent stages while allowing differentiation within the SPL between 'ELEMENT AT' for arrays and 'CHARACTER AT' for strings.
+        }
+        if (value.toLowerCase() === "else") value = "otherwise";
         if (value.toLowerCase() === "otherwise") {
-            console.log("line at:" + this.pseudocodeLines[this.line - 1]);
             let lookaheadSpace = this.peekNextWord();
             let lookahead = this.peekNextWord();
             if (
                 String(this.pseudocodeLines[this.line - 1])
                     .toLowerCase()
-                    .includes("otherwise if")
+                    .includes("otherwise if") ||
+                String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("else if")
             ) {
                 this.consumeWhitespace(); // Consume any space between 'otherwise' and 'if'
                 for (let i = 0; i < lookahead.length; i++) {

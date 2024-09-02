@@ -2,6 +2,67 @@ import { expect } from "chai";
 import JSGenerator from "../src/models/jsGenerator.js";
 
 describe("JSGenerator", () => {
+    it.skip("should handle string concatenation", () => {
+        const pseudocode = `
+            SET greeting TO "Hello" + " " + "World"
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let greeting = "Hello" + " " + "World";
+        `.trim();
+
+        const result = JSGenerator.convert(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it.skip("should handle substring extraction", () => {
+        const pseudocode = `
+            SET name TO "John"
+            SET sub TO substring of name from 2 to 3
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let name = "John";
+let sub = name.substring(1, 3);
+        `.trim();
+
+        const result = JSGenerator.convert(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it.skip("should handle string length calculation", () => {
+        const pseudocode = `
+            SET name TO "John"
+            SET length TO length of name
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let name = "John";
+let length = name.length;
+        `.trim();
+
+        const result = JSGenerator.convert(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it.skip("should handle character indexing", () => {
+        const pseudocode = `
+            SET name TO "John"
+            SET initial TO character at 1 of name
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let name = "John";
+let initial = name.charAt(0);
+        `.trim();
+
+        const result = JSGenerator.convert(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
     it("should convert function declaration pseudocode to JavaScript", () => {
         const pseudocode = `
         DEFINE add_numbers WITH PARAMETERS (a, b)
@@ -104,7 +165,7 @@ console.log("x is 5 or less");
 
     it("should convert a for loop pseudocode to JavaScript", () => {
         const pseudocode = `
-            CREATE array as nums WITH [1, 2, 3]
+            CREATE number array as nums WITH values [1, 2, 3]
             FOR EACH num IN nums
                 PRINT num
             END FOR

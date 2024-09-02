@@ -16,6 +16,7 @@ class JsonConverter extends Converter {
             this.variables,
             this.declaredVariables
         );
+        this.functionMap = new Map(); // This will store function names to their transformation results
     }
 
     convert(ir) {
@@ -137,22 +138,25 @@ class JsonConverter extends Converter {
         const sourceValue = this.expressionEvaluator.getVariableValue(source);
 
         let result;
-        let type;
+        let getType;
+        let varType;
         if (typeof sourceValue === "string") {
             if (index > sourceValue.length) {
                 throw new Error(
                     `Index out of bounds: string length is ${sourceValue.length}, but index is ${index}.`
                 );
             }
-            type = "string";
+            getType = "string";
+            varType = "string";
             result = sourceValue.charAt(index);
         } else if (Array.isArray(sourceValue)) {
+            getType = "array";
             if (index > sourceValue.length) {
                 throw new Error(
                     `Index out of bounds: array length is ${sourceValue.length}, but index is ${index}.`
                 );
             }
-            type = "array";
+            varType = this.initializedArrays[source];
             result = sourceValue[index];
         } else {
             throw new Error(
@@ -167,10 +171,10 @@ class JsonConverter extends Converter {
             line: node.line,
             operation: "set",
             varName: node.name,
-            type: type,
+            type: varType,
             value: {
                 operation: "get",
-                type: type,
+                type: getType,
                 varName: source,
                 index: index,
                 result: result,
@@ -236,19 +240,30 @@ class JsonConverter extends Converter {
     }
 
     transformFunctionDeclaration(node) {
-        const returnVal = {
+        const frames = [];
+
+        // Generate the action frame for the function declaration itself
+        const functionFrame = {
             line: node.line,
             operation: "define",
             varName: node.name,
             params: node.params,
-            body: this.transformNodes(node.body),
             timestamp: new Date().toISOString(),
             description: `Defined function ${
                 node.name
             } with parameters ${node.params.join(", ")}.`,
         };
-        this.currentLine++;
-        return returnVal;
+
+        // Add the function declaration frame
+        frames.push(functionFrame);
+
+        // Generate and add action frames for each statement in the function body
+        node.body.forEach((statement) => {
+            const bodyFrame = this.transformNode(statement);
+            frames.push(bodyFrame);
+        });
+
+        this.functionMap.set(node.name, frames);
     }
 
     transformPrintStatement(node) {
@@ -694,7 +709,7 @@ class JsonConverter extends Converter {
             operation: "return",
             value: transformedReturnValue,
             timestamp: new Date().toISOString(),
-            description: `Returned ${JSON.stringify(transformedReturnValue)}.`,
+            description: `Returned ${transformedReturnValue}.`,
         };
     }
 
@@ -730,17 +745,62 @@ class JsonConverter extends Converter {
             this.expressionEvaluator.evaluateExpression(el)
         );
         this.variables[node.varName] = elements;
-        this.initializedArrays.add(node.varName);
+        this.initializedArrays[node.varName] = node.dsType;
         this.declaredVariables.add(node.varName);
+        const unInitialised = node.unInitialised;
+        let value = elements.map((el) =>
+            this.expressionEvaluator.convertValue(el)
+        );
         return {
             line: node.line,
-            operation: "create_array",
+            operation: "create",
+            dataStructure: "array",
+            type: node.dsType,
             varName: node.varName,
-            value: elements.map((el) =>
-                this.expressionEvaluator.convertValue(el)
-            ),
+            value: value,
             timestamp: new Date().toISOString(),
-            description: `Created array ${node.varName}.`,
+            description: unInitialised
+                ? `Created array ${node.varName} with size ${elements.length}.`
+                : `Created array ${node.varName} with values [${value}].`,
+        };
+    }
+
+    /**
+     * Transforms a RemoveOperation node into an action frame.
+     * @param {Object} node - The RemoveOperation node.
+     * @returns {Object} The transformed action frame.
+     */
+    transformRemoveOperation(node) {
+        const line = node.line;
+
+        // Ensure the variable is an initialized array
+        if (!this.initializedArrays.hasOwnProperty(node.varName)) {
+            throw new Error(
+                `Variable ${node.varName} is not an initialized array.`
+            );
+        }
+
+        // Determine the data structure type (currently supporting only arrays)
+        const dsType = this.initializedArrays[node.varName];
+        // if (dsType !== "array") {
+        //     throw new Error(
+        //         `Operation 'remove' is not supported for ${dsType} data structure.`
+        //     );
+        // }
+
+        // Evaluate the position to remove
+        const position = this.expressionEvaluator.evaluateExpression(
+            node.positionToRemove
+        );
+
+        return {
+            line: line,
+            operation: "remove",
+            dataStructure: "array",
+            varName: node.varName,
+            positionToRemove: position,
+            timestamp: new Date().toISOString(),
+            description: `Removed value at position ${position} in array ${node.varName}.`,
         };
     }
 
@@ -750,7 +810,12 @@ class JsonConverter extends Converter {
         }
         const value = this.expressionEvaluator.evaluateExpression(node.value);
         const position = parseInt(node.position);
-
+        if (typeof value != this.initializedArrays[node.varName])
+            throw new Error(
+                `Array type mismtach: cannot insert value of type ${typeof value} into array of type ${
+                    this.initializedArrays[node.varName]
+                }.`
+            );
         this.variables[node.varName][position] = value;
         return {
             line: node.line,
@@ -760,6 +825,54 @@ class JsonConverter extends Converter {
             position: position,
             timestamp: new Date().toISOString(),
             description: `Added ${value} to array ${node.varName} at position ${node.position}.`,
+        };
+    }
+
+    transformArraySetValue(node) {
+        const varName = node.varName;
+        const index = this.expressionEvaluator.evaluateExpression(node.index);
+        const setValue = this.expressionEvaluator.evaluateExpression(
+            node.setValue
+        );
+
+        // Ensure the array has been initialized before proceeding
+        if (!this.initializedArrays[varName]) {
+            if (this.declaredVariables.has(varName))
+                throw new Error(`Variable '${varName}' is not an array.`);
+            else throw new Error(`Array '${varName}' is not initialized.`);
+        }
+
+        // Perform the actual setting of the value in the array
+        if (!Array.isArray(this.variables[varName])) {
+            throw new Error(`Variable '${varName}' is not an array.`);
+        }
+
+        if (index < 0 || index >= this.variables[varName].length) {
+            throw new Error(
+                `Index ${index} is out of bounds for array '${varName}'.`
+            );
+        }
+
+        if (typeof setValue != this.initializedArrays[varName])
+            throw new Error(
+                `Type mismatch at line ${
+                    node.line
+                }: attempt to set an array of type ${
+                    this.initializedArrays[varName]
+                } to a value of type ${typeof setValue}.`
+            );
+
+        // Set the value at the specified index
+        this.variables[varName][index] = setValue;
+
+        return {
+            line: node.line,
+            operation: "set_array",
+            varName: varName,
+            index: index,
+            setValue: setValue,
+            timestamp: new Date().toISOString(),
+            description: `Set ${varName}[${index}] to ${setValue}.`,
         };
     }
 }

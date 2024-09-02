@@ -84,6 +84,15 @@ class JsonNodeConverterFactory {
                 return this.jsonConverter.transformArrayInsertion.bind(
                     this.jsonConverter
                 );
+            case "RemoveOperation":
+                return this.jsonConverter.transformRemoveOperation.bind(
+                    this.jsonConverter
+                );
+            case "ArraySetValue":
+                return this.jsonConverter.transformArraySetValue.bind(
+                    this.jsonConverter
+                );
+
             default:
                 throw new Error(`Unknown node type: ${nodeType}`);
         }

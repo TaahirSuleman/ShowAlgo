@@ -80,7 +80,9 @@ class NodeTransformerFactory {
                 return {
                     type: "ArrayCreation",
                     varName: node.varName,
+                    dsType: node.arrType,
                     values: node.values,
+                    unInitialised: node.unInitialised,
                 };
             case "ArrayInsertion":
                 return {
@@ -89,6 +91,14 @@ class NodeTransformerFactory {
                     value: transformer.transformExpression(node.value),
                     position: transformer.transformExpression(node.position)
                         .value,
+                };
+            case "ArraySetValue":
+                return {
+                    type: "ArraySetValue",
+                    varName: node.varName,
+                    index: transformer.transformExpression(node.position), // Position to set
+                    setValue: transformer.transformExpression(node.newValue)
+                        .value, // New value to set
                 };
             case "NumberLiteral":
             case "StringLiteral":
@@ -100,6 +110,14 @@ class NodeTransformerFactory {
                 return {
                     type: "Identifier",
                     value: node.value,
+                };
+            case "RemoveOperation": // Add this case
+                return {
+                    type: "RemoveOperation",
+                    varName: node.varName,
+                    positionToRemove: transformer.transformExpression(
+                        node.positionToRemove
+                    ).value,
                 };
             case "LengthExpression":
                 return {

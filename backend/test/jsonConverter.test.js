@@ -274,56 +274,6 @@ describe("JsonConverter", () => {
         });
     });
 
-    it("should convert a function declaration", () => {
-        const ir = {
-            program: [
-                {
-                    type: "FunctionDeclaration",
-                    name: "add_numbers",
-                    params: ["a", "b"],
-                    body: [
-                        {
-                            type: "ReturnStatement",
-                            value: {
-                                type: "Expression",
-                                left: { value: "a" },
-                                operator: "+",
-                                right: { value: "b" },
-                            },
-                        },
-                    ],
-                },
-            ],
-        };
-        const result = converter.transformToFinalJSON(ir);
-        expect(result).to.deep.equal({
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "define",
-                    varName: "add_numbers",
-                    params: ["a", "b"],
-                    body: [
-                        {
-                            line: 2,
-                            operation: "return",
-                            value: {
-                                left: "a",
-                                operator: "+",
-                                right: "b",
-                            },
-                            timestamp: result.actionFrames[0].body[0].timestamp,
-                            description: `Returned {"left":"a","operator":"+","right":"b"}.`,
-                        },
-                    ],
-                    timestamp: result.actionFrames[0].timestamp,
-                    description:
-                        "Defined function add_numbers with parameters a, b.",
-                },
-            ],
-        });
-    });
-
     it("should convert an if statement", () => {
         const ir = {
             program: [
