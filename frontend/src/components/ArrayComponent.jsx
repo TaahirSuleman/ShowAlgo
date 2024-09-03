@@ -41,25 +41,17 @@ function ArrayComponent(
 }, [arrayState]);
 
   useEffect(() => {
-    const operations = ["get","swap","add","remove","setArr","create_array","swapped"]
     const performOperations = () => {
       if (indexState > -1 && indexState < movements.length && !pauseState) {
-        //console.log(movements[indexState].varName + " _________ " +arrayName)
-        if (!operations.includes(movements[indexState].operation) || movements[indexState].varName !== arrayName){
-          console.log("uh oh stupid "+movements[indexState].operation +" "+ movements[indexState].varName)
-          return;
-        }
         switch (movements[indexState].operation){
-          case "swapped":
-            arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            break;
-            //Should scroll to center of array instead of to swapping element. Would be inefficient in most cases to focus on either one of the two blocks being swapped.
-            //as in most use cases, the arrays will not be large enough for that to be an issue.
-          case "create_array":
-            arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-            console.log("whoop whoop")
-            break;
-            // No index incremention here. Done in mainvisualisationwindow
+
+          case "create":
+            if (movements[indexState].dataStructure === "array"){
+              arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+          break;
+            // No index incremention here. Done in MainVisualisationwindow
+
           case "swap":
             //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             console.log("Its a swap");
@@ -86,10 +78,13 @@ function ArrayComponent(
               setSwappedState(["",""])
             }, speedState*1000) // This controls the time between SWAPPING and the next movement.
             return () => clearTimeout(timeoutId1);
-            break;
+          break;
 
           case "add":
-           // arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            if (movements[indexState].varName != arrayState.name){
+              return;
+            }
+            arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             addToArray(movements[indexState].value, movements[indexState].position);
             setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId2 = setTimeout(()=> {
@@ -97,10 +92,13 @@ function ArrayComponent(
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between INSERTING and the next movement.
             return () => clearTimeout(timeoutId2);
-            break;
+          break;
 
           case "remove":
-           // arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            if (movements[indexState].varName != arrayState.name){
+              return;
+            }
+            arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             removeFromArray((movements[indexState].positionToRemove))
             setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId3 = setTimeout(()=> {
@@ -108,32 +106,39 @@ function ArrayComponent(
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between POPPING and the next movement.
             return () => clearTimeout(timeoutId3);
-            break;
+          break;
 
-            case "get":
-              //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-              setGotState(values[movements[indexState].index]);
-              console.log(values[movements[indexState].index] + " This is the got state ")
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
-              const timeoutId4 = setTimeout(()=> {
-                setGotState("")
+          case "set":
+            if (typeof movements[indexState].value === "object"){
+              let innerMovement = movements[indexState].value
+              if (innerMovement.type === "array" && innerMovement.operation === "get" && innerMovement.varName === arrayState.name){
+                arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                setGotState(values[innerMovement.index]);
+                console.log(values[innerMovement.index] + " This is the got state ")
+                setOutput((prev) => {return [...prev, movements[indexState].description]});
+                const timeoutId4 = setTimeout(()=> {
+                  setGotState("")
+                  setIndexState((i)=>{return i+1})
+                }, speedState*1000) // This controls the time between POPPING and the next movement.
+                return () => clearTimeout(timeoutId4);
+              }
+            }
+          break;
 
-                setIndexState((i)=>{return i+1})
-              }, speedState*1000) // This controls the time between POPPING and the next movement.
-              return () => clearTimeout(timeoutId4);
-              break;
-
-            case "setArr":
-              //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-              setValueInArray(movements[indexState].setValue, movements[indexState].index)
-              console.log(values[movements[indexState].index] + " This is the changed state ")
-              setOutput((prev) => {return [...prev, movements[indexState].description]});
-              const timeoutId5 = setTimeout(()=> {
-                setChangedState("")
-                setIndexState((i)=>{return i+1})
-              }, speedState*1000) // This controls the time between POPPING and the next movement.
-              return () => clearTimeout(timeoutId5);
-              break;
+          case "set_array":
+            //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            if (movements[indexState].varName != arrayState.name){
+              return;
+            }
+            setValueInArray(movements[indexState].setValue, movements[indexState].index)
+            console.log(values[movements[indexState].index] + " This is the changed state ")
+            setOutput((prev) => {return [...prev, movements[indexState].description]});
+            const timeoutId5 = setTimeout(()=> {
+              setChangedState("")
+              setIndexState((i)=>{return i+1})
+            }, speedState*1000) // This controls the time between POPPING and the next movement.
+            return () => clearTimeout(timeoutId5);
+          break;
             
         }
       }
@@ -145,7 +150,13 @@ function ArrayComponent(
   const delay = ms => new Promise(res => setTimeout(res, ms));
 
   const setValueInArray = async (value, location) => {
-    let newEntry = arrayState.name + "++"+ value.toString() +"-"+ values.length;
+    let newEntry;
+    if (arrayState.type === "string"){
+      newEntry = arrayState.name + '++"'+ value.toString() +'"-'+ values.length;
+    }
+    else{
+      newEntry = arrayState.name + "++"+ value.toString() +"-"+ values.length;
+    }
     let newValues = [... values.slice(0,location), newEntry, ...values.slice(location+1)];
     setChangedState(newEntry);
     setValues(newValues);
@@ -171,7 +182,14 @@ function ArrayComponent(
   }
 
   const addToArray = async (value, location) => {
-    let newEntry = arrayState.name + "++"+ value.toString() +"-"+ values.length;
+    let newEntry;
+    if (arrayState.type === "string"){
+      newEntry = arrayState.name + '++"'+ value.toString() +'"-'+ values.length;
+    }
+    else{
+      newEntry = arrayState.name + "++"+ value.toString() +"-"+ values.length;
+    }
+    
     let newValues = [... values.slice(0,location), newEntry, ...values.slice(location)];
     setAddedState(newEntry);
     setValues(newValues);
@@ -260,7 +278,6 @@ function ArrayComponent(
           }}
           animate={{
             borderColor: arrayUpdating ? "#48BB78" : "#E2E8F0",
-            borderLeftWidth: arrayUpdating ? "20px" : "8px", // Animate the left border width change
           }}
           layout
           exit={{

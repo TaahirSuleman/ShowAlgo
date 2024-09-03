@@ -28,6 +28,7 @@ function VariableListComponent({
       const performOperations = () => {
         if (indexState > -1 && indexState < movements.length && !pauseState) {
           if (movements[indexState].operation == "set") {
+
             if (typeof movements[indexState].value != "object") {
               varRef.current.scrollIntoView({
                 behavior: "smooth",
@@ -59,39 +60,51 @@ function VariableListComponent({
               }, speedState * 1000);
               return () => clearTimeout(timeoutId2);
             }
-            else {// Only accounts for strings at the moment
+
+
+            else {
               let innerMovement = movements[indexState].value
-              updateVariablesState(
-                "string",
-                innerMovement.result,
-                movements[indexState].varName
-              )
-            }
-          } else if (movements[indexState].operation == "get") {
-            varRef.current.scrollIntoView({
-              behavior: "smooth",
-              block: "nearest",
-              inline: "center",
-            });
-            arraysState.forEach((currentValue) => {
-              if (currentValue.name == movements[indexState].varName) {
-                updateVariablesState(
-                  movements[indexState].type,
-                  currentValue.values[movements[indexState].index].substring(
-                    currentValue.values[movements[indexState].index].indexOf(
-                      "++"
-                    ) + 2,
-                    currentValue.values[movements[indexState].index].indexOf(
-                      "-"
+              switch (movements[indexState].value.operation){
+                case "substring":
+                  updateVariablesState(
+                    "string",
+                    innerMovement.result,
+                    movements[indexState].varName
+                  )
+                  const timeoutId2 = setTimeout(() => {
+                    setIndexState((i) => {
+                      return i + 1;
+                    });
+                  }, speedState * 1000);
+                  return () => clearTimeout(timeoutId2);
+                break;
+                case "get":
+                  if (innerMovement.type === "string"){
+                    updateVariablesState(
+                      "string",
+                      innerMovement.result,
+                      movements[indexState].varName
                     )
-                  ),
-                  movements[indexState].setName
-                );
-                return;
+                    const timeoutId2 = setTimeout(() => {
+                      setIndexState((i) => {
+                        return i + 1;
+                      });
+                    }, speedState * 1000);
+                    return () => clearTimeout(timeoutId2);
+                  }
+                  else if (innerMovement.type === "array"){
+                    let arrayCheck = arraysState.find((obj) => obj.name === innerMovement.varName);
+                    updateVariablesState(
+                      arrayCheck.type,
+                      innerMovement.result,
+                      movements[indexState].varName
+                    )
+                    //Index updating is in ArrayComponent for animation duration management for future.
+                  }
               }
-            });
-          }
-        }
+            }
+          } 
+         }
       };
       performOperations();
     }, [indexState, pauseState]);
