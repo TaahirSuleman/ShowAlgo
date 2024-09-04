@@ -60,8 +60,6 @@ function VariableListComponent({
               }, speedState * 1000);
               return () => clearTimeout(timeoutId2);
             }
-
-
             else {
               let innerMovement = movements[indexState].value
               switch (movements[indexState].value.operation){
@@ -71,12 +69,6 @@ function VariableListComponent({
                     innerMovement.result,
                     movements[indexState].varName
                   )
-                  const timeoutId2 = setTimeout(() => {
-                    setIndexState((i) => {
-                      return i + 1;
-                    });
-                  }, speedState * 1000);
-                  return () => clearTimeout(timeoutId2);
                 break;
                 case "get":
                   if (innerMovement.type === "string"){

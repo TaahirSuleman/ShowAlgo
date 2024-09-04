@@ -176534,3 +176534,4402 @@ Final JSON: {
     }
   ]
 }
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:15:00.216Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-04T11:15:00.216Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "Hello, World!",
+      "timestamp": "2024-09-04T11:15:00.216Z",
+      "description": "Set variable words to Hello, World!."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:15:46.500Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-04T11:15:46.500Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "Hello, World!",
+      "timestamp": "2024-09-04T11:15:46.500Z",
+      "description": "Set variable words to Hello, World!."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:17:40.107Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-04T11:17:40.107Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "Hello, World!",
+      "timestamp": "2024-09-04T11:17:40.107Z",
+      "description": "Set variable words to Hello, World!."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:17:56.116Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-04T11:17:56.116Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "Hello, World!",
+      "timestamp": "2024-09-04T11:17:56.116Z",
+      "description": "Set variable words to Hello, World!."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:18:19.043Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-04T11:18:19.043Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "Hello, World!",
+      "timestamp": "2024-09-04T11:18:19.043Z",
+      "description": "Set variable words to Hello, World!."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello, World!",
+        "line": 3
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:18:37.086Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-04T11:18:37.086Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "Hello, World!",
+      "timestamp": "2024-09-04T11:18:37.086Z",
+      "description": "Set variable words to Hello, World!."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 1
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        }
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "Lala",
+            "line": 2
+          },
+          "line": 2
+        }
+      ],
+      "line": 1
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "0",
+        "end": "5"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "Lala"
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-04T11:20:44.996Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 1,
+      "operation": "loop_from_to",
+      "condition": "i <= 5",
+      "timestamp": "2024-09-04T11:20:44.997Z",
+      "description": "loop from_to loop with condition i <= 5."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-09-04T11:20:45.002Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "Lala",
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Printed Lala."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "Lala",
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Printed Lala."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "Lala",
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Printed Lala."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "Lala",
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Printed Lala."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "Lala",
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Printed Lala."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Set variable i to 5."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": true,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "Lala",
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Printed Lala."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 6,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Set variable i to 6."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 5",
+      "result": false,
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "Checked if i <= 5."
+    },
+    {
+      "line": 3,
+      "operation": "loop_end",
+      "timestamp": "2024-09-04T11:20:45.003Z",
+      "description": "End of loop from_to loop"
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "greater",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "hello",
+            "line": 3
+          },
+          "line": 3
+        }
+      ],
+      "alternate": null,
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "hello"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:23:48.053Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 5",
+      "result": true,
+      "timestamp": "2024-09-04T11:23:48.054Z",
+      "description": "Checked if x > 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "hello",
+      "timestamp": "2024-09-04T11:23:48.055Z",
+      "description": "Printed hello."
+    },
+    {
+      "line": 4,
+      "operation": "endif",
+      "timestamp": "2024-09-04T11:23:48.055Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "greater",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "hello",
+            "line": 3
+          },
+          "line": 3
+        }
+      ],
+      "alternate": null,
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "greater",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "hello"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:24:27.878Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x > 5",
+      "result": true,
+      "timestamp": "2024-09-04T11:24:27.878Z",
+      "description": "Checked if x > 5."
+    },
+    {
+      "line": 3,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "hello",
+      "timestamp": "2024-09-04T11:24:27.878Z",
+      "description": "Printed hello."
+    },
+    {
+      "line": 4,
+      "operation": "endif",
+      "timestamp": "2024-09-04T11:24:27.878Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 1
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        }
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "hello",
+            "line": 2
+          },
+          "line": 2
+        }
+      ],
+      "line": 1
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "0",
+        "end": "2"
+      },
+      "body": [
+        {
+          "type": "PrintStatement",
+          "value": "hello"
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-04T11:25:32.879Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 1,
+      "operation": "loop_from_to",
+      "condition": "i <= 2",
+      "timestamp": "2024-09-04T11:25:32.879Z",
+      "description": "loop from_to loop with condition i <= 2."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 2",
+      "result": true,
+      "timestamp": "2024-09-04T11:25:32.879Z",
+      "description": "Checked if i <= 2."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "hello",
+      "timestamp": "2024-09-04T11:25:32.879Z",
+      "description": "Printed hello."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-04T11:25:32.879Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 2",
+      "result": true,
+      "timestamp": "2024-09-04T11:25:32.879Z",
+      "description": "Checked if i <= 2."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "hello",
+      "timestamp": "2024-09-04T11:25:32.880Z",
+      "description": "Printed hello."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-09-04T11:25:32.880Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 2",
+      "result": true,
+      "timestamp": "2024-09-04T11:25:32.880Z",
+      "description": "Checked if i <= 2."
+    },
+    {
+      "line": 2,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "hello",
+      "timestamp": "2024-09-04T11:25:32.880Z",
+      "description": "Printed hello."
+    },
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-09-04T11:25:32.880Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 1,
+      "operation": "if",
+      "condition": "i <= 2",
+      "result": false,
+      "timestamp": "2024-09-04T11:25:32.880Z",
+      "description": "Checked if i <= 2."
+    },
+    {
+      "line": 3,
+      "operation": "loop_end",
+      "timestamp": "2024-09-04T11:25:32.880Z",
+      "description": "End of loop from_to loop"
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "type": "Expression",
+        "left": "x",
+        "operator": "less",
+        "right": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "StringLiteral",
+            "value": "haha",
+            "line": 3
+          },
+          "line": 3
+        }
+      ],
+      "alternate": null,
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "IfStatement",
+      "condition": {
+        "left": "x",
+        "operator": "less",
+        "right": "5"
+      },
+      "consequent": [
+        {
+          "type": "PrintStatement",
+          "value": "haha"
+        }
+      ],
+      "alternate": null
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-04T11:27:07.554Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "if",
+      "condition": "x < 5",
+      "result": false,
+      "timestamp": "2024-09-04T11:27:07.554Z",
+      "description": "Checked if x < 5."
+    },
+    {
+      "line": 4,
+      "operation": "endif",
+      "timestamp": "2024-09-04T11:27:07.554Z",
+      "description": "End of if statement."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:28:43.879Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:29:20.509Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "nums",
+          "line": 2
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "IndexExpression",
+        "source": "nums",
+        "index": "2"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:33:15.973Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "nums",
+        "index": 2,
+        "result": 3
+      },
+      "timestamp": "2024-09-04T11:33:15.973Z",
+      "description": "Set variable x to nums[2]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "nums",
+          "line": 2
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "IndexExpression",
+        "source": "nums",
+        "index": "2"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:33:27.092Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "nums",
+        "index": 2,
+        "result": 3
+      },
+      "timestamp": "2024-09-04T11:33:27.092Z",
+      "description": "Set variable x to nums[2]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "nums",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      },
+      "newValue": {
+        "type": "NumberLiteral",
+        "value": "25",
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "nums",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      },
+      "setValue": "25"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:34:47.737Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 2,
+      "operation": "set_array",
+      "varName": "nums",
+      "index": 2,
+      "setValue": 25,
+      "timestamp": "2024-09-04T11:34:47.737Z",
+      "description": "Set nums[2] to 25."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "nums",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      },
+      "newValue": {
+        "type": "NumberLiteral",
+        "value": "25",
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "nums",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      },
+      "setValue": "25"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:36:13.748Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 2,
+      "operation": "set_array",
+      "varName": "nums",
+      "index": 2,
+      "setValue": 25,
+      "timestamp": "2024-09-04T11:36:13.749Z",
+      "description": "Set nums[2] to 25."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "99",
+        "line": 2
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "99",
+        "line": 2
+      },
+      "position": "2"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:37:11.358Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "nums",
+      "value": 99,
+      "position": 2,
+      "timestamp": "2024-09-04T11:37:11.358Z",
+      "description": "Added 99 to array nums at position 2."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "99",
+        "line": 2
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "99",
+        "line": 2
+      },
+      "position": "2"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:37:21.918Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "nums",
+      "value": 99,
+      "position": 2,
+      "timestamp": "2024-09-04T11:37:21.919Z",
+      "description": "Added 99 to array nums at position 2."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "99",
+        "line": 2
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "99",
+        "line": 2
+      },
+      "position": "2"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:37:32.685Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 2,
+      "operation": "add",
+      "varName": "nums",
+      "value": 99,
+      "position": 2,
+      "timestamp": "2024-09-04T11:37:32.685Z",
+      "description": "Added 99 to array nums at position 2."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "RemoveOperation",
+      "varName": "nums",
+      "positionToRemove": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "RemoveOperation",
+      "varName": "nums",
+      "positionToRemove": "2"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T11:38:18.892Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 2,
+      "operation": "remove",
+      "dataStructure": "array",
+      "varName": "nums",
+      "positionToRemove": 2,
+      "timestamp": "2024-09-04T11:38:18.892Z",
+      "description": "Removed value at position 2 in array nums."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "timestamp": "2024-09-04T11:45:24.002Z",
+      "description": "Created array nums with values [1,2,3,4]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "subs",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "words",
+          "line": 2
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "subs",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "1",
+        "end": "5"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "This is a sentence",
+      "timestamp": "2024-09-04T12:03:09.534Z",
+      "description": "Set variable words to This is a sentence."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "subs",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 1,
+        "end": 5,
+        "result": "his "
+      },
+      "timestamp": "2024-09-04T12:03:09.535Z",
+      "description": "Set variable subs to a substring of words from index 1 to 5."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "subs",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "words",
+          "line": 2
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "subs",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "1",
+        "end": "5"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "This is a sentence",
+      "timestamp": "2024-09-04T12:03:32.318Z",
+      "description": "Set variable words to This is a sentence."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "subs",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 1,
+        "end": 5,
+        "result": "his "
+      },
+      "timestamp": "2024-09-04T12:03:32.318Z",
+      "description": "Set variable subs to a substring of words from index 1 to 5."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "subs",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "words",
+          "line": 2
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "subs",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "1",
+        "end": "5"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "This is a sentence",
+      "timestamp": "2024-09-04T12:04:57.872Z",
+      "description": "Set variable words to This is a sentence."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "subs",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 1,
+        "end": 5,
+        "result": "his "
+      },
+      "timestamp": "2024-09-04T12:04:57.872Z",
+      "description": "Set variable subs to a substring of words from index 1 to 5."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "subs",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "words",
+          "line": 2
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "subs",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "1",
+        "end": "5"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "This is a sentence",
+      "timestamp": "2024-09-04T12:05:20.962Z",
+      "description": "Set variable words to This is a sentence."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "subs",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 1,
+        "end": 5,
+        "result": "his "
+      },
+      "timestamp": "2024-09-04T12:05:20.962Z",
+      "description": "Set variable subs to a substring of words from index 1 to 5."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "subs",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "words",
+          "line": 2
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "subs",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "1",
+        "end": "5"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "This is a sentence",
+      "timestamp": "2024-09-04T12:06:32.671Z",
+      "description": "Set variable words to This is a sentence."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "subs",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 1,
+        "end": 5,
+        "result": "his "
+      },
+      "timestamp": "2024-09-04T12:06:32.671Z",
+      "description": "Set variable subs to a substring of words from index 1 to 5."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "subs",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "words",
+          "line": 2
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "subs",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "1",
+        "end": "5"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "This is a sentence",
+      "timestamp": "2024-09-04T12:06:52.698Z",
+      "description": "Set variable words to This is a sentence."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "subs",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 1,
+        "end": 5,
+        "result": "his "
+      },
+      "timestamp": "2024-09-04T12:06:52.698Z",
+      "description": "Set variable subs to a substring of words from index 1 to 5."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "words",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "subs",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "words",
+          "line": 2
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "words",
+      "value": {
+        "type": "StringLiteral",
+        "value": "This is a sentence",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "subs",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "words",
+        "start": "1",
+        "end": "5"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "words",
+      "type": "string",
+      "value": "This is a sentence",
+      "timestamp": "2024-09-04T12:07:01.936Z",
+      "description": "Set variable words to This is a sentence."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "subs",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "words",
+        "start": 1,
+        "end": 5,
+        "result": "his "
+      },
+      "timestamp": "2024-09-04T12:07:01.936Z",
+      "description": "Set variable subs to a substring of words from index 1 to 5."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "len",
+      "varType": null,
+      "value": {
+        "type": "LengthExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "nums",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        "end": {
+          "type": "Expression",
+          "left": {
+            "type": "Identifier",
+            "value": "len",
+            "line": 3
+          },
+          "operator": "-",
+          "right": {
+            "type": "NumberLiteral",
+            "value": "1",
+            "line": 3
+          },
+          "line": 4
+        }
+      },
+      "body": [
+        {
+          "type": "VariableDeclaration",
+          "varName": "temp",
+          "varType": null,
+          "value": {
+            "type": "IndexExpression",
+            "source": {
+              "type": "Identifier",
+              "value": "nums",
+              "line": 4
+            },
+            "index": {
+              "type": "Identifier",
+              "value": "i",
+              "line": 4
+            },
+            "line": 4
+          },
+          "line": 4
+        },
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "temp",
+            "line": 5
+          },
+          "line": 5
+        }
+      ],
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "len",
+      "value": {
+        "type": "LengthExpression",
+        "source": "nums"
+      }
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "0"
+      },
+      "body": [
+        {
+          "type": "VariableDeclaration",
+          "name": "temp",
+          "value": {
+            "type": "IndexExpression",
+            "source": "nums",
+            "index": "i"
+          }
+        },
+        {
+          "type": "PrintStatement",
+          "value": "temp"
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "timestamp": "2024-09-04T14:53:52.644Z",
+      "description": "Created array nums with values [1,2,3,4,5]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "len",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-09-04T14:53:52.645Z",
+      "description": "Set variable len to 5."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-04T14:53:52.645Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 3,
+      "operation": "loop_from_to",
+      "condition": "i <= undefined",
+      "timestamp": "2024-09-04T14:53:52.645Z",
+      "description": "loop from_to loop with condition i <= undefined."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= undefined",
+      "result": false,
+      "timestamp": "2024-09-04T14:53:52.645Z",
+      "description": "Checked if i <= undefined."
+    },
+    {
+      "line": 3,
+      "operation": "loop_end",
+      "timestamp": "2024-09-04T14:53:52.645Z",
+      "description": "End of loop from_to loop"
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "len",
+      "varType": null,
+      "value": {
+        "type": "LengthExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "nums",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 3
+        }
+      },
+      "body": [
+        {
+          "type": "VariableDeclaration",
+          "varName": "temp",
+          "varType": null,
+          "value": {
+            "type": "IndexExpression",
+            "source": {
+              "type": "Identifier",
+              "value": "nums",
+              "line": 4
+            },
+            "index": {
+              "type": "Identifier",
+              "value": "i",
+              "line": 4
+            },
+            "line": 4
+          },
+          "line": 4
+        },
+        {
+          "type": "PrintStatement",
+          "value": {
+            "type": "Identifier",
+            "value": "temp",
+            "line": 5
+          },
+          "line": 5
+        }
+      ],
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "len",
+      "value": {
+        "type": "LengthExpression",
+        "source": "nums"
+      }
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": "0",
+        "end": "4"
+      },
+      "body": [
+        {
+          "type": "VariableDeclaration",
+          "name": "temp",
+          "value": {
+            "type": "IndexExpression",
+            "source": "nums",
+            "index": "i"
+          }
+        },
+        {
+          "type": "PrintStatement",
+          "value": "temp"
+        }
+      ]
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "timestamp": "2024-09-04T14:54:21.610Z",
+      "description": "Created array nums with values [1,2,3,4,5]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "len",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-09-04T14:54:21.610Z",
+      "description": "Set variable len to 5."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-04T14:54:21.610Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 3,
+      "operation": "loop_from_to",
+      "condition": "i <= 4",
+      "timestamp": "2024-09-04T14:54:21.610Z",
+      "description": "loop from_to loop with condition i <= 4."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-04T14:54:21.610Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "temp",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "nums",
+        "index": 0,
+        "result": 1
+      },
+      "timestamp": "2024-09-04T14:54:21.610Z",
+      "description": "Set variable temp to nums[0]."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "temp",
+      "timestamp": "2024-09-04T14:54:21.612Z",
+      "description": "Printed temp."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "temp",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "nums",
+        "index": 1,
+        "result": 2
+      },
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable temp to nums[1]."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "temp",
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Printed temp."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "temp",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "nums",
+        "index": 2,
+        "result": 3
+      },
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable temp to nums[2]."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "temp",
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Printed temp."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "temp",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "nums",
+        "index": 3,
+        "result": 4
+      },
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable temp to nums[3]."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "temp",
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Printed temp."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "temp",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "nums",
+        "index": 4,
+        "result": 5
+      },
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable temp to nums[4]."
+    },
+    {
+      "line": 5,
+      "operation": "print",
+      "isLiteral": true,
+      "varName": null,
+      "literal": "temp",
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Printed temp."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Set variable i to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": false,
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 6,
+      "operation": "loop_end",
+      "timestamp": "2024-09-04T14:54:21.613Z",
+      "description": "End of loop from_to loop"
+    }
+  ]
+}
