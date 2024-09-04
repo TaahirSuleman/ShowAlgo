@@ -87,6 +87,8 @@ function AdminLevel() {
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
   const [testResults, setTestResults] = useState([]);
+  const [isRestarting, setIsRestarting] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
   const [errorData, setErrorData] = useState({
     error: "",
     message: "",
@@ -168,8 +170,17 @@ function AdminLevel() {
       setIndexState(0);
       setHighlightState(true);
     } catch (error) {
+      setHighlightState(false);
+      setIsRunning(false);
       console.error("Failed to run code:", error);
-      setIsError(true); // Handle error state
+      setIsError(true)
+      let errorTimeout = setTimeout(()=>{
+        setIsError(false)
+      }, 2000)
+      //setIsError(true); // Handle error state
+      findError(error.response.data);
+      setIsRunLoading(false);
+      return () => {clearTimeout(errorTimeout)}
     }
     setIsRunLoading(false);
   };
@@ -185,7 +196,9 @@ function AdminLevel() {
         ...prev,
         `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
       ]);
-    }, speedState + 2000);
+      setIsRestarting(false);
+    }, speedState*1000 + 1000);
+    setIsRestarting(true)
     return () => timeoutSetKey;
   };
 
@@ -577,6 +590,10 @@ function AdminLevel() {
             submitButton={true}
             isSubmitLoading={isSubmitLoading}
             submitCode={submitCode}
+            setHighlightState={setHighlightState}
+            isRestarting={isRestarting} 
+            isRunning = {isRunning}
+            setIsRunning ={setIsRunning}
           />
         </Box>
 
@@ -595,6 +612,7 @@ function AdminLevel() {
           pauseState={pauseState}
           setPauseState={setPauseState}
           bufferState={bufferState}
+          keyValue={key}
           keyValue={key}
           isClearLoading={isClearLoading}
           isClearOutputLoading={isClearOutputLoading}
