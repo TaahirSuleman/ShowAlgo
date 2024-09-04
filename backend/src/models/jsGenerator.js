@@ -2,7 +2,7 @@ import fs from "fs";
 import Tokenizer from "../helpers/tokenizer.js";
 import Parser from "./parser.js";
 import Transformer from "../helpers/transformer.js";
-import JavaScriptGenerator from "../helpers/JavaScriptGenerator.js"; // Corrected import
+import JavaScriptGenerator from "./JavaScriptGenerator.js"; // Corrected import
 
 class JSGenerator {
     static writeToFile(content) {

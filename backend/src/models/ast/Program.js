@@ -1,8 +1,7 @@
 class Program {
-    constructor(body, line) {
+    constructor(body) {
         this.type = "Program";
         this.body = body;
-        this.line = line;
     }
 }
 

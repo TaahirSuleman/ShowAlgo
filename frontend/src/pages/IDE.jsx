@@ -61,8 +61,10 @@ function IDE() {
   const [bufferState, setBufferState] = useState(false);
   const [key, setKey] = useState(0);
   const [killState, setKillState] = useState(-2);
+  const [isRestarting, setIsRestarting] = useState(false);
   const toast = useToast();
   const [isError, setIsError] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
   const [errorData, setErrorData] = useState({
     error: "",
     message: "",
@@ -123,9 +125,17 @@ function IDE() {
       setIndexState(0);
       setHighlightState(true);
     } catch (error) {
+      setHighlightState(false);
+      setIsRunning(false);
       console.error("Failed to run code:", error);
-      setIsError(true); // Handle error state
+      setIsError(true)
+      let errorTimeout = setTimeout(()=>{
+        setIsError(false)
+      }, 2000)
+      //setIsError(true); // Handle error state
       findError(error.response.data);
+      setIsRunLoading(false);
+      return () => {clearTimeout(errorTimeout)}
     }
     setIsRunLoading(false);
   };
@@ -141,7 +151,9 @@ function IDE() {
         ...prev,
         `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
       ]);
-    }, speedState + 2000);
+      setIsRestarting(false);
+    }, speedState*1000 + 1000);
+    setIsRestarting(true) 
     return () => timeoutSetKey;
   };
 
@@ -162,6 +174,10 @@ function IDE() {
           killState={killState}
           indexState={indexState}
           setOutput={setOutput}
+          setHighlightState={setHighlightState}
+          isRestarting={isRestarting} 
+          isRunning = {isRunning}
+          setIsRunning ={setIsRunning}
         />
       </Box>
 
@@ -179,6 +195,7 @@ function IDE() {
         pauseState={pauseState}
         setPauseState={setPauseState}
         bufferState={bufferState}
+        keyValue={key}
         keyValue={key}
         isClearLoading={isClearLoading}
         isClearOutputLoading={isClearOutputLoading}

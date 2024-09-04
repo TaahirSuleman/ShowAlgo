@@ -61,8 +61,10 @@ function GuestIDE() {
   const [bufferState, setBufferState] = useState(false);
   const [key, setKey] = useState(0);
   const [killState, setKillState] = useState(-2);
+  const [isRestarting, setIsRestarting] = useState(false);
   const toast = useToast();
   const [isError, setIsError] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
   const [errorData, setErrorData] = useState({
     error: "",
     message: "",
@@ -105,6 +107,39 @@ function GuestIDE() {
     });
   };
 
+  // const runCode = async () => {
+  //   setIsRunLoading(true); // To show loading state on the button
+  //   let code = value; // Get code from the editor
+  //     let actionFrames = [  {
+  //       line: 7,
+  //       operation: "create",
+  //       dataStructure: "array",
+  //       value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+  //       length: 9,
+  //       id: "abcd",
+  //       type: "number",
+  //       varName: "nums",
+  //       timestamp: "2024-07-09T12:01:00Z",
+  //       description:
+  //         "Created an array named nums with initial values [1, 2, 3, 4].",
+  //     },{
+  //       line: 14,
+  //       operation: "swap",
+  //       dataStructure: "array",
+  //       firstPosition: 1,
+  //       secondPosition: 3,
+  //       varName: "nums",
+  //       description: "Swapped values in position 1 and 3 in array nums.",
+  //     },];
+  //     setIsError(false); // Reset error state
+  //     setKillState(actionFrames.length);
+  //     setMovementsState(actionFrames);
+  //     setOutput((prev) => [...prev, `colourYellow__RUN STARTING.`]);
+  //     setIndexState(0);
+  //     setHighlightState(true);
+  //   setIsRunLoading(false);
+  // };
+
   const runCode = async () => {
     setIsRunLoading(true); // To show loading state on the button
     let code = value; // Get code from the editor
@@ -123,9 +158,17 @@ function GuestIDE() {
       setIndexState(0);
       setHighlightState(true);
     } catch (error) {
+      setHighlightState(false);
+      setIsRunning(false);
       console.error("Failed to run code:", error);
-      setIsError(true); // Handle error state
+      setIsError(true)
+      let errorTimeout = setTimeout(()=>{
+        setIsError(false)
+      }, 2000)
+      //setIsError(true); // Handle error state
       findError(error.response.data);
+      setIsRunLoading(false);
+      return () => {clearTimeout(errorTimeout)}
     }
     setIsRunLoading(false);
   };
@@ -141,7 +184,9 @@ function GuestIDE() {
         ...prev,
         `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
       ]);
-    }, speedState + 2000);
+      setIsRestarting(false);
+    }, speedState*1000 + 1000);
+    setIsRestarting(true)
     return () => timeoutSetKey;
   };
 
@@ -162,6 +207,10 @@ function GuestIDE() {
           killState={killState}
           indexState={indexState}
           setOutput={setOutput}
+          setHighlightState={setHighlightState}
+          isRestarting={isRestarting}
+          isRunning = {isRunning}
+          setIsRunning ={setIsRunning}
         />
       </Box>
 

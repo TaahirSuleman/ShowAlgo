@@ -1,86 +1,109 @@
-class JsonConverter {
+import Converter from "./Converter.js";
+import JsonNodeConverterFactory from "./JsonNodeConverterFactory.js";
+import ExpressionEvaluator from "./ExpressionEvaluator.js";
+
+class JsonConverter extends Converter {
     constructor() {
+        super();
         this.variables = {};
         this.declaredVariables = new Set();
         this.initializedArrays = new Set();
         this.currentLine = 1;
+        this.nestedEndIf = 0;
+        this.ifDepth = 0; // Track the depth of nested IF statements
+        this.nodeConverterFactory = new JsonNodeConverterFactory(this);
+        this.expressionEvaluator = new ExpressionEvaluator(
+            this.variables,
+            this.declaredVariables
+        );
+        this.functionMap = new Map(); // This will store function names to their transformation results
+    }
+
+    convert(ir) {
+        return this.transformToFinalJSON(ir);
     }
 
     transformToFinalJSON(ir) {
-        // console.log("Transforming IR to final JSON:", ir);
         return {
             actionFrames: this.transformNodes(ir.program),
         };
     }
 
     transformNodes(nodes) {
-        // console.log("Transforming nodes:", nodes);
         return nodes.flatMap((node) => this.transformNode(node));
     }
 
+    /**
+     * Transforms a single node using the appropriate conversion method.
+     * @param {Object} node - The IR node to transform.
+     * @returns {Object|Array} The transformed node, or an array of transformed nodes.
+     */
     transformNode(node) {
-        // console.log("Transforming node:", node);
-        const nodeWithLine = { ...node, line: this.currentLine++ };
+        const nodeWithLine = {
+            ...node,
+            line:
+                node.type === "OtherwiseIfStatement"
+                    ? node.line
+                    : this.currentLine++,
+        };
 
-        switch (nodeWithLine.type) {
-            case "VariableDeclaration":
-                return this.transformVariableDeclaration(nodeWithLine);
-            case "FunctionDeclaration":
-                return this.transformFunctionDeclaration(nodeWithLine);
-            case "PrintStatement":
-                return this.transformPrintStatement(nodeWithLine);
-            case "IfStatement":
-                return this.transformIfStatement(nodeWithLine);
-            case "ForLoop":
-                return this.transformForLoop(nodeWithLine);
-            case "WhileLoop":
-                return this.transformWhileOrLoopUntil(nodeWithLine, "while");
-            case "LoopUntil":
-                return this.transformWhileOrLoopUntil(
-                    nodeWithLine,
-                    "loop_until"
-                );
-            case "LoopFromTo":
-                return this.transformLoopFromTo(nodeWithLine);
-            case "ReturnStatement":
-                return this.transformReturnStatement(nodeWithLine);
-            case "ArrayCreation":
-                return this.transformArrayCreation(nodeWithLine);
-            case "ArrayInsertion":
-                return this.transformArrayInsertion(nodeWithLine);
-            default:
-                throw new Error(`Unknown node type: ${nodeWithLine.type}`);
-        }
+        // Use the factory to get the appropriate converter for the node type
+        const converter = this.nodeConverterFactory.getConverter(
+            nodeWithLine.type
+        );
+        return converter(nodeWithLine);
     }
 
     transformVariableDeclaration(node) {
-        const value = this.evaluateExpression(node.value);
+        if (node.value.type === "SubstringExpression") {
+            return this.handleSubstringExpression(node);
+        }
+        if (node.value.type === "IndexExpression")
+            return this.transformIndexExpression(node);
+        let typeBool = false;
+        let length;
+        if (node.value.type === "LengthExpression") {
+            length = this.expressionEvaluator.evaluateLengthExpression(
+                node.value
+            );
+        }
+        let value = this.expressionEvaluator.evaluateExpression(node.value);
+
+        if (node.value.type === "BooleanLiteral") {
+            typeBool = true;
+            value = value.value;
+        }
         this.variables[node.name] = value;
         this.declaredVariables.add(node.name);
-        let varType = this.determineType(value);
+        let varType = typeBool
+            ? "boolean"
+            : node.type === "StringLiteral"
+            ? "string"
+            : this.determineType(value);
 
         const buildExpressionString = (expr) => {
             if (expr.type === "Expression") {
-                // Check if this is a subtraction from zero (negative number)
-                if (expr.operator === "-" && expr.left === 0) {
+                if (expr.operator === "-" && expr.left.value === 0) {
                     return `-${buildExpressionString(expr.right)}`;
                 } else {
                     return `(${buildExpressionString(expr.left)} ${
                         expr.operator
                     } ${buildExpressionString(expr.right)})`;
                 }
-            } else {
-                return String(expr); // Convert to string to avoid object errors
+            } else if (expr.type == "LengthExpression")
+                return this.expressionEvaluator.evaluateLengthExpression(expr);
+            else {
+                return String(expr);
             }
         };
 
-        // Generate the expression string
         let returnVal =
             node.value.type === "Expression"
                 ? buildExpressionString(node.value)
+                : node.value.type === "BooleanLiteral" ||
+                  node.value.type === "LengthExpression"
+                ? value
                 : String(value);
-
-        // Remove outer parentheses for top-level expression
         if (
             typeof returnVal === "string" &&
             returnVal.startsWith("(") &&
@@ -88,22 +111,126 @@ class JsonConverter {
         ) {
             returnVal = returnVal.slice(1, -1);
         }
+        if (typeof this.variables[node.name] === "string") returnVal = value;
+        return {
+            line: node.line,
+            operation: "set",
+            varName: node.name,
+            type: varType,
+            value: value,
+            timestamp: new Date().toISOString(),
+            description: `Set variable ${node.name} to ${returnVal}.`,
+        };
+    }
+
+    transformIndexExpression(node) {
+        const { varName, value } = node;
+        const source = value.source;
+
+        const index = this.expressionEvaluator.evaluateExpression(value.index);
+
+        if (index < 0) {
+            throw new Error(
+                `Invalid index operation: index (${index}) cannot be negative.`
+            );
+        }
+
+        const sourceValue = this.expressionEvaluator.getVariableValue(source);
+
+        let result;
+        let getType;
+        let varType;
+        if (typeof sourceValue === "string") {
+            if (index > sourceValue.length) {
+                throw new Error(
+                    `Index out of bounds: string length is ${sourceValue.length}, but index is ${index}.`
+                );
+            }
+            getType = "string";
+            varType = "string";
+            result = sourceValue.charAt(index);
+        } else if (Array.isArray(sourceValue)) {
+            getType = "array";
+            if (index > sourceValue.length) {
+                throw new Error(
+                    `Index out of bounds: array length is ${sourceValue.length}, but index is ${index}.`
+                );
+            }
+            varType = this.initializedArrays[source];
+            result = sourceValue[index];
+        } else {
+            throw new Error(
+                `Unsupported type for indexing: ${typeof sourceValue}`
+            );
+        }
+
+        this.variables[varName] = result;
+        this.declaredVariables.add(varName);
 
         return {
             line: node.line,
             operation: "set",
             varName: node.name,
             type: varType,
-            value: isNaN(parseInt(value)) ? value : parseInt(value),
+            value: {
+                operation: "get",
+                type: getType,
+                varName: source,
+                index: index,
+                result: result,
+            },
             timestamp: new Date().toISOString(),
-            description: `Set variable ${node.name} to ${returnVal}.`,
+            description: `Set variable ${node.name} to ${source}[${index}].`,
+        };
+    }
+
+    handleSubstringExpression(node) {
+        const { name, value } = node;
+        const source = value.string;
+
+        const start = this.expressionEvaluator.evaluateExpression(value.start);
+        const end = this.expressionEvaluator.evaluateExpression(value.end);
+        if (start > end) {
+            throw new Error(
+                `Invalid substring operation: 'start' index (${start}) cannot be greater than 'end' index (${end}).`
+            );
+        }
+        if (start < 0)
+            throw new Error(
+                "Invalid substring operation: 'start' index cannot be negative."
+            );
+        const sourceValue = this.expressionEvaluator.getVariableValue(source);
+        const finalValue = sourceValue.substring(start, end);
+
+        this.variables[name] = finalValue;
+        this.declaredVariables.add(name);
+
+        return {
+            line: node.line,
+            operation: "set",
+            varName: name,
+            type: "string",
+            value: {
+                operation: "substring",
+                source,
+                start,
+                end,
+                result: finalValue,
+            },
+            timestamp: new Date().toISOString(),
+            description:
+                start === end
+                    ? "Set variable subStr to an empty string as start and end indices are identical."
+                    : `Set variable ${name} to a substring of ${source} from index ${start} to ${end}.`,
         };
     }
 
     determineType(value) {
         // Try to convert the value to a number
         const convertedValue = Number(value);
-
+        if (typeof value === "string") {
+            if (value.trim() === "") return "string";
+        }
         // Check if the conversion is successful and the result is not NaN
         if (!isNaN(convertedValue)) {
             return "number";
@@ -113,23 +240,33 @@ class JsonConverter {
     }
 
     transformFunctionDeclaration(node) {
-        const returnVal = {
+        const frames = [];
+
+        // Generate the action frame for the function declaration itself
+        const functionFrame = {
             line: node.line,
             operation: "define",
             varName: node.name,
             params: node.params,
-            body: this.transformNodes(node.body),
             timestamp: new Date().toISOString(),
             description: `Defined function ${
                 node.name
             } with parameters ${node.params.join(", ")}.`,
         };
-        this.currentLine++;
-        return returnVal;
+
+        // Add the function declaration frame
+        frames.push(functionFrame);
+
+        // Generate and add action frames for each statement in the function body
+        node.body.forEach((statement) => {
+            const bodyFrame = this.transformNode(statement);
+            frames.push(bodyFrame);
+        });
+
+        this.functionMap.set(node.name, frames);
     }
 
     transformPrintStatement(node) {
-        console.log("Print vars " + this.variables["i"]);
         const value = node.value;
         const isLiteral = !this.declaredVariables.has(value);
         return {
@@ -144,7 +281,10 @@ class JsonConverter {
     }
 
     transformIfStatement(node) {
-        const conditionResult = this.evaluateCondition(node.condition);
+        this.ifDepth++; // Entering an IF statement, increment depth
+        const conditionResult = this.expressionEvaluator.evaluateCondition(
+            node.condition
+        );
         const conditionString = this.convertConditionToString(node.condition);
 
         // Start with the IF statement
@@ -171,18 +311,19 @@ class JsonConverter {
                     this.currentLine + node.alternate.length + 1
                 );
             } else {
-                //this.currentLine++;
+                this.currentLine = node.line + node.consequent.length + 1;
             }
         } else {
             // Handle the false condition (alternate)
-            this.currentLine = Math.max(
-                this.currentLine,
-                this.currentLine + node.consequent.length + 1
-            );
+            if (node.alternate && node.alternate.length > 0) {
+                this.currentLine = Math.max(
+                    this.currentLine,
+                    this.currentLine + node.consequent.length + 1
+                );
+            } else {
+                this.currentLine = node.line + node.consequent.length + 1;
+            }
             frames = frames.concat(this.transformNodes(node.alternate || []));
-
-            // Simply increment the current line by 1
-            //this.currentLine++;
         }
         // Add the "End If" movement object
         if (node.alternate && node.alternate.length > 0) {
@@ -196,14 +337,88 @@ class JsonConverter {
                 node.line + node.consequent.length + 1
             );
         }
-        frames.push({
-            line: this.currentLine,
-            operation: "endif",
-            timestamp: new Date().toISOString(),
-            description: "End of if statement.",
-        });
+        if (this.nestedEndIf > 0 && !node.alternate) {
+            this.currentLine = this.nestedEndIf + 1;
+            frames.push({
+                line: this.currentLine,
+                operation: "endif",
+                timestamp: new Date().toISOString(),
+                description: "End of if statement.",
+            });
+        } else {
+            frames.push({
+                line: this.currentLine,
+                operation: "endif",
+                timestamp: new Date().toISOString(),
+                description: "End of if statement.",
+            });
+        }
+        this.ifDepth--; // Exiting an IF statement, decrement depth
+        this.nestedEndIf = this.currentLine;
         this.currentLine++;
         return frames;
+    }
+
+    transformOtherwiseIfStatement(node) {
+        // Entering an Otherwise If statement, increment depth
+        //this.ifDepth++;
+        this.currentLine = node.line;
+        console.log(node.line);
+        const conditionResult = this.expressionEvaluator.evaluateCondition(
+            node.condition
+        );
+        const conditionString = this.convertConditionToString(node.condition);
+
+        let frames = [
+            {
+                line: this.currentLine++,
+                operation: "if", // Transform Otherwise If as an If in JSON
+                condition: conditionString,
+                result: conditionResult,
+                timestamp: new Date().toISOString(),
+                description: `Checked if ${conditionString}.`,
+            },
+        ];
+
+        if (conditionResult) {
+            frames = frames.concat(this.transformNodes(node.consequent));
+        } else if (node.alternate) {
+            if (node.alternate.type != "OtherwiseIfStatement")
+                this.currentLine = node.otherwiseLine;
+            // Recursively handle nested Otherwise If or Otherwise
+            //this.currentLine = node.line;
+            frames = frames.concat(this.transformNodes(node.alternate));
+        }
+        this.currentLine = node.endLine;
+
+        return frames;
+    }
+
+    calculateEndIfLine(node) {
+        let maxLine = node.line;
+
+        const updateMaxLine = (nodes) => {
+            for (const subNode of nodes) {
+                if (subNode.type === "IfStatement") {
+                    maxLine = Math.max(
+                        maxLine,
+                        this.calculateEndIfLine(subNode)
+                    );
+                } else if (subNode.line) {
+                    maxLine = Math.max(maxLine, subNode.line);
+                }
+            }
+        };
+
+        if (node.consequent && node.consequent.length > 0) {
+            updateMaxLine(node.consequent);
+        }
+
+        if (node.alternate && node.alternate.length > 0) {
+            updateMaxLine(node.alternate);
+        }
+
+        return maxLine + 1; // Adding 1 to represent the 'End If' line
     }
 
     transformForLoop(node) {
@@ -217,8 +432,8 @@ class JsonConverter {
             description: `Iterating over ${node.collection} with ${node.iterator}.`,
         };
     }
+
     transformGenericLoop(node, loopType, conditionString) {
-        console.log(conditionString);
         const loopLine = node.line;
         const actionFrames = [
             {
@@ -233,19 +448,13 @@ class JsonConverter {
             },
         ];
 
-        // Debugging: Print the initial condition
-        console.log(`Initial condition for ${loopType}:`, node.condition);
         let bodyLineStart = node.line; // Line where loop body starts
         let bodyLineCount = 0; // Track the number of lines in the loop body
 
-        while (this.evaluateCondition(node.condition)) {
-            // Debugging: Print the current state of the variables
-            //console.log(`Variables at the start of the loop:`, this.variables);
+        while (this.expressionEvaluator.evaluateCondition(node.condition)) {
             let z = 0;
             this.currentLine = node.line + 1;
             if (this.variables["x"] == 0) {
-                console.log("TRUE!");
-                console.log(this.variables);
                 z += 1;
             }
             actionFrames.push({
@@ -275,7 +484,6 @@ class JsonConverter {
                 );
                 actionFrames.push(updateFrame);
             }
-            //this.currentLine = this.currentLine - node.body.length;
         }
 
         actionFrames.push({
@@ -294,7 +502,6 @@ class JsonConverter {
             timestamp: new Date().toISOString(),
             description: `End of ${loopType.replace("_", " ")} loop`,
         });
-        console.log(this.currentLine);
         return actionFrames;
     }
 
@@ -372,7 +579,6 @@ class JsonConverter {
         throw new Error(`Unsupported operator for flipping: ${operator}`);
     }
 
-    // Helper function to flip the condition for LoopUntil
     flipCondition(condition) {
         if (condition.includes(">=")) {
             return condition.replace(">=", "<");
@@ -391,12 +597,12 @@ class JsonConverter {
     }
 
     transformLoopFromTo(node) {
-        console.log(this.currentLine);
-        const startValue = this.convertValue(node.range.start);
-        const endValue = this.convertValue(node.range.end);
+        const startValue = this.expressionEvaluator.convertValue(
+            node.range.start
+        );
+        const endValue = this.expressionEvaluator.convertValue(node.range.end);
         const loopVariable = node.loopVariable;
 
-        // Create an action frame to set the loop variable to the start value
         const actionFrames = [
             {
                 line: this.currentLine - 1,
@@ -410,17 +616,13 @@ class JsonConverter {
         ];
         this.variables[loopVariable] = startValue;
         this.declaredVariables.add(loopVariable);
-        // Generate the condition string for the loop
         const conditionString = `${loopVariable} <= ${endValue}`;
-        console.log("end val " + endValue);
-        // Set the node.condition to the associated condition
         node.condition = {
             left: loopVariable,
             operator: "<=",
             right: endValue,
         };
 
-        // Start the loop processing using the common logic
         actionFrames.push(
             ...this.transformGenericLoop(node, "loop_from_to", conditionString)
         );
@@ -429,48 +631,57 @@ class JsonConverter {
     }
 
     convertConditionToString(condition) {
-        if (!condition || !condition.operator) {
-            console.error(
-                "Condition is undefined or missing operator:",
-                condition
-            );
-            return null;
+        if (
+            typeof condition === "boolean" ||
+            typeof condition === "number" ||
+            typeof condition === "string"
+        ) {
+            return condition.toString();
         }
 
-        let operator = condition.operator;
-        if (operator === "greater") operator = ">";
-        if (operator === "less") operator = "<";
-        if (operator === "equal") operator = "==";
+        if (this.declaredVariables.has(condition)) {
+            return condition;
+        }
 
-        return `${condition.left} ${operator} ${condition.right}`;
-    }
+        if (
+            condition.type === "Identifier" ||
+            this.declaredVariables.has(condition)
+        ) {
+            return condition.value;
+        }
 
-    transformReturnStatement(node) {
-        const transformedReturnValue = this.transformExpression(node.value);
-        return {
-            line: node.line,
-            operation: "return",
-            value: transformedReturnValue,
-            timestamp: new Date().toISOString(),
-            description: `Returned ${JSON.stringify(transformedReturnValue)}.`,
-        };
-    }
+        if (condition.type === "LengthExpression")
+            return this.expressionEvaluator.evaluateLengthExpression(condition);
 
-    evaluateCondition(condition) {
         if (!condition || !condition.operator) {
             console.error("Condition is malformed or undefined:", condition);
             throw new Error("Condition is malformed or undefined.");
         }
 
-        const left = isNaN(condition.left)
-            ? this.variables[condition.left]
-            : parseFloat(condition.left);
-        const right = isNaN(condition.right)
-            ? this.variables[condition.right]
-            : parseFloat(condition.right);
-        if (this.variables[condition.left] == 0) console.log(left);
-        console.log(right);
+        if (
+            condition.operator === "not" &&
+            condition.type === "UnaryExpression"
+        ) {
+            const right = this.convertConditionToString(condition.argument);
+            return `!${right}`;
+        } else if (condition.operator === "not") {
+            const right = this.convertConditionToString(condition.right);
+            return `!${right}`;
+        }
+
+        const left =
+            condition.left && typeof condition.left === "object"
+                ? this.convertConditionToString(condition.left)
+                : condition.left;
+
+        const right =
+            condition.right && typeof condition.right === "object"
+                ? this.convertConditionToString(condition.right)
+                : condition.right;
+
         const operatorsMap = {
+            and: "&&",
+            or: "||",
             greater: ">",
             less: "<",
             equal: "==",
@@ -488,36 +699,32 @@ class JsonConverter {
             throw new Error(`Unknown operator: ${condition.operator}`);
         }
 
-        switch (operator) {
-            case ">":
-                return left > right;
-            case "<":
-                return left < right;
-            case "==":
-                return left === right;
-            case "!=":
-                return left !== right;
-            case ">=":
-                return left >= right;
-            case "<=":
-                return left <= right;
-            default:
-                throw new Error(`Unhandled operator: ${operator}`);
-        }
+        return `${left} ${operator} ${right}`;
+    }
+
+    transformReturnStatement(node) {
+        const transformedReturnValue = this.transformExpression(node.value);
+        return {
+            line: node.line,
+            operation: "return",
+            value: transformedReturnValue,
+            timestamp: new Date().toISOString(),
+            description: `Returned ${transformedReturnValue}.`,
+        };
     }
 
     transformExpression(expression) {
-        if (expression.type === "Expression") {
-            // Recursively transform the left and right parts of the expression
+        if (expression.type === "IndexExpression") {
+            return this.transformIndexExpression(expression);
+        } else if (expression.type === "Expression") {
             const left = this.transformExpression(expression.left);
             const right = this.transformExpression(expression.right);
             return {
-                left: left.value || left, // Return the transformed value or the transformed expression
+                left: left.value || left,
                 operator: expression.operator,
-                right: right.value || right, // Return the transformed value or the transformed expression
+                right: right.value || right,
             };
         } else if (this.declaredVariables.has(expression)) {
-            // If the expression is an identifier and has been declared, retrieve its value
             return {
                 value: this.variables[expression] || expression,
             };
@@ -525,67 +732,75 @@ class JsonConverter {
             expression.type === "NumberLiteral" ||
             expression.type === "StringLiteral"
         ) {
-            // If the expression is a literal (number or string), return its value directly
             return {
                 value: expression.value,
             };
         } else {
-            // Handle any other cases (like a plain value or unrecognized type)
-
             return expression;
-        }
-    }
-
-    evaluateExpression(expression) {
-        //console.log("x value " + this.variables["x"]);
-        if (expression.type === "Expression") {
-            const left = this.evaluateExpression(expression.left);
-            const right = this.evaluateExpression(expression.right);
-            // console.log(`${left} ${expression.operator} ${right}`);
-            return this.computeExpression(left, expression.operator, right);
-        } else if (this.declaredVariables.has(expression)) {
-            // console.log("var name " + expression);
-            return this.convertValue(this.variables[expression]);
-        } else if (
-            expression.type === "NumberLiteral" ||
-            expression.type === "StringLiteral"
-        ) {
-            // console.log("Value " + this.convertValue(expression.value));
-            return this.convertValue(expression.value);
-        } else {
-            return this.convertValue(expression);
-        }
-    }
-
-    computeExpression(left, operator, right) {
-        switch (operator) {
-            case "+":
-                return left + right;
-            case "-":
-                return left - right;
-            case "*":
-                return left * right;
-            case "/":
-                return left / right;
-            default:
-                throw new Error(`Unknown operator: ${operator}`);
         }
     }
 
     transformArrayCreation(node) {
         const elements = (node.values || []).map((el) =>
-            this.evaluateExpression(el)
+            this.expressionEvaluator.evaluateExpression(el)
         );
         this.variables[node.varName] = elements;
-        this.initializedArrays.add(node.varName);
+        this.initializedArrays[node.varName] = node.dsType;
         this.declaredVariables.add(node.varName);
+        const unInitialised = node.unInitialised;
+        let value = elements.map((el) =>
+            this.expressionEvaluator.convertValue(el)
+        );
         return {
             line: node.line,
-            operation: "create_array",
+            operation: "create",
+            dataStructure: "array",
+            type: node.dsType,
             varName: node.varName,
-            value: elements.map((el) => this.convertValue(el)),
+            value: value,
             timestamp: new Date().toISOString(),
-            description: `Created array ${node.varName}.`,
+            description: unInitialised
+                ? `Created array ${node.varName} with size ${elements.length}.`
+                : `Created array ${node.varName} with values [${value}].`,
+        };
+    }
+
+    /**
+     * Transforms a RemoveOperation node into an action frame.
+     * @param {Object} node - The RemoveOperation node.
+     * @returns {Object} The transformed action frame.
+     */
+    transformRemoveOperation(node) {
+        const line = node.line;
+
+        // Ensure the variable is an initialized array
+        if (!this.initializedArrays.hasOwnProperty(node.varName)) {
+            throw new Error(
+                `Variable ${node.varName} is not an initialized array.`
+            );
+        }
+
+        // Determine the data structure type (currently supporting only arrays)
+        const dsType = this.initializedArrays[node.varName];
+        // if (dsType !== "array") {
+        //     throw new Error(
+        //         `Operation 'remove' is not supported for ${dsType} data structure.`
+        //     );
+        // }
+
+        // Evaluate the position to remove
+        const position = this.expressionEvaluator.evaluateExpression(
+            node.positionToRemove
+        );
+
+        return {
+            line: line,
+            operation: "remove",
+            dataStructure: "array",
+            varName: node.varName,
+            positionToRemove: position,
+            timestamp: new Date().toISOString(),
+            description: `Removed value at position ${position} in array ${node.varName}.`,
         };
     }
 
@@ -593,26 +808,72 @@ class JsonConverter {
         if (!this.variables[node.varName]) {
             throw new Error(`Array ${node.varName} not initialized.`);
         }
-        const value = this.evaluateExpression(node.value);
+        const value = this.expressionEvaluator.evaluateExpression(node.value);
         const position = parseInt(node.position);
-
+        if (typeof value != this.initializedArrays[node.varName])
+            throw new Error(
+                `Array type mismtach: cannot insert value of type ${typeof value} into array of type ${
+                    this.initializedArrays[node.varName]
+                }.`
+            );
         this.variables[node.varName][position] = value;
         return {
             line: node.line,
             operation: "add",
             varName: node.varName,
-            value: this.convertValue(value),
+            value: this.expressionEvaluator.convertValue(value),
             position: position,
             timestamp: new Date().toISOString(),
             description: `Added ${value} to array ${node.varName} at position ${node.position}.`,
         };
     }
 
-    convertValue(value) {
-        if (!isNaN(value)) {
-            return Number(value);
+    transformArraySetValue(node) {
+        const varName = node.varName;
+        const index = this.expressionEvaluator.evaluateExpression(node.index);
+        const setValue = this.expressionEvaluator.evaluateExpression(
+            node.setValue
+        );
+
+        // Ensure the array has been initialized before proceeding
+        if (!this.initializedArrays[varName]) {
+            if (this.declaredVariables.has(varName))
+                throw new Error(`Variable '${varName}' is not an array.`);
+            else throw new Error(`Array '${varName}' is not initialized.`);
         }
-        return value;
+
+        // Perform the actual setting of the value in the array
+        if (!Array.isArray(this.variables[varName])) {
+            throw new Error(`Variable '${varName}' is not an array.`);
+        }
+
+        if (index < 0 || index >= this.variables[varName].length) {
+            throw new Error(
+                `Index ${index} is out of bounds for array '${varName}'.`
+            );
+        }
+
+        if (typeof setValue != this.initializedArrays[varName])
+            throw new Error(
+                `Type mismatch at line ${
+                    node.line
+                }: attempt to set an array of type ${
+                    this.initializedArrays[varName]
+                } to a value of type ${typeof setValue}.`
+            );
+
+        // Set the value at the specified index
+        this.variables[varName][index] = setValue;
+
+        return {
+            line: node.line,
+            operation: "set_array",
+            varName: varName,
+            index: index,
+            setValue: setValue,
+            timestamp: new Date().toISOString(),
+            description: `Set ${varName}[${index}] to ${setValue}.`,
+        };
     }
 }
 
