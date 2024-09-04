@@ -58,7 +58,7 @@ arraysState
     if (isActive == false){
         return (
         <motion.div className="loop-notification" layoutId='loopNotif'>
-        <p>Loop Notifications Here!</p>
+        <p style={{fontSize: "23px"}}>LOOP NOTIFICATIONS APPEAR HERE</p>
         </motion.div>
         );
     }
@@ -69,7 +69,7 @@ arraysState
                 animate={{backgroundColor: isAnimated ? 'hsl(39, 100, 70)' : 'hsl(0, 0, 0)',
                           color: isAnimated ? 'hsl(0, 0, 0)' : 'hsl(0, 0, 100)'}}
             >
-            <p style={{ fontSize: '30px', fontWeight: 'bold' }}>
+            <p style={{ fontSize: '25px', fontWeight: 'bold' }}>
   A {loopNotificationState.loop_type} is in progress!
 </p>
 
@@ -78,7 +78,7 @@ arraysState
       The condition to watch is:
     </>
 </p>
-<p style={{ fontSize: '25px' }}>
+<p style={{ fontSize: '20px' }}>
     <strong style={{ textDecoration: 'underline' }}>
         {loopNotificationState.condition}
     </strong>

@@ -33,9 +33,12 @@ function RunControls({
   setSpeedState,
   killState,
   indexState,
-  setOutput
+  setOutput,
+  setHighlightState,
+  isRestarting,
+  isRunning,
+  setIsRunning
 }) {
-  const [isRunning, setIsRunning] = useState(false);
   const [speed, setSpeed] = useState(1);
   const speedOptions = [0.25, 0.5, 0.75, 1, 1.5, 2];
   const [isFinished, setIsFinished] = useState(false)
@@ -44,6 +47,7 @@ function RunControls({
     if (killState === indexState){
       setIsRunning(false)
       setIsFinished(true)
+      setHighlightState(false)
       setOutput((prev) => [...prev, `colourYellow__RUN COMPLETE.`]);
     }
     console.log("kill "+killState)
@@ -55,19 +59,19 @@ function RunControls({
 
 
   const handleRunStop = async () => {
-    if (isRunning) {
+    if (isRunning) { // Stopping in the middle of an animation
       stopCode();
       console.log("RAW STOP")
-    } else if (isFinished) {
+    } else if (isFinished) { // Basically restarting after a run has completed.
       console.log("FINISHED STOP AND START")
       stopCode();
       setIsFinished(false);
       setIsRunning(true)
       const timeout = setTimeout(() => {
         runCode();
-      }, speedState*1000 +1000);
+      }, speedState*1000 + 1000);
       return () => timeout;
-    } else {
+    } else { // The first start for the application.
       console.log("FROM THE BENINGING")
       runCode();
     }
@@ -78,7 +82,7 @@ function RunControls({
     const currentIndex = speedOptions.indexOf(speed);
     const nextIndex = (currentIndex + 1) % speedOptions.length;
     setSpeed(speedOptions[nextIndex]);
-    setSpeedState(2/speedOptions[nextIndex]) // THE HARD CODED VALUE HERE IS THE STARTING SPEED STATE
+    setSpeedState(2/speedOptions[nextIndex]) // THE HARD CODED VALUE HERE (2) IS THE STARTING SPEED STATE
     
   };
 
@@ -96,7 +100,7 @@ function RunControls({
           colorScheme={isRunning ? "red" : "green" }
           isDisabled={value === ""}
           onClick={handleRunStop}
-          isLoading={isRunLoading}
+          isLoading={isRunLoading || isRestarting}
           width="100%"
           height="33px"
         >
@@ -109,7 +113,7 @@ function RunControls({
         <Button
           variant="outline"
           colorScheme={pauseState ? "green" : "red"}
-          isDisabled={value === ""}
+          isDisabled={indexState < -1 || indexState >= killState}
           onClick={handlePauseResume}
           width="100%"
           height="33px"

@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import JavaScriptGenerator from "../src/helpers/JavaScriptGenerator.js";
+import JavaScriptGenerator from "../src/models/JavaScriptGenerator.js";
 
 describe("JavaScriptGenerator", () => {
     const testCases = [

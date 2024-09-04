@@ -10,6 +10,223 @@ describe("Tokenizer and Parser", () => {
         return parser.parse();
     }
 
+    it("should tokenize and parse boolean literals correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(2);
+
+        const firstVar = ast.body[0];
+        expect(firstVar.type).to.equal("VariableDeclaration");
+        expect(firstVar.varName).to.equal("isTrue");
+        expect(firstVar.value.value).to.equal(true);
+        expect(firstVar.line).to.equal(2);
+
+        const secondVar = ast.body[1];
+        expect(secondVar.type).to.equal("VariableDeclaration");
+        expect(secondVar.varName).to.equal("isFalse");
+        expect(secondVar.value.value).to.equal(false);
+        expect(secondVar.line).to.equal(3);
+    });
+
+    it("should tokenize and parse boolean expressions correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue AND isFalse THEN PRINT "Both are booleans" END IF
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(3);
+
+        const ifStatement = ast.body[2];
+        expect(ifStatement.type).to.equal("IfStatement");
+        expect(ifStatement.condition.left).to.equal("isTrue");
+        expect(ifStatement.condition.operator).to.equal("and");
+        expect(ifStatement.condition.right.value).to.equal("isFalse");
+        expect(ifStatement.consequent).to.have.lengthOf(1);
+        expect(ifStatement.consequent[0].type).to.equal("PrintStatement");
+        expect(ifStatement.consequent[0].value.value).to.equal(
+            "Both are booleans"
+        );
+        expect(ifStatement.line).to.equal(4);
+    });
+
+    it("should tokenize and parse NOT operator correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            IF NOT isTrue THEN PRINT "isTrue is false" END IF
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(2);
+
+        const ifStatement = ast.body[1];
+        expect(ifStatement.type).to.equal("IfStatement");
+        expect(ifStatement.condition.operator).to.equal("not");
+        expect(ifStatement.condition.right.value).to.equal("isTrue");
+        expect(ifStatement.consequent).to.have.lengthOf(1);
+        expect(ifStatement.consequent[0].type).to.equal("PrintStatement");
+        expect(ifStatement.consequent[0].value.value).to.equal(
+            "isTrue is false"
+        );
+        expect(ifStatement.line).to.equal(3);
+    });
+
+    it("should tokenize and parse boolean comparisons correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET result TO isTrue = false
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(2);
+
+        const varDecl = ast.body[1];
+        expect(varDecl.type).to.equal("VariableDeclaration");
+        expect(varDecl.varName).to.equal("result");
+        expect(varDecl.value.left.value).to.equal("isTrue");
+        expect(varDecl.value.operator).to.equal("=");
+        expect(varDecl.value.right.value).to.equal(false);
+        expect(varDecl.line).to.equal(3);
+    });
+
+    it("should handle boolean expressions with mixed operators correctly", () => {
+        const pseudocode = `SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue AND NOT isFalse THEN 
+                PRINT "Correct" 
+            OTHERWISE 
+                PRINT "Incorrect" 
+            END IF
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(3);
+
+        const ifStatement = ast.body[2];
+        expect(ifStatement.type).to.equal("IfStatement");
+        expect(ifStatement.condition.left).to.equal("isTrue");
+        expect(ifStatement.condition.operator).to.equal("and");
+        expect(ifStatement.condition.right.operator).to.equal("not");
+        expect(ifStatement.condition.right.right.value).to.equal("isFalse");
+
+        expect(ifStatement.consequent).to.have.lengthOf(1);
+        expect(ifStatement.consequent[0].type).to.equal("PrintStatement");
+        expect(ifStatement.consequent[0].value.value).to.equal("Correct");
+
+        expect(ifStatement.alternate).to.have.lengthOf(1);
+        expect(ifStatement.alternate[0].type).to.equal("PrintStatement");
+        expect(ifStatement.alternate[0].value.value).to.equal("Incorrect");
+        expect(ifStatement.line).to.equal(3);
+    });
+    it("should tokenize and parse boolean literals correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(2);
+
+        const firstVar = ast.body[0];
+        expect(firstVar.type).to.equal("VariableDeclaration");
+        expect(firstVar.varName).to.equal("isTrue");
+        expect(firstVar.value.value).to.equal(true);
+        expect(firstVar.line).to.equal(2);
+
+        const secondVar = ast.body[1];
+        expect(secondVar.type).to.equal("VariableDeclaration");
+        expect(secondVar.varName).to.equal("isFalse");
+        expect(secondVar.value.value).to.equal(false);
+        expect(secondVar.line).to.equal(3);
+    });
+
+    it("should tokenize and parse boolean expressions correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue AND isFalse THEN PRINT "Both are booleans" END IF
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(3);
+
+        const ifStatement = ast.body[2];
+        expect(ifStatement.type).to.equal("IfStatement");
+        expect(ifStatement.condition.left).to.equal("isTrue");
+        expect(ifStatement.condition.operator).to.equal("and");
+        expect(ifStatement.condition.right.value).to.equal("isFalse");
+        expect(ifStatement.consequent).to.have.lengthOf(1);
+        expect(ifStatement.consequent[0].type).to.equal("PrintStatement");
+        expect(ifStatement.consequent[0].value.value).to.equal(
+            "Both are booleans"
+        );
+        expect(ifStatement.line).to.equal(4);
+    });
+
+    it("should tokenize and parse NOT operator correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            IF NOT isTrue THEN PRINT "isTrue is false" END IF
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(2);
+
+        const ifStatement = ast.body[1];
+        expect(ifStatement.type).to.equal("IfStatement");
+        expect(ifStatement.condition.operator).to.equal("not");
+        expect(ifStatement.condition.right.value).to.equal("isTrue");
+        expect(ifStatement.consequent).to.have.lengthOf(1);
+        expect(ifStatement.consequent[0].type).to.equal("PrintStatement");
+        expect(ifStatement.consequent[0].value.value).to.equal(
+            "isTrue is false"
+        );
+        expect(ifStatement.line).to.equal(3);
+    });
+
+    it("should tokenize and parse boolean comparisons correctly", () => {
+        const pseudocode = `
+            SET isTrue TO true
+            SET result TO isTrue = false
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(2);
+
+        const varDecl = ast.body[1];
+        expect(varDecl.type).to.equal("VariableDeclaration");
+        expect(varDecl.varName).to.equal("result");
+        expect(varDecl.value.left.value).to.equal("isTrue");
+        expect(varDecl.value.operator).to.equal("=");
+        expect(varDecl.value.right.value).to.equal(false);
+        expect(varDecl.line).to.equal(3);
+    });
+
+    it("should handle boolean expressions with mixed operators correctly", () => {
+        const pseudocode = `SET isTrue TO true
+            SET isFalse TO false
+            IF isTrue AND NOT isFalse THEN 
+                PRINT "Correct" 
+            OTHERWISE 
+                PRINT "Incorrect" 
+            END IF
+        `;
+        const ast = tokenizeAndParse(pseudocode);
+        expect(ast.body).to.have.lengthOf(3);
+
+        const ifStatement = ast.body[2];
+        expect(ifStatement.type).to.equal("IfStatement");
+        expect(ifStatement.condition.left).to.equal("isTrue");
+        expect(ifStatement.condition.operator).to.equal("and");
+        expect(ifStatement.condition.right.operator).to.equal("not");
+        expect(ifStatement.condition.right.right.value).to.equal("isFalse");
+
+        expect(ifStatement.consequent).to.have.lengthOf(1);
+        expect(ifStatement.consequent[0].type).to.equal("PrintStatement");
+        expect(ifStatement.consequent[0].value.value).to.equal("Correct");
+
+        expect(ifStatement.alternate).to.have.lengthOf(1);
+        expect(ifStatement.alternate[0].type).to.equal("PrintStatement");
+        expect(ifStatement.alternate[0].value.value).to.equal("Incorrect");
+        expect(ifStatement.line).to.equal(3);
+    });
+
     it("should tokenize and parse function definitions correctly", () => {
         const pseudocode = `DEFINE add_numbers WITH PARAMETERS (a, b)
 RETURN a + b

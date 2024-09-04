@@ -1,9 +1,16 @@
-class JavaScriptGenerator {
+import Converter from "./Converter.js";
+class JavaScriptGenerator extends Converter {
     constructor(ir) {
+        super();
         this.ir = ir;
         this.jsCode = "";
         this.declaredVariables = new Set();
         //this.variables = {};
+    }
+
+    convert(ir) {
+        this.ir = ir;
+        return this.generate();
     }
 
     generate() {
@@ -26,6 +33,19 @@ class JavaScriptGenerator {
                 return this.generateReturnStatement(node);
             case "IfStatement":
                 return this.generateIfStatement(node);
+            case "SubstringExpression":
+                const string = this.generateExpression(expression.string);
+                const start = this.generateExpression(expression.start);
+                const end = this.generateExpression(expression.end);
+                return `${string}.substring(${start} - 1, ${end})`; // JS is 0-indexed, subtract 1 from start
+            case "LengthExpression":
+                const source = this.generateExpression(expression.source);
+                return `${source}.length`;
+
+            case "IndexExpression":
+                const stringVar = this.generateExpression(expression.source);
+                const index = this.generateExpression(expression.index);
+                return `${stringVar}.charAt(${index} - 1)`; // JS is 0-indexed, subtract 1 from index
             case "ForLoop":
                 return this.generateForLoop(node);
             case "WhileLoop":
