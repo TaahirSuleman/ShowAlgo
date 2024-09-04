@@ -181528,3 +181528,95 @@ Final JSON: {
     }
   ]
 }
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "HAHAHAHAHA",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "x",
+          "line": 2
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "name": "x",
+      "value": {
+        "type": "StringLiteral",
+        "value": "HAHAHAHAHA",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "y",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "x",
+        "start": "0",
+        "end": "5"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": "HAHAHAHAHA",
+      "timestamp": "2024-09-04T21:26:21.827Z",
+      "description": "Set variable x to HAHAHAHAHA."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "x",
+        "start": 0,
+        "end": 5,
+        "result": "HAHAH"
+      },
+      "timestamp": "2024-09-04T21:26:21.827Z",
+      "description": "Set variable y to a substring of x from index 0 to 5."
+    }
+  ]
+}
