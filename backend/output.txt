@@ -180933,3 +180933,598 @@ Final JSON: {
     }
   ]
 }
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "myStrings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "What",
+          "line": 1
+        },
+        {
+          "type": "StringLiteral",
+          "value": "The",
+          "line": 1
+        },
+        {
+          "type": "StringLiteral",
+          "value": "Sigma",
+          "line": 1
+        },
+        {
+          "type": "StringLiteral",
+          "value": "Bruh",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "word",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "THIS WILL BE CHECKED",
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "myStrings",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 4
+      },
+      "newValue": {
+        "type": "StringLiteral",
+        "value": "hello",
+        "line": 4
+      },
+      "line": 4
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "nums",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 5
+      },
+      "newValue": {
+        "type": "NumberLiteral",
+        "value": "69",
+        "line": 5
+      },
+      "line": 5
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "myStrings",
+      "value": {
+        "type": "StringLiteral",
+        "value": "AAAA",
+        "line": 6
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 6
+      },
+      "line": 6
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "55",
+        "line": 7
+      },
+      "position": {
+        "type": "NumberLiteral",
+        "value": "2",
+        "line": 7
+      },
+      "line": 7
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "fetchedString",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "myStrings",
+          "line": 8
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 8
+        },
+        "line": 8
+      },
+      "line": 8
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "fetchedNumber",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "nums",
+          "line": 9
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 9
+        },
+        "line": 9
+      },
+      "line": 9
+    },
+    {
+      "type": "RemoveOperation",
+      "varName": "myStrings",
+      "positionToRemove": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 10
+      },
+      "line": 10
+    },
+    {
+      "type": "RemoveOperation",
+      "varName": "nums",
+      "positionToRemove": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 11
+      },
+      "line": 11
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "subst",
+      "varType": null,
+      "value": {
+        "type": "SubstringExpression",
+        "string": {
+          "type": "Identifier",
+          "value": "word",
+          "line": 12
+        },
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 12
+        },
+        "end": {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 12
+        },
+        "line": 12
+      },
+      "line": 12
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "stringLen",
+      "varType": null,
+      "value": {
+        "type": "LengthExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "word",
+          "line": 13
+        },
+        "line": 13
+      },
+      "line": 13
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "myStrings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "What",
+          "line": 1
+        },
+        {
+          "type": "StringLiteral",
+          "value": "The",
+          "line": 1
+        },
+        {
+          "type": "StringLiteral",
+          "value": "Sigma",
+          "line": 1
+        },
+        {
+          "type": "StringLiteral",
+          "value": "Bruh",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "nums",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "2",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "3",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "4",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "5",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "6",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "8",
+          "line": 2
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "9",
+          "line": 2
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "word",
+      "value": {
+        "type": "StringLiteral",
+        "value": "THIS WILL BE CHECKED",
+        "line": 3
+      }
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "myStrings",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 4
+      },
+      "setValue": "hello"
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "nums",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 5
+      },
+      "setValue": "69"
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "myStrings",
+      "value": {
+        "type": "StringLiteral",
+        "value": "AAAA",
+        "line": 6
+      },
+      "position": "2"
+    },
+    {
+      "type": "ArrayInsertion",
+      "varName": "nums",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "55",
+        "line": 7
+      },
+      "position": "2"
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "fetchedString",
+      "value": {
+        "type": "IndexExpression",
+        "source": "myStrings",
+        "index": "0"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "fetchedNumber",
+      "value": {
+        "type": "IndexExpression",
+        "source": "nums",
+        "index": "2"
+      }
+    },
+    {
+      "type": "RemoveOperation",
+      "varName": "myStrings",
+      "positionToRemove": "3"
+    },
+    {
+      "type": "RemoveOperation",
+      "varName": "nums",
+      "positionToRemove": "1"
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "subst",
+      "value": {
+        "type": "SubstringExpression",
+        "string": "word",
+        "start": "0",
+        "end": "6"
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "stringLen",
+      "value": {
+        "type": "LengthExpression",
+        "source": "word"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "myStrings",
+      "value": [
+        "What",
+        "The",
+        "Sigma",
+        "Bruh"
+      ],
+      "timestamp": "2024-09-04T21:15:25.756Z",
+      "description": "Created array myStrings with values [What,The,Sigma,Bruh]."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "nums",
+      "value": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "timestamp": "2024-09-04T21:15:25.756Z",
+      "description": "Created array nums with values [1,2,3,4,5,6,7,8,9]."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "word",
+      "type": "string",
+      "value": "THIS WILL BE CHECKED",
+      "timestamp": "2024-09-04T21:15:25.756Z",
+      "description": "Set variable word to THIS WILL BE CHECKED."
+    },
+    {
+      "line": 4,
+      "operation": "set_array",
+      "varName": "myStrings",
+      "index": 0,
+      "setValue": "hello",
+      "timestamp": "2024-09-04T21:15:25.756Z",
+      "description": "Set myStrings[0] to hello."
+    },
+    {
+      "line": 5,
+      "operation": "set_array",
+      "varName": "nums",
+      "index": 5,
+      "setValue": 69,
+      "timestamp": "2024-09-04T21:15:25.756Z",
+      "description": "Set nums[5] to 69."
+    },
+    {
+      "line": 6,
+      "operation": "add",
+      "varName": "myStrings",
+      "value": "AAAA",
+      "position": 2,
+      "timestamp": "2024-09-04T21:15:25.756Z",
+      "description": "Added AAAA to array myStrings at position 2."
+    },
+    {
+      "line": 7,
+      "operation": "add",
+      "varName": "nums",
+      "value": 55,
+      "position": 2,
+      "timestamp": "2024-09-04T21:15:25.756Z",
+      "description": "Added 55 to array nums at position 2."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "fetchedString",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myStrings",
+        "index": 0,
+        "result": "hello"
+      },
+      "timestamp": "2024-09-04T21:15:25.757Z",
+      "description": "Set variable fetchedString to myStrings[0]."
+    },
+    {
+      "line": 9,
+      "operation": "set",
+      "varName": "fetchedNumber",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "nums",
+        "index": 2,
+        "result": 55
+      },
+      "timestamp": "2024-09-04T21:15:25.757Z",
+      "description": "Set variable fetchedNumber to nums[2]."
+    },
+    {
+      "line": 10,
+      "operation": "remove",
+      "dataStructure": "array",
+      "varName": "myStrings",
+      "positionToRemove": 3,
+      "timestamp": "2024-09-04T21:15:25.757Z",
+      "description": "Removed value at position 3 in array myStrings."
+    },
+    {
+      "line": 11,
+      "operation": "remove",
+      "dataStructure": "array",
+      "varName": "nums",
+      "positionToRemove": 1,
+      "timestamp": "2024-09-04T21:15:25.757Z",
+      "description": "Removed value at position 1 in array nums."
+    },
+    {
+      "line": 12,
+      "operation": "set",
+      "varName": "subst",
+      "type": "string",
+      "value": {
+        "operation": "substring",
+        "source": "word",
+        "start": 0,
+        "end": 6,
+        "result": "THIS W"
+      },
+      "timestamp": "2024-09-04T21:15:25.757Z",
+      "description": "Set variable subst to a substring of word from index 0 to 6."
+    },
+    {
+      "line": 13,
+      "operation": "set",
+      "varName": "stringLen",
+      "type": "number",
+      "value": 20,
+      "timestamp": "2024-09-04T21:15:25.757Z",
+      "description": "Set variable stringLen to 20."
+    }
+  ]
+}
