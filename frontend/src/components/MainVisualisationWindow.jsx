@@ -4,6 +4,7 @@ import LoopNotificationComponent from "./LoopNotificationComponent";
 import ArrayComponent from "./ArrayComponent";
 import { useState, useEffect } from 'react';
 import '../styles/App.css';
+import { Box } from "@chakra-ui/react";
 
 
 function MainVisualisationWindow({
@@ -15,7 +16,7 @@ function MainVisualisationWindow({
     setIndexState, 
     pauseState,
     bufferState,
-    setPauseState
+    setPauseState,
     })
     {
     useEffect(()=>{
@@ -75,7 +76,7 @@ function MainVisualisationWindow({
     }, [indexState, pauseState]);
 
     return (
-        <div className="MainVisualisationWindow">
+        <Box className="MainVisualisationWindow" width="100%" overflow="auto" height="100%">
           <VariableListComponent
             movements={movementsState}
             speedState={speedState}
@@ -129,7 +130,7 @@ function MainVisualisationWindow({
               />
             ))}
           </div>
-        </div>
+        </Box>
       );
 }
 
