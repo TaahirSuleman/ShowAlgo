@@ -58,6 +58,7 @@ function StringVisualisationComponent({
         setAfterHighlight(actualValue.substring(end));
       }
       setPresentState(true);
+      setOutput((prev) => [...prev, currentMovement.description]);
       const timeout = setTimeout(() => {
         setPresentState(false);
         setIndexState((c) => c + 1); // Index incrementation is within this component for more control
