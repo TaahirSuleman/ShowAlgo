@@ -7,7 +7,7 @@ class JsonConverter extends Converter {
         super();
         this.variables = {};
         this.declaredVariables = new Set();
-        this.initializedArrays = new Set();
+        this.initializedArrays = {};
         this.currentLine = 1;
         this.nestedEndIf = 0;
         this.ifDepth = 0; // Track the depth of nested IF statements
@@ -16,7 +16,7 @@ class JsonConverter extends Converter {
             this.variables,
             this.declaredVariables
         );
-        this.functionMap = new Map(); // This will store function names to their transformation results
+        this.functionMap = new Map(); // This will store function names mapped to their IR for transformation when the function is called.
     }
 
     convert(ir) {
@@ -58,24 +58,64 @@ class JsonConverter extends Converter {
         if (node.value.type === "SubstringExpression") {
             return this.handleSubstringExpression(node);
         }
-        if (node.value.type === "IndexExpression")
+
+        if (node.value.type === "IndexExpression") {
             return this.transformIndexExpression(node);
+        }
+
+        let frames = []; // Collect frames for movements
+        let value = this.expressionEvaluator.evaluateExpression(node.value);
+
+        // Check if the value is a function call
+        if (node.value.type === "FunctionCall") {
+            const lineNum = node.value.line;
+            // Process the function call and retrieve the frames and return value
+            const functionCallResult = this.transformFunctionCall(node.value);
+
+            // Add the function call frames first
+            frames = [...functionCallResult.frames];
+
+            // Set the return value from the function call as the value of the variable
+            value = functionCallResult.returnValue;
+
+            // Assign the value from the function return to the variable
+            this.variables[node.name] = value;
+            this.declaredVariables.add(node.name);
+
+            const varType = this.determineType(value);
+
+            // Add the variable declaration movement after function call and body
+            frames.push({
+                line: lineNum,
+                operation: "set",
+                varName: node.name,
+                type: varType,
+                value: value,
+                timestamp: new Date().toISOString(),
+                description: `Set variable ${node.name} to function return value ${value}.`,
+            });
+            this.currentLine = lineNum + 1;
+            return frames; // Return all frames including the function call and variable assignment
+        }
+
+        // For non-function-call values, proceed as usual
         let typeBool = false;
-        let length;
+
         if (node.value.type === "LengthExpression") {
-            length = this.expressionEvaluator.evaluateLengthExpression(
+            value = this.expressionEvaluator.evaluateLengthExpression(
                 node.value
             );
         }
-        let value = this.expressionEvaluator.evaluateExpression(node.value);
 
         if (node.value.type === "BooleanLiteral") {
             typeBool = true;
             value = value.value;
         }
+
         this.variables[node.name] = value;
         this.declaredVariables.add(node.name);
-        let varType = typeBool
+
+        const varType = typeBool
             ? "boolean"
             : node.type === "StringLiteral"
             ? "string"
@@ -104,6 +144,7 @@ class JsonConverter extends Converter {
                   node.value.type === "LengthExpression"
                 ? value
                 : String(value);
+
         if (
             typeof returnVal === "string" &&
             returnVal.startsWith("(") &&
@@ -111,7 +152,11 @@ class JsonConverter extends Converter {
         ) {
             returnVal = returnVal.slice(1, -1);
         }
-        if (typeof this.variables[node.name] === "string") returnVal = value;
+
+        if (typeof this.variables[node.name] === "string") {
+            returnVal = value;
+        }
+
         return {
             line: node.line,
             operation: "set",
@@ -240,10 +285,18 @@ class JsonConverter extends Converter {
     }
 
     transformFunctionDeclaration(node) {
-        const frames = [];
+        // Store the entire IR (body, params) in the functionMap for later processing
+        const functionIR = {
+            name: node.name,
+            params: node.params,
+            startLine: node.startLine,
+            body: node.body,
+        };
 
-        // Generate the action frame for the function declaration itself
-        const functionFrame = {
+        this.functionMap.set(node.name, functionIR);
+
+        // Return a movement object for the function definition
+        return {
             line: node.line,
             operation: "define",
             varName: node.name,
@@ -253,17 +306,82 @@ class JsonConverter extends Converter {
                 node.name
             } with parameters ${node.params.join(", ")}.`,
         };
+    }
 
-        // Add the function declaration frame
-        frames.push(functionFrame);
+    transformFunctionCall(node) {
+        const frames = [];
+        const functionName = node.name;
 
-        // Generate and add action frames for each statement in the function body
-        node.body.forEach((statement) => {
-            const bodyFrame = this.transformNode(statement);
-            frames.push(bodyFrame);
+        // Ensure the function exists in the map
+        if (!this.functionMap.has(functionName)) {
+            throw new Error(`Function ${functionName} is not defined.`);
+        }
+
+        // Retrieve the function's full IR
+        const functionIR = this.functionMap.get(functionName);
+        console.log(functionIR);
+        // Check argument count match between the call and definition
+        const params = functionIR.params;
+        const args = node.args;
+
+        if (params.length !== args.length) {
+            throw new Error(
+                `Argument count mismatch in function ${functionName}. Expected ${params.length} but got ${args.length}.`
+            );
+        }
+        let prevLine = node.line;
+        this.currentLine = functionIR.startLine + 1;
+        // Map arguments to function parameters
+        const previousVariables = { ...this.variables }; // Save the current variables state
+        for (let i = 0; i < params.length; i++) {
+            this.variables[params[i]] =
+                this.expressionEvaluator.evaluateExpression(args[i]);
+            this.declaredVariables.add(params[i]);
+        }
+        console.log(this.variables);
+
+        // Output the function call movement object
+        frames.push({
+            line: node.line,
+            operation: "function_call",
+            varName: functionName,
+            arguments: args.map((arg) =>
+                this.expressionEvaluator.evaluateExpression(arg)
+            ),
+            timestamp: new Date().toISOString(),
+            description: `Called function ${functionName} with arguments ${args}.`,
         });
 
-        this.functionMap.set(node.name, frames);
+        // Process the function body and retrieve the return value
+        let returnValue = null;
+        functionIR.body.forEach((statement) => {
+            const bodyFrame = this.transformNode(statement);
+
+            // Check if the statement is a return statement
+            if (statement.type === "ReturnStatement") {
+                returnValue = this.expressionEvaluator.evaluateExpression(
+                    statement.value
+                );
+                console.log("Hello " + returnValue);
+            }
+
+            // If bodyFrame is an array, loop through each element and push them to frames
+            if (Array.isArray(bodyFrame)) {
+                bodyFrame.forEach((frame) => frames.push(frame));
+            } else {
+                frames.push(bodyFrame); // If it's a single frame, just push it directly
+            }
+        });
+
+        // Restore the previous variable state
+        this.variables = previousVariables;
+        this.currentLine = prevLine;
+        node.line = prevLine;
+
+        return {
+            frames,
+            returnValue, // Return the final result of the function, if any
+        };
     }
 
     transformPrintStatement(node) {
@@ -703,7 +821,8 @@ class JsonConverter extends Converter {
     }
 
     transformReturnStatement(node) {
-        const transformedReturnValue = this.transformExpression(node.value);
+        const transformedReturnValue =
+            this.expressionEvaluator.evaluateExpression(node.value);
         return {
             line: node.line,
             operation: "return",

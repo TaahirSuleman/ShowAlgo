@@ -7,14 +7,159 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should correctly process a function definition, function call, and its return value", function () {
+        // The input pseudocode
+        const pseudocode = `DEFINE maxNumber WITH PARAMETERS (x,y,z)
+      set x to number 3
+      set y to number 100
+      set z to number 42
+      set max to number 0
+      if x is greater than y then
+          set max to x
+      otherwise
+          set max to y
+      end if
+      if z is greater than max then
+          set max to z
+      end if
+      print max
+      END FUNCTION
+      SET result TO CALL maxNumber WITH (3, 100, 42)
+    `;
+
+        // Define the expected JSON action frames
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "define",
+                    varName: "maxNumber",
+                    params: ["x", "y", "z"],
+                    timestamp: undefined,
+                    description:
+                        "Defined function maxNumber with parameters x, y, z.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable x to 3.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "y",
+                    type: "number",
+                    value: 100,
+                    timestamp: undefined,
+                    description: "Set variable y to 100.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "z",
+                    type: "number",
+                    value: 42,
+                    timestamp: undefined,
+                    description: "Set variable z to 42.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "max",
+                    type: "number",
+                    value: 0,
+                    timestamp: undefined,
+                    description: "Set variable max to 0.",
+                },
+                {
+                    line: 6,
+                    operation: "if",
+                    condition: "x > y",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if x > y.",
+                },
+                {
+                    line: 8,
+                    operation: "set",
+                    varName: "max",
+                    type: "number",
+                    value: 100,
+                    timestamp: undefined,
+                    description: "Set variable max to 100.",
+                },
+                {
+                    line: 10,
+                    operation: "if",
+                    condition: "z > max",
+                    result: false,
+                    timestamp: undefined,
+                    description: "Checked if z > max.",
+                },
+                {
+                    line: 12,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "max",
+                    literal: 100,
+                    timestamp: undefined,
+                    description: "Printed 100.",
+                },
+                {
+                    line: 14,
+                    operation: "function_call",
+                    varName: "maxNumber",
+                    arguments: [3, 100, 42],
+                    timestamp: undefined,
+                    description:
+                        "Called function maxNumber with arguments 3, 100, 42.",
+                },
+                {
+                    line: 14,
+                    operation: "set",
+                    varName: "result",
+                    type: "number",
+                    value: 100,
+                    timestamp: undefined,
+                    description: "Set variable result to 100.",
+                },
+            ],
+        };
+
+        // Assert that the generated output matches the expected JSON
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        if (result.actionFrames[0] != undefined) {
+            console.log("hi " + expectedJson.actionFrames[0]);
+            expectedJson.actionFrames.forEach((frame, index) => {
+                frame.timestamp = result.actionFrames[index].timestamp;
+            });
+        }
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
     it("should correctly process a function call and return the function body", () => {
         const pseudocode = `DEFINE add_numbers WITH PARAMETERS (a, b)
             RETURN a + b
         END FUNCTION
-        CALL add_numbers WITH (5, 10)`;
+        SET x TO CALL add_numbers WITH (5, 10)`;
 
         const expectedJson = {
             actionFrames: [
+                {
+                    line: 3,
+                    operation: "function_call",
+                    varName: "add_numbers",
+                    arguments: [5, 10],
+                    timestamp: undefined,
+                    description:
+                        "Called function add_numbers with arguments 5, 10.",
+                },
                 {
                     line: 1,
                     operation: "define",
@@ -35,27 +180,6 @@ describe("PseudocodeProcessor", () => {
                     timestamp: undefined,
                     description:
                         'Returned {"left":"a","operator":"+","right":"b"}.',
-                },
-                {
-                    line: 3,
-                    operation: "function_call",
-                    varName: "add_numbers",
-                    arguments: [5, 10],
-                    timestamp: undefined,
-                    description:
-                        "Called function add_numbers with arguments 5, 10.",
-                },
-                {
-                    line: 2,
-                    operation: "return",
-                    value: {
-                        left: "5",
-                        operator: "+",
-                        right: "10",
-                    },
-                    timestamp: undefined,
-                    description:
-                        'Returned {"left":"5","operator":"+","right":"10"}.',
                 },
             ],
         };

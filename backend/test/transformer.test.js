@@ -1007,7 +1007,8 @@ describe("Transformer", () => {
                             { type: "Identifier", value: "b", line: 2 }
                         )
                     ),
-                ]
+                ],
+                1
             ),
         ]);
 
@@ -1199,7 +1200,8 @@ describe("Transformer", () => {
                             { type: "Identifier", value: "b", line: 2 }
                         )
                     ),
-                ]
+                ],
+                2
             ),
             new IfStatement(
                 new Expression("x", "greater", {

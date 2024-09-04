@@ -28,6 +28,10 @@ class JsonNodeConverterFactory {
                 return this.jsonConverter.transformFunctionDeclaration.bind(
                     this.jsonConverter
                 );
+            case "FunctionCall":
+                return this.jsonConverter.transformFunctionCall.bind(
+                    this.jsonConverter
+                );
             case "PrintStatement":
                 return this.jsonConverter.transformPrintStatement.bind(
                     this.jsonConverter
