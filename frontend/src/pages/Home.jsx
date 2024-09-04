@@ -21,5 +21,5 @@ function Home() {
     </Center>
   );
 }
-<iframe src="https://scribehow.com/embed/Course_Convener_User_Manual__c2FEnihoQtOBS1B-WefBEA" width="100%" height="640" allowfullscreen frameborder="0"></iframe>
+
 export default Home;

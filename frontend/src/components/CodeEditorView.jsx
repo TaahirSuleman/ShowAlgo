@@ -44,7 +44,7 @@ const CodeEditorView = ({
               "keyword.methods",
             ],
             [
-              /\bif\b|\bIF\b|\bIS\b|\bis\b|\bequal\b|\bEQUAL\b|\bgreater\b|\bGREATER\b|\bless\b|\bLESS\b|\bthan\b|\bTHAN\b|\bthen\b|\bTHEN\b|\botherwise\b|\bOTHERWISE\b|\bend\s*if\b|\bEND\s*IF\b|\bswitch\b|\bSWITCH\b|\bcase\b|\bCASE\b|\bend switch\b|\bEND SWITCH\b/i,
+              /\bif\b|\bIF\b|\bIS\b|\bis\b|\bequal\b|\bEQUAL\b|\bgreater\b|\bGREATER\b|\bless\b|\bLESS\b|\bthan\b|\bTHAN\b|\bthen\b|\bTHEN\b|\botherwise\b|\bOTHERWISE\b|\bend\s*if\b|\bEND\s*IF\b/i,
               "keyword.control",
             ],
             [
@@ -635,42 +635,6 @@ const CodeEditorView = ({
               kind: monaco.languages.CompletionItemKind.Keyword,
               insertText: "VALUES",
               detail: "Keyword: VALUES",
-            },
-            {
-              label: "switch",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: "switch",
-              detail: "Control structure: switch",
-            },
-            {
-              label: "SWITCH",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: "SWITCH",
-              detail: "Control structure: SWITCH",
-            },
-            {
-              label: "case",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: "case",
-              detail: "Control structure: case",
-            },
-            {
-              label: "CASE",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: "CASE",
-              detail: "Control structure: CASE",
-            },
-            {
-              label: "end switch",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: "end switch",
-              detail: "Control structure: end switch",
-            },
-            {
-              label: "END SWITCH",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: "END SWITCH",
-              detail: "Control structure: END SWITCH",
             },
           ];
           return { suggestions: suggestions };
