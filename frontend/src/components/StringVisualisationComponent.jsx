@@ -61,7 +61,6 @@ function StringVisualisationComponent({
       setOutput((prev) => [...prev, currentMovement.description]);
       const timeout = setTimeout(() => {
         setPresentState(false);
-        setIndexState((c) => c + 1); // Index incrementation is within this component for more control
       }, speedState * 1000); // Over animation duration. Was previously in variableComponent.
       return () => clearTimeout(timeout);
     };

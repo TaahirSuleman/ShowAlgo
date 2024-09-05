@@ -86,7 +86,7 @@ function ArrayBlockComponent({
         transition={{
           type: "tween",
           times: [0, 0.33, 0.66, 1],
-          duration: speedState * 0.66,
+          duration: speedState * 0.5,
         }}
         animate={{
           backgroundColor: [
