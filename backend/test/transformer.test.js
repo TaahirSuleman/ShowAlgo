@@ -1018,6 +1018,7 @@ describe("Transformer", () => {
                     type: "FunctionDeclaration",
                     name: "add_numbers",
                     params: ["a", "b"],
+                    startLine: 1,
                     body: [
                         {
                             type: "ReturnStatement",
@@ -1271,6 +1272,7 @@ describe("Transformer", () => {
                     type: "FunctionDeclaration",
                     name: "add_numbers",
                     params: ["a", "b"],
+                    startLine: 2,
                     body: [
                         {
                             type: "ReturnStatement",

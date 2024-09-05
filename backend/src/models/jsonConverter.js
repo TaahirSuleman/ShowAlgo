@@ -171,7 +171,6 @@ class JsonConverter extends Converter {
     transformIndexExpression(node) {
         const { varName, value } = node;
         const source = value.source;
-
         const index = this.expressionEvaluator.evaluateExpression(value.index);
 
         if (index < 0) {
@@ -209,9 +208,9 @@ class JsonConverter extends Converter {
             );
         }
 
-        this.variables[varName] = result;
-        this.declaredVariables.add(varName);
-
+        this.variables[node.name] = result;
+        this.declaredVariables.add(node.name);
+        console.log(this.variables);
         return {
             line: node.line,
             operation: "set",
@@ -339,17 +338,17 @@ class JsonConverter extends Converter {
             this.declaredVariables.add(params[i]);
         }
         console.log(this.variables);
-
+        let frameArgs = args.map((arg) =>
+            this.expressionEvaluator.evaluateExpression(arg)
+        );
         // Output the function call movement object
         frames.push({
             line: node.line,
             operation: "function_call",
             varName: functionName,
-            arguments: args.map((arg) =>
-                this.expressionEvaluator.evaluateExpression(arg)
-            ),
+            arguments: frameArgs,
             timestamp: new Date().toISOString(),
-            description: `Called function ${functionName} with arguments ${args}.`,
+            description: `Called function ${functionName} with arguments ${frameArgs}.`,
         });
 
         // Process the function body and retrieve the return value
@@ -681,6 +680,21 @@ class JsonConverter extends Converter {
     }
 
     flipOperator(operator) {
+        const operatorsMap = {
+            and: "&&",
+            or: "||",
+            greater: ">",
+            less: "<",
+            equal: "==",
+            ">": ">",
+            "<": "<",
+            "==": "==",
+            "!=": "!=",
+            ">=": ">=",
+            "<=": "<=",
+        };
+
+        const operatorMapped = operatorsMap[operator];
         const flipMap = {
             ">": "<=",
             "<": ">=",
@@ -690,8 +704,8 @@ class JsonConverter extends Converter {
             "!=": "==",
         };
 
-        if (flipMap[operator]) {
-            return flipMap[operator];
+        if (flipMap[operatorMapped]) {
+            return flipMap[operatorMapped];
         }
 
         throw new Error(`Unsupported operator for flipping: ${operator}`);
@@ -860,16 +874,23 @@ class JsonConverter extends Converter {
     }
 
     transformArrayCreation(node) {
-        const elements = (node.values || []).map((el) =>
-            this.expressionEvaluator.evaluateExpression(el)
-        );
+        let elements;
+        if (node.dsType === "boolean")
+            elements = (node.values || []).map((el) => el.value);
+        else
+            elements = (node.values || []).map((el) =>
+                this.expressionEvaluator.evaluateExpression(el)
+            );
         this.variables[node.varName] = elements;
         this.initializedArrays[node.varName] = node.dsType;
         this.declaredVariables.add(node.varName);
         const unInitialised = node.unInitialised;
-        let value = elements.map((el) =>
-            this.expressionEvaluator.convertValue(el)
-        );
+        let value;
+        if (node.dsType === "boolean") value = elements.map((el) => el);
+        else
+            value = elements.map((el) =>
+                this.expressionEvaluator.convertValue(el)
+            );
         return {
             line: node.line,
             operation: "create",

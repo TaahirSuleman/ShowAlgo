@@ -7,22 +7,66 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should correctly process the creation of a boolean array and retrieving a value at an index", function () {
+        const pseudocode = `create boolean array as boolArray with values [true, false, true]
+            SET isTrue TO boolArray[0]
+        `;
+
+        // Expected JSON output
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    varName: "boolArray",
+                    dataStructure: "array",
+                    value: [true, false, true],
+                    type: "boolean",
+                    timestamp: undefined,
+                    description:
+                        "Created array boolArray with values [true,false,true].",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "isTrue",
+                    type: "boolean",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "boolArray",
+                        index: 0,
+                        result: true,
+                    },
+                    timestamp: undefined,
+                    description: "Set variable isTrue to boolArray[0].",
+                },
+            ],
+        };
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
     it("should correctly process a function definition, function call, and its return value", function () {
         // The input pseudocode
-        const pseudocode = `DEFINE maxNumber WITH PARAMETERS (x,y,z)
-      set x to number 3
+        const pseudocode = `DEFINE maxNumber WITH PARAMETERS (num1,num2,num3);
+      set x to number 3;
       set y to number 100
       set z to number 42
-      set max to number 0
+      set max to number 0;
       if x is greater than y then
           set max to x
       otherwise
-          set max to y
+          set max to y;
       end if
       if z is greater than max then
-          set max to z
+          set max to z;
       end if
-      print max
+      print max;
       END FUNCTION
       SET result TO CALL maxNumber WITH (3, 100, 42)
     `;
@@ -34,10 +78,19 @@ describe("PseudocodeProcessor", () => {
                     line: 1,
                     operation: "define",
                     varName: "maxNumber",
-                    params: ["x", "y", "z"],
-                    timestamp: undefined,
+                    params: ["num1", "num2", "num3"],
+                    timestamp: "2024-09-04T23:03:42.201Z",
                     description:
-                        "Defined function maxNumber with parameters x, y, z.",
+                        "Defined function maxNumber with parameters num1, num2, num3.",
+                },
+                {
+                    line: 16,
+                    operation: "function_call",
+                    varName: "maxNumber",
+                    arguments: [3, 100, 42],
+                    timestamp: "2024-09-04T23:03:42.202Z",
+                    description:
+                        "Called function maxNumber with arguments 3,100,42.",
                 },
                 {
                     line: 2,
@@ -45,7 +98,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "x",
                     type: "number",
                     value: 3,
-                    timestamp: undefined,
+                    timestamp: "2024-09-04T23:03:42.202Z",
                     description: "Set variable x to 3.",
                 },
                 {
@@ -54,7 +107,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "y",
                     type: "number",
                     value: 100,
-                    timestamp: undefined,
+                    timestamp: "2024-09-04T23:03:42.202Z",
                     description: "Set variable y to 100.",
                 },
                 {
@@ -63,7 +116,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "z",
                     type: "number",
                     value: 42,
-                    timestamp: undefined,
+                    timestamp: "2024-09-04T23:03:42.202Z",
                     description: "Set variable z to 42.",
                 },
                 {
@@ -72,7 +125,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "max",
                     type: "number",
                     value: 0,
-                    timestamp: undefined,
+                    timestamp: "2024-09-04T23:03:42.202Z",
                     description: "Set variable max to 0.",
                 },
                 {
@@ -80,52 +133,56 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "x > y",
                     result: false,
-                    timestamp: undefined,
+                    timestamp: "2024-09-04T23:03:42.203Z",
                     description: "Checked if x > y.",
                 },
                 {
-                    line: 8,
+                    line: 9,
                     operation: "set",
                     varName: "max",
                     type: "number",
                     value: 100,
-                    timestamp: undefined,
+                    timestamp: "2024-09-04T23:03:42.203Z",
                     description: "Set variable max to 100.",
                 },
                 {
                     line: 10,
+                    operation: "endif",
+                    timestamp: "2024-09-04T23:03:42.203Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 11,
                     operation: "if",
                     condition: "z > max",
                     result: false,
-                    timestamp: undefined,
+                    timestamp: "2024-09-04T23:03:42.203Z",
                     description: "Checked if z > max.",
                 },
                 {
-                    line: 12,
+                    line: 13,
+                    operation: "endif",
+                    timestamp: "2024-09-04T23:03:42.203Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 14,
                     operation: "print",
                     isLiteral: false,
                     varName: "max",
                     literal: 100,
-                    timestamp: undefined,
-                    description: "Printed 100.",
+                    timestamp: "2024-09-04T23:03:42.203Z",
+                    description: "Printed max.",
                 },
                 {
-                    line: 14,
-                    operation: "function_call",
-                    varName: "maxNumber",
-                    arguments: [3, 100, 42],
-                    timestamp: undefined,
-                    description:
-                        "Called function maxNumber with arguments 3, 100, 42.",
-                },
-                {
-                    line: 14,
+                    line: 16,
                     operation: "set",
                     varName: "result",
                     type: "number",
-                    value: 100,
-                    timestamp: undefined,
-                    description: "Set variable result to 100.",
+                    value: null,
+                    timestamp: "2024-09-04T23:03:42.203Z",
+                    description:
+                        "Set variable result to function return value null.",
                 },
             ],
         };
@@ -133,12 +190,9 @@ describe("PseudocodeProcessor", () => {
         // Assert that the generated output matches the expected JSON
         const result = PseudocodeProcessor.process(pseudocode);
 
-        if (result.actionFrames[0] != undefined) {
-            console.log("hi " + expectedJson.actionFrames[0]);
-            expectedJson.actionFrames.forEach((frame, index) => {
-                frame.timestamp = result.actionFrames[index].timestamp;
-            });
-        }
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
 
         expect(result).to.deep.equal(expectedJson);
     });
@@ -152,34 +206,38 @@ describe("PseudocodeProcessor", () => {
         const expectedJson = {
             actionFrames: [
                 {
-                    line: 3,
-                    operation: "function_call",
-                    varName: "add_numbers",
-                    arguments: [5, 10],
-                    timestamp: undefined,
-                    description:
-                        "Called function add_numbers with arguments 5, 10.",
-                },
-                {
                     line: 1,
                     operation: "define",
                     varName: "add_numbers",
                     params: ["a", "b"],
-                    timestamp: undefined,
+                    timestamp: "2024-09-04T23:03:42.211Z",
                     description:
                         "Defined function add_numbers with parameters a, b.",
                 },
                 {
+                    line: 4,
+                    operation: "function_call",
+                    varName: "add_numbers",
+                    arguments: [5, 10],
+                    timestamp: "2024-09-04T23:03:42.211Z",
+                    description:
+                        "Called function add_numbers with arguments 5,10.",
+                },
+                {
                     line: 2,
                     operation: "return",
-                    value: {
-                        left: "a",
-                        operator: "+",
-                        right: "b",
-                    },
-                    timestamp: undefined,
-                    description:
-                        'Returned {"left":"a","operator":"+","right":"b"}.',
+                    value: 15,
+                    timestamp: "2024-09-04T23:03:42.211Z",
+                    description: "Returned 15.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "x",
+                    type: "number",
+                    value: 15,
+                    timestamp: "2024-09-04T23:03:42.211Z",
+                    description: "Set variable x to function return value 15.",
                 },
             ],
         };
@@ -200,17 +258,24 @@ describe("PseudocodeProcessor", () => {
         END FUNCTION`;
 
         const expectedJson = {
-            actionFrames: [undefined],
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "define",
+                    varName: "add_numbers",
+                    params: ["a", "b"],
+                    timestamp: "2024-09-04T23:03:42.213Z",
+                    description:
+                        "Defined function add_numbers with parameters a, b.",
+                },
+            ],
         };
 
         const result = PseudocodeProcessor.process(pseudocode);
 
-        if (result.actionFrames[0] != undefined) {
-            console.log("hi " + expectedJson.actionFrames[0]);
-            expectedJson.actionFrames.forEach((frame, index) => {
-                frame.timestamp = result.actionFrames[index].timestamp;
-            });
-        }
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
 
         expect(result).to.deep.equal(expectedJson);
     });
@@ -219,7 +284,7 @@ describe("PseudocodeProcessor", () => {
         const pseudocode = `CREATE string array AS myStrings WITH SIZE 3
         SET element 0 OF myStrings TO "hello"
         SET element 1 OF myStrings TO "world"
-        INSERT "!" TO myStrings AT position 2
+        ADD "!" TO myStrings AT position 2
         REMOVE element 0 FROM myStrings
         PRINT myStrings
         SET firstElement TO myStrings[0]`;
