@@ -249,6 +249,22 @@ class Transformer {
         };
     }
 
+    /**
+     * Transforms a function call node.
+     * @param {Object} node - The function call AST node.
+     * @returns {Object} The transformed function call.
+     */
+    transformFunctionCall(node) {
+        const functionName = node.name; // Function name
+        const args = node.args.map((arg) => this.transformExpression(arg)); // Transform the arguments
+
+        return {
+            type: "FunctionCall",
+            name: functionName,
+            arguments: args,
+        };
+    }
+
     convertValue(value) {
         console.log(value.value);
         if (typeof value === "string" && value.trim() !== "" && !isNaN(value)) {

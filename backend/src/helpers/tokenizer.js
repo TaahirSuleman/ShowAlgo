@@ -91,7 +91,7 @@ class Tokenizer {
      * @returns {boolean} True if the character is a whitespace, false otherwise.
      */
     isWhitespace(char) {
-        return /\s/.test(char);
+        return /\s/.test(char) || char === ";"; // Treat semicolons as whitespace
     }
 
     /**
@@ -192,9 +192,12 @@ class Tokenizer {
             "as",
             "with",
             "insert",
+            "add",
             "at",
             "position",
             "print",
+            "display",
+            "show",
             "if",
             "then",
             "otherwise",
@@ -217,6 +220,7 @@ class Tokenizer {
             "character",
             "otherwiseif",
             "remove",
+            "delete",
             // New combined keywords can be added here if needed
         ];
         if (value.toLowerCase() === "set") {
@@ -235,6 +239,8 @@ class Tokenizer {
                 value = "character"; // treat array indexing the same as substring - making it transparent for the subsequent stages while allowing differentiation within the SPL between 'ELEMENT AT' for arrays and 'CHARACTER AT' for strings.
         }
         if (value.toLowerCase() === "else") value = "otherwise";
+        else if (value.toLowerCase() === "add") value = "insert";
+        else if (value.toLowerCase() === "delete") value = "remove";
         if (value.toLowerCase() === "otherwise") {
             let lookaheadSpace = this.peekNextWord();
             let lookahead = this.peekNextWord();
@@ -256,7 +262,10 @@ class Tokenizer {
             }
         }
 
-        if (value.toLowerCase() === "display") {
+        if (
+            value.toLowerCase() === "display" ||
+            value.toLowerCase() === "show"
+        ) {
             value = "print";
         }
 
