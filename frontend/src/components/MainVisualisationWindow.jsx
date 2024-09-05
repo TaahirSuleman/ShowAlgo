@@ -24,7 +24,13 @@ function MainVisualisationWindow({
     }, [indexState, speedState]);
     const [arraysState, setArraysState] = useState([]); // {name, values, locations, type}
     const [variablesState, setVariablesState] = useState([]);
-    const genericOperations = ["else", "print"];
+    const genericOperations = [
+        "else",
+        "print",
+        "define",
+        "function_call",
+        "return",
+    ];
 
     useEffect(() => {
         const performOperations = () => {
