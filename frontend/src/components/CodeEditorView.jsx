@@ -599,18 +599,6 @@ const CodeEditorView = ({
               detail: "Data structure: ARRAY",
             },
             {
-              label: "linkedlist",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: "linkedlist",
-              detail: "Data structure: linkedlist",
-            },
-            {
-              label: "LINKEDLIST",
-              kind: monaco.languages.CompletionItemKind.Keyword,
-              insertText: "LINKEDLIST",
-              detail: "Data structure: LINKEDLIST",
-            },
-            {
               label: "return",
               kind: monaco.languages.CompletionItemKind.Keyword,
               insertText: "return",
@@ -694,9 +682,6 @@ const CodeEditorView = ({
               insertText: "CHARACTER",
               detail: "Function: CHARACTER",
             },
-            {
-              label: ""
-            }
           ];
           return { suggestions: suggestions };
         },
