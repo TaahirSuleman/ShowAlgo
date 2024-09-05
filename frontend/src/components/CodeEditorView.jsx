@@ -40,7 +40,7 @@ const CodeEditorView = ({
               "type",
             ],
             [
-              /\bcreate\b|\bCREATE\b|\bas\b|\bAS\b|\bwith\b|\bWITH\b|\badd\b|\bADD\b|\binsert\b|\bINSERT\b|\bdelete\b|\bDELETE\b|\bremove\b|\bREMOVE\b|\binto\b|\bINTO\b|\bfrom\b|\bFROM\b|\barray\b|\bARRAY\b|\blinkedlist\b|\bLINKEDLIST\b|\breturn\b|\bRETURN\b|\bvalues\b|\bVALUES\b/i,
+              /\bcreate\b|\bCREATE\b|\bas\b|\bAS\b|\bwith\b|\bWITH\b|\badd\b|\bADD\b|\binsert\b|\bINSERT\b|\bdelete\b|\bDELETE\b|\bremove\b|\bREMOVE\b|\binto\b|\bINTO\b|\bfrom\b|\bFROM\b|\barray\b|\bARRAY\b|\breturn\b|\bRETURN\b|\bvalues\b|\bVALUES\b|\bat\b|\bAT\b|\bof\b|\bOF\b/i,
               "keyword.methods",
             ],
             [
@@ -51,19 +51,17 @@ const CodeEditorView = ({
               /\bloop\b|\bLOOP\b|\buntil\b|\bUNTIL\b|\bend\s*loop\b|\bEND\s*LOOP\b|\bfor each\b|\bFOR EACH\b|\bin\b|\bIN\b/i,
               "keyword.control",
             ],
-            [/\btrue\b|\bTRUE\b|\bfalse\b|\bFALSE\b/i, "keyword.boolean"],
+            [/\btrue\b|\bTRUE\b|\bfalse\b|\bFALSE\b|\band\b|\bAND\b|\bor\b|\bOR\b|\bnot\b|\bNOT\b/i, "keyword.boolean"],
             [
               /\band\b|\bAND\b|\bor\b|\bOR\b|\bnot\b|\bNOT\b/i,
               "keyword.operator",
             ],
             [
-              /\bdefine\b|\bDEFINE\b|\bparameters\b|\bPARAMETERS\b|\bend\s*function\b|\bEND\s*FUNCTION\b/i,
+              /\bdefine\b|\bDEFINE\b|\bparameters\b|\bPARAMETERS\b|\bend\s*function\b|\bEND\s*FUNCTION\b|\bsubstring\b|\bSUBSTRING\b|\blength\b|\bLENGTH\b|\bcharacter\b|\bCHARACTER\b/i,
               "keyword.function",
             ],
             [/\bsize\b|\bSIZE\b/i, "keyword"],
             [/\bprint\b|\bPRINT\b|\bdisplay\b|\bDISPLAY\b/i, "keyword"],
-            // [/\/\/.*/, "comment"],  // Single-line comments with //
-            // [/#.*/, "comment"],     // Single-line comments with #
           ],
         },
       });
@@ -636,6 +634,69 @@ const CodeEditorView = ({
               insertText: "VALUES",
               detail: "Keyword: VALUES",
             },
+            {
+              label: "at",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "at",
+              detail: "Keyword: at",
+            },
+            {
+              label: "AT",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "AT",
+              detail: "Keyword: AT",
+            },
+            {
+              label: "of",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "of",
+              detail: "Keyword: of",
+            },
+            {
+              label: "OF",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "OF",
+              detail: "Keyword: OF",
+            },
+            {
+              label: "substring",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "substring",
+              detail: "Function: substring",
+            },
+            {
+              label: "SUBSTRING",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "SUBSTRING",
+              detail: "Function: SUBSTRING",
+            },
+            {
+              label: "length",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "length",
+              detail: "Function: length",
+            },
+            {
+              label: "LENGTH",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "LENGTH",
+              detail: "Function: LENGTH",
+            },
+            {
+              label: "character",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "character",
+              detail: "Function: character",
+            },
+            {
+              label: "CHARACTER",
+              kind: monaco.languages.CompletionItemKind.Keyword,
+              insertText: "CHARACTER",
+              detail: "Function: CHARACTER",
+            },
+            {
+              label: ""
+            }
           ];
           return { suggestions: suggestions };
         },
