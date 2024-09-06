@@ -1007,7 +1007,8 @@ describe("Transformer", () => {
                             { type: "Identifier", value: "b", line: 2 }
                         )
                     ),
-                ]
+                ],
+                1
             ),
         ]);
 
@@ -1017,6 +1018,7 @@ describe("Transformer", () => {
                     type: "FunctionDeclaration",
                     name: "add_numbers",
                     params: ["a", "b"],
+                    startLine: 1,
                     body: [
                         {
                             type: "ReturnStatement",
@@ -1199,7 +1201,8 @@ describe("Transformer", () => {
                             { type: "Identifier", value: "b", line: 2 }
                         )
                     ),
-                ]
+                ],
+                2
             ),
             new IfStatement(
                 new Expression("x", "greater", {
@@ -1269,6 +1272,7 @@ describe("Transformer", () => {
                     type: "FunctionDeclaration",
                     name: "add_numbers",
                     params: ["a", "b"],
+                    startLine: 2,
                     body: [
                         {
                             type: "ReturnStatement",

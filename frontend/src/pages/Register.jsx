@@ -26,8 +26,38 @@ function Register() {
     role: "user",
   });
 
+  const validateInput = () => {
+    const { username, password } = data;
+    if (username.length < 6) {
+      toast({
+        title: "Invalid Input",
+        description: "Username should be at least 6 characters long.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return false;
+    }
+    if (password.length < 6) {
+      toast({
+        title: "Invalid Input",
+        description: "Password should be at least 6 characters long.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const registerUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
+
+    if (!validateInput()) {
+      return; // Stop execution if validation fails
+    }
+
     // destructure data
     const { username, password, role } = data;
     try {
@@ -61,6 +91,13 @@ function Register() {
       }
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Error",
+        description: "An error occurred. Please try again.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
 
