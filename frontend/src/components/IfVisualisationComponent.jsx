@@ -65,6 +65,12 @@ function IfVisualisationComponent(
           }, speedState*1000);
           return () => clearTimeout(timeoutId4);
         }
+        else if (movement.operation === "loop_end"){
+          const timeoutId4 = setTimeout(()=> {
+            setIsActive(false);
+          }, speedState*1000);
+          return () => clearTimeout(timeoutId4);
+        }
       }
     }
     performOperations();

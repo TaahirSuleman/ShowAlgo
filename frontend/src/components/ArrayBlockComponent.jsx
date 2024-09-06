@@ -86,13 +86,13 @@ function ArrayBlockComponent({
         transition={{
           type: "tween",
           times: [0, 0.33, 0.66, 1],
-          duration: speedState * 0.66,
+          duration: speedState*0.5,
         }}
         animate={{
           backgroundColor: [
             "#1A365D",
-            "hsl(48, 100, 67)",
-            "hsl(48, 100, 67)",
+            "#f7e400",
+            "#f7e400",
             "#1A365D",
           ],
           color: [
