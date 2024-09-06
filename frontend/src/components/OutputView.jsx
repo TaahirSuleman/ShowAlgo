@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 
 const OutputView = ({
   output,
@@ -9,12 +9,17 @@ const OutputView = ({
   height,
   width,
 }) => {
+  const boxRef = useRef(null); 
+
   useEffect(() => {
-    console.log(output);
+    if (boxRef.current) {
+      boxRef.current.scrollTop = boxRef.current.scrollHeight;
+    }
   }, [output]);
 
   return (
     <Box
+      ref={boxRef}
       className={className}
       height={height}
       width={width}
