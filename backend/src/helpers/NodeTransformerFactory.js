@@ -18,8 +18,11 @@ class NodeTransformerFactory {
                     type: "FunctionDeclaration",
                     name: node.name,
                     params: node.params,
+                    startLine: node.line,
                     body: transformer.transformNodes(node.body),
                 };
+            case "FunctionCall":
+                return transformer.transformFunctionCall(node);
             case "VariableDeclaration":
                 return {
                     type: "VariableDeclaration",
