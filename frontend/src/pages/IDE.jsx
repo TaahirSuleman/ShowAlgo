@@ -196,7 +196,6 @@ function IDE() {
         setPauseState={setPauseState}
         bufferState={bufferState}
         keyValue={key}
-        keyValue={key}
         isClearLoading={isClearLoading}
         isClearOutputLoading={isClearOutputLoading}
         setIsClearOutputLoading={setIsClearOutputLoading}
