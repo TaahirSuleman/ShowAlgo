@@ -23,13 +23,14 @@ import LengthExpression from "./ast/LengthExpression.js";
 import IndexExpression from "./ast/IndexExpression.js";
 import RemoveOperation from "./ast/RemoveOperation.js";
 import ArraySetValue from "./ast/ArraySetValue.js";
+import SwapOperation from "./ast/SwapOperation.js";
 /**
  * ASTNodeFactory class responsible for creating instances of AST nodes.
  */
 class ASTNodeFactory {
     constructor() {
         this.nodeTypes = {
-            Program, // Add Program node here
+            Program,
             VariableDeclaration,
             PrintStatement,
             ArrayCreation,
@@ -54,6 +55,7 @@ class ASTNodeFactory {
             IndexExpression,
             RemoveOperation,
             ArraySetValue,
+            SwapOperation,
         };
     }
 

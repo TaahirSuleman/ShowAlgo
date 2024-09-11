@@ -1109,6 +1109,7 @@ describe("Transformer", () => {
                     type: "ForLoop",
                     iterator: "num",
                     collection: "nums",
+                    endLine: 8,
                     body: [
                         {
                             type: "PrintStatement",
@@ -1309,6 +1310,7 @@ describe("Transformer", () => {
                     type: "ForLoop",
                     iterator: "num",
                     collection: "nums",
+                    endLine: 8,
                     body: [
                         {
                             type: "PrintStatement",
@@ -1447,8 +1449,16 @@ describe("Transformer", () => {
                     type: "LoopFromTo",
                     loopVariable: "i",
                     range: {
-                        start: "0",
-                        end: "10",
+                        start: {
+                            line: 2,
+                            type: "NumberLiteral",
+                            value: "0",
+                        },
+                        end: {
+                            line: 2,
+                            type: "NumberLiteral",
+                            value: "10",
+                        },
                     },
                     body: [
                         {

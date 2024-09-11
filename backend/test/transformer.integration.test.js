@@ -363,6 +363,7 @@ END FOR`,
                         type: "ForLoop",
                         iterator: "num",
                         collection: "nums",
+                        endLine: 2,
                         body: [
                             {
                                 type: "PrintStatement",
@@ -478,6 +479,7 @@ END WHILE`,
                         type: "ForLoop",
                         iterator: "num",
                         collection: "nums",
+                        endLine: 11,
                         body: [
                             {
                                 type: "PrintStatement",

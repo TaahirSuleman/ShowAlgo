@@ -242,8 +242,8 @@ class Transformer {
             type: "LoopFromTo",
             loopVariable: node.loopVariable,
             range: {
-                start: this.transformExpression(node.range.start).value,
-                end: this.transformExpression(node.range.end).value,
+                start: this.transformExpression(node.range.start),
+                end: this.transformExpression(node.range.end),
             },
             body: this.transformNodes(node.body),
         };
@@ -266,7 +266,7 @@ class Transformer {
     }
 
     convertValue(value) {
-        console.log(value.value);
+        //console.log(value.value);
         if (typeof value === "string" && value.trim() !== "" && !isNaN(value)) {
             return Number(value);
         }

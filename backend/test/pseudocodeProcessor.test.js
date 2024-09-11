@@ -1,5 +1,8 @@
 import { expect } from "chai";
 import PseudocodeProcessor from "../src/models/PseudocodeProcessor.js";
+import Processor from "../src/models/Processor.js";
+import JsonConverter from "../src/models/JsonConverter.js";
+
 import fs from "fs";
 
 function writeTestNumber(testNumber) {
@@ -7,6 +10,2266 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should correctly process a bubble sort algorithm with variable assignments for nested operations and no break", () => {
+        const pseudocode = `
+            CREATE number array AS myArray WITH VALUES [50, 40, 30, 20, 10]
+            SET swapped TO true
+            LOOP i FROM 0 TO LENGTH OF myArray - 1
+                SET swapped TO false
+                LOOP j FROM 0 TO LENGTH OF myArray - i - 2
+                    SET current TO myArray[j]
+                    SET next TO myArray[j + 1]
+                    IF current > next THEN
+                        SWAP position j WITH position j + 1 IN myArray
+                        SET swapped TO true
+                    END IF
+                END LOOP
+                IF NOT swapped THEN
+                    SET i TO LENGTH OF myArray - 1
+                END IF
+            END LOOP
+            PRINT myArray
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [50, 40, 30, 20, 10],
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description:
+                        "Created array myArray with values [50,40,30,20,10].",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 0,
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Set variable i to 0.",
+                },
+                {
+                    line: 3,
+                    operation: "loop_from_to",
+                    condition: "i <= 4",
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "loop from_to loop with condition i <= 4.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: false,
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Set variable swapped to false.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 0,
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Set variable j to 0.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_from_to",
+                    condition: "j <= 3",
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "loop from_to loop with condition j <= 3.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 3",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Checked if j <= 3.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 0,
+                        result: 50,
+                    },
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Set variable current to myArray[0].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 40,
+                    },
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Set variable next to myArray[1].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.247Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 0,
+                    secondPosition: 1,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 0 and 1 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 1,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable j to 1.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 3",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if j <= 3.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 50,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable current to myArray[1].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 2,
+                        result: 30,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable next to myArray[2].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 1,
+                    secondPosition: 2,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 1 and 2 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 2,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable j to 2.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 3",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if j <= 3.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 2,
+                        result: 50,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable current to myArray[2].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 3,
+                        result: 20,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable next to myArray[3].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 2,
+                    secondPosition: 3,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 2 and 3 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 3,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable j to 3.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 3",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if j <= 3.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 3,
+                        result: 50,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable current to myArray[3].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 4,
+                        result: 10,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable next to myArray[4].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 3,
+                    secondPosition: 4,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 3 and 4 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 4,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable j to 4.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 3",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if j <= 3.",
+                },
+                {
+                    line: 12,
+                    operation: "loop_end",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "End of loop from_to loop",
+                },
+                {
+                    line: 13,
+                    operation: "if",
+                    condition: "!swapped",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if !swapped.",
+                },
+                {
+                    line: 15,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 1,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable i to 1.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: false,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable swapped to false.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 0,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable j to 0.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_from_to",
+                    condition: "j <= 2",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "loop from_to loop with condition j <= 2.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 2",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if j <= 2.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 0,
+                        result: 40,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable current to myArray[0].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 30,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable next to myArray[1].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 0,
+                    secondPosition: 1,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 0 and 1 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 1,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable j to 1.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 2",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if j <= 2.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 40,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable current to myArray[1].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 2,
+                        result: 20,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable next to myArray[2].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 1,
+                    secondPosition: 2,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 1 and 2 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 2,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable j to 2.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 2",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Checked if j <= 2.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 2,
+                        result: 40,
+                    },
+                    timestamp: "2024-09-11T20:56:02.248Z",
+                    description: "Set variable current to myArray[2].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 3,
+                        result: 10,
+                    },
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable next to myArray[3].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 2,
+                    secondPosition: 3,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 2 and 3 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 3,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable j to 3.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 2",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if j <= 2.",
+                },
+                {
+                    line: 12,
+                    operation: "loop_end",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of loop from_to loop",
+                },
+                {
+                    line: 13,
+                    operation: "if",
+                    condition: "!swapped",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if !swapped.",
+                },
+                {
+                    line: 15,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 2,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable i to 2.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable swapped to false.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 0,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable j to 0.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_from_to",
+                    condition: "j <= 1",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "loop from_to loop with condition j <= 1.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 1",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if j <= 1.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 0,
+                        result: 30,
+                    },
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable current to myArray[0].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 20,
+                    },
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable next to myArray[1].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 0,
+                    secondPosition: 1,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 0 and 1 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 1,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable j to 1.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 1",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if j <= 1.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 30,
+                    },
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable current to myArray[1].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 2,
+                        result: 10,
+                    },
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable next to myArray[2].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 1,
+                    secondPosition: 2,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 1 and 2 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 2,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable j to 2.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 1",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if j <= 1.",
+                },
+                {
+                    line: 12,
+                    operation: "loop_end",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of loop from_to loop",
+                },
+                {
+                    line: 13,
+                    operation: "if",
+                    condition: "!swapped",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if !swapped.",
+                },
+                {
+                    line: 15,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 3,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable i to 3.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable swapped to false.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 0,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable j to 0.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_from_to",
+                    condition: "j <= 0",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "loop from_to loop with condition j <= 0.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 0",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if j <= 0.",
+                },
+                {
+                    line: 6,
+                    operation: "set",
+                    varName: "current",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 0,
+                        result: 20,
+                    },
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable current to myArray[0].",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "next",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 10,
+                    },
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable next to myArray[1].",
+                },
+                {
+                    line: 8,
+                    operation: "if",
+                    condition: "current > next",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if current > next.",
+                },
+                {
+                    line: 9,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 0,
+                    secondPosition: 1,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 0 and 1 in array myArray.",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                },
+                {
+                    line: 10,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable swapped to true.",
+                },
+                {
+                    line: 11,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 1,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable j to 1.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= 0",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if j <= 0.",
+                },
+                {
+                    line: 12,
+                    operation: "loop_end",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of loop from_to loop",
+                },
+                {
+                    line: 13,
+                    operation: "if",
+                    condition: "!swapped",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if !swapped.",
+                },
+                {
+                    line: 15,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 4,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable i to 4.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "swapped",
+                    type: "boolean",
+                    value: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable swapped to false.",
+                },
+                {
+                    line: 5,
+                    operation: "set",
+                    varName: "j",
+                    type: "number",
+                    value: 0,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable j to 0.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_from_to",
+                    condition: "j <= -1",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "loop from_to loop with condition j <= -1.",
+                },
+                {
+                    line: 5,
+                    operation: "if",
+                    condition: "j <= -1",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if j <= -1.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_end",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of loop from_to loop",
+                },
+                {
+                    line: 6,
+                    operation: "if",
+                    condition: "!swapped",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if !swapped.",
+                },
+                {
+                    line: 8,
+                    operation: "endif",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of if statement.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 5,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Set variable i to 5.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: false,
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 16,
+                    operation: "loop_end",
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "End of loop from_to loop",
+                },
+                {
+                    line: 17,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "myArray",
+                    literal: [10, 20, 30, 40, 50],
+                    timestamp: "2024-09-11T20:56:02.249Z",
+                    description: "Printed myArray.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should handle swap with expressions in position values", () => {
+        const pseudocode = `
+            CREATE number array AS myArray WITH VALUES [10, 20, 30, 40]
+            SWAP position LENGTH OF myArray - 1 WITH position 0 IN myArray
+            PRINT myArray
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [10, 20, 30, 40],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [10,20,30,40].",
+                },
+                {
+                    line: 2,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 3, // LENGTH OF myArray - 1 = 3
+                    secondPosition: 0, // position 0
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 3 and 0 in array myArray.",
+                    timestamp: undefined,
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "myArray",
+                    literal: [40, 20, 30, 10], // The swapped array
+                    timestamp: undefined,
+                    description: "Printed myArray.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly handle a for-each loop after swapping elements", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [5, 15, 25, 35]
+        SWAP position 0 WITH position 3 IN myArray
+        FOR EACH num IN myArray
+            PRINT num
+        END FOR
+    `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [5, 15, 25, 35],
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description:
+                        "Created array myArray with values [5,15,25,35].",
+                },
+                {
+                    line: 2,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 0,
+                    secondPosition: 3,
+                    varName: "myArray",
+                    description:
+                        "Swapped values in position 0 and 3 in array myArray.",
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                },
+                {
+                    line: 3,
+                    operation: "for_each",
+                    condition: "num in myArray",
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "for each loop with condition num in myArray.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Checked if index < 4",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 0,
+                        result: 35,
+                    },
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Set variable num to myArray[0].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "num",
+                    literal: 35,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Printed num.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Checked if index < 4",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 15,
+                    },
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Set variable num to myArray[1].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "num",
+                    literal: 15,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Printed num.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Checked if index < 4",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 2,
+                        result: 25,
+                    },
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Set variable num to myArray[2].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "num",
+                    literal: 25,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Printed num.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 4",
+                    result: true,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Checked if index < 4",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 3,
+                        result: 5,
+                    },
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Set variable num to myArray[3].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "num",
+                    literal: 5,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Printed num.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 4",
+                    result: false,
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "Checked if num in myArray.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_end",
+                    timestamp: "2024-09-11T20:44:54.236Z",
+                    description: "End of for each loop",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+    // Test case 1: Basic swap operation
+    it("should correctly handle swapping two elements in an array", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        SWAP position 1 WITH position 2 IN myArray
+    `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [10, 20, 30, 40, 50],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [10,20,30,40,50].",
+                },
+                {
+                    line: 2,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 1,
+                    secondPosition: 2,
+                    varName: "myArray",
+                    timestamp: undefined,
+                    description:
+                        "Swapped values in position 1 and 2 in array myArray.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    // Test case 2: Swap elements and use the array after swap
+    it("should correctly handle using an array after swapping elements", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        SWAP position 0 WITH position 4 IN myArray
+        PRINT myArray
+    `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [10, 20, 30, 40, 50],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [10,20,30,40,50].",
+                },
+                {
+                    line: 2,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 0,
+                    secondPosition: 4,
+                    varName: "myArray",
+                    timestamp: undefined,
+                    description:
+                        "Swapped values in position 0 and 4 in array myArray.",
+                },
+                {
+                    line: 3,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "myArray",
+                    literal: [50, 20, 30, 40, 10],
+                    timestamp: undefined,
+                    description: "Printed myArray.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    // Test case 3: Swap with out-of-bounds positions
+    it("should throw an error when trying to swap with out-of-bounds positions", () => {
+        const pseudocode = `
+        CREATE number array AS myArray WITH VALUES [10, 20, 30]
+        SWAP position 0 WITH position 3 IN myArray
+    `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Error at line 2: Swap positions must be within the bounds of the array myArray (size 3)."
+        );
+    });
+
+    it("should correctly handle swapping two elements in an array with one-based pseudocode positions", () => {
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+            SWAP position 1 WITH position 2 IN myArray`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [10, 20, 30, 40, 50],
+                    timestamp: undefined,
+                    description:
+                        "Created array myArray with values [10,20,30,40,50].",
+                },
+                {
+                    line: 2,
+                    operation: "swap",
+                    dataStructure: "array",
+                    firstPosition: 1, // Directly from pseudocode, no need to adjust for zero-based
+                    secondPosition: 2, // Directly from pseudocode, no need to adjust for zero-based
+                    varName: "myArray",
+                    timestamp: undefined,
+                    description:
+                        "Swapped values in position 1 and 2 in array myArray.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        // Sync timestamps for comparison purposes
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it.skip("should correctly handle swapping two elements in an array", () => {
+        const pseudocode = `
+            CREATE number array AS myNumbers WITH SIZE 5
+            SET element 0 OF myNumbers TO 10
+            SET element 1 OF myNumbers TO 20
+            SET element 2 OF myNumbers TO 30
+            SET element 3 OF myNumbers TO 40
+            SET element 4 OF myNumbers TO 50
+            SET temp TO myNumbers[0]
+            SET element 0 of myNumbers TO element at 1 of myNumbers
+            SET myNumbers[1] TO temp
+            PRINT myNumbers`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    type: "number",
+                    dataStructure: "array",
+                    varName: "myNumbers",
+                    value: [0, 0, 0, 0, 0],
+                    timestamp: undefined,
+                    description: "Created array myNumbers with size 5.",
+                },
+                {
+                    line: 2,
+                    operation: "set_array",
+                    varName: "myNumbers",
+                    index: 0,
+                    setValue: 10,
+                    timestamp: undefined,
+                    description: "Set myNumbers[0] to 10.",
+                },
+                {
+                    line: 3,
+                    operation: "set_array",
+                    varName: "myNumbers",
+                    index: 1,
+                    setValue: 20,
+                    timestamp: undefined,
+                    description: "Set myNumbers[1] to 20.",
+                },
+                {
+                    line: 4,
+                    operation: "set_array",
+                    varName: "myNumbers",
+                    index: 2,
+                    setValue: 30,
+                    timestamp: undefined,
+                    description: "Set myNumbers[2] to 30.",
+                },
+                {
+                    line: 5,
+                    operation: "set_array",
+                    varName: "myNumbers",
+                    index: 3,
+                    setValue: 40,
+                    timestamp: undefined,
+                    description: "Set myNumbers[3] to 40.",
+                },
+                {
+                    line: 6,
+                    operation: "set_array",
+                    varName: "myNumbers",
+                    index: 4,
+                    setValue: 50,
+                    timestamp: undefined,
+                    description: "Set myNumbers[4] to 50.",
+                },
+                {
+                    line: 7,
+                    operation: "set",
+                    varName: "temp",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myNumbers",
+                        index: 0,
+                        result: 10,
+                    },
+                    timestamp: undefined,
+                    description: "Set variable temp to myNumbers[0].",
+                },
+                {
+                    line: 8,
+                    operation: "set_array",
+                    varName: "myNumbers",
+                    index: 0,
+                    setValue: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myNumbers",
+                        index: 1,
+                        result: 20,
+                    },
+                    timestamp: undefined,
+                    description: "Set myNumbers[0] to myNumbers[1].",
+                },
+                {
+                    line: 9,
+                    operation: "set_array",
+                    varName: "myNumbers",
+                    index: 1,
+                    setValue: {
+                        operation: "get",
+                        type: "variable",
+                        varName: "temp",
+                        result: 10,
+                    },
+                    timestamp: undefined,
+                    description: "Set myNumbers[1] to temp.",
+                },
+                {
+                    line: 10,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "myNumbers",
+                    literal: [20, 10, 30, 40, 50],
+                    timestamp: undefined,
+                    description: "Printed myNumbers.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process a 'FOR EACH' loop followed by operations correctly", () => {
+        const pseudocode = `SET total TO 0
+            CREATE number array AS nums WITH values [1, 2, 3]
+            FOR each num IN nums
+                SET total TO total + num
+            END FOR
+            PRINT total`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "total",
+                    type: "number",
+                    value: 0,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Set variable total to 0.",
+                },
+                {
+                    line: 2,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "nums",
+                    value: [1, 2, 3],
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Created array nums with values [1,2,3].",
+                },
+                {
+                    line: 3,
+                    operation: "for_each",
+                    condition: "num in nums",
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "for each loop with condition num in nums.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 3",
+                    result: true,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Checked if index < 3",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "nums",
+                        index: 0,
+                        result: 1,
+                    },
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Set variable num to nums[0].",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "total",
+                    type: "number",
+                    value: 1,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Set variable total to total + num.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 3",
+                    result: true,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Checked if index < 3",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "nums",
+                        index: 1,
+                        result: 2,
+                    },
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Set variable num to nums[1].",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "total",
+                    type: "number",
+                    value: 3,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Set variable total to total + num.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 3",
+                    result: true,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Checked if index < 3",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "num",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "nums",
+                        index: 2,
+                        result: 3,
+                    },
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Set variable num to nums[2].",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "total",
+                    type: "number",
+                    value: 6,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Set variable total to total + num.",
+                },
+                {
+                    line: 3,
+                    operation: "if",
+                    condition: "Checked if index < 3",
+                    result: false,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Checked if num in nums.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_end",
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "End of for each loop",
+                },
+                {
+                    line: 6,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "total",
+                    literal: 6,
+                    timestamp: "2024-09-11T13:21:14.431Z",
+                    description: "Printed total.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process a simulated 'FOR EACH' loop using 'LOOP FROM TO'", () => {
+        const pseudocode = `
+            CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+            LOOP i FROM 0 TO LENGTH OF myArray - 1
+                SET temp TO myArray[i]
+                PRINT temp
+            END LOOP`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "create",
+                    dataStructure: "array",
+                    type: "number",
+                    varName: "myArray",
+                    value: [10, 20, 30, 40, 50],
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description:
+                        "Created array myArray with values [10,20,30,40,50].",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 0,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable i to 0.",
+                },
+                {
+                    line: 2,
+                    operation: "loop_from_to",
+                    condition: "i <= 4",
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "loop from_to loop with condition i <= 4.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "temp",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 0,
+                        result: 10,
+                    },
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable temp to myArray[0].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "temp",
+                    literal: 10,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Printed temp.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 1,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable i to 1.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "temp",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 1,
+                        result: 20,
+                    },
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable temp to myArray[1].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "temp",
+                    literal: 20,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Printed temp.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 2,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable i to 2.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "temp",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 2,
+                        result: 30,
+                    },
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable temp to myArray[2].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "temp",
+                    literal: 30,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Printed temp.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 3,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable i to 3.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "temp",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 3,
+                        result: 40,
+                    },
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable temp to myArray[3].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "temp",
+                    literal: 40,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Printed temp.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 4,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable i to 4.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: true,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "temp",
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: "myArray",
+                        index: 4,
+                        result: 50,
+                    },
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable temp to myArray[4].",
+                },
+                {
+                    line: 4,
+                    operation: "print",
+                    isLiteral: false,
+                    varName: "temp",
+                    literal: 50,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Printed temp.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "i",
+                    type: "number",
+                    value: 5,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Set variable i to 5.",
+                },
+                {
+                    line: 2,
+                    operation: "if",
+                    condition: "i <= 4",
+                    result: false,
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "Checked if i <= 4.",
+                },
+                {
+                    line: 5,
+                    operation: "loop_end",
+                    timestamp: "2024-09-10T20:56:04.391Z",
+                    description: "End of loop from_to loop",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        result.actionFrames.forEach((frame, index) => {
+            frame.timestamp = expectedJson.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process variable declarations with division and complex arithmetic", () => {
+        const pseudocode = `SET p to number 100
+        SET q to p / 4
+        SET r to (q + 5) * 3`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "p",
+                    type: "number",
+                    value: 100,
+                    timestamp: undefined,
+                    description: "Set variable p to 100.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "q",
+                    type: "number",
+                    value: 25,
+                    timestamp: undefined,
+                    description: "Set variable q to p / 4.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "r",
+                    type: "number",
+                    value: 90,
+                    timestamp: undefined,
+                    description: "Set variable r to (q + 5) * 3.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
     it("should correctly process the creation of a boolean array and retrieving a value at an index", function () {
         const pseudocode = `create boolean array as boolArray with values [true, false, true]
             SET isTrue TO boolArray[0]
@@ -43,7 +2306,10 @@ describe("PseudocodeProcessor", () => {
                 },
             ],
         };
-        const result = PseudocodeProcessor.process(pseudocode);
+        const jsonConverter = new JsonConverter();
+        const processor = new Processor(jsonConverter);
+
+        const result = processor.process(pseudocode, "jsonOutput.txt");
 
         expectedJson.actionFrames.forEach((frame, index) => {
             frame.timestamp = result.actionFrames[index].timestamp;
@@ -899,147 +3165,6 @@ describe("PseudocodeProcessor", () => {
 
         const result = PseudocodeProcessor.process(pseudocode.trim());
 
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-    it("should correctly evaluate mixed expressions in otherwise if conditions", () => {
-        const pseudocode = `SET a TO number 25
-            SET b TO boolean true
-            IF a > 50 THEN
-                SET message TO string "a is greater than 50"
-            ELSE IF b AND a > 20 THEN
-                SET message TO string "a is greater than 20 and b is true"
-            ELSE IF NOT b OR a <= 20 THEN
-                SET message TO string "Either b is not true or a is 20 or less"
-            ELSE
-                SET message TO string "No condition met"
-            END IF`;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "a",
-                    type: "number",
-                    value: 25,
-                    timestamp: undefined,
-                    description: "Set variable a to 25.",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "b",
-                    type: "boolean",
-                    value: true,
-                    timestamp: undefined,
-                    description: "Set variable b to true.",
-                },
-                {
-                    line: 3,
-                    operation: "if",
-                    condition: "a > 50",
-                    result: false,
-                    timestamp: undefined,
-                    description: "Checked if a > 50.",
-                },
-                {
-                    line: 5,
-                    operation: "if",
-                    condition: "b && a > 20",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if b && a > 20.",
-                },
-                {
-                    line: 6,
-                    operation: "set",
-                    varName: "message",
-                    type: "string",
-                    value: "a is greater than 20 and b is true",
-                    timestamp: undefined,
-                    description:
-                        "Set variable message to a is greater than 20 and b is true.",
-                },
-                {
-                    line: 11,
-                    operation: "endif",
-                    timestamp: undefined,
-                    description: "End of if statement.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it.skip("should correctly evaluate arithmetic and comparison expressions in otherwise if conditions", () => {
-        const pseudocode = `SET x TO number 5
-            IF x * 2 > 20 THEN
-                SET output TO string "Double x is greater than 20"
-            OTHERWISE IF x + 10 > 10 THEN
-                SET output TO string "x plus 10 is greater than 10"
-            OTHERWISE IF x - 3 < 5 THEN
-                SET output TO string "x minus 3 is less than 5"
-            OTHERWISE
-                SET output TO string "All conditions failed"
-            END IF`;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 5,
-                    timestamp: undefined,
-                    description: "Set variable x to 5.",
-                },
-                {
-                    line: 2,
-                    operation: "if",
-                    condition: "x * 2 > 20",
-                    result: false,
-                    timestamp: undefined,
-                    description: "Checked if double x > 20.",
-                },
-                {
-                    line: 4,
-                    operation: "if",
-                    condition: "x + 10 > 10",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x plus 10 > 10.",
-                },
-                {
-                    line: 5,
-                    operation: "set",
-                    varName: "output",
-                    type: "string",
-                    value: "x plus 10 is greater than 10",
-                    timestamp: undefined,
-                    description:
-                        "Set output to 'x plus 10 is greater than 10'.",
-                },
-                {
-                    line: 10,
-                    operation: "endif",
-                    timestamp: undefined,
-                    description: "End of if statement.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
         expectedJson.actionFrames.forEach((frame, index) => {
             frame.timestamp = result.actionFrames[index].timestamp;
         });
@@ -2666,157 +4791,6 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
 
-    it.skip("should process complex boolean conditions with AND, OR, and NOT correctly", () => {
-        const pseudocode = `
-        SET a TO true
-        SET b TO false
-        SET c TO true
-        IF a AND NOT b OR c THEN
-            PRINT "Condition is true"
-        OTHERWISE
-            PRINT "Condition is false"
-        END IF
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "a",
-                    type: "boolean",
-                    value: true,
-                    timestamp: undefined,
-                    description: "Set variable a to true.",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "b",
-                    type: "boolean",
-                    value: false,
-                    timestamp: undefined,
-                    description: "Set variable b to false.",
-                },
-                {
-                    line: 3,
-                    operation: "set",
-                    varName: "c",
-                    type: "boolean",
-                    value: true,
-                    timestamp: undefined,
-                    description: "Set variable c to true.",
-                },
-                {
-                    line: 4,
-                    operation: "if",
-                    condition: "a && !b || c",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if a and not b or c.",
-                },
-                {
-                    line: 5,
-                    operation: "print",
-                    isLiteral: true,
-                    varName: null,
-                    literal: "Condition is true",
-                    timestamp: undefined,
-                    description: "Printed Condition is true.",
-                },
-                {
-                    description: "End of if statement.",
-                    line: 8,
-                    operation: "endif",
-                    timestamp: undefined,
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it.skip("should process nested boolean conditions with AND and OR correctly", () => {
-        const pseudocode = `SET x TO number 10
-        SET y TO number 5
-        SET z TO number 3
-        IF (x is greater than 5 AND y is less than 10) OR z is greater than 2 THEN
-            PRINT "Complex condition is true"
-        OTHERWISE
-            PRINT "Complex condition is false"
-        END IF
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 10,
-                    timestamp: undefined,
-                    description: "Set variable x to 10.",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "y",
-                    type: "number",
-                    value: 5,
-                    timestamp: undefined,
-                    description: "Set variable y to 5.",
-                },
-                {
-                    line: 3,
-                    operation: "set",
-                    varName: "z",
-                    type: "number",
-                    value: 3,
-                    timestamp: undefined,
-                    description: "Set variable z to 3.",
-                },
-                {
-                    line: 4,
-                    operation: "if",
-                    condition: "(x > 5 && y < 10) || z > 2",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if (x > 5 and y < 10) or z > 2.",
-                },
-                {
-                    line: 5,
-                    operation: "print",
-                    isLiteral: true,
-                    varName: null,
-                    literal: "Complex condition is true",
-                    timestamp: undefined,
-                    description: "Printed Complex condition is true.",
-                },
-                {
-                    description: "End of if statement.",
-                    line: 8,
-                    operation: "endif",
-                    timestamp: undefined,
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
     it("should process conditions with multiple NOT operators correctly", () => {
         const pseudocode = `
         SET p TO true
@@ -3732,45 +5706,6 @@ describe("PseudocodeProcessor", () => {
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it.skip("should process boolean comparisons correctly", () => {
-        const pseudocode = `
-            SET isTrue TO true
-            SET result TO isTrue === false
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "isTrue",
-                    type: "boolean",
-                    value: true,
-                    timestamp: undefined,
-                    description: "Set variable isTrue to true.",
-                },
-                {
-                    line: 3,
-                    operation: "set",
-                    varName: "result",
-                    type: "boolean",
-                    value: false,
-                    timestamp: undefined,
-                    description:
-                        "Set variable result to the result of isTrue = false.",
                 },
             ],
         };
@@ -6184,411 +8119,7 @@ describe("PseudocodeProcessor", () => {
 
         expect(result).to.deep.equal(expectedJson);
     });
-    it.skip("should process pseudocode and convert to final JSON format", () => {
-        writeTestNumber(8);
-        const pseudocode = `
-        SET x to number 10
-        CREATE array as nums with [1, 2, 3]
-        DEFINE add_numbers WITH PARAMETERS (a, b)
-            RETURN a + b
-        END FUNCTION
-        IF x is greater than 5 THEN
-            PRINT "x is greater than 5"
-        OTHERWISE
-            PRINT "x is not greater than 5"
-        END IF
-        FOR each num IN nums
-            PRINT num
-        END FOR
-        WHILE x > 0
-            PRINT x
-            SET x to x - 1
-        END WHILE
-        `;
 
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 10,
-                    timestamp: undefined,
-                    description: "Set variable x to 10.",
-                },
-                {
-                    line: 2,
-                    operation: "create",
-                    dataStructure: "array",
-                    type: "number",
-                    varName: "nums",
-                    value: [1, 2, 3],
-                    timestamp: undefined,
-                    description: "Created array nums.",
-                },
-                {
-                    line: 3,
-                    operation: "define",
-                    varName: "add_numbers",
-                    params: ["a", "b"],
-                    body: [
-                        {
-                            line: 4,
-                            operation: "return",
-                            value: {
-                                left: "a",
-                                operator: "+",
-                                right: "b",
-                            },
-                            timestamp: undefined,
-                            description: `Returned {"left":"a","operator":"+","right":"b"}.`,
-                        },
-                    ],
-                    timestamp: undefined,
-                    description:
-                        "Defined function add_numbers with parameters a, b.",
-                },
-                {
-                    line: 6,
-                    operation: "if",
-                    condition: "x > 5",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 5.",
-                },
-                {
-                    line: 7,
-                    operation: "print",
-                    isLiteral: true,
-                    varName: null,
-                    literal: "x is greater than 5",
-                    timestamp: undefined,
-                    description: "Printed x is greater than 5.",
-                },
-                {
-                    description: "End of if statement.",
-                    line: 10,
-                    operation: "endif",
-                    timestamp: undefined,
-                },
-                {
-                    line: 11,
-                    operation: "for",
-                    iterator: "num",
-                    collection: "nums",
-                    body: [
-                        {
-                            line: 12,
-                            operation: "print",
-                            isLiteral: true,
-                            varName: null,
-                            literal: "num",
-                            timestamp: undefined,
-                            description: "Printed num.",
-                        },
-                    ],
-                    timestamp: undefined,
-                    description: "Iterating over nums with num.",
-                },
-                {
-                    line: 13,
-                    operation: "while",
-                    condition: "x > 0",
-                    timestamp: undefined,
-                    description: "while loop with condition x > 0.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 10, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 9,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 9, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 8,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 8, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 7,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 7, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 6,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 6, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 5,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 5, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 4,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 4, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 3,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 3, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 2,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 2, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 1,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: true,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "x",
-                    literal: 1, // Reflecting the value of x at this point
-                    timestamp: undefined,
-                    description: "Printed x.",
-                },
-                {
-                    line: 15,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 0,
-                    timestamp: undefined,
-                    description: "Set variable x to x - 1.",
-                },
-                {
-                    line: 13,
-                    operation: "if",
-                    condition: "x > 0",
-                    result: false,
-                    timestamp: undefined,
-                    description: "Checked if x > 0.",
-                },
-                {
-                    line: 17,
-                    operation: "loop_end",
-                    timestamp: undefined,
-                    description: "End of while loop",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-            if (frame.body) {
-                frame.body.forEach((subFrame, subIndex) => {
-                    subFrame.timestamp =
-                        result.actionFrames[index].body[subIndex].timestamp;
-                });
-            }
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
     it("should process variable declarations with arithmetic expressions", () => {
         writeTestNumber(17);
         const pseudocode = `
@@ -6710,54 +8241,6 @@ describe("PseudocodeProcessor", () => {
                     value: 30,
                     timestamp: undefined,
                     description: "Set variable z to y * 2.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should process variable declarations with division and complex arithmetic", () => {
-        const pseudocode = `
-        SET p to number 100
-        SET q to p / 4
-        SET r to (q + 5) * 3
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "p",
-                    type: "number",
-                    value: 100,
-                    timestamp: undefined,
-                    description: "Set variable p to 100.",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "q",
-                    type: "number",
-                    value: 25,
-                    timestamp: undefined,
-                    description: "Set variable q to p / 4.",
-                },
-                {
-                    line: 3,
-                    operation: "set",
-                    varName: "r",
-                    type: "number",
-                    value: 90,
-                    timestamp: undefined,
-                    description: "Set variable r to (q + 5) * 3.",
                 },
             ],
         };

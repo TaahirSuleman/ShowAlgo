@@ -26,7 +26,10 @@ class NodeTransformerFactory {
             case "VariableDeclaration":
                 return {
                     type: "VariableDeclaration",
-                    name: node.varName,
+                    name:
+                        node.type === "IndexExpression"
+                            ? transformer.transformExpression(node.value)
+                            : node.varName,
                     value: transformer.transformExpression(node.value),
                 };
             case "PrintStatement":
@@ -62,6 +65,7 @@ class NodeTransformerFactory {
                     type: "ForLoop",
                     iterator: node.iterator,
                     collection: node.collection,
+                    endLine: node.body[0].value.line,
                     body: transformer.transformNodes(node.body),
                 };
             case "WhileLoop":
@@ -100,8 +104,23 @@ class NodeTransformerFactory {
                     type: "ArraySetValue",
                     varName: node.varName,
                     index: transformer.transformExpression(node.position), // Position to set
-                    setValue: transformer.transformExpression(node.newValue)
-                        .value, // New value to set
+                    setValue:
+                        node.newValue.type === "IndexExpression"
+                            ? transformer.transformExpression(node.newValue)
+                            : transformer.transformExpression(node.newValue)
+                                  .value, // New value to set
+                };
+            case "SwapOperation": // Refactored SwapOperation
+                return {
+                    type: "SwapOperation",
+                    varName: node.varName,
+                    firstPosition: transformer.transformExpression(
+                        node.firstPosition
+                    ), // Transform first position
+                    secondPosition: transformer.transformExpression(
+                        node.secondPosition
+                    ), // Transform second position
+                    line: node.line,
                 };
             case "NumberLiteral":
             case "StringLiteral":
