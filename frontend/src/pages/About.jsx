@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Box,
   Button,
@@ -9,26 +9,33 @@ import {
   Icon,
   Text,
   VStack,
+  Stack,
+  Flex,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { FaChartLine, FaCode, FaGithub, FaPlay } from "react-icons/fa";
 
 function About() {
   const iframeBoxRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleScrollToIframe = () => {
     iframeBoxRef.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
     <Box>
       <Box color="white" py={20}>
         <Center>
           <VStack spacing={4}>
-            <Heading fontSize="8xl" textAlign="center" letterSpacing="-0.04em">
+            <Heading fontSize={{ base: "4xl", md: "8xl" }} textAlign="center" letterSpacing="-0.04em">
               Welcome to ShowAlgo.
             </Heading>
             <Text
-              fontSize="xl"
+              fontSize={{ base: "md", md: "xl" }}
               textAlign="center"
               maxW="600px"
               textColor="whiteAlpha.700"
@@ -49,7 +56,7 @@ function About() {
         </Center>
       </Box>
 
-      <Divider width="80%"/>
+      <Divider width="80%" />
 
       <Box mt={15}>
         <Center>
@@ -57,7 +64,7 @@ function About() {
             <Heading as="h2" size="xl">
               Features
             </Heading>
-            <HStack spacing={8} >
+            <Stack direction={{ base: "column", md: "row" }} spacing={8}>
               <VStack>
                 <Icon as={FaCode} boxSize={12} color="yellow.400" />
                 <Text fontSize="lg" fontWeight="bold" textAlign="center">
@@ -85,28 +92,63 @@ function About() {
                   Learn by doing, with our interactive learning mode.
                 </Text>
               </VStack>
-            </HStack>
+            </Stack>
           </VStack>
         </Center>
       </Box>
 
-      <Box width="100%" justifyContent="center" display="flex" mt={10} ref={iframeBoxRef}>
+      <Flex
+        direction={{ base: "column", md: "row" }}
+        alignItems="center"
+        justifyContent="center"
+        mt={10}
+      >
         <Box
-          width="60%"
+          width={{ base: "90%", md: "60%" }}
           borderRadius={20}
           overflow="hidden"
           boxShadow="lg"
           bg="white"
+          ref={iframeBoxRef}
+          mb={{ base: 4, md: 0 }}
         >
           <iframe
             src="https://scribehow.com/embed/Using_the_ShowAlgo_IDE__JDZTl4ogQVmdcSBKSvOhzQ"
             width="100%"
             height="550"
-            allowfullscreen
-            frameborder="10"
+            allowFullScreen
+            frameBorder="10"
           ></iframe>
         </Box>
-      </Box>
+
+        <Box
+          width={{ base: "90%", md: "30%" }}
+          mr={{ base: 0, md: "20" }}
+          display="flex"
+          flexDir="column"
+          justifyContent="center"
+          alignItems="center"
+          mt={{ base: 4, md: 0 }}
+        >
+          <Heading size="2xl" textAlign="center">
+            Jump right in!
+          </Heading>
+          <Heading size="2xl" fontWeight="thin" textAlign="center">
+            Start visualising algorithms now.
+          </Heading>
+
+          <Button
+            colorScheme="blue"
+            mt={4}
+            size="lg"
+            width="150px"
+            onClick={() => navigate("/ide")}
+            leftIcon={<FaPlay />}
+          >
+            Go to IDE
+          </Button>
+        </Box>
+      </Flex>
 
       <Box bg="gray.900" color="white" py={10} mt={20}>
         <Center>

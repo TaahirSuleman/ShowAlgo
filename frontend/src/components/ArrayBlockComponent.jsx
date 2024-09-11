@@ -91,8 +91,8 @@ function ArrayBlockComponent({
         animate={{
           backgroundColor: [
             "#1A365D",
-            "hsl(48, 100, 67)",
-            "hsl(48, 100, 67)",
+            "#f7e400",
+            "#f7e400",
             "#1A365D",
           ],
           color: [

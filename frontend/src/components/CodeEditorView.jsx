@@ -748,6 +748,8 @@ const CodeEditorView = ({
           ])
         );
 
+        editor.revealLine(line);
+
         currentLineIndex.current += 1; // Move to the next line
 
         if (currentLineIndex.current < movementsState.length) {

@@ -13,7 +13,10 @@ import {
   IconButton,
   FormHelperText,
   Box,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
 
@@ -23,11 +26,15 @@ function Register() {
   const [data, setData] = useState({
     username: "",
     password: "",
+    confirmPassword: "",
     role: "user",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
 
   const validateInput = () => {
-    const { username, password } = data;
+    const { username, password, confirmPassword } = data;
     if (username.length < 6) {
       toast({
         title: "Invalid Input",
@@ -42,6 +49,16 @@ function Register() {
       toast({
         title: "Invalid Input",
         description: "Password should be at least 6 characters long.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return false;
+    }
+    if (password !== confirmPassword) {
+      toast({
+        title: "Invalid Input",
+        description: "Passwords do not match.",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -77,7 +94,7 @@ function Register() {
         });
       } else {
         // clear the form
-        setData({});
+        setData({  username: "", password: "", confirmPassword: "", role: "user"  });
         toast({
           title: "Success",
           description:
@@ -126,7 +143,7 @@ function Register() {
           </Text>
           <Stack>
             <FormControl>
-              <FormLabel color="gray">Username</FormLabel>
+              <FormLabel color="whitesmoke">Username</FormLabel>
               <Input
                 type="text"
                 id="username"
@@ -136,23 +153,52 @@ function Register() {
                 border="1px solid gray"
                 textColor="gray.100"
               />
-              <FormHelperText mb="4" fontSize="small" color="whiteAlpha.400">
+              <FormHelperText mb="4" fontSize="small" color="gray">
                 Username should be at least 6 characters long{" "}
               </FormHelperText>
 
-              <FormLabel color="gray">Password</FormLabel>
-              <Input
-                type="password"
-                id="password"
-                placeholder="Enter password..."
-                border="1px solid gray"
-                textColor="gray.800"
-                color="gray.100"
-                value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
-              />
-              <FormHelperText mb="4" fontSize="small" color="whiteAlpha.400">
+              <FormLabel color="whitesmoke">Password</FormLabel>
+              <InputGroup>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  placeholder="Enter password..."
+                  border="1px solid gray"
+                  textColor="gray.800"
+                  color="gray.100"
+                  value={data.password}
+                  onChange={(e) => setData({ ...data, password: e.target.value })}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button size="sm" onClick={() => setShowPassword(!showPassword)}>
+                    {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <FormHelperText mb="4" fontSize="small" color="gray">
                 Password should be at least 6 characters long{" "}
+              </FormHelperText>
+
+              <FormLabel color="whitesmoke">Confirm Password</FormLabel>
+              <InputGroup>
+                <Input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  placeholder="Confirm password..."
+                  border="1px solid gray"
+                  textColor="gray.800"
+                  color="gray.100"
+                  value={data.confirmPassword}
+                  onChange={(e) => setData({ ...data, confirmPassword: e.target.value })}
+                />
+                <InputRightElement width="4.5rem">
+                  <Button h="1.75rem" size="sm" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                    {showConfirmPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+              <FormHelperText mb="4" fontSize="small" color="gray">
+                Please confirm your password{" "}
               </FormHelperText>
 
               <div
@@ -174,7 +220,7 @@ function Register() {
             </FormControl>
           </Stack>
 
-          <Stack justify="center" color="gray.600" spacing="3">
+          <Stack justify="center" color="whiteAlpha.700" spacing="3">
             <Text as="div" textAlign="center">
               <span>Already have an account?</span>
               <Button colorScheme="purple" variant="link" ml="1">
