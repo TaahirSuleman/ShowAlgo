@@ -12,7 +12,10 @@ import {
   Stack,
   Text,
   useToast,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
@@ -24,6 +27,7 @@ function Login() {
     username: "",
     password: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const validateInput = () => {
     const { username, password } = data;
@@ -49,7 +53,6 @@ function Login() {
     }
     return true;
   };
-
 
   const loginUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
@@ -100,10 +103,7 @@ function Login() {
 
   return (
     <Box>
-      <Center
-        p="10"
-        flexDirection="column"
-      >
+      <Center p="10" flexDirection="column">
         <Stack boxShadow="md" bg="blackAlpha.900" p="20" rounded="md">
           <div
             style={{
@@ -123,7 +123,7 @@ function Login() {
           </Text>
           <Stack>
             <FormControl>
-              <FormLabel color="gray">Username</FormLabel>
+              <FormLabel color="whitesmoke">Username</FormLabel>
               <Input
                 type="text"
                 id="username"
@@ -135,18 +135,31 @@ function Login() {
                 mb="4"
               />
 
-              <FormLabel color="gray">Password</FormLabel>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter password..."
-                border="1px solid gray"
-                textColor="gray.800"
-                color="gray.100"
-                value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
-                mb="4"
-              />
+              <FormLabel color="whitesmoke">Password</FormLabel>
+              <InputGroup>
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter password..."
+                  border="1px solid gray"
+                  textColor="gray.800"
+                  color="gray.100"
+                  value={data.password}
+                  onChange={(e) =>
+                    setData({ ...data, password: e.target.value })
+                  }
+                  mb="4"
+                />
+                <InputRightElement width="4.5rem">
+                  <Button
+                    size="sm"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <ViewOffIcon /> : <ViewIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+
               <div
                 style={{
                   display: "flex",
