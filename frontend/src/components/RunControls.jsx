@@ -8,6 +8,10 @@ import {
   Stack,
   SimpleGrid,
   useBreakpointValue,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import { IoClose } from "react-icons/io5";
 import {
@@ -16,6 +20,7 @@ import {
   FaPlay,
   FaPlayCircle,
   FaStop,
+  FaChevronDown,
 } from "react-icons/fa";
 
 function RunControls({
@@ -78,11 +83,9 @@ function RunControls({
     setIsRunning(!isRunning);
   };
 
-  const handleSpeedChange = () => {
-    const currentIndex = speedOptions.indexOf(speed);
-    const nextIndex = (currentIndex + 1) % speedOptions.length;
-    setSpeed(speedOptions[nextIndex]);
-    setSpeedState(2/speedOptions[nextIndex]) // THE HARD CODED VALUE HERE (2) IS THE STARTING SPEED STATE
+  const handleSpeedChange = (option) => {
+    setSpeed(option);
+    setSpeedState(2/option) // THE HARD CODED VALUE HERE (2) IS THE STARTING SPEED STATE
     
   };
 
@@ -124,15 +127,18 @@ function RunControls({
           </Box>
         </Button>
 
-        <Button
-          variant="outline"
-          colorScheme="purple"
-          onClick={handleSpeedChange}
-          width="100%"
-          height="33px"
-        >
-          <Box as="span">Speed: {speed}x</Box>
-        </Button>
+        <Menu>
+          <MenuButton as={Button} rightIcon={<FaChevronDown />} variant="outline" colorScheme="purple" width="100%" height="33px">
+            <Box as="span">Speed: {speed}x</Box>
+          </MenuButton>
+          <MenuList minW="125px">
+            {speedOptions.map((option) => (
+              <MenuItem key={option} onClick={() => handleSpeedChange(option)}>
+                {option}x
+              </MenuItem>
+            ))}
+          </MenuList>
+        </Menu>
 
         {submitButton && (
           <Button
