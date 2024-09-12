@@ -18,15 +18,34 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Progress,
   SimpleGrid,
   Stack,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
   Text,
+  Th,
+  Thead,
+  Tr,
+  useBreakpointValue,
   useDisclosure,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
+import {
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Tooltip,
+  XAxis,
+  PieChart,
+  Pie,
+} from "recharts";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { all } from "axios";
 import "react-multi-carousel/lib/styles.css";
 import ModuleCard from "../components/ModuleCard";
 import { AddIcon } from "@chakra-ui/icons";
@@ -56,6 +75,8 @@ function AdminDashboard() {
   const [user, setUser] = useState({
     username: "",
   });
+  const [allUserProgress, setAllUserProgress] = useState([]);
+  const [expandedUser, setExpandedUser] = useState(null);
   const [sections, setSections] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [moduleBeingEdited, setModuleBeingEdited] = useState(null);
@@ -74,12 +95,59 @@ function AdminDashboard() {
       try {
         const response = await axios.get("/sections");
         setSections(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchSections();
   }, []);
+
+  // get all user progress
+  useEffect(() => {
+    const fetchAllUserProgress = async () => {
+      try {
+        const response = await axios.get("/get-progress");
+        const userProgressWithDetails = response.data.map((user) => {
+          const userSections = user.progress.sections || [];
+          const { overallProgress, totalLvls, completedLvls } =
+            calculateOverallCompletion(userSections, sections);
+
+          // Map section_id from user progress to the correct section in the state
+          const progressObject = userSections.map((userSection) => {
+            const matchingSection = sections.find(
+              (section) => section._id === userSection.section_id
+            );
+
+            return {
+              moduleName: matchingSection ? matchingSection.heading : "Unknown",
+              completedLevels: countCompletedLevels(userSection),
+              totalLevels: userSection.levels.length,
+            };
+          });
+
+          const barChartData = progressObject.map((module) => ({
+            name: module.moduleName,
+            Completed: module.completedLevels,
+            Remaining: module.totalLevels - module.completedLevels,
+          }));
+
+          return {
+            ...user,
+            overallProgress: Math.floor((completedLvls / totalLvls) * 100),
+            progressObject,
+            barChartData,
+          };
+        });
+
+        setAllUserProgress(userProgressWithDetails);
+        console.log(userProgressWithDetails);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAllUserProgress();
+  }, [sections]);
 
   const handleSectionSelect = (sectionHeading) => {
     navigate(`/admin-dashboard/${sectionHeading}`);
@@ -245,6 +313,53 @@ function AdminDashboard() {
     onEditModalClose();
   };
 
+  // function that counts the number of levels completed in a section
+  const countCompletedLevels = (section) => {
+    if (!section || !section.levels) {
+      return 0;
+    }
+    let completedLevels = 0;
+    section.levels.forEach((level) => {
+      if (level.completed) {
+        completedLevels += 1;
+      }
+    });
+    return completedLevels;
+  };
+
+  const calculateOverallCompletion = (sections = [], allSections = []) => {
+    let totalLvls = 0;
+    let completedLvls = 0;
+    const progressObject = sections.map((section) => {
+      const completedLevels = countCompletedLevels(section);
+      totalLvls += section.levels.length;
+      completedLvls += completedLevels;
+
+      return {
+        // moduleName: matchingSection ? matchingSection.heading : "Unknown",
+        completedLevels,
+        totalLevels: section.levels.length,
+      };
+    });
+    const overallProgress =
+      totalLvls > 0 ? Math.floor((completedLvls / totalLvls) * 100) : 0;
+    return { overallProgress, progressObject, totalLvls, completedLvls };
+  };
+
+  const handleShowMore = (userId) => {
+    setExpandedUser(expandedUser === userId ? null : userId);
+  };
+
+  const averageProgress = allUserProgress.length
+    ? allUserProgress.reduce((acc, user) => acc + user.overallProgress, 0) /
+      allUserProgress.length
+    : 0;
+
+  const pieChartData = [
+    { name: "Completed", value: Math.round(averageProgress), fill: "#FFBB28" },
+    { name: "Remaining", value: Math.round(100 - averageProgress), fill: "#8884d8" },
+  ];
+
   const gradients = [
     "linear(to-br, #ec0958, #f573b2)", // pink
     "linear(to-br, #1203fa, #00e1fd)", // blue
@@ -258,6 +373,10 @@ function AdminDashboard() {
     "linear(to-br, #ecb315, #ff9933, #f22920)", // orange
     "linear(to-br, #5a136e, #a90b84, #ff009c)", // pink
   ];
+
+  const flexDirection = useBreakpointValue({ base: "column", md: "row" });
+  const boxWidth = useBreakpointValue({ base: "100%", md: "25%" });
+  const pieChartWidth = useBreakpointValue({ base: "100%", md: "50%" });
 
   return (
     <Box
@@ -279,9 +398,7 @@ function AdminDashboard() {
           {user.username}!
         </Text>
       </Heading>
-
       <Divider width="80%" />
-
       <Heading
         fontSize="5xl"
         mb={10}
@@ -291,7 +408,6 @@ function AdminDashboard() {
       >
         Modules:
       </Heading>
-
       <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} spacing={6}>
         {sections.map((section, index) => (
           <GridItem p={2} key={section._id}>
@@ -410,8 +526,149 @@ function AdminDashboard() {
         </GridItem>
       </SimpleGrid>
 
-      <Divider width="80%" mt={10}/>
+      <Divider width="80%" mt={10} />
 
+      <Heading
+        fontSize="5xl"
+        mb={10}
+        mt={10}
+        color="whiteAlpha.800"
+        textAlign="center"
+      >
+        User Progress:
+      </Heading>
+
+      <HStack width="100%" justifyContent="center">
+        <Box
+          bg="blackAlpha.800"
+          borderRadius={8}
+          p={4}
+          display="flex"
+          flexDirection={flexDirection}
+          width="50%"
+          height="auto"
+          alignItems="center"
+        >
+          <Box width={boxWidth} mr={2} mb={flexDirection === "column" ? 4 : 0}>
+            <Text fontSize="xl" color="whiteAlpha.700">
+              Average Progress
+            </Text>
+            <Text fontSize="4xl" fontWeight="bold" color="whiteAlpha.800">
+              {averageProgress.toFixed(2)}%
+            </Text>
+          </Box>
+
+          <Box
+            width={pieChartWidth}
+            height="35dvh"
+            mb={flexDirection === "column" ? 4 : 0}
+          >
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart width="100%" height="100%">
+                <Pie
+                  data={pieChartData}
+                  dataKey="value"
+                  cx="50%"
+                  cy="50%"
+                  innerRadius="60%"
+                  outerRadius="100%"
+                  startAngle={90}
+                  endAngle={-270}
+                  stroke="none"
+                />
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </Box>
+
+          <Box width={boxWidth} ml={flexDirection === "row" ? 4 : 0}>
+            <VStack>
+              <Text fontSize="xl" color="whiteAlpha.700">
+                Total Users
+              </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="whiteAlpha.800">
+                {allUserProgress.length}
+              </Text>
+
+              <Text fontSize="xl" color="whiteAlpha.700" mt={4}>
+                Total Modules
+              </Text>
+              <Text fontSize="2xl" fontWeight="bold" color="whiteAlpha.800">
+                {sections.length}
+              </Text>
+            </VStack>
+          </Box>
+        </Box>
+      </HStack>
+
+      <TableContainer bg="blackAlpha.800" borderRadius={10} width="85%" mt={2}>
+        <Table variant="simple" size="lg">
+          <Thead>
+            <Tr>
+              <Th>Username</Th>
+              <Th>Daily Streak</Th>
+              <Th>Overall Progress (%)</Th>
+              <Th>Actions</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {allUserProgress.map((user) => (
+              <React.Fragment key={user.progress.user_id}>
+                <Tr>
+                  <Td>{user.username}</Td>
+                  <Td>{user.dailyStreak}</Td>
+                  <Td>
+                    {user.overallProgress}
+                    <Progress
+                      value={user.overallProgress}
+                      size="sm"
+                      colorScheme="blue"
+                      borderRadius={10}
+                    />
+                  </Td>
+                  <Td>
+                    <Button
+                      onClick={() => handleShowMore(user.progress.user_id)}
+                      colorScheme="blue"
+                    >
+                      {expandedUser === user.progress.user_id ? "Show Less" : "Show More"}
+                    </Button>
+                  </Td>
+                </Tr>
+                {expandedUser === user.progress.user_id && (
+                  <Tr>
+                    <Td colSpan={4}>
+                      <Box bg="gray.700" p={4} borderRadius={10}>
+                        <Heading size="md" mb={4}>
+                          Module Progress
+                        </Heading>
+                        <ResponsiveContainer width="50%" height={150}>
+                          <BarChart data={user.barChartData}>
+                            <XAxis dataKey="name" />
+                            <Tooltip />
+                            <Bar
+                              dataKey="Completed"
+                              stackId="a"
+                              fill="#ffc658"
+                            />
+                            <Bar
+                              dataKey="Remaining"
+                              stackId="a"
+                              fill="#8884d8"
+                            />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </Box>
+                    </Td>
+                  </Tr>
+                )}
+              </React.Fragment>
+            ))}
+          </Tbody>
+        </Table>
+      </TableContainer>
+
+      <Divider width="80%" mt={10} />
       <Heading
         fontSize="5xl"
         mb={10}
@@ -421,8 +678,7 @@ function AdminDashboard() {
       >
         Documentation:
       </Heading>
-
-      <DocumentationComponent admin={true}/>
+      <DocumentationComponent admin={true} />
     </Box>
   );
 }
