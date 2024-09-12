@@ -110,7 +110,7 @@ class JavaScriptGenerator extends Converter {
 
     generateWhileLoop(node) {
         const condition = this.generateCondition(node.condition);
-        console.log("HI");
+        //console.log("HI");
         const body = this.generateNodes(node.body);
         return `while (${condition}) {\n${body}\n}`;
     }
@@ -184,7 +184,7 @@ class JavaScriptGenerator extends Converter {
         if (typeof condition != "object" && condition !== null) {
             return condition; // Already a structured object
         }
-        console.log(condition.left);
+        //console.log(condition.left);
         const left = this.generateExpression(condition.left);
         const operator = this.getOperator(condition.operator);
         const right = this.generateExpression(condition.right);
@@ -237,7 +237,7 @@ class JavaScriptGenerator extends Converter {
         if (typeof value === "object" && value !== null) {
             return value; // Already a structured object
         }
-        console.log(value);
+        //console.log(value);
         if (this.declaredVariables.has(value)) {
             // If the value is in declaredVariables, treat it as an Identifier
             return { type: "Identifier", value: value };

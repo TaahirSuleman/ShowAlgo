@@ -22,7 +22,8 @@ class ExpressionEvaluator {
             }
         } else if (expression.type === "LengthExpression") {
             return this.evaluateLengthExpression(expression);
-        } else {
+        } else if (expression.type === "IndexExpression") return;
+        else {
             return this.convertValue(expression);
         }
     }

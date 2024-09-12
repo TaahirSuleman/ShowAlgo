@@ -195,6 +195,7 @@ class Tokenizer {
             "add",
             "at",
             "position",
+            "swap",
             "print",
             "display",
             "show",
@@ -234,7 +235,10 @@ class Tokenizer {
             if (
                 String(this.pseudocodeLines[this.line - 1])
                     .toLowerCase()
-                    .includes("element at")
+                    .includes("element at") &&
+                !String(this.pseudocodeLines[this.line - 1])
+                    .toLowerCase()
+                    .includes("set element")
             )
                 value = "character"; // treat array indexing the same as substring - making it transparent for the subsequent stages while allowing differentiation within the SPL between 'ELEMENT AT' for arrays and 'CHARACTER AT' for strings.
         }
@@ -257,7 +261,7 @@ class Tokenizer {
                     // Move currentIndex past 'if'
                     this.currentIndex++;
                 }
-                console.log("after " + value);
+                //console.log("after " + value);
                 value += "if"; // Combine 'otherwise' and 'if' to 'otherwise if'
             }
         }

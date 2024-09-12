@@ -12,9 +12,9 @@ class PseudocodeProcessor {
     static process(pseudocode) {
         const tokenizer = new Tokenizer(pseudocode);
         const tokens = tokenizer.tokenize();
-        // PseudocodeProcessor.writeToFile(
-        //     "Tokens: " + JSON.stringify(tokens, null, 2)
-        // );
+        PseudocodeProcessor.writeToFile(
+            "Tokens: " + JSON.stringify(tokens, null, 2)
+        );
 
         const parser = new Parser(tokens);
         const ast = parser.parse();

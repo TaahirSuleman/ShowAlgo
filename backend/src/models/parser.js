@@ -50,6 +50,8 @@ class Parser {
                 return this.parseArrayInsertion();
             case "remove":
                 return this.parseRemoveOperation();
+            case "swap":
+                return this.parseSwapOperation();
             case "if":
                 return this.parseIfStatement();
             case "define":
@@ -83,14 +85,27 @@ class Parser {
     parseVariableDeclaration() {
         const line = this.currentToken().line;
         this.expect("Keyword", "set");
-        if (this.currentToken().type === "Keyword") {
-            throw new Error(
-                `Reserved keywords such as ${
-                    this.currentToken().value
-                } cannot be used as a variable name.`
-            );
+
+        let varName;
+
+        // Check if it's an array element assignment (e.g., SET myArray[0])
+        if (
+            this.currentToken().type === "Identifier" &&
+            this.peekNextToken().value === "["
+        ) {
+            varName = this.parseIndexExpression(); // Parse array indexing (myArray[0])
+        } else {
+            // Handle normal variable assignment (e.g., SET myVar)
+            if (this.currentToken().type === "Keyword") {
+                throw new Error(
+                    `Reserved keywords such as ${
+                        this.currentToken().value
+                    } cannot be used as a variable name.`
+                );
+            }
+            varName = this.consume("Identifier").value;
         }
-        const varName = this.consume("Identifier").value;
+
         let varType = null;
         if (
             this.currentToken().value.toLowerCase() === "number" ||
@@ -100,6 +115,7 @@ class Parser {
         }
 
         this.expect("Keyword", "to");
+
         let value;
         // Check if the next token indicates a function call
         if (
@@ -112,11 +128,13 @@ class Parser {
             this.currentToken().type === "Identifier" &&
             this.peekNextToken().value === "["
         ) {
-            console.log("in");
             value = this.parseIndexExpression();
-        } else value = this.parseExpression();
+        } else {
+            value = this.parseExpression();
+        }
+
         if (value.type === "BooleanLiteral") this.bools.add(varName);
-        console.log(this.bools);
+
         return this.factory.createNode(
             "VariableDeclaration",
             varName,
@@ -236,6 +254,7 @@ class Parser {
      * @returns {ArraySetValue} The AST node representing the array set value operation.
      */
     parseArraySetValue() {
+        console.log("Hello");
         const line = this.currentToken().line;
         this.expect("Identifier", "set_array"); // Expect the 'set_array' identifier
         this.expect("Keyword", "element");
@@ -244,12 +263,36 @@ class Parser {
         const varName = this.consume("Identifier").value; // The array variable name
         this.expect("Keyword", "to");
         const newValue = this.parseExpression(); // The new value to set
-
+        console.log("Bye");
         return this.factory.createNode(
             "ArraySetValue",
             varName,
             position,
             newValue,
+            line
+        );
+    }
+
+    parseSwapOperation() {
+        const line = this.currentToken().line;
+
+        this.expect("Keyword", "swap");
+        this.expect("Keyword", "position");
+
+        const firstPosition = this.parseExpression(); // Parse the first position expression
+        this.expect("Keyword", "with");
+        this.expect("Keyword", "position");
+
+        const secondPosition = this.parseExpression(); // Parse the second position expression
+        this.expect("Keyword", "in");
+
+        const varName = this.consume("Identifier").value; // Get the array name
+
+        return this.factory.createNode(
+            "SwapOperation",
+            varName,
+            firstPosition,
+            secondPosition,
             line
         );
     }
@@ -287,7 +330,7 @@ class Parser {
             this.peekNextToken().value === "then"
                 ? this.parseBool(line)
                 : this.parseCondition();
-        console.log(this.currentToken().value);
+        //console.log(this.currentToken().value);
         while (this.currentToken().value != "then") this.parseCondition();
         this.expect("Keyword", "then");
         const consequent = [];
@@ -630,7 +673,7 @@ class Parser {
             this.currentToken().value.toLowerCase() === "not"
         ) {
             const operator = this.consume("LogicalOperator").value;
-            console.log(`next token is ${this.peekNextToken().value}`);
+            //console.log(`next token is ${this.peekNextToken().value}`);
             const right =
                 this.peekNextToken().value.toLowerCase() === "then"
                     ? this.parseValue()
@@ -779,7 +822,8 @@ class Parser {
             left = this.parseLengthExpression();
         } else if (
             this.currentToken().type === "Keyword" &&
-            this.currentToken().value.toLowerCase() === "character"
+            (this.currentToken().value.toLowerCase() === "character" ||
+                this.currentToken().value.toLowerCase() === "element")
         ) {
             left = this.parseIndexExpression(); // Handle high-level syntax
         } else {
@@ -831,13 +875,13 @@ class Parser {
             this.consume("Identifier").value,
             line
         );
-        console.log(stringIdentifier);
+        //console.log(stringIdentifier);
         this.expect("Keyword", "from");
         const startIndex = this.parseExpression();
-        console.log(startIndex);
+        //console.log(startIndex);
         this.expect("Keyword", "to");
         const endIndex = this.parseExpression();
-        console.log(endIndex);
+        //console.log(endIndex);
 
         // Create the SubstringExpression node with correct structure
         return this.factory.createNode(
@@ -875,6 +919,16 @@ class Parser {
         ) {
             // High-level syntax: CHARACTER AT index OF stringVariable
             this.expect("Keyword", "character");
+            this.expect("Keyword", "at");
+            index = this.parseExpression(); // Parse the index expression
+            this.expect("Keyword", "of");
+            source = this.consume("Identifier").value;
+        } else if (
+            this.currentToken().type === "Keyword" &&
+            this.currentToken().value.toLowerCase() === "element"
+        ) {
+            // High-level syntax: CHARACTER AT index OF stringVariable
+            this.expect("Keyword", "element");
             this.expect("Keyword", "at");
             index = this.parseExpression(); // Parse the index expression
             this.expect("Keyword", "of");

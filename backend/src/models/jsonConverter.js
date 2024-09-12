@@ -60,6 +60,7 @@ class JsonConverter extends Converter {
         }
 
         if (node.value.type === "IndexExpression") {
+            console.log("hello");
             return this.transformIndexExpression(node);
         }
 
@@ -170,6 +171,7 @@ class JsonConverter extends Converter {
 
     transformIndexExpression(node) {
         const { varName, value } = node;
+        console.log("in here" + value);
         const source = value.source;
         const index = this.expressionEvaluator.evaluateExpression(value.index);
 
@@ -210,7 +212,7 @@ class JsonConverter extends Converter {
 
         this.variables[node.name] = result;
         this.declaredVariables.add(node.name);
-        console.log(this.variables);
+        //console.log(this.variables);
         return {
             line: node.line,
             operation: "set",
@@ -269,6 +271,60 @@ class JsonConverter extends Converter {
         };
     }
 
+    /**
+     * Transforms a SwapOperation node into a final JSON action frame.
+     * @param {Object} node - The SwapOperation node to transform.
+     * @returns {Object} The transformed action frame for the swap operation.
+     */
+    transformSwapOperation(node) {
+        const firstPosition = this.expressionEvaluator.evaluateExpression(
+            node.firstPosition
+        );
+        const secondPosition = this.expressionEvaluator.evaluateExpression(
+            node.secondPosition
+        );
+
+        // Ensure the array is initialized
+        if (!this.initializedArrays[node.varName]) {
+            throw new Error(
+                `Error at line ${node.line}: Array ${node.varName} must be initialized before being used.`
+            );
+        }
+
+        // Ensure firstPosition and secondPosition are within array bounds
+        const arrayLength = this.variables[node.varName].length;
+        if (
+            firstPosition < 0 ||
+            firstPosition >= arrayLength ||
+            secondPosition < 0 ||
+            secondPosition >= arrayLength
+        ) {
+            throw new Error(
+                `Error at line ${node.line}: Swap positions must be within the bounds of the array ${node.varName} (size ${arrayLength}).`
+            );
+        }
+
+        // Perform the swap in the array stored in this.variables
+        const array = this.variables[node.varName];
+        const temp = array[firstPosition];
+        array[firstPosition] = array[secondPosition];
+        array[secondPosition] = temp;
+
+        // Update the array in this.variables after the swap
+        this.variables[node.varName] = array;
+
+        return {
+            line: node.line,
+            operation: "swap",
+            dataStructure: "array",
+            firstPosition: firstPosition,
+            secondPosition: secondPosition,
+            varName: node.varName,
+            description: `Swapped values in position ${firstPosition} and ${secondPosition} in array ${node.varName}.`,
+            timestamp: new Date().toISOString(),
+        };
+    }
+
     determineType(value) {
         // Try to convert the value to a number
         const convertedValue = Number(value);
@@ -318,7 +374,7 @@ class JsonConverter extends Converter {
 
         // Retrieve the function's full IR
         const functionIR = this.functionMap.get(functionName);
-        console.log(functionIR);
+        //console.log(functionIR);
         // Check argument count match between the call and definition
         const params = functionIR.params;
         const args = node.args;
@@ -337,7 +393,7 @@ class JsonConverter extends Converter {
                 this.expressionEvaluator.evaluateExpression(args[i]);
             this.declaredVariables.add(params[i]);
         }
-        console.log(this.variables);
+        //console.log(this.variables);
         let frameArgs = args.map((arg) =>
             this.expressionEvaluator.evaluateExpression(arg)
         );
@@ -361,7 +417,7 @@ class JsonConverter extends Converter {
                 returnValue = this.expressionEvaluator.evaluateExpression(
                     statement.value
                 );
-                console.log("Hello " + returnValue);
+                //console.log("Hello " + returnValue);
             }
 
             // If bodyFrame is an array, loop through each element and push them to frames
@@ -480,7 +536,7 @@ class JsonConverter extends Converter {
         // Entering an Otherwise If statement, increment depth
         //this.ifDepth++;
         this.currentLine = node.line;
-        console.log(node.line);
+        //console.log(node.line);
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
@@ -538,16 +594,18 @@ class JsonConverter extends Converter {
         return maxLine + 1; // Adding 1 to represent the 'End If' line
     }
 
-    transformForLoop(node) {
-        return {
-            line: node.line,
-            operation: "for",
-            iterator: node.iterator,
-            collection: node.collection,
-            body: this.transformNodes(node.body),
-            timestamp: new Date().toISOString(),
-            description: `Iterating over ${node.collection} with ${node.iterator}.`,
-        };
+    transformForEachLoop(node) {
+        const arrayName = node.collection;
+        const iterator = node.iterator;
+
+        // Set the initial index to 0
+        const startValue = 0;
+        const endValue = this.variables[arrayName].length - 1; // Length of the array minus one
+
+        this.variables[iterator] = null; // Initialize the iterator
+        const conditionString = `${iterator} in ${arrayName}`; // New condition format
+
+        return this.transformGenericLoop(node, "for_each", conditionString);
     }
 
     transformGenericLoop(node, loopType, conditionString) {
@@ -564,49 +622,107 @@ class JsonConverter extends Converter {
                 )} loop with condition ${conditionString}.`,
             },
         ];
-
+        let ifCondition;
         let bodyLineStart = node.line; // Line where loop body starts
         let bodyLineCount = 0; // Track the number of lines in the loop body
+        if (loopType === "for_each") {
+            // Handle the special case for the for_each loop
+            const arrayName = node.collection; // The array to iterate over
+            const iterator = node.iterator; // The iterator variable (e.g., 'num')
+            let index = 0; // Start with index 0
+            ifCondition = `Checked if index < ${this.variables[arrayName].length}`;
 
-        while (this.expressionEvaluator.evaluateCondition(node.condition)) {
-            let z = 0;
-            this.currentLine = node.line + 1;
-            if (this.variables["x"] == 0) {
-                z += 1;
-            }
-            actionFrames.push({
-                line: node.line,
-                operation: "if",
-                condition: conditionString,
-                result: true,
-                timestamp: new Date().toISOString(),
-                description: `Checked if ${conditionString}.`,
-            });
+            // While the index is within the array bounds
+            while (index < this.variables[arrayName].length) {
+                actionFrames.push({
+                    line: node.line,
+                    operation: "if",
+                    condition: ifCondition,
+                    result: true,
+                    timestamp: new Date().toISOString(),
+                    description: ifCondition,
+                });
 
-            const bodyFrames = this.transformNodes(node.body).map((frame) => ({
-                ...frame,
-                line: frame.line,
-            }));
-
-            actionFrames.push(...bodyFrames);
-            bodyLineCount = Math.max(
-                bodyLineCount,
-                this.currentLine - bodyLineStart
-            );
-            // For loop_from_to, update the loop variable and add the set movement object
-            if (loopType === "loop_from_to") {
-                const updateFrame = this.updateLoopVariable(
-                    node.loopVariable,
-                    loopLine
+                // Set the iterator variable to the value at the current index
+                const arrayValue = this.variables[arrayName][index];
+                actionFrames.push({
+                    line: node.line,
+                    operation: "set",
+                    varName: iterator,
+                    type: "number",
+                    value: {
+                        operation: "get",
+                        type: "array",
+                        varName: arrayName,
+                        index: index,
+                        result: arrayValue,
+                    },
+                    timestamp: new Date().toISOString(),
+                    description: `Set variable ${iterator} to ${arrayName}[${index}].`,
+                });
+                this.declaredVariables.add(iterator);
+                this.variables[iterator] = arrayValue;
+                this.currentLine = bodyLineStart + 1;
+                // Transform the loop body (processing the body of the loop)
+                const bodyFrames = this.transformNodes(node.body).map(
+                    (frame) => ({
+                        ...frame,
+                        line: frame.line,
+                    })
                 );
-                actionFrames.push(updateFrame);
+
+                actionFrames.push(...bodyFrames);
+
+                // Increment the index
+                index += 1;
+                bodyLineCount = Math.max(
+                    bodyLineCount,
+                    this.currentLine - bodyLineStart
+                );
+                this.currentLine = node.endLine;
+            }
+        } else {
+            while (this.expressionEvaluator.evaluateCondition(node.condition)) {
+                let z = 0;
+                this.currentLine = node.line + 1;
+                if (this.variables["x"] == 0) {
+                    z += 1;
+                }
+                actionFrames.push({
+                    line: node.line,
+                    operation: "if",
+                    condition: conditionString,
+                    result: true,
+                    timestamp: new Date().toISOString(),
+                    description: `Checked if ${conditionString}.`,
+                });
+
+                const bodyFrames = this.transformNodes(node.body).map(
+                    (frame) => ({
+                        ...frame,
+                        line: frame.line,
+                    })
+                );
+
+                actionFrames.push(...bodyFrames);
+                bodyLineCount = Math.max(
+                    bodyLineCount,
+                    this.currentLine - bodyLineStart
+                );
+                // For loop_from_to, update the loop variable and add the set movement object
+                if (loopType === "loop_from_to") {
+                    const updateFrame = this.updateLoopVariable(
+                        node.loopVariable,
+                        loopLine
+                    );
+                    actionFrames.push(updateFrame);
+                }
             }
         }
-
         actionFrames.push({
             line: node.line,
             operation: "if",
-            condition: conditionString,
+            condition: loopType === "for_each" ? ifCondition : conditionString,
             result: false,
             timestamp: new Date().toISOString(),
             description: `Checked if ${conditionString}.`,
@@ -729,10 +845,12 @@ class JsonConverter extends Converter {
     }
 
     transformLoopFromTo(node) {
-        const startValue = this.expressionEvaluator.convertValue(
+        const startValue = this.expressionEvaluator.evaluateExpression(
             node.range.start
         );
-        const endValue = this.expressionEvaluator.convertValue(node.range.end);
+        const endValue = this.expressionEvaluator.evaluateExpression(
+            node.range.end
+        );
         const loopVariable = node.loopVariable;
 
         const actionFrames = [
@@ -971,9 +1089,11 @@ class JsonConverter extends Converter {
     transformArraySetValue(node) {
         const varName = node.varName;
         const index = this.expressionEvaluator.evaluateExpression(node.index);
-        const setValue = this.expressionEvaluator.evaluateExpression(
-            node.setValue
-        );
+        console.log("set");
+        const setValue =
+            node.setValue.type === "IndexExpression"
+                ? this.transformIndexExpression(node.setValue)
+                : this.expressionEvaluator.evaluateExpression(node.setValue);
 
         // Ensure the array has been initialized before proceeding
         if (!this.initializedArrays[varName]) {

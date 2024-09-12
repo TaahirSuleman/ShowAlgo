@@ -60,7 +60,7 @@ class JsonNodeConverterFactory {
                 };
 
             case "ForLoop":
-                return this.jsonConverter.transformForLoop.bind(
+                return this.jsonConverter.transformForEachLoop.bind(
                     this.jsonConverter
                 );
             case "WhileLoop":
@@ -96,7 +96,10 @@ class JsonNodeConverterFactory {
                 return this.jsonConverter.transformArraySetValue.bind(
                     this.jsonConverter
                 );
-
+            case "SwapOperation":
+                return this.jsonConverter.transformSwapOperation.bind(
+                    this.jsonConverter
+                );
             default:
                 throw new Error(`Unknown node type: ${nodeType}`);
         }
