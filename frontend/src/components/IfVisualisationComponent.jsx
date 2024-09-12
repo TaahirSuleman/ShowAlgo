@@ -36,6 +36,7 @@ function IfVisualisationComponent({
             inline: "center",
           });
           setIsActive(true);
+          setResultColourState("#6B46C1")
           setIfStatement(movement);
           const timeoutId1 = setTimeout(() => {
             if (movement.result === true) {

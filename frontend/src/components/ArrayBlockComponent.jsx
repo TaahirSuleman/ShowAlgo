@@ -23,7 +23,7 @@ function ArrayBlockComponent({
 
   // Use useEffect to trigger scrolling when an animation is about to start
   useEffect(() => {
-    if (inserted || removed || changed || got) {
+    if (inserted || removed || changed || got || swapped[0] === keyProp) {
       arrBlockRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "center",
@@ -149,9 +149,15 @@ function ArrayBlockComponent({
         animate={{
           backgroundColor: [
             "#1A365D",
-            "hsl(0, 100, 50)",
-            "hsl(0, 100, 50)",
+            "#F687B3",
+            "#F687B3",
             "#1A365D",
+          ],
+          color: [
+            "hsl(0, 0, 100)",
+            "hsl(0, 0, 0)",
+            "hsl(0, 0, 0)",
+            "hsl(0, 0, 100)",
           ],
           scale: [1, 1.5, 1.5, 1],
         }}

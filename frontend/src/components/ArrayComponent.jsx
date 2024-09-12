@@ -53,12 +53,14 @@ function ArrayComponent(
             // No index incremention here. Done in MainVisualisationwindow
 
           case "swap":
-            //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            if (movements[indexState].varName != arrayState.name){
+              return;
+            }
             console.log("Its a swap");
             let prevValues = [...values];
-            if (movements[indexState].firstPosition && movements[indexState].secondPosition){
             [prevValues[movements[indexState].firstPosition], prevValues[movements[indexState].secondPosition]] = [prevValues[movements[indexState].secondPosition], prevValues[movements[indexState].firstPosition]];
-            }
+            console.log("swapping debug values "+values)
+            console.log("swapping debug prev values "+prevValues)
             setSwappedState([prevValues[movements[indexState].firstPosition],prevValues[movements[indexState].secondPosition]])
             setValues(prevValues);
             for (let i = 0; i<arraysState.length;i++){

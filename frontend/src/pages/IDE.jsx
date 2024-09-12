@@ -142,6 +142,8 @@ function IDE() {
 
   const stopCode = () => {
     setPauseState(true);
+    let time;
+    killState == indexState ? time = 1000 : time = speedState*1000 + 1000
     const timeoutSetKey = setTimeout(() => {
       setIndexState(-1);
       setHighlightState(false);
@@ -152,7 +154,7 @@ function IDE() {
         `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
       ]);
       setIsRestarting(false);
-    }, speedState*1000 + 1000);
+    }, time);
     setIsRestarting(true) 
     return () => timeoutSetKey;
   };
