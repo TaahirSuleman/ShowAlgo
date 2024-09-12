@@ -70,6 +70,8 @@ function IDE() {
     message: "",
     errorLine: 0,
   });
+  const [followOutputState, setFollowOutputState] = useState(true);
+  const [followVisState, setFollowVisState] = useState(true);
 
   let savedIndex = -1;
 
@@ -142,8 +144,9 @@ function IDE() {
 
   const stopCode = () => {
     setPauseState(true);
-    let time;
-    killState == indexState ? time = 1000 : time = speedState*1000 + 1000
+    let time = speedState*1000 + 1000
+    if (killState == indexState){ time = 1000;} 
+    console.log("time: "+time)
     const timeoutSetKey = setTimeout(() => {
       setIndexState(-1);
       setHighlightState(false);
@@ -155,7 +158,7 @@ function IDE() {
       ]);
       setIsRestarting(false);
     }, time);
-    setIsRestarting(true) 
+    setIsRestarting(true)
     return () => timeoutSetKey;
   };
 
@@ -203,6 +206,10 @@ function IDE() {
         setIsClearOutputLoading={setIsClearOutputLoading}
         setIsClearLoading={setIsClearLoading}
         isError={isError}
+        followOutputState={followOutputState}
+        followVisState={followVisState}
+        setFollowOutputState={setFollowOutputState}
+        setFollowVisState={setFollowVisState}
       />
     </Box>
   );

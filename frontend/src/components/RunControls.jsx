@@ -67,14 +67,15 @@ function RunControls({
     if (isRunning) { // Stopping in the middle of an animation
       stopCode();
       console.log("RAW STOP")
-    } else if (isFinished) { // Basically restarting after a run has completed.
+    } else if (isFinished) { //restarting after a run has completed.
       console.log("FINISHED STOP AND START")
       stopCode();
       setIsFinished(false);
       setIsRunning(true)
       const timeout = setTimeout(() => {
         runCode();
-      }, speedState*1000 + 1000);
+        console.log("runCode called")
+      }, 2000);
       return () => timeout;
     } else { // The first start for the application.
       console.log("FROM THE BENINGING")
@@ -116,7 +117,7 @@ function RunControls({
         <Button
           variant="outline"
           colorScheme={pauseState ? "green" : "red"}
-          isDisabled={indexState < -1 || indexState >= killState}
+          isDisabled={indexState <= -1 || indexState >= killState}
           onClick={handlePauseResume}
           width="100%"
           height="33px"

@@ -13,6 +13,7 @@ function StringVisualisationComponent({
   setPauseState,
   variablesState,
   setVariablesState,
+  followVisState
 }) {
   const [presentState, setPresentState] = useState(false);
   const [afterHighlight, setAfterHighlight] = useState("");
@@ -31,12 +32,12 @@ function StringVisualisationComponent({
         typeof currentMovement.value !== "object"
       )
         return;
-
+        if (followVisState){
       stringVisRef.current.scrollIntoView({
         behavior: "smooth",
         block: "nearest",
         inline: "center",
-      });
+      });}
 
       const { operation, type, varName, source, result, index, start, end } =
         currentMovement.value;

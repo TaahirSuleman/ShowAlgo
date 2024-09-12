@@ -15,6 +15,7 @@ function VariableListComponent({
     setArraysState,
     variablesState,
     setVariablesState,
+    followVisState
     }){
 
     let [updating, setUpdating] = useState("");
@@ -30,11 +31,12 @@ function VariableListComponent({
           if (movements[indexState].operation == "set") {
 
             if (typeof movements[indexState].value != "object") {
+              if (followVisState){
               varRef.current.scrollIntoView({
                 behavior: "smooth",
                 block: "nearest",
                 inline: "center",
-              });
+              });}
               updateVariablesState(
                 movements[indexState].type,
                 movements[indexState].value,
@@ -140,7 +142,7 @@ function VariableListComponent({
                      border: updating === variable.name ? "4px solid rgba(0, 0, 0, 0.80)": "2px solid #9AE6B4",
                      wordWrap: 'break-word', overflowWrap: 'break-word', wordBreak: 'break-all'
              }}
-            animate={updating === variable.name ? { color: ['white', 'rgba(0, 0, 0, 0.80)', 'rgba(0, 0, 0, 0.80)'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {color: ['white', 'white', 'white'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
+            animate={updating === variable.name ? { color: ['rgba(255, 255, 255, 0.80)', 'rgba(0, 0, 0, 0.80)', 'rgba(0, 0, 0, 0.80)'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {color: ['rgba(255, 255, 255, 0.80)', 'rgba(255, 255, 255, 0.80)', 'rgba(255, 255, 255, 0.80)'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
             transition={{ duration: speedState }}
           >
             <p style={{fontSize: '13px'}}>{"(" + variable.type + ") " + variable.name + " = " + variable.value}</p>

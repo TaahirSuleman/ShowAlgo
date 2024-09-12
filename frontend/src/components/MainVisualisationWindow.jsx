@@ -17,6 +17,7 @@ function MainVisualisationWindow({
     pauseState,
     bufferState,
     setPauseState,
+    followVisState
 }) {
     useEffect(() => {
         console.log(indexState);
@@ -163,6 +164,7 @@ function MainVisualisationWindow({
                 bufferState={bufferState}
                 variablesState={variablesState}
                 setVariablesState={setVariablesState}
+                followVisState={followVisState}
             />
             <div className="if-array-container">
                 <div className="top-row">
@@ -175,6 +177,7 @@ function MainVisualisationWindow({
                         setPauseState={setPauseState}
                         setOutput={setOutput}
                         bufferState={bufferState}
+                        followVisState={followVisState}
                     />
                     <LoopNotificationComponent
                         movements={movementsState}
@@ -186,6 +189,7 @@ function MainVisualisationWindow({
                         arraysState={arraysState}
                         setOutput={setOutput}
                         bufferState={bufferState}
+                        followVisState={followVisState}
                     />
                 </div>
                 <StringVisualisationComponent
@@ -199,6 +203,7 @@ function MainVisualisationWindow({
                     setOutput={setOutput}
                     variablesState={variablesState}
                     setVariablesState={setVariablesState}
+                    followVisState={followVisState}
                 />
                 <AnimatePresence>
                     {arraysState.map((array, i) => (
@@ -216,6 +221,7 @@ function MainVisualisationWindow({
                             setPauseState={setPauseState}
                             setOutput={setOutput}
                             bufferState={bufferState}
+                            followVisState={followVisState}
                         />
                     ))}
                 </AnimatePresence>

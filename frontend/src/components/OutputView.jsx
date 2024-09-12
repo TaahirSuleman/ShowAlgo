@@ -8,11 +8,12 @@ const OutputView = ({
   className,
   height,
   width,
+  followOutputState
 }) => {
   const boxRef = useRef(null); 
 
   useEffect(() => {
-    if (boxRef.current) {
+    if (boxRef.current && followOutputState) {
       boxRef.current.scrollTop = boxRef.current.scrollHeight;
     }
   }, [output]);

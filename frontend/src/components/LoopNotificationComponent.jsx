@@ -12,7 +12,8 @@ pauseState,
 setOutput,
 bufferState,
 setPauseState,
-arraysState
+arraysState,
+followVisState
 }
 ) {
   const [loopNotificationState, setLoopNotificationState] = useState();
@@ -29,7 +30,9 @@ arraysState
           movements[indexState].operation == "while" ||
           movements[indexState].operation == "for_each"
         ) {
+          if (followVisState){
           loopNotifRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          }
           setIsAnimated(true);
           setIsActive(true);
           let loopObj = {

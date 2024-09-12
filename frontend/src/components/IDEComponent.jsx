@@ -26,6 +26,7 @@ import {
   PopoverBody,
   useBreakpointValue,
   useDisclosure,
+  Checkbox
 } from "@chakra-ui/react";
 import { IoClose } from "react-icons/io5";
 import { InfoIcon } from "@chakra-ui/icons";
@@ -55,7 +56,11 @@ function IDEComponent({
   setIsClearOutputLoading,
   defaultValue,
   level = false,
-  isError,
+  followOutputState,
+  setFollowOutputState,
+  followVisState,
+  setFollowVisState,
+  isError
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
@@ -85,6 +90,14 @@ function IDEComponent({
       setOutput([]);
       setIsClearOutputLoading(false);
     }, 1000);
+  };
+
+  const handleCheckboxChangeOutput = (e) => {
+    setFollowOutputState(e.target.checked);
+  };
+
+  const handleCheckboxChangeVis = (e) => {
+    setFollowVisState(e.target.checked);
   };
 
   const gridTemplateColumns = useBreakpointValue({
@@ -277,6 +290,15 @@ function IDEComponent({
               Output View
             </Heading>
 
+            <Checkbox
+            isChecked={followOutputState}
+            onChange={handleCheckboxChangeOutput}
+            colorScheme="green"
+            me={2}
+            >
+              Auto-scroll
+            </Checkbox>
+
             <Box width="84px" />
           </Box>
           <Box
@@ -284,7 +306,7 @@ function IDEComponent({
             height={{ base: "33dvh", md: "33dvh" }}
             boxShadow="md"
           >
-            <OutputView height="100%" width="100%" output={output} />
+            <OutputView height="100%" width="100%" output={output} followOutputState={followOutputState} />
           </Box>
         </Box>
       </GridItem>
@@ -303,6 +325,15 @@ function IDEComponent({
           <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="xl">
             Visualisation View
           </Heading>
+
+          <Checkbox
+            isChecked={followVisState}
+            onChange={handleCheckboxChangeVis}
+            colorScheme="green"
+            me={2}
+            >
+              Auto-scroll
+            </Checkbox>
         </Box>
 
         <Box
@@ -324,6 +355,8 @@ function IDEComponent({
             pauseState={pauseState}
             setPauseState={setPauseState}
             bufferState={bufferState}
+            followOutputState={followOutputState}
+            followVisState={followVisState}
           />
         </Box>
       </GridItem>
