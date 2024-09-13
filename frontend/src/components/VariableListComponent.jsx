@@ -101,8 +101,9 @@ function VariableListComponent({
             const index = variables.findIndex(variable => variable.name === name);
             if (index !== -1) {
                 variables[index] = {
-                    ...variables[index],
+                    type: type,
                     value: (type === "string" ? "'"+value+"'" : value),
+                    name: name
                 };                
             } else {
                 variables.push({

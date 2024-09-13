@@ -98670,3 +98670,7349 @@ Final JSON: {
     }
   ]
 }
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "11",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "z",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 5
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "v",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 6
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "m",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 7
+  },
+  {
+    "type": "String",
+    "value": "Hello World",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 8
+  },
+  {
+    "type": "String",
+    "value": "hello World",
+    "line": 8
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      },
+      "line": 4
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "z",
+      "varType": "string",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      },
+      "line": 5
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "v",
+      "varType": "number",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      },
+      "line": 6
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "m",
+      "varType": "boolean",
+      "value": {
+        "type": "StringLiteral",
+        "value": "Hello World",
+        "line": 7
+      },
+      "line": 7
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      },
+      "line": 8
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "11",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "z",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 5
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "v",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 6
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "m",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 7
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 8
+  },
+  {
+    "type": "String",
+    "value": "hello World",
+    "line": 8
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      },
+      "line": 4
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "z",
+      "varType": "string",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      },
+      "line": 5
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "v",
+      "varType": "number",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      },
+      "line": 6
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "m",
+      "varType": "boolean",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 7
+      },
+      "line": 7
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      },
+      "line": 8
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "11",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "z",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 5
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "v",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 6
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "m",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 7
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 8
+  },
+  {
+    "type": "String",
+    "value": "hello World",
+    "line": 8
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      },
+      "line": 4
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "z",
+      "varType": "string",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      },
+      "line": 5
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "v",
+      "varType": "number",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      },
+      "line": 6
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "m",
+      "varType": "boolean",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "0",
+        "line": 7
+      },
+      "line": 7
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      },
+      "line": 8
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "11",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "z",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 5
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "v",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 6
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "m",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 7
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 8
+  },
+  {
+    "type": "String",
+    "value": "hello World",
+    "line": 8
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      },
+      "line": 4
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "z",
+      "varType": "string",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      },
+      "line": 5
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "v",
+      "varType": "number",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      },
+      "line": 6
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "m",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 7
+      },
+      "line": 7
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      },
+      "line": 8
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 3,
+      "name": "x",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 4,
+      "name": "y",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 5,
+      "name": "z",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 6,
+      "name": "v",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 7,
+      "name": "m",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 8,
+      "name": "x",
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:26:16.661Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-13T14:26:16.661Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "x",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:26:16.661Z",
+      "description": "Set variable x to true."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "y",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-13T14:26:16.661Z",
+      "description": "Set variable y to false."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "z",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:26:16.661Z",
+      "description": "Set variable z to true."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "v",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:26:16.661Z",
+      "description": "Set variable v to true."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "m",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-13T14:26:16.661Z",
+      "description": "Set variable m to false."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": "hello World",
+      "timestamp": "2024-09-13T14:26:16.661Z",
+      "description": "Set variable x to hello World."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "11",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "z",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 5
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "v",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 6
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "m",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 7
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 8
+  },
+  {
+    "type": "String",
+    "value": "hello World",
+    "line": 8
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      },
+      "line": 4
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "z",
+      "varType": "string",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      },
+      "line": 5
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "v",
+      "varType": "number",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      },
+      "line": 6
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "m",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 7
+      },
+      "line": 7
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      },
+      "line": 8
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 3,
+      "name": "x",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 4,
+      "name": "y",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 5,
+      "name": "z",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 6,
+      "name": "v",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 7,
+      "name": "m",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 8,
+      "name": "x",
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:30:16.968Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-13T14:30:16.969Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "x",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:30:16.969Z",
+      "description": "Set variable x to true."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "y",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-13T14:30:16.969Z",
+      "description": "Set variable y to false."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "z",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:30:16.969Z",
+      "description": "Set variable z to true."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "v",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:30:16.969Z",
+      "description": "Set variable v to true."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "m",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-13T14:30:16.969Z",
+      "description": "Set variable m to false."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": "hello World",
+      "timestamp": "2024-09-13T14:30:16.969Z",
+      "description": "Set variable x to hello World."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "11",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "z",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 5
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "v",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 6
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "m",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 7
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 8
+  },
+  {
+    "type": "String",
+    "value": "hello World",
+    "line": 8
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": "number",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": null,
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      },
+      "line": 4
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "z",
+      "varType": "string",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      },
+      "line": 5
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "v",
+      "varType": "number",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      },
+      "line": 6
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "m",
+      "varType": "boolean",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 7
+      },
+      "line": 7
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      },
+      "line": 8
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "11",
+        "line": 2
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 3,
+      "name": "x",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 4,
+      "name": "y",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 4
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 5,
+      "name": "z",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 5
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 6,
+      "name": "v",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 6
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 7,
+      "name": "m",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": false,
+        "line": 7
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 8,
+      "name": "x",
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 8
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:37:56.941Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 11,
+      "timestamp": "2024-09-13T14:37:56.941Z",
+      "description": "Set variable y to 11."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "x",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:37:56.942Z",
+      "description": "Set variable x to true."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "y",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-13T14:37:56.942Z",
+      "description": "Set variable y to false."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "z",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:37:56.942Z",
+      "description": "Set variable z to true."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "v",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-13T14:37:56.942Z",
+      "description": "Set variable v to true."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "m",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-13T14:37:56.942Z",
+      "description": "Set variable m to false."
+    },
+    {
+      "line": 8,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": "hello World",
+      "timestamp": "2024-09-13T14:37:56.942Z",
+      "description": "Set variable x to hello World."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "boolean",
+    "line": 1
+  },
+  {
+    "type": "String",
+    "value": "hello World",
+    "line": 1
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "boolean",
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 1
+      },
+      "line": 1
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "String",
+    "value": "hello World",
+    "line": 1
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 1
+      },
+      "line": 1
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "StringLiteral",
+        "value": "hello World",
+        "line": 1
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": "hello World",
+      "timestamp": "2024-09-13T14:38:38.083Z",
+      "description": "Set variable x to hello World."
+    }
+  ]
+}
+Tokens: []
+AST: {
+  "type": "Program",
+  "body": []
+}
+Intermediate Representation: {
+  "program": []
+}
+Final JSON: {
+  "actionFrames": []
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "y",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 2
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "y",
+      "varType": "string",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "y",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 2
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:39:59.897Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "y",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:39:59.897Z",
+      "description": "Set variable y to 10."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  }
+]
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:42:01.956Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:42:01.956Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "set_array",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "element",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "String",
+    "value": "yaaa",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "strings",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "newValue": {
+        "type": "StringLiteral",
+        "value": "yaaa",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "line": 3,
+      "varName": "strings",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "setValue": "yaaa"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:42:24.409Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:42:24.409Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    },
+    {
+      "line": 3,
+      "operation": "set_array",
+      "varName": "strings",
+      "index": 3,
+      "setValue": "yaaa",
+      "timestamp": "2024-09-13T14:42:24.409Z",
+      "description": "Set strings[3] to yaaa."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "set_array",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "element",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "5",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "strings",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "newValue": {
+        "type": "NumberLiteral",
+        "value": "5",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "line": 3,
+      "varName": "strings",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "setValue": "5"
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "set_array",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "element",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "strings",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "newValue": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "line": 3,
+      "varName": "strings",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "setValue": true
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "set_array",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "element",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "String",
+    "value": "",
+    "line": 3
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "strings",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "newValue": {
+        "type": "Expression",
+        "left": {
+          "type": "StringLiteral",
+          "value": "",
+          "line": 3
+        },
+        "operator": "+",
+        "right": {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "line": 3,
+      "varName": "strings",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      }
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "set_array",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "element",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "(",
+    "line": 3
+  },
+  {
+    "type": "String",
+    "value": "",
+    "line": 3
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 3
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": ")",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "strings",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "newValue": {
+        "type": "Expression",
+        "left": {
+          "type": "StringLiteral",
+          "value": "",
+          "line": 3
+        },
+        "operator": "+",
+        "right": {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "line": 3,
+      "varName": "strings",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      }
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "set_array",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "element",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "String",
+    "value": "suresure",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "strings",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "newValue": {
+        "type": "StringLiteral",
+        "value": "suresure",
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "line": 3,
+      "varName": "strings",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "setValue": "suresure"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:45:07.819Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:45:07.819Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    },
+    {
+      "line": 3,
+      "operation": "set_array",
+      "varName": "strings",
+      "index": 3,
+      "setValue": "suresure",
+      "timestamp": "2024-09-13T14:45:07.819Z",
+      "description": "Set strings[3] to suresure."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "set_array",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "element",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "3",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "String",
+    "value": "suresure",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 4
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "ArraySetValue",
+      "varName": "strings",
+      "position": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "newValue": {
+        "type": "StringLiteral",
+        "value": "suresure",
+        "line": 3
+      },
+      "line": 3
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 4
+      },
+      "line": 4
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "ArraySetValue",
+      "line": 3,
+      "varName": "strings",
+      "index": {
+        "type": "NumberLiteral",
+        "value": "3",
+        "line": 3
+      },
+      "setValue": "suresure"
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 4,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "1",
+        "line": 4
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:48:33.848Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:48:33.849Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    },
+    {
+      "line": 3,
+      "operation": "set_array",
+      "varName": "strings",
+      "index": 3,
+      "setValue": "suresure",
+      "timestamp": "2024-09-13T14:48:33.849Z",
+      "description": "Set strings[3] to suresure."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-13T14:48:33.849Z",
+      "description": "Set variable x to 1."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "strings",
+          "line": 3
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 3,
+      "name": "x",
+      "value": {
+        "type": "IndexExpression",
+        "line": 3,
+        "source": "strings",
+        "index": "1"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:49:14.287Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:49:14.287Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "strings",
+        "index": 1,
+        "result": "BROWN"
+      },
+      "timestamp": "2024-09-13T14:49:14.288Z",
+      "description": "Set variable x to strings[1]."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "strings",
+          "line": 3
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 3,
+      "name": "x",
+      "value": {
+        "type": "IndexExpression",
+        "line": 3,
+        "source": "strings",
+        "index": "1"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:49:28.119Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:49:28.120Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "strings",
+        "index": 1,
+        "result": "BROWN"
+      },
+      "timestamp": "2024-09-13T14:49:28.120Z",
+      "description": "Set variable x to strings[1]."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "strings",
+          "line": 3
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 3,
+      "name": "x",
+      "value": {
+        "type": "IndexExpression",
+        "line": 3,
+        "source": "strings",
+        "index": "1"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:50:09.402Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:50:09.402Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "strings",
+        "index": 1,
+        "result": "BROWN"
+      },
+      "timestamp": "2024-09-13T14:50:09.402Z",
+      "description": "Set variable x to strings[1]."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "strings",
+          "line": 3
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "1",
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 3,
+      "name": "x",
+      "value": {
+        "type": "IndexExpression",
+        "line": 3,
+        "source": "strings",
+        "index": "1"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:50:40.043Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:50:40.043Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "strings",
+        "index": 1,
+        "result": "BROWN"
+      },
+      "timestamp": "2024-09-13T14:50:40.043Z",
+      "description": "Set variable x to strings[1]."
+    }
+  ]
+}
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "string",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "QUICK",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "BROWN",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "FOX",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "JUMPS",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "OVER",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "THE",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "LAZY",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 2
+  },
+  {
+    "type": "String",
+    "value": "DOG",
+    "line": 2
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "x",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "strings",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "7",
+    "line": 3
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 3
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": null,
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      },
+      "line": 1
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "arrType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "unInitialised": false,
+      "line": 2
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "x",
+      "varType": "number",
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "strings",
+          "line": 3
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "7",
+          "line": 3
+        },
+        "line": 3
+      },
+      "line": 3
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "VariableDeclaration",
+      "line": 1,
+      "name": "x",
+      "value": {
+        "type": "NumberLiteral",
+        "value": "10",
+        "line": 1
+      }
+    },
+    {
+      "type": "ArrayCreation",
+      "varName": "strings",
+      "dsType": "string",
+      "values": [
+        {
+          "type": "StringLiteral",
+          "value": "QUICK",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "BROWN",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "FOX",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "JUMPS",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "OVER",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "THE",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "LAZY",
+          "line": 2
+        },
+        {
+          "type": "StringLiteral",
+          "value": "DOG",
+          "line": 2
+        }
+      ],
+      "line": 2,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 3,
+      "name": "x",
+      "value": {
+        "type": "IndexExpression",
+        "line": 3,
+        "source": "strings",
+        "index": "7"
+      }
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "set",
+      "varName": "x",
+      "type": "number",
+      "value": 10,
+      "timestamp": "2024-09-13T14:50:58.945Z",
+      "description": "Set variable x to 10."
+    },
+    {
+      "line": 2,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "string",
+      "varName": "strings",
+      "value": [
+        "QUICK",
+        "BROWN",
+        "FOX",
+        "JUMPS",
+        "OVER",
+        "THE",
+        "LAZY",
+        "DOG"
+      ],
+      "timestamp": "2024-09-13T14:50:58.945Z",
+      "description": "Created array strings with values [QUICK,BROWN,FOX,JUMPS,OVER,THE,LAZY,DOG]."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "x",
+      "type": "string",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "strings",
+        "index": 7,
+        "result": "DOG"
+      },
+      "timestamp": "2024-09-13T14:50:58.946Z",
+      "description": "Set variable x to strings[7]."
+    }
+  ]
+}
