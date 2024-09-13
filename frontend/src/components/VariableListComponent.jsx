@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from 'react';
-import { motion, useForceUpdate } from 'framer-motion';
-import '../styles/App.css'
+import { useState, useEffect, useRef } from "react";
+import { motion, useForceUpdate } from "framer-motion";
+import "../styles/App.css";
 
 function VariableListComponent({
     movements,
@@ -23,7 +23,7 @@ function VariableListComponent({
     
     const varRef = useRef();
 
-    const delay = ms  => new Promise(res => setTimeout(res, ms));
+  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
     useEffect(() => {
       const performOperations = () => {
@@ -72,70 +72,80 @@ function VariableListComponent({
                     movements[indexState].varName
                   )
                 break;
-                case "get":
-                  if (innerMovement.type === "string"){
-                    updateVariablesState(
-                      "string",
-                      innerMovement.result,
-                      movements[indexState].varName
-                    )
-                  }
-                  else if (innerMovement.type === "array"){
-                    let arrayCheck = arraysState.find((obj) => obj.name === innerMovement.varName);
-                    updateVariablesState(
-                      arrayCheck.type,
-                      innerMovement.result,
-                      movements[indexState].varName
-                    )
-                    //Index updating is in ArrayComponent for animation duration management for future.
-                  }
-              }
+              case "get":
+                if (innerMovement.type === "string") {
+                  updateVariablesState(
+                    "string",
+                    innerMovement.result,
+                    movements[indexState].varName
+                  );
+                } else if (innerMovement.type === "array") {
+                  let arrayCheck = arraysState.find(
+                    (obj) => obj.name === innerMovement.varName
+                  );
+                  updateVariablesState(
+                    arrayCheck.type,
+                    innerMovement.result,
+                    movements[indexState].varName
+                  );
+                  //Index updating is in ArrayComponent for animation duration management for future.
+                }
             }
-          } 
-         }
-      };
-      performOperations();
-    }, [indexState, pauseState]);
+          }
+        }
+      }
+    };
+    performOperations();
+  }, [indexState, pauseState]);
 
-    let updateVariablesState = async (type , value , name) => {
-        setVariablesState((prevVariablesState) => {
-            let variables = [...prevVariablesState];
-            const index = variables.findIndex(variable => variable.name === name);
-            if (index !== -1) {
-                variables[index] = {
-                    ...variables[index],
-                    value: (type === "string" ? "'"+value+"'" : value),
-                };                
-            } else {
-                variables.push({
-                    type: type,
-                    value: (type === "string" ? "'"+value+"'" : value),
-                    name: name,
-                });
-            }
-
-            setUpdating(name);
-            setCounter(c => c+1)
-            return variables;
+  let updateVariablesState = async (type, value, name) => {
+    setVariablesState((prevVariablesState) => {
+      let variables = [...prevVariablesState];
+      const index = variables.findIndex((variable) => variable.name === name);
+      if (index !== -1) {
+        variables[index] = {
+          type: type,
+          value: type === "string" ? "'" + value + "'" : value,
+          name: name
+        };
+      } else {
+        variables.push({
+          type: type,
+          value: type === "string" ? "'" + value + "'" : value,
+          name: name,
         });
-    }
+      }
 
-    if (variablesState.length == 0){
-        return(
-        <div className="variables-container" style={{width:"200px"}} ref={varRef}>
-            <ul className="ul-variables">
-                <li style={{backgroundColor: "#276749",textAlign:"center"}} className="list-items">
-                    <p>VARIABLES WILL APPEAR HERE</p>
-                </li>
-            </ul>
-        </div>
-        )
-    }
-    return(
-        <div className="variables-container" ref={varRef}>
+      setUpdating(name);
+      setCounter((c) => c + 1);
+      return variables;
+    });
+  };
+
+  if (variablesState.length == 0) {
+    return (
+      <div
+        className="variables-container"
+        style={{ width: "200px" }}
+        ref={varRef}
+      >
+        <ul className="ul-variables">
+          <li
+            style={{ backgroundColor: "#276749", textAlign: "center" }}
+            className="list-items"
+          >
+            <p>VARIABLES WILL APPEAR HERE</p>
+          </li>
+        </ul>
+      </div>
+    );
+  }
+  return (
+    <div className="variables-container" ref={varRef}>
       <ul className="ul-variables">
         {variablesState.map((variable) => (
-          <motion.li className="list-items"
+          <motion.li
+            className="list-items"
             layout
             key={variable.name + counter}
             style={{ borderRadius: updating === variable.name ? "7px": "5px",
@@ -145,14 +155,19 @@ function VariableListComponent({
             animate={updating === variable.name ? { color: ['rgba(255, 255, 255, 0.80)', 'rgba(0, 0, 0, 0.80)', 'rgba(0, 0, 0, 0.80)'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {color: ['rgba(255, 255, 255, 0.80)', 'rgba(255, 255, 255, 0.80)', 'rgba(255, 255, 255, 0.80)'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
             transition={{ duration: speedState }}
           >
-            <p style={{fontSize: '13px'}}>{"(" + variable.type + ") " + variable.name + " = " + variable.value}</p>
+            <p style={{ fontSize: "13px" }}>
+              {"(" +
+                variable.type +
+                ") " +
+                variable.name +
+                " = " +
+                variable.value}
+            </p>
           </motion.li>
         ))}
       </ul>
     </div>
-    )
-
+  );
 }
-
 
 export default VariableListComponent;

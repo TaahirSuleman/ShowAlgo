@@ -16,6 +16,7 @@ import {
   updateSection,
   updateLevel,
   deleteLevel,
+  getAllUserProgress,
   getUserProgress,
   updateUserProgress,
   getDailyStreak,
@@ -89,6 +90,8 @@ router.put("/update-level/:levelId", adminMiddleware, updateLevel);
 
 // PROGRESS ROUTES
 
+// This endpoint is to get all the users progress
+router.get("/get-progress", authMiddleware, getAllUserProgress);
 // This endpoint is used to get the user's progress
 router.get("/get-progress/:userId", authMiddleware, getUserProgress);
 // This endpoint is used to get the user's daily streak

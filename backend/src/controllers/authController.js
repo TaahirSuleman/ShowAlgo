@@ -3,7 +3,7 @@ import Sections from "../models/section.js";
 import Levels from "../models/level.js";
 import UserProgress from "../models/userProgress.js";
 import Documentation from "../models/documentation.js";
-import testUserCode from '../helpers/testUserCode.js';
+import testUserCode from "../helpers/testUserCode.js";
 import { hashPassword, comparePassword } from "../helpers/auth.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
@@ -340,6 +340,15 @@ export const deleteSection = async (req, res) => {
   try {
     const { sectionId } = req.params;
     const section = await Sections.findByIdAndDelete(sectionId);
+
+    // Remove the section from all userProgress documents
+    await UserProgress.updateMany(
+      { "sections.section_id": sectionId },
+      {
+        $pull: { sections: { section_id: sectionId } },
+      }
+    );
+
     res.json(section);
   } catch (error) {
     console.log(error);
@@ -394,6 +403,28 @@ export const getSingleLevel = async (req, res) => {
   }
 };
 
+// Route to get all user progress
+export const getAllUserProgress = async (req, res) => {
+  try {
+    const users = await User.find({ role: "user" });
+    const userProgress = await UserProgress.find();
+    const userProgressWithUsername = users.map((user) => {
+      const progress = userProgress.find((progress) =>
+        progress.user_id.equals(user._id)
+      );
+      return {
+        username: user.username,
+        progress,
+        dailyStreak: user.dailyStreak,
+      };
+    });
+    res.json(userProgressWithUsername);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
 // Route to get user progress
 export const getUserProgress = async (req, res) => {
   try {
@@ -422,8 +453,8 @@ export const updateUserProgress = async (req, res) => {
     const sectionIndex = userProgress.sections.findIndex((section) =>
       section.levels.some((level) => level.level_id.equals(levelId))
     );
-    const levelIndex = userProgress.sections[sectionIndex].levels.findIndex((level) =>
-      level.level_id.equals(levelId)
+    const levelIndex = userProgress.sections[sectionIndex].levels.findIndex(
+      (level) => level.level_id.equals(levelId)
     );
 
     // Update the level to be completed
@@ -449,7 +480,7 @@ export const getDailyStreak = async (req, res) => {
     console.log(error);
     res.status(500).json({ error: "Internal server error" });
   }
-}
+};
 
 // Route to get all documentation
 export const getDocumentation = async (req, res) => {
@@ -498,7 +529,9 @@ export const updateDocumentationSection = async (req, res) => {
 export const deleteDocumentationSection = async (req, res) => {
   try {
     const { documentationId } = req.params;
-    const documentation = await Documentation.findByIdAndDelete(documentationId);
+    const documentation = await Documentation.findByIdAndDelete(
+      documentationId
+    );
     res.json(documentation);
   } catch (error) {
     console.log(error);
@@ -511,7 +544,9 @@ export const testCode = async (req, res) => {
   const { userCode, testCases } = req.body;
 
   if (!userCode || !testCases) {
-    return res.status(400).json({ error: "User code and test cases are required." });
+    return res
+      .status(400)
+      .json({ error: "User code and test cases are required." });
   }
 
   try {
