@@ -13,7 +13,7 @@ function StringVisualisationComponent({
   setPauseState,
   variablesState,
   setVariablesState,
-  followVisState
+  followVisState,
 }) {
   const [presentState, setPresentState] = useState(false);
   const [afterHighlight, setAfterHighlight] = useState("");
@@ -32,12 +32,13 @@ function StringVisualisationComponent({
         typeof currentMovement.value !== "object"
       )
         return;
-        if (followVisState){
-      stringVisRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-        inline: "center",
-      });}
+      if (followVisState) {
+        stringVisRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+          inline: "center",
+        });
+      }
 
       const { operation, type, varName, source, result, index, start, end } =
         currentMovement.value;
@@ -61,6 +62,7 @@ function StringVisualisationComponent({
       setPresentState(true);
       setOutput((prev) => [...prev, currentMovement.description]);
       const timeout = setTimeout(() => {
+        setIndexState((prev) => prev + 1);
         setPresentState(false);
       }, speedState * 1000); // Over animation duration. Was previously in variableComponent.
       return () => clearTimeout(timeout);
