@@ -11,10 +11,10 @@ function writeTestNumber(testNumber) {
 
 describe("PseudocodeProcessor", () => {
     it("should throw an error when using a boolean variable in a number expression", () => {
-        const pseudocode = `set x to string "0"
-        set y to string "2"
-        print x + y
-        `;
+        const pseudocode = `DEFINE hello with parameters ()
+        return "hello"
+    END FUNCTION
+    CALL hello WITH ()`;
         let result = PseudocodeProcessor.process(pseudocode);
         // expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
         //     " Please ensure that only booleans and conditional expressions are used in conditions."

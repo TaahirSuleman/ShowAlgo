@@ -68,7 +68,10 @@ class JsonConverter extends Converter {
         if (node.value.type === "FunctionCall") {
             const lineNum = node.value.line;
             // Process the function call and retrieve the frames and return value
-            const functionCallResult = this.transformFunctionCall(node.value);
+            const functionCallResult = this.transformFunctionCall(
+                node.value,
+                true
+            );
 
             // Add the function call frames first
             if (!functionCallResult.returnValue) {
@@ -382,7 +385,7 @@ class JsonConverter extends Converter {
         };
     }
 
-    transformFunctionCall(node) {
+    transformFunctionCall(node, varDecl = false) {
         const frames = [];
         const functionName = node.name;
 
@@ -460,7 +463,9 @@ class JsonConverter extends Converter {
         this.currentLine = prevLine;
         node.line = prevLine;
 
-        return returnValue !== null ? { frames, returnValue } : frames;
+        return returnValue !== null && varDecl
+            ? { frames, returnValue }
+            : frames;
     }
 
     transformPrintStatement(node) {
