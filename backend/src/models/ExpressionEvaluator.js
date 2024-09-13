@@ -50,10 +50,6 @@ class ExpressionEvaluator {
                 right
             );
 
-            // Debugging
-            console.log("Evaluating: ", left, expression.operator, right);
-            console.log("Result: ", result);
-
             if (isNaN(result) && typeof result !== "string") {
                 throw new Error(
                     `Ensure that all variables are declared before being used in an expression.`

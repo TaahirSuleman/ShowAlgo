@@ -264,7 +264,6 @@ class Tokenizer {
                     // Move currentIndex past 'if'
                     this.currentIndex++;
                 }
-                //console.log("after " + value);
                 value += "if"; // Combine 'otherwise' and 'if' to 'otherwise if'
             }
         }

@@ -177,7 +177,6 @@ class JsonConverter extends Converter {
         }
 
         // let result = eval(returnVal);
-        // console.log(`result is ${result}`);
         return {
             line: node.line,
             operation: "set",
@@ -231,7 +230,6 @@ class JsonConverter extends Converter {
 
         this.variables[node.name] = result;
         this.declaredVariables.add(node.name);
-        //console.log(this.variables);
         return {
             line: node.line,
             operation: "set",
@@ -571,7 +569,6 @@ class JsonConverter extends Converter {
         // Entering an Otherwise If statement, increment depth
         //this.ifDepth++;
         this.currentLine = node.line;
-        //console.log(node.line);
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
@@ -1138,7 +1135,6 @@ class JsonConverter extends Converter {
     transformArraySetValue(node) {
         const varName = node.varName;
         const index = this.expressionEvaluator.evaluateExpression(node.index);
-        console.log("set");
         const setValue =
             node.setValue.type === "IndexExpression"
                 ? this.transformIndexExpression(node.setValue)

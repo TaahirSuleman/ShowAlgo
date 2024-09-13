@@ -254,7 +254,6 @@ class Parser {
      * @returns {ArraySetValue} The AST node representing the array set value operation.
      */
     parseArraySetValue() {
-        console.log("Hello");
         const line = this.currentToken().line;
         this.expect("Identifier", "set_array"); // Expect the 'set_array' identifier
         this.expect("Keyword", "element");
@@ -263,7 +262,6 @@ class Parser {
         const varName = this.consume("Identifier").value; // The array variable name
         this.expect("Keyword", "to");
         const newValue = this.parseExpression(); // The new value to set
-        console.log("Bye");
         return this.factory.createNode(
             "ArraySetValue",
             varName,
@@ -330,7 +328,6 @@ class Parser {
             this.peekNextToken().value === "then"
                 ? this.parseBool(line)
                 : this.parseCondition();
-        //console.log(this.currentToken().value);
         while (this.currentToken().value != "then") this.parseCondition();
         this.expect("Keyword", "then");
         const consequent = [];
@@ -673,7 +670,6 @@ class Parser {
             this.currentToken().value.toLowerCase() === "not"
         ) {
             const operator = this.consume("LogicalOperator").value;
-            //console.log(`next token is ${this.peekNextToken().value}`);
             const right =
                 this.peekNextToken().value.toLowerCase() === "then"
                     ? this.parseValue()
@@ -893,13 +889,10 @@ class Parser {
             this.consume("Identifier").value,
             line
         );
-        //console.log(stringIdentifier);
         this.expect("Keyword", "from");
         const startIndex = this.parseExpression();
-        //console.log(startIndex);
         this.expect("Keyword", "to");
         const endIndex = this.parseExpression();
-        //console.log(endIndex);
 
         // Create the SubstringExpression node with correct structure
         return this.factory.createNode(

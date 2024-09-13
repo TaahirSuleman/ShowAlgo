@@ -287,7 +287,6 @@ class Transformer {
     }
 
     convertValue(value) {
-        //console.log(value.value);
         if (typeof value === "string" && value.trim() !== "" && !isNaN(value)) {
             return Number(value);
         }
