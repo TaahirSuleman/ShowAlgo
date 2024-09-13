@@ -3,71 +3,74 @@ import { motion, useForceUpdate } from "framer-motion";
 import "../styles/App.css";
 
 function VariableListComponent({
-  movements,
-  speedState,
-  indexState,
-  setIndexState,
-  pauseState,
-  setOutput,
-  bufferState,
-  setPauseState,
-  arraysState,
-  setArraysState,
-  variablesState,
-  setVariablesState,
-}) {
-  let [updating, setUpdating] = useState("");
-  const [counter, setCounter] = useState(0);
+    movements,
+    speedState,
+    indexState,
+    setIndexState,
+    pauseState,
+    setOutput,
+    bufferState,
+    setPauseState,
+    arraysState,
+    setArraysState,
+    variablesState,
+    setVariablesState,
+    followVisState
+    }){
 
-  const varRef = useRef();
+    let [updating, setUpdating] = useState("");
+    const [counter, setCounter] = useState(0);
+    
+    const varRef = useRef();
 
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-  useEffect(() => {
-    const performOperations = () => {
-      if (indexState > -1 && indexState < movements.length && !pauseState) {
-        if (movements[indexState].operation == "set") {
-          if (typeof movements[indexState].value != "object") {
-            varRef.current.scrollIntoView({
-              behavior: "smooth",
-              block: "nearest",
-              inline: "center",
-            });
-            updateVariablesState(
-              movements[indexState].type,
-              movements[indexState].value,
-              movements[indexState].varName
-            );
-            let arrayIndexCheck = arraysState.findIndex(
-              (obj) => obj.name === movements[indexState].varName
-            );
-            if (arrayIndexCheck != -1) {
-              console.log(arrayIndexCheck + " ARRAY INDEX CHECK");
-              setArraysState((arrState) => {
-                let newArrs = [...arrState];
-                newArrs.splice(arrayIndexCheck, 1);
-                console.log(newArrs); // Logging the updated array after deletion
-                return newArrs;
+    useEffect(() => {
+      const performOperations = () => {
+        if (indexState > -1 && indexState < movements.length && !pauseState) {
+          if (movements[indexState].operation == "set") {
+
+            if (typeof movements[indexState].value != "object") {
+              if (followVisState){
+              varRef.current.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+                inline: "center",
+              });}
+              updateVariablesState(
+                movements[indexState].type,
+                movements[indexState].value,
+                movements[indexState].varName
+              );
+              let arrayIndexCheck = arraysState.findIndex((obj) => obj.name === movements[indexState].varName);
+              if (arrayIndexCheck != -1){
+                console.log(arrayIndexCheck+" ARRAY INDEX CHECK")
+                setArraysState( (arrState)=>{
+                  let newArrs = [...arrState];
+                  newArrs.splice(arrayIndexCheck, 1);
+                  console.log(newArrs); // Logging the updated array after deletion
+                  return newArrs; 
+                })
+              }
+              setOutput((prev) => {
+                return [...prev, movements[indexState].description];
               });
+              const timeoutId2 = setTimeout(() => {
+                setIndexState((i) => {
+                  return i + 1;
+                });
+              }, speedState * 1000);
+              return () => clearTimeout(timeoutId2);
             }
-            setOutput((prev) => {
-              return [...prev, movements[indexState].description];
-            });
-            const timeoutId2 = setTimeout(() => {
-              setIndexState((i) => {
-                return i + 1;
-              });
-            }, speedState * 1000);
-            return () => clearTimeout(timeoutId2);
-          } else {
-            let innerMovement = movements[indexState].value;
-            switch (movements[indexState].value.operation) {
-              case "substring":
-                updateVariablesState(
-                  "string",
-                  innerMovement.result,
-                  movements[indexState].varName
-                );
+            else {
+              let innerMovement = movements[indexState].value
+              switch (movements[indexState].value.operation){
+                case "substring":
+                  updateVariablesState(
+                    "string",
+                    innerMovement.result,
+                    movements[indexState].varName
+                  )
                 break;
               case "get":
                 if (innerMovement.type === "string") {
@@ -145,39 +148,11 @@ function VariableListComponent({
             className="list-items"
             layout
             key={variable.name + counter}
-            style={{
-              borderRadius: updating === variable.name ? "7px" : "5px",
-              border:
-                updating === variable.name
-                  ? "4px solid rgba(0, 0, 0, 0.80)"
-                  : "2px solid #9AE6B4",
-              wordWrap: "break-word",
-              overflowWrap: "break-word",
-              wordBreak: "break-all",
-            }}
-            animate={
-              updating === variable.name
-                ? {
-                    color: [
-                      "white",
-                      "rgba(0, 0, 0, 0.80)",
-                      "rgba(0, 0, 0, 0.80)",
-                    ],
-                    backgroundColor: [
-                      "hsla(39, 100%, 50%, 0)",
-                      "hsla(39, 100%, 50%, 0.5)",
-                      "hsla(194.7, 53.2%, 79.0%, 0.4)",
-                    ],
-                  }
-                : {
-                    color: ["white", "white", "white"],
-                    backgroundColor: [
-                      "hsla(39, 100%, 50%, 0)",
-                      "hsla(39, 100%, 50%, 0)",
-                      "hsla(39, 100%, 50%, 0)",
-                    ],
-                  }
-            }
+            style={{ borderRadius: updating === variable.name ? "7px": "5px",
+                     border: updating === variable.name ? "4px solid rgba(0, 0, 0, 0.80)": "2px solid #9AE6B4",
+                     wordWrap: 'break-word', overflowWrap: 'break-word', wordBreak: 'break-all'
+             }}
+            animate={updating === variable.name ? { color: ['rgba(255, 255, 255, 0.80)', 'rgba(0, 0, 0, 0.80)', 'rgba(0, 0, 0, 0.80)'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0.5)", "hsla(194.7, 53.2%, 79.0%, 0.4)"] }: {color: ['rgba(255, 255, 255, 0.80)', 'rgba(255, 255, 255, 0.80)', 'rgba(255, 255, 255, 0.80)'], backgroundColor: ["hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)", "hsla(39, 100%, 50%, 0)"]}}
             transition={{ duration: speedState }}
           >
             <p style={{ fontSize: "13px" }}>

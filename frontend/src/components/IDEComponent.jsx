@@ -26,6 +26,9 @@ import {
   PopoverBody,
   useBreakpointValue,
   useDisclosure,
+  Checkbox,
+  Spacer,
+  HStack,
 } from "@chakra-ui/react";
 import { IoClose } from "react-icons/io5";
 import { InfoIcon } from "@chakra-ui/icons";
@@ -55,6 +58,10 @@ function IDEComponent({
   setIsClearOutputLoading,
   defaultValue,
   level = false,
+  followOutputState,
+  setFollowOutputState,
+  followVisState,
+  setFollowVisState,
   isError,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -87,6 +94,14 @@ function IDEComponent({
     }, 1000);
   };
 
+  const handleCheckboxChangeOutput = (e) => {
+    setFollowOutputState(e.target.checked);
+  };
+
+  const handleCheckboxChangeVis = (e) => {
+    setFollowVisState(e.target.checked);
+  };
+
   const gridTemplateColumns = useBreakpointValue({
     base: "1fr",
     md: "0.5fr 1fr",
@@ -96,6 +111,8 @@ function IDEComponent({
     base: "auto",
     md: "1fr 1fr",
   });
+
+  const flexDirection = useBreakpointValue({ base: "column", md: "row" });
 
   return (
     <Grid
@@ -257,7 +274,7 @@ function IDEComponent({
             display="flex"
             alignItems="center"
             height="8dvh"
-            justifyContent="space-between"
+            width={{ base: "94dvw", md: "40dvw" }}
           >
             <Button
               variant="solid"
@@ -273,18 +290,40 @@ function IDEComponent({
               <Box as="span">Clear</Box>
             </Button>
 
-            <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="xl">
-              Output View
-            </Heading>
+            <Box width="20%"/>
 
-            <Box width="84px" />
+            <HStack
+              flexDirection={flexDirection}
+              justifyContent={{ base: "center", md: "space-between" }}
+              spacing={{ base: 0, md: 110 }}
+            >
+              <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="xl">
+                Output View
+              </Heading>
+
+              <Checkbox
+                isChecked={followOutputState}
+                onChange={handleCheckboxChangeOutput}
+                colorScheme="green"
+                size="sm"
+                mr={{ base: 0, md: 2 }}
+              >
+                Auto-scroll
+              </Checkbox>
+            </HStack>
+
           </Box>
           <Box
             borderBottomRadius={4}
             height={{ base: "33dvh", md: "33dvh" }}
             boxShadow="md"
           >
-            <OutputView height="100%" width="100%" output={output} />
+            <OutputView
+              height="100%"
+              width="100%"
+              output={output}
+              followOutputState={followOutputState}
+            />
           </Box>
         </Box>
       </GridItem>
@@ -296,15 +335,32 @@ function IDEComponent({
           p={2}
           display="flex"
           alignItems="center"
-          justifyContent="center"
+          justifyContent={{ base: "center", md: "space-between" }}
           height="8dvh"
           width={{ base: "94dvw", md: "55dvw" }}
+          flexDirection={flexDirection}
         >
-          <Heading fontWeight="normal" color="whiteAlpha.900" fontSize="xl">
+          <Heading
+            fontWeight="normal"
+            color="whiteAlpha.900"
+            fontSize="xl"
+            textAlign="center"
+            ml={{ base: 0, md: 20 }}
+            flex={{ base: 0, md: 1 }}
+          >
             Visualisation View
           </Heading>
-        </Box>
 
+          <Checkbox
+            isChecked={followVisState}
+            onChange={handleCheckboxChangeVis}
+            colorScheme="green"
+            size="sm"
+            mr={{ base: 0, md: 2 }}
+          >
+            Auto-scroll
+          </Checkbox>
+        </Box>
         <Box
           bg="blackAlpha.600"
           borderBottomRadius={10}
@@ -324,6 +380,8 @@ function IDEComponent({
             pauseState={pauseState}
             setPauseState={setPauseState}
             bufferState={bufferState}
+            followOutputState={followOutputState}
+            followVisState={followVisState}
           />
         </Box>
       </GridItem>

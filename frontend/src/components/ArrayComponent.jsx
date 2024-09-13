@@ -17,7 +17,8 @@ function ArrayComponent(
     pauseState,
     setOutput,
     bufferState,
-    setPauseState
+    setPauseState,
+    followVisState
   }) {
   const [values, setValues] = useState(arrayState.values);
   const [removedState, setRemovedState] = useState(-1);
@@ -47,7 +48,9 @@ function ArrayComponent(
 
           case "create":
             if (movements[indexState].dataStructure === "array"){
+              if (followVisState){
               arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+              }
             }
           break;
             // No index incremention here. Done in MainVisualisationwindow
@@ -86,7 +89,9 @@ function ArrayComponent(
             if (movements[indexState].varName != arrayState.name){
               return;
             }
+            if (followVisState){
             arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
             addToArray(movements[indexState].value, movements[indexState].position);
             setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId2 = setTimeout(()=> {
@@ -100,7 +105,9 @@ function ArrayComponent(
             if (movements[indexState].varName != arrayState.name){
               return;
             }
+            if (followVisState){
             arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
             removeFromArray((movements[indexState].positionToRemove))
             setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId3 = setTimeout(()=> {
@@ -114,7 +121,9 @@ function ArrayComponent(
             if (typeof movements[indexState].value === "object"){
               let innerMovement = movements[indexState].value
               if (innerMovement.type === "array" && innerMovement.operation === "get" && innerMovement.varName === arrayState.name){
+                if (followVisState){
                 arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
                 setGotState(values[innerMovement.index]);
                 console.log(values[innerMovement.index] + " This is the got state ")
                 setOutput((prev) => {return [...prev, movements[indexState].description]});
@@ -128,7 +137,6 @@ function ArrayComponent(
           break;
 
           case "set_array":
-            //arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             if (movements[indexState].varName != arrayState.name){
               return;
             }
@@ -305,6 +313,7 @@ function ArrayComponent(
               changed={changedState === value}
               got={gotState === value}
               setSwappedState={setSwappedState}
+              followVisState={followVisState}
             />
           ))}
         </motion.div>
