@@ -10,9 +10,82 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should throw an error when using a boolean variable in a number expression", () => {
+        const pseudocode = `set x to string "0"
+        set y to string "2"
+        print x + y
+        `;
+        let result = PseudocodeProcessor.process(pseudocode);
+        // expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+        //     " Please ensure that only booleans and conditional expressions are used in conditions."
+        // );
+    });
+
+    it("should correctly ignore lines with comments", () => {
+        const pseudocode = `// This is a comment
+            SET result TO 5 + 10
+            // Another comment here
+            SET total TO result + 20
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "result",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Set variable result to 5 + 10.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "total",
+                    type: "number",
+                    value: 35,
+                    timestamp: undefined,
+                    description: "Set variable total to result + 20.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+        expect(result).to.deep.equal(expectedJson);
+    });
+    it("should correctly process complex nested parentheses with mixed operators in PseudocodeProcessor", () => {
+        const pseudocode = `SET result TO 5 * (2 + (3 - 1) / 2) + 4
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "result",
+                    type: "number",
+                    value: 19,
+                    timestamp: undefined,
+                    description:
+                        "Set variable result to 5 * (2 + (3 - 1) / 2) + 4.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
     it("should correctly process a bubble sort algorithm with variable assignments for nested operations and no break", () => {
-        const pseudocode = `
-            CREATE number array AS myArray WITH VALUES [50, 40, 30, 20, 10]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [50, 40, 30, 20, 10]
             SET swapped TO true
             LOOP i FROM 0 TO LENGTH OF myArray - 1
                 SET swapped TO false
@@ -40,7 +113,7 @@ describe("PseudocodeProcessor", () => {
                     type: "number",
                     varName: "myArray",
                     value: [50, 40, 30, 20, 10],
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description:
                         "Created array myArray with values [50,40,30,20,10].",
                 },
@@ -50,7 +123,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
@@ -59,14 +132,14 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Set variable i to 0.",
                 },
                 {
                     line: 3,
                     operation: "loop_from_to",
                     condition: "i <= 4",
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "loop from_to loop with condition i <= 4.",
                 },
                 {
@@ -74,7 +147,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -83,7 +156,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: false,
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to false.",
                 },
                 {
@@ -92,14 +165,14 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Set variable j to 0.",
                 },
                 {
                     line: 5,
                     operation: "loop_from_to",
                     condition: "j <= 3",
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "loop from_to loop with condition j <= 3.",
                 },
                 {
@@ -107,7 +180,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 3",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 3.",
                 },
                 {
@@ -122,7 +195,7 @@ describe("PseudocodeProcessor", () => {
                         index: 0,
                         result: 50,
                     },
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[0].",
                 },
                 {
@@ -137,7 +210,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 40,
                     },
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[1].",
                 },
                 {
@@ -145,7 +218,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.247Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -157,7 +230,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 0 and 1 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -165,13 +238,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -180,7 +253,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 1,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable j to 1.",
                 },
                 {
@@ -188,7 +261,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 3",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 3.",
                 },
                 {
@@ -203,7 +276,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 50,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[1].",
                 },
                 {
@@ -218,7 +291,7 @@ describe("PseudocodeProcessor", () => {
                         index: 2,
                         result: 30,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[2].",
                 },
                 {
@@ -226,7 +299,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -238,7 +311,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 1 and 2 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -246,13 +319,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -261,7 +334,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 2,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable j to 2.",
                 },
                 {
@@ -269,7 +342,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 3",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 3.",
                 },
                 {
@@ -284,7 +357,7 @@ describe("PseudocodeProcessor", () => {
                         index: 2,
                         result: 50,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[2].",
                 },
                 {
@@ -299,7 +372,7 @@ describe("PseudocodeProcessor", () => {
                         index: 3,
                         result: 20,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[3].",
                 },
                 {
@@ -307,7 +380,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -319,7 +392,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 2 and 3 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -327,13 +400,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -342,7 +415,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 3,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable j to 3.",
                 },
                 {
@@ -350,7 +423,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 3",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 3.",
                 },
                 {
@@ -365,7 +438,7 @@ describe("PseudocodeProcessor", () => {
                         index: 3,
                         result: 50,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[3].",
                 },
                 {
@@ -380,7 +453,7 @@ describe("PseudocodeProcessor", () => {
                         index: 4,
                         result: 10,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[4].",
                 },
                 {
@@ -388,7 +461,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -400,7 +473,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 3 and 4 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -408,13 +481,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -423,7 +496,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 4,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable j to 4.",
                 },
                 {
@@ -431,13 +504,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 3",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 3.",
                 },
                 {
                     line: 12,
                     operation: "loop_end",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "End of loop from_to loop",
                 },
                 {
@@ -445,13 +518,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "!swapped",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if !swapped.",
                 },
                 {
                     line: 15,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -460,7 +533,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 1,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable i to 1.",
                 },
                 {
@@ -468,7 +541,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -477,7 +550,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: false,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to false.",
                 },
                 {
@@ -486,14 +559,14 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable j to 0.",
                 },
                 {
                     line: 5,
                     operation: "loop_from_to",
                     condition: "j <= 2",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "loop from_to loop with condition j <= 2.",
                 },
                 {
@@ -501,7 +574,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 2",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 2.",
                 },
                 {
@@ -516,7 +589,7 @@ describe("PseudocodeProcessor", () => {
                         index: 0,
                         result: 40,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[0].",
                 },
                 {
@@ -531,7 +604,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 30,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[1].",
                 },
                 {
@@ -539,7 +612,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -551,7 +624,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 0 and 1 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -559,13 +632,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -574,7 +647,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 1,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable j to 1.",
                 },
                 {
@@ -582,7 +655,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 2",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 2.",
                 },
                 {
@@ -597,7 +670,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 40,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[1].",
                 },
                 {
@@ -612,7 +685,7 @@ describe("PseudocodeProcessor", () => {
                         index: 2,
                         result: 20,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[2].",
                 },
                 {
@@ -620,7 +693,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -632,7 +705,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 1 and 2 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -640,13 +713,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -655,7 +728,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 2,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable j to 2.",
                 },
                 {
@@ -663,7 +736,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 2",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 2.",
                 },
                 {
@@ -678,7 +751,7 @@ describe("PseudocodeProcessor", () => {
                         index: 2,
                         result: 40,
                     },
-                    timestamp: "2024-09-11T20:56:02.248Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[2].",
                 },
                 {
@@ -693,7 +766,7 @@ describe("PseudocodeProcessor", () => {
                         index: 3,
                         result: 10,
                     },
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[3].",
                 },
                 {
@@ -701,7 +774,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -713,7 +786,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 2 and 3 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -721,13 +794,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -736,7 +809,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 3,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable j to 3.",
                 },
                 {
@@ -744,13 +817,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 2",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 2.",
                 },
                 {
                     line: 12,
                     operation: "loop_end",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of loop from_to loop",
                 },
                 {
@@ -758,13 +831,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "!swapped",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if !swapped.",
                 },
                 {
                     line: 15,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -773,7 +846,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 2,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable i to 2.",
                 },
                 {
@@ -781,7 +854,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -790,7 +863,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to false.",
                 },
                 {
@@ -799,14 +872,14 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable j to 0.",
                 },
                 {
                     line: 5,
                     operation: "loop_from_to",
                     condition: "j <= 1",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "loop from_to loop with condition j <= 1.",
                 },
                 {
@@ -814,7 +887,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 1",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 1.",
                 },
                 {
@@ -829,7 +902,7 @@ describe("PseudocodeProcessor", () => {
                         index: 0,
                         result: 30,
                     },
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[0].",
                 },
                 {
@@ -844,7 +917,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 20,
                     },
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[1].",
                 },
                 {
@@ -852,7 +925,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -864,7 +937,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 0 and 1 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -872,13 +945,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -887,7 +960,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 1,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable j to 1.",
                 },
                 {
@@ -895,7 +968,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 1",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 1.",
                 },
                 {
@@ -910,7 +983,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 30,
                     },
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[1].",
                 },
                 {
@@ -925,7 +998,7 @@ describe("PseudocodeProcessor", () => {
                         index: 2,
                         result: 10,
                     },
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[2].",
                 },
                 {
@@ -933,7 +1006,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -945,7 +1018,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 1 and 2 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -953,13 +1026,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -968,7 +1041,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 2,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable j to 2.",
                 },
                 {
@@ -976,13 +1049,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 1",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 1.",
                 },
                 {
                     line: 12,
                     operation: "loop_end",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of loop from_to loop",
                 },
                 {
@@ -990,13 +1063,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "!swapped",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if !swapped.",
                 },
                 {
                     line: 15,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -1005,7 +1078,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 3,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable i to 3.",
                 },
                 {
@@ -1013,7 +1086,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -1022,7 +1095,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to false.",
                 },
                 {
@@ -1031,14 +1104,14 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable j to 0.",
                 },
                 {
                     line: 5,
                     operation: "loop_from_to",
                     condition: "j <= 0",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "loop from_to loop with condition j <= 0.",
                 },
                 {
@@ -1046,7 +1119,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 0",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 0.",
                 },
                 {
@@ -1061,7 +1134,7 @@ describe("PseudocodeProcessor", () => {
                         index: 0,
                         result: 20,
                     },
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable current to myArray[0].",
                 },
                 {
@@ -1076,7 +1149,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 10,
                     },
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable next to myArray[1].",
                 },
                 {
@@ -1084,7 +1157,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "current > next",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if current > next.",
                 },
                 {
@@ -1096,7 +1169,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 0 and 1 in array myArray.",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 10,
@@ -1104,13 +1177,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to true.",
                 },
                 {
                     line: 11,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -1119,7 +1192,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 1,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable j to 1.",
                 },
                 {
@@ -1127,13 +1200,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= 0",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if j <= 0.",
                 },
                 {
                     line: 12,
                     operation: "loop_end",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of loop from_to loop",
                 },
                 {
@@ -1141,13 +1214,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "!swapped",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if !swapped.",
                 },
                 {
                     line: 15,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -1156,7 +1229,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 4,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable i to 4.",
                 },
                 {
@@ -1164,7 +1237,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -1173,7 +1246,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "swapped",
                     type: "boolean",
                     value: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable swapped to false.",
                 },
                 {
@@ -1182,14 +1255,14 @@ describe("PseudocodeProcessor", () => {
                     varName: "j",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable j to 0.",
                 },
                 {
                     line: 5,
                     operation: "loop_from_to",
                     condition: "j <= -1",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "loop from_to loop with condition j <= -1.",
                 },
                 {
@@ -1197,27 +1270,27 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "j <= -1",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if j <= -1.",
                 },
                 {
                     line: 5,
                     operation: "loop_end",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of loop from_to loop",
                 },
                 {
-                    line: 6,
+                    line: 13,
                     operation: "if",
                     condition: "!swapped",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if !swapped.",
                 },
                 {
-                    line: 8,
+                    line: 15,
                     operation: "endif",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -1226,7 +1299,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 5,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Set variable i to 5.",
                 },
                 {
@@ -1234,13 +1307,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: false,
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
                     line: 16,
                     operation: "loop_end",
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "End of loop from_to loop",
                 },
                 {
@@ -1249,7 +1322,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "myArray",
                     literal: [10, 20, 30, 40, 50],
-                    timestamp: "2024-09-11T20:56:02.249Z",
+                    timestamp: undefined,
                     description: "Printed myArray.",
                 },
             ],
@@ -1263,10 +1336,358 @@ describe("PseudocodeProcessor", () => {
 
         expect(result).to.deep.equal(expectedJson);
     });
+    it("should throw an error when trying to set a variable based on an uninitialized variable", () => {
+        const pseudocode = `            SET result TO x * 2
+        `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Ensure that all variables are declared before being used in an expression."
+        );
+    });
+
+    it("should throw an error when trying to use an uninitialized variable in a function call", () => {
+        const pseudocode = `DEFINE add_numbers WITH PARAMETERS (a, b)
+                RETURN a + b
+            END FUNCTION
+            SET result TO CALL add_numbers WITH (x, 5)
+        `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Variable 'x' is not declared. Ensure that 'x' is declared before it is used."
+        );
+    });
+
+    it("should throw an error when trying to use an uninitialized variable in a conditional statement", () => {
+        const pseudocode = `           IF x > 5 THEN
+                PRINT "x is greater than 5"
+            END IF
+        `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Variable 'x' is not declared. Ensure that 'x' is declared before it is used."
+        );
+    });
+
+    it("should throw an error when trying to use an uninitialized variable in a loop", () => {
+        const pseudocode = `LOOP UNTIL x > 10
+                SET x TO x + 1
+            END LOOP
+        `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Variable 'x' is not declared. Ensure that 'x' is declared before it is used."
+        );
+    });
+
+    it("should throw an error when trying to access the length of an uninitialized array", () => {
+        const pseudocode = `SET len TO LENGTH OF myArray
+        `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Variable 'myArray' is not declared. Ensure that 'myArray' is declared before it is used."
+        );
+    });
+
+    it("should throw an error when trying to access an element of an uninitialized array", () => {
+        const pseudocode = `SET e TO myArray[0]
+        `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Variable 'myArray' is not declared. Ensure that 'myArray' is declared before it is used."
+        );
+    });
+
+    it("should throw an error when trying to call a function before it is declared", () => {
+        const pseudocode = `SET result TO CALL myFunction WITH (5)
+        `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Function myFunction is not defined."
+        );
+    });
+
+    it("should throw an error when trying to access a string index of an uninitialized variable", () => {
+        const pseudocode = `SET firstChar TO CHARACTER AT 0 OF myString
+        `;
+
+        expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
+            "Variable 'myString' is not declared. Ensure that 'myString' is declared before it is used."
+        );
+    });
+
+    it("should correctly process multiplication before addition in arithmetic with parentheses in PseudocodeProcessor", () => {
+        const pseudocode = `SET result TO (4 + 2) * (3 - 1)
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "result",
+                    type: "number",
+                    value: 12,
+                    timestamp: undefined,
+                    description: "Set variable result to (4 + 2) * (3 - 1).",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process multiple levels of parentheses in arithmetic in PseudocodeProcessor", () => {
+        const pseudocode = `SET result TO (1 + (2 * (3 + 4)))
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "result",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Set variable result to 1 + (2 * (3 + 4)).",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process nested parentheses in arithmetic in PseudocodeProcessor", () => {
+        const pseudocode = `SET result TO (2 + (3 * 2)) - 5
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "result",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable result to (2 + (3 * 2)) - 5.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process simple arithmetic with parentheses in PseudocodeProcessor", () => {
+        const pseudocode = `SET result TO (5 + 3) * 2
+        `;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "result",
+                    type: "number",
+                    value: 16,
+                    timestamp: undefined,
+                    description: "Set variable result to (5 + 3) * 2.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should throw an error when processing a function call with no return value inside a variable declaration", () => {
+        const pseudocode = `DEFINE logMessage WITH PARAMETERS (message)
+            PRINT message
+        END FUNCTION
+        SET result TO CALL logMessage WITH ("Test message")`;
+
+        // We expect an error to be thrown
+        expect(() => {
+            PseudocodeProcessor.process(pseudocode);
+        }).to.throw(
+            Error,
+            "Function logMessage does not return a value and cannot be used in a variable declaration."
+        );
+    });
+
+    it("should correctly process a function call within a variable declaration", () => {
+        const pseudocode = `DEFINE addNumbers WITH PARAMETERS (a, b)
+            RETURN a + b
+        END FUNCTION
+        SET sum TO CALL addNumbers WITH (5, 10)`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "define",
+                    varName: "addNumbers",
+                    params: ["a", "b"],
+                    timestamp: undefined,
+                    description:
+                        "Defined function addNumbers with parameters a, b.",
+                },
+                {
+                    line: 4,
+                    operation: "function_call",
+                    varName: "addNumbers",
+                    arguments: [5, 10],
+                    timestamp: undefined,
+                    description:
+                        "Called function addNumbers with arguments 5,10.",
+                },
+                {
+                    line: 2,
+                    operation: "return",
+                    value: 15,
+                    timestamp: undefined,
+                    description: "Returned 15.",
+                },
+                {
+                    line: 4,
+                    operation: "set",
+                    varName: "sum",
+                    type: "number",
+                    value: 15,
+                    timestamp: undefined,
+                    description:
+                        "Set variable sum to function return value 15.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process a function with multiple parameters and no return", () => {
+        const pseudocode = `DEFINE multiplyNumbers WITH PARAMETERS (num1, num2)
+            PRINT num1 * num2
+        END FUNCTION
+        CALL multiplyNumbers WITH (5, 6)`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "define",
+                    varName: "multiplyNumbers",
+                    params: ["num1", "num2"],
+                    timestamp: undefined,
+                    description:
+                        "Defined function multiplyNumbers with parameters num1, num2.",
+                },
+                {
+                    line: 4,
+                    operation: "function_call",
+                    varName: "multiplyNumbers",
+                    arguments: [5, 6],
+                    timestamp: undefined,
+                    description:
+                        "Called function multiplyNumbers with arguments 5,6.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: true,
+                    varName: null,
+                    literal: 30,
+                    timestamp: undefined,
+                    description: "Printed 30.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should correctly process a function with zero parameters and no return statement", () => {
+        const pseudocode = `DEFINE greetUser WITH PARAMETERS ()
+            PRINT "Hello, user!"
+        END FUNCTION
+        CALL greetUser WITH ()`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "define",
+                    varName: "greetUser",
+                    params: [],
+                    timestamp: undefined,
+                    description:
+                        "Defined function greetUser with no parameters.",
+                },
+                {
+                    line: 4,
+                    operation: "function_call",
+                    varName: "greetUser",
+                    arguments: [],
+                    timestamp: undefined,
+                    description: "Called function greetUser with no arguments.",
+                },
+                {
+                    line: 2,
+                    operation: "print",
+                    isLiteral: true,
+                    varName: null,
+                    literal: "Hello, user!",
+                    timestamp: undefined,
+                    description: "Printed Hello, user!.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
 
     it("should handle swap with expressions in position values", () => {
-        const pseudocode = `
-            CREATE number array AS myArray WITH VALUES [10, 20, 30, 40]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40]
             SWAP position LENGTH OF myArray - 1 WITH position 0 IN myArray
             PRINT myArray
         `;
@@ -1317,8 +1738,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly handle a for-each loop after swapping elements", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [5, 15, 25, 35]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [5, 15, 25, 35]
         SWAP position 0 WITH position 3 IN myArray
         FOR EACH num IN myArray
             PRINT num
@@ -1334,7 +1754,7 @@ describe("PseudocodeProcessor", () => {
                     type: "number",
                     varName: "myArray",
                     value: [5, 15, 25, 35],
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description:
                         "Created array myArray with values [5,15,25,35].",
                 },
@@ -1347,21 +1767,21 @@ describe("PseudocodeProcessor", () => {
                     varName: "myArray",
                     description:
                         "Swapped values in position 0 and 3 in array myArray.",
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                 },
                 {
                     line: 3,
                     operation: "for_each",
                     condition: "num in myArray",
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "for each loop with condition num in myArray.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 4",
+                    condition: "index < 4",
                     result: true,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Checked if index < 4",
                 },
                 {
@@ -1376,7 +1796,7 @@ describe("PseudocodeProcessor", () => {
                         index: 0,
                         result: 35,
                     },
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Set variable num to myArray[0].",
                 },
                 {
@@ -1385,15 +1805,15 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "num",
                     literal: 35,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Printed num.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 4",
+                    condition: "index < 4",
                     result: true,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Checked if index < 4",
                 },
                 {
@@ -1408,7 +1828,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 15,
                     },
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Set variable num to myArray[1].",
                 },
                 {
@@ -1417,15 +1837,15 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "num",
                     literal: 15,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Printed num.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 4",
+                    condition: "index < 4",
                     result: true,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Checked if index < 4",
                 },
                 {
@@ -1440,7 +1860,7 @@ describe("PseudocodeProcessor", () => {
                         index: 2,
                         result: 25,
                     },
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Set variable num to myArray[2].",
                 },
                 {
@@ -1449,15 +1869,15 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "num",
                     literal: 25,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Printed num.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 4",
+                    condition: "index < 4",
                     result: true,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Checked if index < 4",
                 },
                 {
@@ -1472,7 +1892,7 @@ describe("PseudocodeProcessor", () => {
                         index: 3,
                         result: 5,
                     },
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Set variable num to myArray[3].",
                 },
                 {
@@ -1481,21 +1901,21 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "num",
                     literal: 5,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Printed num.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 4",
+                    condition: "index < 4",
                     result: false,
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "Checked if num in myArray.",
                 },
                 {
                     line: 5,
                     operation: "loop_end",
-                    timestamp: "2024-09-11T20:44:54.236Z",
+                    timestamp: undefined,
                     description: "End of for each loop",
                 },
             ],
@@ -1511,8 +1931,7 @@ describe("PseudocodeProcessor", () => {
     });
     // Test case 1: Basic swap operation
     it("should correctly handle swapping two elements in an array", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         SWAP position 1 WITH position 2 IN myArray
     `;
 
@@ -1554,8 +1973,7 @@ describe("PseudocodeProcessor", () => {
 
     // Test case 2: Swap elements and use the array after swap
     it("should correctly handle using an array after swapping elements", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         SWAP position 0 WITH position 4 IN myArray
         PRINT myArray
     `;
@@ -1607,8 +2025,7 @@ describe("PseudocodeProcessor", () => {
 
     // Test case 3: Swap with out-of-bounds positions
     it("should throw an error when trying to swap with out-of-bounds positions", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [10, 20, 30]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30]
         SWAP position 0 WITH position 3 IN myArray
     `;
 
@@ -1659,8 +2076,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it.skip("should correctly handle swapping two elements in an array", () => {
-        const pseudocode = `
-            CREATE number array AS myNumbers WITH SIZE 5
+        const pseudocode = `CREATE number array AS myNumbers WITH SIZE 5
             SET element 0 OF myNumbers TO 10
             SET element 1 OF myNumbers TO 20
             SET element 2 OF myNumbers TO 30
@@ -1809,7 +2225,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "total",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Set variable total to 0.",
                 },
                 {
@@ -1819,22 +2235,22 @@ describe("PseudocodeProcessor", () => {
                     type: "number",
                     varName: "nums",
                     value: [1, 2, 3],
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Created array nums with values [1,2,3].",
                 },
                 {
                     line: 3,
                     operation: "for_each",
                     condition: "num in nums",
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "for each loop with condition num in nums.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 3",
+                    condition: "index < 3",
                     result: true,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Checked if index < 3",
                 },
                 {
@@ -1849,7 +2265,7 @@ describe("PseudocodeProcessor", () => {
                         index: 0,
                         result: 1,
                     },
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Set variable num to nums[0].",
                 },
                 {
@@ -1858,15 +2274,15 @@ describe("PseudocodeProcessor", () => {
                     varName: "total",
                     type: "number",
                     value: 1,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Set variable total to total + num.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 3",
+                    condition: "index < 3",
                     result: true,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Checked if index < 3",
                 },
                 {
@@ -1881,7 +2297,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 2,
                     },
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Set variable num to nums[1].",
                 },
                 {
@@ -1890,15 +2306,15 @@ describe("PseudocodeProcessor", () => {
                     varName: "total",
                     type: "number",
                     value: 3,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Set variable total to total + num.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 3",
+                    condition: "index < 3",
                     result: true,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Checked if index < 3",
                 },
                 {
@@ -1913,7 +2329,7 @@ describe("PseudocodeProcessor", () => {
                         index: 2,
                         result: 3,
                     },
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Set variable num to nums[2].",
                 },
                 {
@@ -1922,21 +2338,21 @@ describe("PseudocodeProcessor", () => {
                     varName: "total",
                     type: "number",
                     value: 6,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Set variable total to total + num.",
                 },
                 {
                     line: 3,
                     operation: "if",
-                    condition: "Checked if index < 3",
+                    condition: "index < 3",
                     result: false,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Checked if num in nums.",
                 },
                 {
                     line: 5,
                     operation: "loop_end",
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "End of for each loop",
                 },
                 {
@@ -1945,7 +2361,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "total",
                     literal: 6,
-                    timestamp: "2024-09-11T13:21:14.431Z",
+                    timestamp: undefined,
                     description: "Printed total.",
                 },
             ],
@@ -1959,8 +2375,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a simulated 'FOR EACH' loop using 'LOOP FROM TO'", () => {
-        const pseudocode = `
-            CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
             LOOP i FROM 0 TO LENGTH OF myArray - 1
                 SET temp TO myArray[i]
                 PRINT temp
@@ -1975,7 +2390,7 @@ describe("PseudocodeProcessor", () => {
                     type: "number",
                     varName: "myArray",
                     value: [10, 20, 30, 40, 50],
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description:
                         "Created array myArray with values [10,20,30,40,50].",
                 },
@@ -1985,14 +2400,14 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable i to 0.",
                 },
                 {
                     line: 2,
                     operation: "loop_from_to",
                     condition: "i <= 4",
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "loop from_to loop with condition i <= 4.",
                 },
                 {
@@ -2000,7 +2415,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -2015,7 +2430,7 @@ describe("PseudocodeProcessor", () => {
                         index: 0,
                         result: 10,
                     },
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable temp to myArray[0].",
                 },
                 {
@@ -2024,7 +2439,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "temp",
                     literal: 10,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Printed temp.",
                 },
                 {
@@ -2033,7 +2448,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 1,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable i to 1.",
                 },
                 {
@@ -2041,7 +2456,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -2056,7 +2471,7 @@ describe("PseudocodeProcessor", () => {
                         index: 1,
                         result: 20,
                     },
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable temp to myArray[1].",
                 },
                 {
@@ -2065,7 +2480,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "temp",
                     literal: 20,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Printed temp.",
                 },
                 {
@@ -2074,7 +2489,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 2,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable i to 2.",
                 },
                 {
@@ -2082,7 +2497,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -2097,7 +2512,7 @@ describe("PseudocodeProcessor", () => {
                         index: 2,
                         result: 30,
                     },
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable temp to myArray[2].",
                 },
                 {
@@ -2106,7 +2521,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "temp",
                     literal: 30,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Printed temp.",
                 },
                 {
@@ -2115,7 +2530,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 3,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable i to 3.",
                 },
                 {
@@ -2123,7 +2538,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -2138,7 +2553,7 @@ describe("PseudocodeProcessor", () => {
                         index: 3,
                         result: 40,
                     },
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable temp to myArray[3].",
                 },
                 {
@@ -2147,7 +2562,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "temp",
                     literal: 40,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Printed temp.",
                 },
                 {
@@ -2156,7 +2571,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 4,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable i to 4.",
                 },
                 {
@@ -2164,7 +2579,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: true,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
@@ -2179,7 +2594,7 @@ describe("PseudocodeProcessor", () => {
                         index: 4,
                         result: 50,
                     },
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable temp to myArray[4].",
                 },
                 {
@@ -2188,7 +2603,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "temp",
                     literal: 50,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Printed temp.",
                 },
                 {
@@ -2197,7 +2612,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "i",
                     type: "number",
                     value: 5,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Set variable i to 5.",
                 },
                 {
@@ -2205,13 +2620,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "i <= 4",
                     result: false,
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "Checked if i <= 4.",
                 },
                 {
                     line: 5,
                     operation: "loop_end",
-                    timestamp: "2024-09-10T20:56:04.391Z",
+                    timestamp: undefined,
                     description: "End of loop from_to loop",
                 },
             ],
@@ -2317,151 +2732,6 @@ describe("PseudocodeProcessor", () => {
 
         expect(result).to.deep.equal(expectedJson);
     });
-    it("should correctly process a function definition, function call, and its return value", function () {
-        // The input pseudocode
-        const pseudocode = `DEFINE maxNumber WITH PARAMETERS (num1,num2,num3);
-      set x to number 3;
-      set y to number 100
-      set z to number 42
-      set max to number 0;
-      if x is greater than y then
-          set max to x
-      otherwise
-          set max to y;
-      end if
-      if z is greater than max then
-          set max to z;
-      end if
-      print max;
-      END FUNCTION
-      SET result TO CALL maxNumber WITH (3, 100, 42)
-    `;
-
-        // Define the expected JSON action frames
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "define",
-                    varName: "maxNumber",
-                    params: ["num1", "num2", "num3"],
-                    timestamp: "2024-09-04T23:03:42.201Z",
-                    description:
-                        "Defined function maxNumber with parameters num1, num2, num3.",
-                },
-                {
-                    line: 16,
-                    operation: "function_call",
-                    varName: "maxNumber",
-                    arguments: [3, 100, 42],
-                    timestamp: "2024-09-04T23:03:42.202Z",
-                    description:
-                        "Called function maxNumber with arguments 3,100,42.",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 3,
-                    timestamp: "2024-09-04T23:03:42.202Z",
-                    description: "Set variable x to 3.",
-                },
-                {
-                    line: 3,
-                    operation: "set",
-                    varName: "y",
-                    type: "number",
-                    value: 100,
-                    timestamp: "2024-09-04T23:03:42.202Z",
-                    description: "Set variable y to 100.",
-                },
-                {
-                    line: 4,
-                    operation: "set",
-                    varName: "z",
-                    type: "number",
-                    value: 42,
-                    timestamp: "2024-09-04T23:03:42.202Z",
-                    description: "Set variable z to 42.",
-                },
-                {
-                    line: 5,
-                    operation: "set",
-                    varName: "max",
-                    type: "number",
-                    value: 0,
-                    timestamp: "2024-09-04T23:03:42.202Z",
-                    description: "Set variable max to 0.",
-                },
-                {
-                    line: 6,
-                    operation: "if",
-                    condition: "x > y",
-                    result: false,
-                    timestamp: "2024-09-04T23:03:42.203Z",
-                    description: "Checked if x > y.",
-                },
-                {
-                    line: 9,
-                    operation: "set",
-                    varName: "max",
-                    type: "number",
-                    value: 100,
-                    timestamp: "2024-09-04T23:03:42.203Z",
-                    description: "Set variable max to 100.",
-                },
-                {
-                    line: 10,
-                    operation: "endif",
-                    timestamp: "2024-09-04T23:03:42.203Z",
-                    description: "End of if statement.",
-                },
-                {
-                    line: 11,
-                    operation: "if",
-                    condition: "z > max",
-                    result: false,
-                    timestamp: "2024-09-04T23:03:42.203Z",
-                    description: "Checked if z > max.",
-                },
-                {
-                    line: 13,
-                    operation: "endif",
-                    timestamp: "2024-09-04T23:03:42.203Z",
-                    description: "End of if statement.",
-                },
-                {
-                    line: 14,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "max",
-                    literal: 100,
-                    timestamp: "2024-09-04T23:03:42.203Z",
-                    description: "Printed max.",
-                },
-                {
-                    line: 16,
-                    operation: "set",
-                    varName: "result",
-                    type: "number",
-                    value: null,
-                    timestamp: "2024-09-04T23:03:42.203Z",
-                    description:
-                        "Set variable result to function return value null.",
-                },
-            ],
-        };
-
-        // Assert that the generated output matches the expected JSON
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
 
     it("should correctly process a function call and return the function body", () => {
         const pseudocode = `DEFINE add_numbers WITH PARAMETERS (a, b)
@@ -2476,7 +2746,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "define",
                     varName: "add_numbers",
                     params: ["a", "b"],
-                    timestamp: "2024-09-04T23:03:42.211Z",
+                    timestamp: undefined,
                     description:
                         "Defined function add_numbers with parameters a, b.",
                 },
@@ -2485,7 +2755,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "function_call",
                     varName: "add_numbers",
                     arguments: [5, 10],
-                    timestamp: "2024-09-04T23:03:42.211Z",
+                    timestamp: undefined,
                     description:
                         "Called function add_numbers with arguments 5,10.",
                 },
@@ -2493,7 +2763,7 @@ describe("PseudocodeProcessor", () => {
                     line: 2,
                     operation: "return",
                     value: 15,
-                    timestamp: "2024-09-04T23:03:42.211Z",
+                    timestamp: undefined,
                     description: "Returned 15.",
                 },
                 {
@@ -2502,7 +2772,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "x",
                     type: "number",
                     value: 15,
-                    timestamp: "2024-09-04T23:03:42.211Z",
+                    timestamp: undefined,
                     description: "Set variable x to function return value 15.",
                 },
             ],
@@ -2518,8 +2788,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a function declaration with separate action frames for the body", () => {
-        const pseudocode = `
-        DEFINE add_numbers WITH PARAMETERS (a, b)
+        const pseudocode = `DEFINE add_numbers WITH PARAMETERS (a, b)
             RETURN a + b
         END FUNCTION`;
 
@@ -2530,7 +2799,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "define",
                     varName: "add_numbers",
                     params: ["a", "b"],
-                    timestamp: "2024-09-04T23:03:42.213Z",
+                    timestamp: undefined,
                     description:
                         "Defined function add_numbers with parameters a, b.",
                 },
@@ -2625,7 +2894,7 @@ describe("PseudocodeProcessor", () => {
                         index: 0,
                         result: "hello",
                     },
-                    timestamp: "2024-09-01T19:19:33.060Z",
+                    timestamp: undefined,
                     description: "Set variable firstElement to myStrings[0].",
                 },
             ],
@@ -2641,8 +2910,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process a series of array operations", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [5, 10, 15, 20, 25]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [5, 10, 15, 20, 25]
         INSERT 30 TO myArray AT position 3
         REMOVE element 4 FROM myArray
         SET element 2 OF myArray TO 50
@@ -2696,7 +2964,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "myArray",
                     literal: [5, 10, 50, 30, 25],
-                    timestamp: "2024-09-01T19:13:03.182Z",
+                    timestamp: undefined,
                     description: "Printed myArray.",
                 },
                 {
@@ -2721,16 +2989,14 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error when trying to set a value at a negative index", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         SET element -1 OF myArray TO 25`;
         expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
             "Index -1 is out of bounds for array 'myArray'."
         );
     });
     it("should correctly set a value in a string array", () => {
-        const pseudocode = `
-        CREATE string array AS myArray WITH VALUES ["a", "b", "c", "d", "e"]
+        const pseudocode = `CREATE string array AS myArray WITH VALUES ["a", "b", "c", "d", "e"]
         SET element 2 OF myArray TO "z"`;
 
         const expectedJson = {
@@ -2768,8 +3034,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error when trying to set a value of a different type than the array", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         SET element 2 OF myArray TO "stringValue"`;
 
         expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
@@ -2778,8 +3043,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error when trying to set a value in a non-array variable", () => {
-        const pseudocode = `
-        SET myVar TO 100
+        const pseudocode = `SET myVar TO 100
         SET element 2 OF myVar TO 25`;
 
         expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
@@ -2788,8 +3052,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error when trying to set a value in an uninitialized array", () => {
-        const pseudocode = `
-        SET element 2 OF myArray TO 25`;
+        const pseudocode = `SET element 2 OF myArray TO 25`;
 
         expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
             "Array 'myArray' is not initialized."
@@ -2797,8 +3060,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error when trying to set a value at an out of bounds index", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         SET element 10 OF myArray TO 25`;
 
         expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
@@ -2807,8 +3069,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process setting a specific value in an array", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         SET element 2 OF myArray TO 25`;
 
         const expectedJson = {
@@ -2846,8 +3107,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process removing the last element from an array", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [100, 200, 300]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [100, 200, 300]
         REMOVE element 2 FROM myArray`;
 
         const expectedJson = {
@@ -2886,8 +3146,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process removing the first element from an array", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         REMOVE element 0 FROM myArray`;
 
         const expectedJson = {
@@ -2926,8 +3185,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process element removal from an array", () => {
-        const pseudocode = `
-        CREATE number array AS myArray WITH VALUES [1, 2, 3, 4, 5]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [1, 2, 3, 4, 5]
         REMOVE element 2 FROM myArray`;
 
         const expectedJson = {
@@ -2965,8 +3223,7 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should correctly process array creation with size", () => {
-        const pseudocode = `
-            CREATE string array AS myArray WITH VALUES ["hi", "hello"]
+        const pseudocode = `CREATE string array AS myArray WITH VALUES ["hi", "hello"]
             SET len to length of myArray
         `;
 
@@ -3004,8 +3261,7 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should correctly process array creation and element access using high-level syntax", () => {
-        const pseudocode = `
-            CREATE number array AS myArray WITH VALUES [10, 20, 30]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30]
             SET firstElement TO ELEMENT AT 0 OF myArray
         `;
 
@@ -3050,8 +3306,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process array creation and element access using traditional syntax", () => {
-        const pseudocode = `
-            CREATE number array AS myArray WITH VALUES [10, 20, 30]
+        const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30]
             SET firstElement TO myArray[0]
         `;
 
@@ -3095,8 +3350,7 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should correctly process array creation with values", () => {
-        const pseudocode = `
-            CREATE number Array AS myArray WITH VALUES [1, 2, 3]
+        const pseudocode = `CREATE number Array AS myArray WITH VALUES [1, 2, 3]
             SET len to length of myArray
         `;
 
@@ -3134,8 +3388,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process linked list creation with size", () => {
-        const pseudocode = `
-            CREATE string array AS myArray WITH SIZE 10
+        const pseudocode = `CREATE string array AS myArray WITH SIZE 10
             SET len to length of myArray
         `;
 
@@ -3867,8 +4120,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly evaluate indexing with a variable index", () => {
-        const pseudocode = `
-            SET index TO 0
+        const pseudocode = `SET index TO 0
             SET myString TO "Hello, World!"
             SET characterAtIndex TO CHARACTER AT index OF myString
         `;
@@ -3922,8 +4174,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly evaluate indexing at the end of the string", () => {
-        const pseudocode = `
-            SET myString TO "Hello, World!"
+        const pseudocode = `SET myString TO "Hello, World!"
             SET lastCharacter TO CHARACTER AT LENGTH OF myString - 1 OF myString
         `;
 
@@ -3966,8 +4217,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly evaluate indexing an empty string", () => {
-        const pseudocode = `
-            SET emptyString TO ""
+        const pseudocode = `SET emptyString TO ""
             SET emptyIndex TO CHARACTER AT 0 OF emptyString
         `;
 
@@ -4053,8 +4303,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly evaluate a length operation in a conditional statement", () => {
-        const pseudocode = `
-            SET myString TO string "Test String"
+        const pseudocode = `SET myString TO string "Test String"
             IF LENGTH OF myString > 5 THEN
                 PRINT "String is long enough"
             OTHERWISE
@@ -4109,8 +4358,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error when attempting to calculate the length of an undeclared variable", () => {
-        const pseudocode = `
-            SET lengthOfUndefined TO LENGTH OF undefinedVariable
+        const pseudocode = `SET lengthOfUndefined TO LENGTH OF undefinedVariable
         `;
 
         expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
@@ -4118,8 +4366,7 @@ describe("PseudocodeProcessor", () => {
         );
     });
     it("should process a length operation on a variable within an expression correctly", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET halfLength TO LENGTH OF myString / 2
         `;
 
@@ -4156,8 +4403,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a LENGTH OF operation with a string", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET lengthOfString TO LENGTH OF myString
         `;
 
@@ -4194,8 +4440,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a LENGTH OF operation followed by a print statement", () => {
-        const pseudocode = `
-            SET myString TO string "abc"
+        const pseudocode = `SET myString TO string "abc"
             SET lengthOfString TO LENGTH OF myString
             PRINT lengthOfString
         `;
@@ -4242,8 +4487,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should return the entire string when start is 0 and end is the length of the string in substring operation", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET subStr TO substring of myString FROM 0 TO 13
             PRINT subStr
         `;
@@ -4297,8 +4541,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should return an empty string when start and end indices are identical in substring operation", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET subStr TO substring of myString FROM 5 TO 5
             PRINT subStr
         `;
@@ -4352,8 +4595,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error for a substring operation with a non-numeric end index", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET subStr TO substring of myString FROM 5 TO "ten"
             PRINT subStr
         `;
@@ -4364,8 +4606,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error for a substring operation with a non-numeric start index", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET subStr TO substring of myString FROM "five" TO 10
             PRINT subStr
         `;
@@ -4376,8 +4617,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error for a substring operation where start index is greater than end index", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET subStr TO substring of myString FROM 5 TO 2
             PRINT subStr
         `;
@@ -4388,8 +4628,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should throw an error for a substring operation with a negative start index", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET subStr TO substring of myString FROM -1 TO 5
             PRINT subStr
         `;
@@ -4400,8 +4639,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a substring operation with end index beyond string length correctly", () => {
-        const pseudocode = `
-            SET myString TO string "Hello"
+        const pseudocode = `SET myString TO string "Hello"
             SET subStr TO substring of myString FROM 1 TO 10
             PRINT subStr
         `;
@@ -4455,8 +4693,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a substring operation with start index 0 correctly", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET subStr TO substring of myString FROM 0 TO 5
             PRINT subStr
         `;
@@ -4510,8 +4747,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a substring operation with variable start and end indices correctly", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET startIndex TO number 7
             SET endIndex TO number 12
             SET subStr TO substring of myString FROM startIndex TO endIndex
@@ -4585,8 +4821,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process nested conditional logic with numeric comparisons correctly", () => {
-        const pseudocode = `
-            SET x TO number 3
+        const pseudocode = `SET x TO number 3
             SET y TO number 100
             SET z TO number 42
             SET max TO number 0
@@ -4609,7 +4844,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "x",
                     type: "number",
                     value: 3,
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "Set variable x to 3.",
                 },
                 {
@@ -4618,7 +4853,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "y",
                     type: "number",
                     value: 100,
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "Set variable y to 100.",
                 },
                 {
@@ -4627,7 +4862,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "z",
                     type: "number",
                     value: 42,
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "Set variable z to 42.",
                 },
                 {
@@ -4636,7 +4871,7 @@ describe("PseudocodeProcessor", () => {
                     varName: "max",
                     type: "number",
                     value: 0,
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "Set variable max to 0.",
                 },
                 {
@@ -4644,7 +4879,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "x > y",
                     result: false,
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "Checked if x > y.",
                 },
                 {
@@ -4653,13 +4888,13 @@ describe("PseudocodeProcessor", () => {
                     varName: "max",
                     type: "number",
                     value: 100,
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "Set variable max to 100.",
                 },
                 {
                     line: 9,
                     operation: "endif",
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -4667,13 +4902,13 @@ describe("PseudocodeProcessor", () => {
                     operation: "if",
                     condition: "z > max",
                     result: false,
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "Checked if z > max.",
                 },
                 {
                     line: 12,
                     operation: "endif",
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
@@ -4682,7 +4917,7 @@ describe("PseudocodeProcessor", () => {
                     isLiteral: false,
                     varName: "max",
                     literal: 100,
-                    timestamp: "2024-08-29T14:24:04.138Z",
+                    timestamp: undefined,
                     description: "Printed max.",
                 },
             ],
@@ -4698,8 +4933,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process substring operation correctly", () => {
-        const pseudocode = `
-            SET myString TO string "Hello, World!"
+        const pseudocode = `SET myString TO string "Hello, World!"
             SET subStr TO substring of myString FROM 7 TO 12
             PRINT subStr
         `;
@@ -4753,8 +4987,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process 'display' as 'print' for a variable correctly", () => {
-        const pseudocode = `
-            SET x to number 10
+        const pseudocode = `SET x to number 10
             DISPLAY x
         `;
 
@@ -4792,8 +5025,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process conditions with multiple NOT operators correctly", () => {
-        const pseudocode = `
-        SET p TO true
+        const pseudocode = `SET p TO true
         SET q TO false
         IF NOT p AND NOT q THEN
             PRINT "Both are false"
@@ -4858,8 +5090,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process nested if statements followed by a calculation and another if statement correctly", () => {
-        const pseudocode = `
-            SET x to number 15
+        const pseudocode = `SET x to number 15
             SET y to number 10
             IF x is greater than y THEN
                 IF x is less than 20 THEN
@@ -4974,8 +5205,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process nested if statements followed by normal pseudocode and another if statement correctly", () => {
-        const pseudocode = `
-            SET x to number 10
+        const pseudocode = `SET x to number 10
             SET y to number 20
             IF x is greater than 5 THEN
                 IF y is less than 25 THEN
@@ -5090,8 +5320,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process nested if-otherwise with otherwise on outer if correctly", () => {
-        const pseudocode = `
-            SET x to number 20
+        const pseudocode = `SET x to number 20
             SET y to number 5
             IF x is greater than 10 THEN
                 IF y is greater than 10 THEN
@@ -5174,8 +5403,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process nested if statements with otherwise correctly", () => {
-        const pseudocode = `
-            SET x to number 5
+        const pseudocode = `SET x to number 5
             IF x is greater than 10 THEN
                 PRINT "x is greater than 10"
             OTHERWISE
@@ -5249,8 +5477,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process complex nested if-otherwise statements with multiple levels correctly", () => {
-        const pseudocode = `
-            SET a to number 5
+        const pseudocode = `SET a to number 5
             SET b to number 15
             IF a is less than 10 THEN
                 IF b is greater than 10 THEN
@@ -5359,8 +5586,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process nested if-otherwise statements correctly", () => {
-        const pseudocode = `
-            SET x to number 20
+        const pseudocode = `SET x to number 20
             IF x is greater than 10 THEN
                 IF x is less than 30 THEN
                     PRINT "x is between 10 and 30"
@@ -5431,8 +5657,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should declare two string variables and concatenate them", () => {
-        const pseudocode = `
-            SET firstName TO "John"
+        const pseudocode = `SET firstName TO "John"
             SET lastName TO "Doe"
             SET fullName TO firstName + " " + lastName
             PRINT fullName
@@ -5532,8 +5757,7 @@ describe("PseudocodeProcessor", () => {
     it("should process setting a variable to a boolean and using it in a conditional", () => {
         writeTestNumber(2);
 
-        const pseudocode = `
-        SET isTrue TO boolean true
+        const pseudocode = `SET isTrue TO boolean true
         IF isTrue THEN
             PRINT "Boolean is true"
         OTHERWISE
@@ -5587,8 +5811,7 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should process complex boolean logic correctly", () => {
-        const pseudocode = `
-            SET isTrue TO true
+        const pseudocode = `SET isTrue TO true
             SET isFalse TO false
             IF isTrue OR (isFalse AND NOT isTrue) THEN 
                 PRINT "Complex Condition Met" 
@@ -5654,8 +5877,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should handle boolean expressions with mixed operators correctly", () => {
-        const pseudocode = `
-            SET isTrue TO true
+        const pseudocode = `SET isTrue TO true
             SET isFalse TO false
             IF isTrue AND NOT isFalse THEN 
                 PRINT "Correct" 
@@ -5719,8 +5941,7 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should process setting a variable to a boolean", () => {
-        const pseudocode = `
-            SET isTrue TO true
+        const pseudocode = `SET isTrue TO true
             SET isFalse TO false
         `;
 
@@ -5757,8 +5978,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process boolean expressions correctly", () => {
-        const pseudocode = `
-            SET isTrue TO true
+        const pseudocode = `SET isTrue TO true
             SET isFalse TO false
             IF isTrue AND isFalse THEN 
                 PRINT "Both are booleans" 
@@ -5814,8 +6034,7 @@ describe("PseudocodeProcessor", () => {
     it("should process setting a variable to a string and print it", () => {
         writeTestNumber(1);
 
-        const pseudocode = `
-        SET myVar TO "Hello, World!"
+        const pseudocode = `SET myVar TO "Hello, World!"
         PRINT myVar
         `;
 
@@ -5852,8 +6071,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a 'LOOP UNTIL' statement with a conditional update inside correctly", () => {
-        const pseudocode = `
-            SET x TO 1
+        const pseudocode = `SET x TO 1
             LOOP UNTIL x >= 10
                 PRINT x
                 IF x < 5 THEN
@@ -6066,8 +6284,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process a while loop with multiple variables and operations", () => {
-        const pseudocode = `
-            SET x to number 5
+        const pseudocode = `SET x to number 5
             SET y to number 0
             WHILE x > 0
                 PRINT x
@@ -6314,8 +6531,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a 'LOOP FROM TO' followed by additional operations correctly", () => {
-        const pseudocode = `
-            SET sum TO 0
+        const pseudocode = `SET sum TO 0
             LOOP i FROM 1 TO 3
                 PRINT i
                 SET sum TO sum + i
@@ -6508,8 +6724,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a 'LOOP FROM TO' with an additional operation correctly", () => {
-        const pseudocode = `
-            SET sum TO 0
+        const pseudocode = `SET sum TO 0
             LOOP i FROM 1 TO 5
                 PRINT i
                 SET sum TO sum + i
@@ -6945,8 +7160,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a 'LOOP UNTIL' statement correctly", () => {
-        const pseudocode = `
-            SET x TO 10
+        const pseudocode = `SET x TO 10
             LOOP UNTIL x == 0
                 PRINT x
                 SET x TO x - 1
@@ -7255,8 +7469,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process a while loop with repeated if statements and loop_end", () => {
-        const pseudocode = `
-        SET x to number 5
+        const pseudocode = `SET x to number 5
         WHILE x > 0
             PRINT x
             SET x to x - 1
@@ -7438,8 +7651,7 @@ describe("PseudocodeProcessor", () => {
     });
     it("should process a 'FOR LOOP FROM TO' with traditional syntax correctly", () => {
         writeTestNumber(16);
-        const pseudocode = `
-            LOOP i FROM 0 TO 10
+        const pseudocode = `LOOP i FROM 0 TO 10
                 PRINT i
             END LOOP`;
 
@@ -7773,8 +7985,7 @@ describe("PseudocodeProcessor", () => {
 
     it("should process complex pseudocode with if-else, array creation, and array insertion", () => {
         writeTestNumber(1);
-        const pseudocode = `
-        SET x to 10
+        const pseudocode = `SET x to 10
         IF x is greater than 5 THEN
             PRINT "x is greater than 5"
         OTHERWISE
@@ -7945,8 +8156,7 @@ describe("PseudocodeProcessor", () => {
 
     it("should process array creation", () => {
         writeTestNumber(3);
-        const pseudocode = `
-        CREATE number array as numbers with values [0]
+        const pseudocode = `CREATE number array as numbers with values [0]
         `;
 
         const expectedJson = {
@@ -7975,8 +8185,7 @@ describe("PseudocodeProcessor", () => {
 
     it("should process array operations correctly", () => {
         writeTestNumber(4);
-        const pseudocode = `
-        CREATE number array as numbers with values [0]
+        const pseudocode = `CREATE number array as numbers with values [0]
         INSERT 1 TO numbers AT position 1
         INSERT 2 TO numbers AT position 2
         INSERT 3 TO numbers AT position 3
@@ -8035,8 +8244,7 @@ describe("PseudocodeProcessor", () => {
 
     it("should process nested if statements correctly", () => {
         writeTestNumber(7);
-        const pseudocode = `
-        SET x to number 10
+        const pseudocode = `SET x to number 10
         SET y to number 5
         IF x is greater than 5 THEN
             IF y is less than 10 THEN
@@ -8122,8 +8330,7 @@ describe("PseudocodeProcessor", () => {
 
     it("should process variable declarations with arithmetic expressions", () => {
         writeTestNumber(17);
-        const pseudocode = `
-        SET x to number 5
+        const pseudocode = `SET x to number 5
         SET y to x + 3
         `;
 
@@ -8159,8 +8366,7 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should process variable declarations with simple addition", () => {
-        const pseudocode = `
-        SET a to number 5
+        const pseudocode = `SET a to number 5
         SET b to number 10
         SET c to a + b
         `;
@@ -8207,8 +8413,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process variable declarations with subtraction and multiplication", () => {
-        const pseudocode = `
-        SET x to number 20
+        const pseudocode = `SET x to number 20
         SET y to x - 5
         SET z to y * 2
         `;
@@ -8255,8 +8460,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should handle division by zero", () => {
-        const pseudocode = `
-        SET x to number 10
+        const pseudocode = `SET x to number 10
         SET y to x / 0
         `;
 
@@ -8293,8 +8497,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process arithmetic with variables only", () => {
-        const pseudocode = `
-        SET x to number 10
+        const pseudocode = `SET x to number 10
         SET y to number 5
         SET z to x * y
         `;
@@ -8341,8 +8544,7 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should correctly process a while loop with repeated if statements and loop_end", () => {
-        const pseudocode = `
-        SET x to number 5
+        const pseudocode = `SET x to number 5
         WHILE x > 0
             PRINT x
             SET x to x - 1
@@ -8523,11 +8725,9 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should process arithmetic with negative numbers", () => {
-        const pseudocode = `
-        SET a to number -5
+        const pseudocode = `SET a to number -5
         SET b to a + 10
-        SET c to b * -2
-        `;
+        SET c to b * -2`;
 
         const expectedJson = {
             actionFrames: [

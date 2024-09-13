@@ -14,6 +14,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 1,
                     value: {
                         type: "StringLiteral",
                         value: "Hello, World!",
@@ -23,6 +24,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "lengthOfString",
+                    line: 2,
                     value: {
                         type: "LengthExpression",
                         source: "myString",
@@ -63,6 +65,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 1,
                     value: {
                         type: "StringLiteral",
                         value: "Hello, World!",
@@ -72,6 +75,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "halfLength",
+                    line: 2,
                     value: {
                         type: "Expression",
                         left: {
@@ -118,6 +122,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "emptyString",
+                    line: 1,
                     value: {
                         type: "StringLiteral",
                         value: "",
@@ -127,6 +132,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "lengthOfEmptyString",
+                    line: 2,
                     value: {
                         type: "LengthExpression",
                         source: "emptyString",
@@ -167,6 +173,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "undeclaredVarLength",
+                    line: 2,
                     value: {
                         type: "LengthExpression",
                         source: "undeclaredVar",
@@ -187,6 +194,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 1,
                     value: {
                         type: "StringLiteral",
                         value: "Hello",
@@ -196,6 +204,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "lengthOfString",
+                    line: 2,
                     value: {
                         type: "LengthExpression",
                         source: "myString",
@@ -250,6 +259,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "x",
+                    line: 1,
                     value: {
                         type: "NumberLiteral",
                         value: 10,
@@ -278,8 +288,9 @@ describe("JsonConverter", () => {
         const ir = {
             program: [
                 {
-                    type: "VariableDeclaration", // Ensure variable x is declared
+                    type: "VariableDeclaration",
                     name: "x",
+                    line: 1,
                     value: {
                         type: "NumberLiteral",
                         value: 10,
@@ -288,6 +299,7 @@ describe("JsonConverter", () => {
                 },
                 {
                     type: "IfStatement",
+                    line: 2,
                     condition: {
                         left: "10",
                         operator: ">",
@@ -296,12 +308,14 @@ describe("JsonConverter", () => {
                     consequent: [
                         {
                             type: "PrintStatement",
+                            line: 3,
                             value: "x is greater than 5",
                         },
                     ],
                     alternate: [
                         {
                             type: "PrintStatement",
+                            line: 5,
                             value: "x is not greater than 5",
                         },
                     ],
@@ -351,8 +365,9 @@ describe("JsonConverter", () => {
         const ir = {
             program: [
                 {
-                    type: "VariableDeclaration", // Ensure variable x is declared
+                    type: "VariableDeclaration",
                     name: "x",
+                    line: 1,
                     value: {
                         type: "NumberLiteral",
                         value: "0",
@@ -361,6 +376,7 @@ describe("JsonConverter", () => {
                 },
                 {
                     type: "LoopUntil",
+                    line: 2,
                     condition: {
                         left: "x",
                         operator: ">",
@@ -369,13 +385,16 @@ describe("JsonConverter", () => {
                     body: [
                         {
                             type: "PrintStatement",
+                            line: 3,
                             value: "x",
                         },
                         {
                             type: "VariableDeclaration",
                             name: "x",
+                            line: 4,
                             value: {
                                 type: "Expression",
+                                line: 4,
                                 left: "x",
                                 operator: "+",
                                 right: "1",
@@ -584,6 +603,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration", // Ensure variable x is declared
                     name: "x",
+                    line: 1,
                     value: {
                         type: "NumberLiteral",
                         value: "0",
@@ -592,6 +612,7 @@ describe("JsonConverter", () => {
                 },
                 {
                     type: "LoopUntil",
+                    line: 2,
                     condition: {
                         left: "x",
                         operator: ">",
@@ -600,13 +621,16 @@ describe("JsonConverter", () => {
                     body: [
                         {
                             type: "PrintStatement",
+                            line: 3,
                             value: "x",
                         },
                         {
                             type: "VariableDeclaration",
                             name: "x",
+                            line: 4,
                             value: {
                                 type: "Expression",
+                                line: 4,
                                 left: "x",
                                 operator: "+",
                                 right: "1",
@@ -814,6 +838,7 @@ describe("JsonConverter", () => {
                 {
                     type: "LoopFromTo",
                     loopVariable: "i",
+                    line: 1,
                     range: {
                         start: "0",
                         end: "10",
@@ -821,6 +846,7 @@ describe("JsonConverter", () => {
                     body: [
                         {
                             type: "PrintStatement",
+                            line: 2,
                             value: "i",
                         },
                     ],
@@ -1496,6 +1522,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isTrue",
+                    line: 1,
                     value: {
                         type: "BooleanLiteral",
                         value: true,
@@ -1505,6 +1532,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isFalse",
+                    line: 2,
                     value: {
                         type: "BooleanLiteral",
                         value: false,
@@ -1544,6 +1572,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isTrue",
+                    line: 1,
                     value: {
                         type: "BooleanLiteral",
                         value: true,
@@ -1620,6 +1649,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isTrue",
+                    line: 1,
                     value: {
                         type: "BooleanLiteral",
                         value: true,
@@ -1628,6 +1658,7 @@ describe("JsonConverter", () => {
                 },
                 {
                     type: "IfStatement",
+                    line: 2,
                     condition: {
                         left: null,
                         operator: "not",
@@ -1681,6 +1712,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 1,
                     value: {
                         type: "StringLiteral",
                         value: "Hello, World!",
@@ -1690,6 +1722,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "subStr",
+                    line: 2,
                     value: {
                         type: "SubstringExpression",
                         string: "myString",
@@ -1756,6 +1789,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 1,
                     value: {
                         type: "StringLiteral",
                         value: "Hello, World!",
@@ -1765,6 +1799,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "subStr",
+                    line: 2,
                     value: {
                         type: "SubstringExpression",
                         string: "myString",
@@ -1775,6 +1810,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "nestedSubStr",
+                    line: 3,
                     value: {
                         type: "SubstringExpression",
                         string: "subStr",
@@ -1890,6 +1926,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 1,
                     value: {
                         type: "StringLiteral",
                         value: "Hello, World!",
@@ -1899,6 +1936,7 @@ describe("JsonConverter", () => {
                 {
                     type: "VariableDeclaration",
                     name: "subStr",
+                    line: 2,
                     value: {
                         type: "SubstringExpression",
                         string: "myString",

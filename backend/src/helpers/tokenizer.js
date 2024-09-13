@@ -53,6 +53,9 @@ class Tokenizer {
 
             if (this.isWhitespace(char)) {
                 this.consumeWhitespace();
+            } else if (this.pseudocode.startsWith("//", this.currentIndex)) {
+                // Skip the comment line
+                this.skipComment();
             } else if (this.isLetter(char)) {
                 const lookahead = this.peekNextWord().toLowerCase();
                 if (lookahead === "true" || lookahead === "false") {
@@ -142,7 +145,7 @@ class Tokenizer {
      * @returns {boolean} True if the character is an operator, false otherwise.
      */
     isOperator(char) {
-        return ["+", "-", "*", "/"].includes(char);
+        return ["+", "-", "*", "/", "%"].includes(char);
     }
 
     /**
@@ -428,6 +431,18 @@ class Tokenizer {
             tempIndex++;
         }
         return nextWord;
+    }
+
+    /**
+     * Skips over a comment line that starts with "//".
+     */
+    skipComment() {
+        while (
+            this.currentIndex < this.pseudocode.length &&
+            this.pseudocode[this.currentIndex] !== "\n"
+        ) {
+            this.currentIndex++;
+        }
     }
 }
 

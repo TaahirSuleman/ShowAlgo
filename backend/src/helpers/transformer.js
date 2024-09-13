@@ -74,6 +74,7 @@ class Transformer {
                 rightTransformed.type === "Expression"
                     ? rightTransformed
                     : rightTransformed.value,
+            line: condition.line,
         };
     }
 
@@ -83,6 +84,17 @@ class Transformer {
      * @returns {Object} The transformed expression.
      */
     transformExpression(expression) {
+        const operatorPrecedence = {
+            "*": 2,
+            "/": 2,
+            "+": 1,
+            "-": 1,
+        };
+
+        const getOperatorPrecedence = (operator) => {
+            return operatorPrecedence[operator] || 0;
+        };
+
         if (expression.type === "SubstringExpression") {
             return this.transformSubstringExpression(expression);
         }
@@ -134,6 +146,7 @@ class Transformer {
 
             return {
                 type: "Expression",
+                line: expression.line,
                 left: leftExp,
                 operator: expression.operator,
                 right: rightExp,
@@ -165,6 +178,7 @@ class Transformer {
         return {
             type: "SubstringExpression",
             string: expression.string.value, // Flattening the string part
+            line: expression.line,
             start: start, // Properly handle the start expression
             end: end, // Properly handle the end expression
         };
@@ -178,6 +192,7 @@ class Transformer {
     transformIndexExpression(expression) {
         return {
             type: "IndexExpression",
+            line: expression.line,
             source: expression.source.value,
             index: expression.index.value,
         };
@@ -196,6 +211,7 @@ class Transformer {
 
         return {
             type: "UnaryExpression",
+            line: expression.line,
             operator: expression.operator,
             argument: rightExp,
         };
@@ -210,6 +226,7 @@ class Transformer {
         if (expression.type === "Expression") {
             return {
                 type: "Expression",
+                line: expression.line,
                 left: expression.left.value,
                 operator: expression.operator,
                 right: expression.right.value,
@@ -227,6 +244,7 @@ class Transformer {
     transformLoopUntil(node) {
         return {
             type: "LoopUntil",
+            line: node.line,
             condition: this.transformCondition(node.condition),
             body: this.transformNodes(node.body),
         };
@@ -240,6 +258,7 @@ class Transformer {
     transformLoopFromTo(node) {
         return {
             type: "LoopFromTo",
+            line: node.line,
             loopVariable: node.loopVariable,
             range: {
                 start: this.transformExpression(node.range.start),
@@ -260,8 +279,10 @@ class Transformer {
 
         return {
             type: "FunctionCall",
+            line: node.line,
             name: functionName,
-            arguments: args,
+            args: args,
+            callLine: node.line,
         };
     }
 

@@ -48,10 +48,8 @@ class JsonConverter extends Converter {
         };
 
         // Use the factory to get the appropriate converter for the node type
-        const converter = this.nodeConverterFactory.getConverter(
-            nodeWithLine.type
-        );
-        return converter(nodeWithLine);
+        const converter = this.nodeConverterFactory.getConverter(node.type);
+        return converter(node);
     }
 
     transformVariableDeclaration(node) {
@@ -60,7 +58,6 @@ class JsonConverter extends Converter {
         }
 
         if (node.value.type === "IndexExpression") {
-            console.log("hello");
             return this.transformIndexExpression(node);
         }
 
@@ -74,6 +71,11 @@ class JsonConverter extends Converter {
             const functionCallResult = this.transformFunctionCall(node.value);
 
             // Add the function call frames first
+            if (!functionCallResult.returnValue) {
+                throw new Error(
+                    `Function ${node.value.name} does not return a value and cannot be used in a variable declaration.`
+                );
+            }
             frames = [...functionCallResult.frames];
 
             // Set the return value from the function call as the value of the variable
@@ -111,6 +113,9 @@ class JsonConverter extends Converter {
         if (node.value.type === "BooleanLiteral") {
             typeBool = true;
             value = value.value;
+            if (value != true && value != false) {
+                throw new Error("Booleans can only be true or false");
+            }
         }
 
         this.variables[node.name] = value;
@@ -118,10 +123,20 @@ class JsonConverter extends Converter {
 
         const varType = typeBool
             ? "boolean"
-            : node.type === "StringLiteral"
+            : node.value.type === "StringLiteral"
             ? "string"
             : this.determineType(value);
 
+        const operatorPrecedence = {
+            "+": 1,
+            "-": 1,
+            "*": 2,
+            "/": 2,
+        };
+        if (typeof value != "string" && varType === "string") {
+            value = String(value);
+            this.variables[node.name] = value;
+        }
         const buildExpressionString = (expr) => {
             if (expr.type === "Expression") {
                 if (expr.operator === "-" && expr.left.value === 0) {
@@ -158,6 +173,8 @@ class JsonConverter extends Converter {
             returnVal = value;
         }
 
+        // let result = eval(returnVal);
+        // console.log(`result is ${result}`);
         return {
             line: node.line,
             operation: "set",
@@ -171,7 +188,6 @@ class JsonConverter extends Converter {
 
     transformIndexExpression(node) {
         const { varName, value } = node;
-        console.log("in here" + value);
         const source = value.source;
         const index = this.expressionEvaluator.evaluateExpression(value.index);
 
@@ -305,7 +321,7 @@ class JsonConverter extends Converter {
         }
 
         // Perform the swap in the array stored in this.variables
-        const array = this.variables[node.varName];
+        const array = this.expressionEvaluator.getVariableValue(node.varName);
         const temp = array[firstPosition];
         array[firstPosition] = array[secondPosition];
         array[secondPosition] = temp;
@@ -357,9 +373,12 @@ class JsonConverter extends Converter {
             varName: node.name,
             params: node.params,
             timestamp: new Date().toISOString(),
-            description: `Defined function ${
-                node.name
-            } with parameters ${node.params.join(", ")}.`,
+            description:
+                node.params.length == 0
+                    ? `Defined function ${node.name} with no parameters.`
+                    : `Defined function ${
+                          node.name
+                      } with parameters ${node.params.join(", ")}.`,
         };
     }
 
@@ -374,18 +393,22 @@ class JsonConverter extends Converter {
 
         // Retrieve the function's full IR
         const functionIR = this.functionMap.get(functionName);
-        //console.log(functionIR);
-        // Check argument count match between the call and definition
-        const params = functionIR.params;
-        const args = node.args;
 
+        // Ensure params and args are defined, defaulting to an empty array if no params exist
+        const params = functionIR.params || [];
+        const args = node.args || [];
+
+        // Check argument count match between the call and definition
         if (params.length !== args.length) {
             throw new Error(
                 `Argument count mismatch in function ${functionName}. Expected ${params.length} but got ${args.length}.`
             );
         }
+
+        // Store the current line number
         let prevLine = node.line;
         this.currentLine = functionIR.startLine + 1;
+
         // Map arguments to function parameters
         const previousVariables = { ...this.variables }; // Save the current variables state
         for (let i = 0; i < params.length; i++) {
@@ -393,18 +416,23 @@ class JsonConverter extends Converter {
                 this.expressionEvaluator.evaluateExpression(args[i]);
             this.declaredVariables.add(params[i]);
         }
-        //console.log(this.variables);
+
+        // Prepare the frame for the function call
         let frameArgs = args.map((arg) =>
             this.expressionEvaluator.evaluateExpression(arg)
         );
-        // Output the function call movement object
+
+        // Add the function call frame
         frames.push({
-            line: node.line,
+            line: node.callLine ? node.callLine : node.line,
             operation: "function_call",
             varName: functionName,
             arguments: frameArgs,
             timestamp: new Date().toISOString(),
-            description: `Called function ${functionName} with arguments ${frameArgs}.`,
+            description:
+                frameArgs.length === 0
+                    ? `Called function ${functionName} with no arguments.`
+                    : `Called function ${functionName} with arguments ${frameArgs}.`,
         });
 
         // Process the function body and retrieve the return value
@@ -417,14 +445,13 @@ class JsonConverter extends Converter {
                 returnValue = this.expressionEvaluator.evaluateExpression(
                     statement.value
                 );
-                //console.log("Hello " + returnValue);
             }
 
-            // If bodyFrame is an array, loop through each element and push them to frames
+            // Flatten the frames directly into the main frames array
             if (Array.isArray(bodyFrame)) {
-                bodyFrame.forEach((frame) => frames.push(frame));
+                frames.push(...bodyFrame); // Spread array if multiple frames
             } else {
-                frames.push(bodyFrame); // If it's a single frame, just push it directly
+                frames.push(bodyFrame); // Push single frame directly
             }
         });
 
@@ -433,14 +460,13 @@ class JsonConverter extends Converter {
         this.currentLine = prevLine;
         node.line = prevLine;
 
-        return {
-            frames,
-            returnValue, // Return the final result of the function, if any
-        };
+        return returnValue !== null ? { frames, returnValue } : frames;
     }
 
     transformPrintStatement(node) {
-        const value = node.value;
+        const value = node.value.type
+            ? this.expressionEvaluator.evaluateExpression(node.value)
+            : node.value;
         const isLiteral = !this.declaredVariables.has(value);
         return {
             line: node.line,
@@ -459,7 +485,11 @@ class JsonConverter extends Converter {
             node.condition
         );
         const conditionString = this.convertConditionToString(node.condition);
-
+        if (conditionResult != true && conditionResult != false) {
+            throw new Error(
+                "Please ensure that only booleans and conditional expressions are used in conditions."
+            );
+        }
         // Start with the IF statement
         let frames = [
             {
@@ -600,7 +630,8 @@ class JsonConverter extends Converter {
 
         // Set the initial index to 0
         const startValue = 0;
-        const endValue = this.variables[arrayName].length - 1; // Length of the array minus one
+        const endValue =
+            this.expressionEvaluator.getVariableValue(arrayName).length - 1;
 
         this.variables[iterator] = null; // Initialize the iterator
         const conditionString = `${iterator} in ${arrayName}`; // New condition format
@@ -630,7 +661,9 @@ class JsonConverter extends Converter {
             const arrayName = node.collection; // The array to iterate over
             const iterator = node.iterator; // The iterator variable (e.g., 'num')
             let index = 0; // Start with index 0
-            ifCondition = `Checked if index < ${this.variables[arrayName].length}`;
+            ifCondition = `index < ${
+                this.expressionEvaluator.getVariableValue(arrayName).length
+            }`;
 
             // While the index is within the array bounds
             while (index < this.variables[arrayName].length) {
@@ -640,7 +673,7 @@ class JsonConverter extends Converter {
                     condition: ifCondition,
                     result: true,
                     timestamp: new Date().toISOString(),
-                    description: ifCondition,
+                    description: `Checked if ${ifCondition}`,
                 });
 
                 // Set the iterator variable to the value at the current index
@@ -970,11 +1003,22 @@ class JsonConverter extends Converter {
         } else if (expression.type === "Expression") {
             const left = this.transformExpression(expression.left);
             const right = this.transformExpression(expression.right);
-            return {
+
+            // Handle parentheses based on operator precedence
+            const wrapInParentheses = (expr) => {
+                return expr.operator &&
+                    (expr.operator === "+" || expr.operator === "-")
+                    ? `(${expr.left} ${expr.operator} ${expr.right})`
+                    : `${expr.left} ${expr.operator} ${expr.right}`;
+            };
+
+            const transformedExpression = {
                 left: left.value || left,
                 operator: expression.operator,
                 right: right.value || right,
             };
+
+            return wrapInParentheses(transformedExpression);
         } else if (this.declaredVariables.has(expression)) {
             return {
                 value: this.variables[expression] || expression,

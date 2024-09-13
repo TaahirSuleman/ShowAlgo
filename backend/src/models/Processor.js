@@ -18,7 +18,7 @@ class Processor {
         fs.appendFileSync(filename, content + "\n");
     }
 
-    process(pseudocode, outputFile = "output.txt") {
+    process(pseudocode, outputFile = "jsOutput.txt") {
         const tokenizer = new Tokenizer(pseudocode);
         const tokens = tokenizer.tokenize();
 

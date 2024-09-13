@@ -107,15 +107,15 @@ class Parser {
         }
 
         let varType = null;
+
+        this.expect("Keyword", "to");
         if (
             this.currentToken().value.toLowerCase() === "number" ||
-            this.currentToken().value.toLowerCase() === "string"
+            this.currentToken().value.toLowerCase() === "string" ||
+            this.currentToken().value.toLowerCase() === "boolean"
         ) {
             varType = this.consume("Keyword").value;
         }
-
-        this.expect("Keyword", "to");
-
         let value;
         // Check if the next token indicates a function call
         if (
@@ -798,7 +798,7 @@ class Parser {
      * @description Parses an expression, potentially with operators.
      * @returns {Expression|ASTNode} The AST node representing the expression.
      */
-    parseExpression() {
+    parseExpression(precedence = 0) {
         let left;
 
         if (
@@ -830,21 +830,39 @@ class Parser {
             left = this.parseValue();
         }
 
+        // Operator precedence table
+        const operatorPrecedence = {
+            "*": 2,
+            "/": 2,
+            "+": 1,
+            "-": 1,
+        };
+
+        // Handle operators and enforce precedence
         while (
             this.currentToken().type === "Operator" ||
             this.currentToken().type === "ComparisonOperator" ||
             this.currentToken().type === "LogicalOperator" // Handle logical operators
         ) {
-            const operator = this.consume(this.currentToken().type).value;
-            let right;
+            const currentOperator = this.currentToken().value;
+            const currentPrecedence = operatorPrecedence[currentOperator] || 0;
 
+            // Only consume the operator if its precedence is greater than or equal to the current precedence
+            if (currentPrecedence < precedence) {
+                break;
+            }
+
+            const operator = this.consume(this.currentToken().type).value;
+
+            // Parse the right-hand side expression with higher precedence
+            let right;
             if (
                 this.currentToken().type === "Delimiter" &&
                 this.currentToken().value === "("
             ) {
-                right = this.parseExpression();
+                right = this.parseExpression(0); // Reset precedence for expressions within parentheses
             } else {
-                right = this.parseValue();
+                right = this.parseExpression(currentPrecedence + 1); // Increase precedence level for the right-hand side
             }
 
             left = this.factory.createNode(
@@ -1091,11 +1109,14 @@ class Parser {
      */
     parseArgumentList() {
         const args = [];
+        // Add support for 'String', 'Boolean', and other literal types
         while (
             this.currentToken().type === "Number" ||
-            this.currentToken().type === "Identifier"
+            this.currentToken().type === "Identifier" ||
+            this.currentToken().type === "String" || // Now supports string literals
+            this.currentToken().type === "Boolean"
         ) {
-            args.push(this.parseValue());
+            args.push(this.parseValue()); // Use parseValue() to handle different types of values
             if (this.currentToken().value === ",") {
                 this.consume("Delimiter", ",");
             }

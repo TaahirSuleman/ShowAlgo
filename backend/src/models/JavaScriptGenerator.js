@@ -37,15 +37,17 @@ class JavaScriptGenerator extends Converter {
                 const string = this.generateExpression(expression.string);
                 const start = this.generateExpression(expression.start);
                 const end = this.generateExpression(expression.end);
-                return `${string}.substring(${start} - 1, ${end})`; // JS is 0-indexed, subtract 1 from start
+                return `${string}.substring(${start}, ${end})`; // JS is 0-indexed, subtract 1 from start
             case "LengthExpression":
-                const source = this.generateExpression(expression.source);
-                return `${source}.length`;
-
+                return this.generateLengthExpression(node);
             case "IndexExpression":
-                const stringVar = this.generateExpression(expression.source);
-                const index = this.generateExpression(expression.index);
-                return `${stringVar}.charAt(${index} - 1)`; // JS is 0-indexed, subtract 1 from index
+                return this.generateIndexExpression(node);
+            case "RemoveOperation":
+                return this.generateRemoveOperation(node);
+            case "ArraySetValue":
+                return this.generateArraySetValue(node);
+            case "SwapOperation":
+                return this.generateSwapOperation(node);
             case "ForLoop":
                 return this.generateForLoop(node);
             case "WhileLoop":
@@ -140,18 +142,76 @@ class JavaScriptGenerator extends Converter {
         }, 0, ${this.generateExpression(node.value)});`;
     }
 
-    generateExpression(expression) {
-        //console.log(expression);
-        //console.log(this.declaredVariables);
+    generateRemoveOperation(node) {
+        return `${node.varName}.splice(${node.positionToRemove}, 1);`;
+    }
+
+    // New method to set an element at a specific index in the array
+    generateArraySetValue(node) {
+        return `${node.varName}[${
+            node.index.value
+        }] = ${this.generateExpression(node.setValue)};`;
+    }
+
+    // New method to generate access to a specific element in an array
+    generateIndexExpression(node) {
+        return `${node.source.value}[${this.generateExpression(node.index)}]`;
+    }
+
+    // New method to generate retrieval of array length
+    generateLengthExpression(node) {
+        return `${node.source}.length`;
+    }
+
+    // New method to swap two elements in an array
+    generateSwapOperation(node) {
+        return `let temp = ${node.varName}[${node.firstPosition.value}];
+${node.varName}[${node.firstPosition.value}] = ${node.varName}[${node.secondPosition.value}];
+${node.varName}[${node.secondPosition.value}] = temp;`;
+    }
+
+    generateExpression(expression, parentIsNested = false) {
+        const operatorPrecedence = {
+            "*": 2,
+            "/": 2,
+            "+": 1,
+            "-": 1,
+        };
+
+        const getOperatorPrecedence = (operator) => {
+            return operatorPrecedence[operator] || 0;
+        };
+
         expression = this.ensureStructuredValue(expression); // Ensure it's structured
 
         switch (expression.type) {
-            case "Expression":
-                const left = this.generateExpression(expression.left);
-                const operator = expression.operator;
-                const right = this.generateExpression(expression.right);
-                return `${left} ${operator} ${right}`;
+            case "Expression": {
+                const currentPrecedence = getOperatorPrecedence(
+                    expression.operator
+                );
+                const leftIsNested =
+                    expression.left && expression.left.type === "Expression";
+                const rightIsNested =
+                    expression.right && expression.right.type === "Expression";
 
+                const left = this.generateExpression(
+                    expression.left,
+                    leftIsNested
+                );
+                const right = this.generateExpression(
+                    expression.right,
+                    rightIsNested
+                );
+
+                // Only wrap in parentheses if it's a nested expression with lower precedence
+                let exprString = `${left} ${expression.operator} ${right}`;
+
+                // Add parentheses if it's nested
+                if (parentIsNested) {
+                    return `(${exprString})`;
+                }
+                return exprString;
+            }
             case "Identifier":
                 return expression.value;
 
@@ -161,19 +221,25 @@ class JavaScriptGenerator extends Converter {
             case "StringLiteral":
                 return `"${expression.value}"`;
 
-            // Exclude ArrayLiteral as per your suggestion, unless needed later
-            /*
-            case "ArrayLiteral":
-                return `[${expression.value
-                    .map((v) => this.generateExpression(v))
-                    .join(", ")}]`;
-            */
-
             case "FunctionCall":
                 const args = expression.arguments
                     .map((arg) => this.generateExpression(arg))
                     .join(", ");
                 return `${expression.callee}(${args})`;
+
+            case "SubstringExpression":
+                const string = expression.string;
+                const start = this.generateExpression(expression.start);
+                const end = this.generateExpression(expression.end);
+                return `${string}.substring(${start}, ${end})`;
+
+            case "IndexExpression":
+                return `${expression.source}[${this.generateExpression(
+                    expression.index
+                )}]`;
+
+            case "LengthExpression":
+                return `${expression.source}.length`;
 
             default:
                 throw new Error(`Unknown expression type: ${expression.type}`);

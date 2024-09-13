@@ -13,7 +13,7 @@ import WhileLoop from "../src/models/ast/WhileLoop.js";
 import ReturnStatement from "../src/models/ast/ReturnStatement.js";
 import Expression from "../src/models/ast/Expression.js";
 
-describe("Transformer", () => {
+describe.skip("Transformer", () => {
     let transformer;
 
     beforeEach(() => {

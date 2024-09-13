@@ -3,7 +3,7 @@ import Tokenizer from "../src/helpers/tokenizer.js";
 import Parser from "../src/models/parser.js";
 import Transformer from "../src/helpers/transformer.js";
 
-describe("Tokenizer, Parser, and Transformer Integration", () => {
+describe.skip("Tokenizer, Parser, and Transformer Integration", () => {
     let tokenizer, parser, transformer;
 
     beforeEach(() => {

@@ -18,14 +18,24 @@ class NodeTransformerFactory {
                     type: "FunctionDeclaration",
                     name: node.name,
                     params: node.params,
-                    startLine: node.line,
+                    line: node.line,
                     body: transformer.transformNodes(node.body),
                 };
             case "FunctionCall":
                 return transformer.transformFunctionCall(node);
             case "VariableDeclaration":
+                let value = transformer.transformExpression(node.value);
+                if (
+                    node.varType === "boolean" &&
+                    node.value.type != "BooleanLiteral"
+                ) {
+                    throw new Error(
+                        "Booleans can only be either true or false."
+                    );
+                }
                 return {
                     type: "VariableDeclaration",
+                    line: node.line,
                     name:
                         node.type === "IndexExpression"
                             ? transformer.transformExpression(node.value)
@@ -35,11 +45,16 @@ class NodeTransformerFactory {
             case "PrintStatement":
                 return {
                     type: "PrintStatement",
-                    value: transformer.transformExpression(node.value).value,
+                    value: node.value.type.includes("Expression")
+                        ? transformer.transformExpression(node.value)
+                        : transformer.transformExpression(node.value).value,
+                    line: node.line,
                 };
             case "IfStatement":
                 return {
                     type: "IfStatement",
+                    line: node.condition.line,
+                    endLine: node.line,
                     condition: transformer.transformCondition(node.condition),
                     consequent: transformer.transformNodes(node.consequent),
                     alternate: node.alternate
@@ -65,6 +80,7 @@ class NodeTransformerFactory {
                     type: "ForLoop",
                     iterator: node.iterator,
                     collection: node.collection,
+                    line: node.line,
                     endLine: node.body[0].value.line,
                     body: transformer.transformNodes(node.body),
                 };
@@ -72,6 +88,7 @@ class NodeTransformerFactory {
                 return {
                     type: "WhileLoop",
                     condition: transformer.transformCondition(node.condition),
+                    line: node.line,
                     body: transformer.transformNodes(node.body),
                 };
             case "LoopUntil":
@@ -82,6 +99,7 @@ class NodeTransformerFactory {
                 return {
                     type: "ReturnStatement",
                     value: transformer.transformReturnValue(node.value),
+                    line: node.line,
                 };
             case "ArrayCreation":
                 return {
@@ -89,11 +107,13 @@ class NodeTransformerFactory {
                     varName: node.varName,
                     dsType: node.arrType,
                     values: node.values,
+                    line: node.line,
                     unInitialised: node.unInitialised,
                 };
             case "ArrayInsertion":
                 return {
                     type: "ArrayInsertion",
+                    line: node.line,
                     varName: node.varName,
                     value: transformer.transformExpression(node.value),
                     position: transformer.transformExpression(node.position)
@@ -102,6 +122,7 @@ class NodeTransformerFactory {
             case "ArraySetValue":
                 return {
                     type: "ArraySetValue",
+                    line: node.line,
                     varName: node.varName,
                     index: transformer.transformExpression(node.position), // Position to set
                     setValue:
@@ -113,6 +134,7 @@ class NodeTransformerFactory {
             case "SwapOperation": // Refactored SwapOperation
                 return {
                     type: "SwapOperation",
+                    line: node.line,
                     varName: node.varName,
                     firstPosition: transformer.transformExpression(
                         node.firstPosition
@@ -133,9 +155,10 @@ class NodeTransformerFactory {
                     type: "Identifier",
                     value: node.value,
                 };
-            case "RemoveOperation": // Add this case
+            case "RemoveOperation":
                 return {
                     type: "RemoveOperation",
+                    line: node.line,
                     varName: node.varName,
                     positionToRemove: transformer.transformExpression(
                         node.positionToRemove
@@ -144,6 +167,7 @@ class NodeTransformerFactory {
             case "LengthExpression":
                 return {
                     type: "LengthExpression",
+                    line: node.line,
                     source: node.source.value, // Extract the variable name directly
                 };
             case "SubstringExpression":
@@ -154,6 +178,7 @@ class NodeTransformerFactory {
                 );
                 return {
                     type: "IndexExpression",
+                    line: node.line,
                     source: node.source.value,
                     index:
                         transformedIndex.type === "Expression"

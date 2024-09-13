@@ -8,22 +8,73 @@ class ExpressionEvaluator {
         if (expression.type === "Expression") {
             const left = this.evaluateExpression(expression.left);
             const right = this.evaluateExpression(expression.right);
-            return this.computeExpression(left, expression.operator, right);
+
+            // Handle operator precedence for both left and right sides
+            const hasHigherPrecedence = (operator) =>
+                operator === "*" || operator === "/";
+
+            if (expression.operator === "+" || expression.operator === "-") {
+                // If the left side involves higher precedence (* or /), evaluate it first
+                if (
+                    typeof expression.left === "object" &&
+                    hasHigherPrecedence(expression.left.operator)
+                ) {
+                    const leftResult = this.evaluateExpression(expression.left);
+                    return this.computeExpression(
+                        leftResult,
+                        expression.operator,
+                        right
+                    );
+                }
+
+                // If the right side involves higher precedence (* or /), evaluate it first
+                if (
+                    typeof expression.right === "object" &&
+                    hasHigherPrecedence(expression.right.operator)
+                ) {
+                    const rightResult = this.evaluateExpression(
+                        expression.right
+                    );
+                    return this.computeExpression(
+                        left,
+                        expression.operator,
+                        rightResult
+                    );
+                }
+            }
+
+            // Regular evaluation without precedence issue
+            const result = this.computeExpression(
+                left,
+                expression.operator,
+                right
+            );
+
+            // Debugging
+            console.log("Evaluating: ", left, expression.operator, right);
+            console.log("Result: ", result);
+
+            if (isNaN(result) && typeof result !== "string") {
+                throw new Error(
+                    `Ensure that all variables are declared before being used in an expression.`
+                );
+            }
+
+            return result;
         } else if (this.declaredVariables.has(expression)) {
-            return this.convertValue(this.variables[expression]);
+            return this.variables[expression];
         } else if (
             expression.type === "NumberLiteral" ||
             expression.type === "StringLiteral"
         ) {
             return this.convertValue(expression.value);
         } else if (expression.type === "Identifier") {
-            if (this.declaredVariables.has(expression.value)) {
-                return this.variables[expression.value];
-            }
+            return this.getVariableValue(expression.value);
         } else if (expression.type === "LengthExpression") {
             return this.evaluateLengthExpression(expression);
-        } else if (expression.type === "IndexExpression") return;
-        else {
+        } else if (expression.type === "IndexExpression") {
+            return; // Handle index expressions
+        } else {
             return this.convertValue(expression);
         }
     }
@@ -83,11 +134,13 @@ class ExpressionEvaluator {
         }
 
         if (this.declaredVariables.has(condition)) {
-            return this.variables[condition];
+            return this.getVariableValue(condition);
         }
 
         if (condition.type === "Identifier") {
-            return this.variables[condition.value] || this.variables[condition];
+            if (condition.value) return this.getVariableValue(condition.value);
+            else return this.getVariableValue(condition);
+            //return this.variables[condition.value] || this.variables[condition];
         }
 
         if (condition.type === "LengthExpression") {
@@ -111,14 +164,14 @@ class ExpressionEvaluator {
             condition.left && typeof condition.left === "object"
                 ? this.evaluateCondition(condition.left)
                 : isNaN(condition.left)
-                ? this.variables[condition.left]
+                ? this.getVariableValue(condition.left)
                 : parseFloat(condition.left);
 
         const right =
             condition.right && typeof condition.right === "object"
                 ? this.evaluateCondition(condition.right)
                 : isNaN(condition.right)
-                ? this.variables[condition.right]
+                ? this.getVariableValue(condition.right)
                 : parseFloat(condition.right);
 
         const operatorsMap = {

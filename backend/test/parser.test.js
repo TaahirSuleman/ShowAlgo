@@ -256,7 +256,7 @@ describe("Parser", () => {
                 {
                     type: "VariableDeclaration",
                     varName: "specialString",
-                    varType: null,
+                    varType: "string",
                     value: {
                         type: "StringLiteral",
                         value: "@#$%^&*()",
@@ -298,7 +298,7 @@ describe("Parser", () => {
                 {
                     type: "VariableDeclaration",
                     varName: "myString",
-                    varType: null,
+                    varType: "string",
                     value: {
                         type: "StringLiteral",
                         value: "",
@@ -342,7 +342,7 @@ describe("Parser", () => {
                 {
                     type: "VariableDeclaration",
                     varName: "myString",
-                    varType: null,
+                    varType: "string",
                     value: {
                         type: "StringLiteral",
                         value: "Hello, World!",
@@ -386,7 +386,7 @@ describe("Parser", () => {
                 {
                     type: "VariableDeclaration",
                     varName: "greeting",
-                    varType: null,
+                    varType: "string",
                     value: {
                         type: "StringLiteral",
                         value: "Good Morning",
@@ -583,7 +583,7 @@ describe("Parser", () => {
                 {
                     type: "VariableDeclaration",
                     varName: "myString",
-                    varType: null,
+                    varType: "string",
                     value: {
                         type: "StringLiteral",
                         value: "Hello, World!",
