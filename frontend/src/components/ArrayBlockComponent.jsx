@@ -17,6 +17,7 @@ function ArrayBlockComponent({
   changed,
   setSwappedState,
   got,
+  followVisState
 }) {
   // Define the ref for the block
   const arrBlockRef = useRef(null);
@@ -24,11 +25,12 @@ function ArrayBlockComponent({
   // Use useEffect to trigger scrolling when an animation is about to start
   useEffect(() => {
     if (inserted || removed || changed || got || swapped[0] === keyProp) {
+      if (followVisState){
       arrBlockRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "center",
         inline: "center",
-      });
+      });}
     }
   }, [inserted, removed, changed, swapped, got, keyProp]);
 

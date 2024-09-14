@@ -11,6 +11,7 @@ function IfVisualisationComponent({
   setOutput,
   bufferState,
   setPauseState,
+  followVisState,
 }) {
   const [ifStatement, setIfStatement] = useState({
     operation: "if",
@@ -30,13 +31,15 @@ function IfVisualisationComponent({
       if (indexState > -1 && indexState < movements.length && !pauseState) {
         const movement = movements[indexState];
         if (movement.operation === "if") {
-          ifRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "center",
-          });
+          if (followVisState) {
+            ifRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "center",
+            });
+          }
           setIsActive(true);
-          setResultColourState("#6B46C1")
+          setResultColourState("#6B46C1");
           setIfStatement(movement);
           const timeoutId1 = setTimeout(() => {
             if (movement.result === true) {
@@ -62,10 +65,15 @@ function IfVisualisationComponent({
 
           return () => clearTimeout(timeoutId1);
         } else if (movement.operation === "endif") {
-          ifRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "center",
+          if (followVisState) {
+            ifRef.current.scrollIntoView({
+              behavior: "smooth",
+              block: "nearest",
+              inline: "center",
+            });
+          }
+          setOutput((prev) => {
+            return [...prev, movements[indexState].description];
           });
           const timeoutId4 = setTimeout(() => {
             setIsActive(false);
@@ -73,15 +81,17 @@ function IfVisualisationComponent({
           }, speedState * 1000);
           return () => clearTimeout(timeoutId4);
         } else if (movement.operation === "loop_end") {
+          setOutput((prev) => {
+            return [...prev, movements[indexState].description];
+          });
           const timeoutId4 = setTimeout(() => {
             setIsActive(false);
           }, speedState * 1000);
           return () => clearTimeout(timeoutId4);
-        }
-        else if (movement.operation === "loop_end"){
-          const timeoutId4 = setTimeout(()=> {
+        } else if (movement.operation === "loop_end") {
+          const timeoutId4 = setTimeout(() => {
             setIsActive(false);
-          }, speedState*1000);
+          }, speedState * 1000);
           return () => clearTimeout(timeoutId4);
         }
       }
