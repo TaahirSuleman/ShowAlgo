@@ -75,7 +75,7 @@ function MainVisualisationWindow({
                                     (value, i) =>
                                         `${
                                             movement.varName
-                                        }++${value.toString()}-${i}`
+                                        }++${value.value.toString()}-${i}`
                                 );
                         }
                         const locationsArr = movement.value.map((_, i) => i);
