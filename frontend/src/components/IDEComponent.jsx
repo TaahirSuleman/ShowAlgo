@@ -247,7 +247,6 @@ function IDEComponent({
 
           <CodeEditorView
             defaultValue={defaultValue}
-            speedState={speedState}
             movementsState={movementsState}
             height="33dvh"
             width={{ base: "100%", md: "50vw" }}
@@ -258,6 +257,7 @@ function IDEComponent({
             setHighlightState={setHighlightState}
             pauseState={pauseState}
             setPauseState={setPauseState}
+            indexState={indexState}
           />
         </Box>
 

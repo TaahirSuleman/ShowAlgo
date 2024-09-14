@@ -81,9 +81,6 @@ function IfVisualisationComponent({
           }, speedState * 1000);
           return () => clearTimeout(timeoutId4);
         } else if (movement.operation === "loop_end") {
-          setOutput((prev) => {
-            return [...prev, movements[indexState].description];
-          });
           const timeoutId4 = setTimeout(() => {
             setIsActive(false);
           }, speedState * 1000);
