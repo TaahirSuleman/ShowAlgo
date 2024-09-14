@@ -44,7 +44,6 @@ function VariableListComponent({
               );
               let arrayIndexCheck = arraysState.findIndex((obj) => obj.name === movements[indexState].varName);
               if (arrayIndexCheck != -1){
-                console.log(arrayIndexCheck+" ARRAY INDEX CHECK")
                 setArraysState( (arrState)=>{
                   let newArrs = [...arrState];
                   newArrs.splice(arrayIndexCheck, 1);
@@ -80,6 +79,17 @@ function VariableListComponent({
                     movements[indexState].varName
                   );
                 } else if (innerMovement.type === "array") {
+                  let arrayIndexCheck = arraysState.findIndex(
+                    (obj) => obj.name === movements[indexState].varName
+                  );
+                  if (arrayIndexCheck != -1){
+                    setArraysState( (arrState)=>{
+                      let newArrs = [...arrState];
+                      newArrs.splice(arrayIndexCheck, 1);
+                      console.log(newArrs); // Logging the updated array after deletion
+                      return newArrs; 
+                    })
+                  }
                   let arrayCheck = arraysState.find(
                     (obj) => obj.name === innerMovement.varName
                   );
