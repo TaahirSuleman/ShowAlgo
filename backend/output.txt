@@ -101971,3 +101971,2238 @@ Final JSON: {
     }
   ]
 }
+Tokens: [
+  {
+    "type": "Keyword",
+    "value": "create",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "number",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "array",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "as",
+    "line": 1
+  },
+  {
+    "type": "Identifier",
+    "value": "myArray",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "values",
+    "line": 1
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "50",
+    "line": 1
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "40",
+    "line": 1
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "30",
+    "line": 1
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "20",
+    "line": 1
+  },
+  {
+    "type": "Delimiter",
+    "value": ",",
+    "line": 1
+  },
+  {
+    "type": "Number",
+    "value": "10",
+    "line": 1
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 1
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 2
+  },
+  {
+    "type": "Identifier",
+    "value": "swapped",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 2
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 2
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "i",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "from",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "length",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 3
+  },
+  {
+    "type": "Identifier",
+    "value": "myArray",
+    "line": 3
+  },
+  {
+    "type": "Operator",
+    "value": "-",
+    "line": 3
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 3
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 4
+  },
+  {
+    "type": "Identifier",
+    "value": "swapped",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 4
+  },
+  {
+    "type": "Boolean",
+    "value": "false",
+    "line": 4
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "j",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "from",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "0",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "length",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "myArray",
+    "line": 5
+  },
+  {
+    "type": "Operator",
+    "value": "-",
+    "line": 5
+  },
+  {
+    "type": "Identifier",
+    "value": "i",
+    "line": 5
+  },
+  {
+    "type": "Operator",
+    "value": "-",
+    "line": 5
+  },
+  {
+    "type": "Number",
+    "value": "2",
+    "line": 5
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "current",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "myArray",
+    "line": 6
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 6
+  },
+  {
+    "type": "Identifier",
+    "value": "j",
+    "line": 6
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 6
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "next",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "myArray",
+    "line": 7
+  },
+  {
+    "type": "Delimiter",
+    "value": "[",
+    "line": 7
+  },
+  {
+    "type": "Identifier",
+    "value": "j",
+    "line": 7
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 7
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 7
+  },
+  {
+    "type": "Delimiter",
+    "value": "]",
+    "line": 7
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "current",
+    "line": 8
+  },
+  {
+    "type": "ComparisonOperator",
+    "value": ">",
+    "line": 8
+  },
+  {
+    "type": "Identifier",
+    "value": "next",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "then",
+    "line": 8
+  },
+  {
+    "type": "Keyword",
+    "value": "swap",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "position",
+    "line": 9
+  },
+  {
+    "type": "Identifier",
+    "value": "j",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "with",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "position",
+    "line": 9
+  },
+  {
+    "type": "Identifier",
+    "value": "j",
+    "line": 9
+  },
+  {
+    "type": "Operator",
+    "value": "+",
+    "line": 9
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "in",
+    "line": 9
+  },
+  {
+    "type": "Identifier",
+    "value": "myArray",
+    "line": 9
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 10
+  },
+  {
+    "type": "Identifier",
+    "value": "swapped",
+    "line": 10
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 10
+  },
+  {
+    "type": "Boolean",
+    "value": "true",
+    "line": 10
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 11
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 11
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 12
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 12
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 13
+  },
+  {
+    "type": "LogicalOperator",
+    "value": "not",
+    "line": 13
+  },
+  {
+    "type": "Identifier",
+    "value": "swapped",
+    "line": 13
+  },
+  {
+    "type": "Keyword",
+    "value": "then",
+    "line": 13
+  },
+  {
+    "type": "Keyword",
+    "value": "set",
+    "line": 14
+  },
+  {
+    "type": "Identifier",
+    "value": "i",
+    "line": 14
+  },
+  {
+    "type": "Keyword",
+    "value": "to",
+    "line": 14
+  },
+  {
+    "type": "Keyword",
+    "value": "length",
+    "line": 14
+  },
+  {
+    "type": "Keyword",
+    "value": "of",
+    "line": 14
+  },
+  {
+    "type": "Identifier",
+    "value": "myArray",
+    "line": 14
+  },
+  {
+    "type": "Operator",
+    "value": "-",
+    "line": 14
+  },
+  {
+    "type": "Number",
+    "value": "1",
+    "line": 14
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 15
+  },
+  {
+    "type": "Keyword",
+    "value": "if",
+    "line": 15
+  },
+  {
+    "type": "Keyword",
+    "value": "end",
+    "line": 16
+  },
+  {
+    "type": "Keyword",
+    "value": "loop",
+    "line": 16
+  },
+  {
+    "type": "Keyword",
+    "value": "print",
+    "line": 17
+  },
+  {
+    "type": "Identifier",
+    "value": "myArray",
+    "line": 17
+  }
+]
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "myArray",
+      "arrType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "50",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "40",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "30",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "20",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "10",
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "swapped",
+      "varType": null,
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 2
+      },
+      "line": 2
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        "end": {
+          "type": "Expression",
+          "left": {
+            "type": "LengthExpression",
+            "source": {
+              "type": "Identifier",
+              "value": "myArray",
+              "line": 3
+            },
+            "line": 3
+          },
+          "operator": "-",
+          "right": {
+            "type": "NumberLiteral",
+            "value": "1",
+            "line": 3
+          },
+          "line": 4
+        }
+      },
+      "body": [
+        {
+          "type": "VariableDeclaration",
+          "varName": "swapped",
+          "varType": null,
+          "value": {
+            "type": "BooleanLiteral",
+            "value": false,
+            "line": 4
+          },
+          "line": 4
+        },
+        {
+          "type": "LoopFromTo",
+          "loopVariable": "j",
+          "range": {
+            "start": {
+              "type": "NumberLiteral",
+              "value": "0",
+              "line": 5
+            },
+            "end": {
+              "type": "Expression",
+              "left": {
+                "type": "Expression",
+                "left": {
+                  "type": "LengthExpression",
+                  "source": {
+                    "type": "Identifier",
+                    "value": "myArray",
+                    "line": 5
+                  },
+                  "line": 5
+                },
+                "operator": "-",
+                "right": {
+                  "type": "Identifier",
+                  "value": "i",
+                  "line": 5
+                },
+                "line": 5
+              },
+              "operator": "-",
+              "right": {
+                "type": "NumberLiteral",
+                "value": "2",
+                "line": 5
+              },
+              "line": 6
+            }
+          },
+          "body": [
+            {
+              "type": "VariableDeclaration",
+              "varName": "current",
+              "varType": null,
+              "value": {
+                "type": "IndexExpression",
+                "source": {
+                  "type": "Identifier",
+                  "value": "myArray",
+                  "line": 6
+                },
+                "index": {
+                  "type": "Identifier",
+                  "value": "j",
+                  "line": 6
+                },
+                "line": 6
+              },
+              "line": 6
+            },
+            {
+              "type": "VariableDeclaration",
+              "varName": "next",
+              "varType": null,
+              "value": {
+                "type": "IndexExpression",
+                "source": {
+                  "type": "Identifier",
+                  "value": "myArray",
+                  "line": 7
+                },
+                "index": {
+                  "type": "Expression",
+                  "left": {
+                    "type": "Identifier",
+                    "value": "j",
+                    "line": 7
+                  },
+                  "operator": "+",
+                  "right": {
+                    "type": "NumberLiteral",
+                    "value": "1",
+                    "line": 7
+                  },
+                  "line": 7
+                },
+                "line": 7
+              },
+              "line": 7
+            },
+            {
+              "type": "IfStatement",
+              "condition": {
+                "type": "Expression",
+                "left": "current",
+                "operator": ">",
+                "right": {
+                  "type": "Identifier",
+                  "value": "next",
+                  "line": 8
+                },
+                "line": 8
+              },
+              "consequent": [
+                {
+                  "type": "SwapOperation",
+                  "varName": "myArray",
+                  "firstPosition": {
+                    "type": "Identifier",
+                    "value": "j",
+                    "line": 9
+                  },
+                  "secondPosition": {
+                    "type": "Expression",
+                    "left": {
+                      "type": "Identifier",
+                      "value": "j",
+                      "line": 9
+                    },
+                    "operator": "+",
+                    "right": {
+                      "type": "NumberLiteral",
+                      "value": "1",
+                      "line": 9
+                    },
+                    "line": 9
+                  },
+                  "line": 9
+                },
+                {
+                  "type": "VariableDeclaration",
+                  "varName": "swapped",
+                  "varType": null,
+                  "value": {
+                    "type": "BooleanLiteral",
+                    "value": true,
+                    "line": 10
+                  },
+                  "line": 10
+                }
+              ],
+              "alternate": null,
+              "line": 8
+            }
+          ],
+          "line": 5
+        },
+        {
+          "type": "IfStatement",
+          "condition": {
+            "type": "Expression",
+            "left": null,
+            "operator": "not",
+            "right": {
+              "type": "Identifier",
+              "value": "swapped",
+              "line": 13
+            },
+            "line": 13
+          },
+          "consequent": [
+            {
+              "type": "VariableDeclaration",
+              "varName": "i",
+              "varType": null,
+              "value": {
+                "type": "Expression",
+                "left": {
+                  "type": "LengthExpression",
+                  "source": {
+                    "type": "Identifier",
+                    "value": "myArray",
+                    "line": 14
+                  },
+                  "line": 14
+                },
+                "operator": "-",
+                "right": {
+                  "type": "NumberLiteral",
+                  "value": "1",
+                  "line": 14
+                },
+                "line": 15
+              },
+              "line": 14
+            }
+          ],
+          "alternate": null,
+          "line": 13
+        }
+      ],
+      "line": 3
+    },
+    {
+      "type": "PrintStatement",
+      "value": {
+        "type": "Identifier",
+        "value": "myArray",
+        "line": 17
+      },
+      "line": 17
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "myArray",
+      "dsType": "number",
+      "values": [
+        {
+          "type": "NumberLiteral",
+          "value": "50",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "40",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "30",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "20",
+          "line": 1
+        },
+        {
+          "type": "NumberLiteral",
+          "value": "10",
+          "line": 1
+        }
+      ],
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "name": "swapped",
+      "value": {
+        "type": "BooleanLiteral",
+        "value": true,
+        "line": 2
+      }
+    },
+    {
+      "type": "LoopFromTo",
+      "loopVariable": "i",
+      "range": {
+        "start": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 3
+        },
+        "end": {
+          "type": "Expression",
+          "left": {
+            "type": "LengthExpression",
+            "source": "myArray"
+          },
+          "operator": "-",
+          "right": "1"
+        }
+      },
+      "body": [
+        {
+          "type": "VariableDeclaration",
+          "name": "swapped",
+          "value": {
+            "type": "BooleanLiteral",
+            "value": false,
+            "line": 4
+          }
+        },
+        {
+          "type": "LoopFromTo",
+          "loopVariable": "j",
+          "range": {
+            "start": {
+              "type": "NumberLiteral",
+              "value": "0",
+              "line": 5
+            },
+            "end": {
+              "type": "Expression",
+              "left": {
+                "type": "Expression",
+                "left": {
+                  "type": "LengthExpression",
+                  "source": "myArray"
+                },
+                "operator": "-",
+                "right": "i"
+              },
+              "operator": "-",
+              "right": "2"
+            }
+          },
+          "body": [
+            {
+              "type": "VariableDeclaration",
+              "name": "current",
+              "value": {
+                "type": "IndexExpression",
+                "source": "myArray",
+                "index": "j"
+              }
+            },
+            {
+              "type": "VariableDeclaration",
+              "name": "next",
+              "value": {
+                "type": "IndexExpression",
+                "source": "myArray",
+                "index": {
+                  "type": "Expression",
+                  "left": "j",
+                  "operator": "+",
+                  "right": "1"
+                }
+              }
+            },
+            {
+              "type": "IfStatement",
+              "condition": {
+                "left": "current",
+                "operator": ">",
+                "right": "next"
+              },
+              "consequent": [
+                {
+                  "type": "SwapOperation",
+                  "varName": "myArray",
+                  "firstPosition": {
+                    "type": "Identifier",
+                    "value": "j",
+                    "line": 9
+                  },
+                  "secondPosition": {
+                    "type": "Expression",
+                    "left": "j",
+                    "operator": "+",
+                    "right": "1"
+                  },
+                  "line": 9
+                },
+                {
+                  "type": "VariableDeclaration",
+                  "name": "swapped",
+                  "value": {
+                    "type": "BooleanLiteral",
+                    "value": true,
+                    "line": 10
+                  }
+                }
+              ],
+              "alternate": null
+            }
+          ]
+        },
+        {
+          "type": "IfStatement",
+          "condition": {
+            "left": null,
+            "operator": "not",
+            "right": "swapped"
+          },
+          "consequent": [
+            {
+              "type": "VariableDeclaration",
+              "name": "i",
+              "value": {
+                "type": "Expression",
+                "left": {
+                  "type": "LengthExpression",
+                  "source": "myArray"
+                },
+                "operator": "-",
+                "right": "1"
+              }
+            }
+          ],
+          "alternate": null
+        }
+      ]
+    },
+    {
+      "type": "PrintStatement",
+      "value": "myArray"
+    }
+  ]
+}
+Final JSON: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "number",
+      "varName": "myArray",
+      "value": [
+        50,
+        40,
+        30,
+        20,
+        10
+      ],
+      "timestamp": "2024-09-14T18:22:46.200Z",
+      "description": "Created array myArray with values [50,40,30,20,10]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.201Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-14T18:22:46.201Z",
+      "description": "Set variable i to 0."
+    },
+    {
+      "line": 3,
+      "operation": "loop_from_to",
+      "condition": "i <= 4",
+      "timestamp": "2024-09-14T18:22:46.201Z",
+      "description": "loop from_to loop with condition i <= 4."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.201Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-14T18:22:46.201Z",
+      "description": "Set variable swapped to false."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-14T18:22:46.201Z",
+      "description": "Set variable j to 0."
+    },
+    {
+      "line": 5,
+      "operation": "loop_from_to",
+      "condition": "j <= 3",
+      "timestamp": "2024-09-14T18:22:46.201Z",
+      "description": "loop from_to loop with condition j <= 3."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.201Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 0,
+        "result": 50
+      },
+      "timestamp": "2024-09-14T18:22:46.202Z",
+      "description": "Set variable current to myArray[0]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 1,
+        "result": 40
+      },
+      "timestamp": "2024-09-14T18:22:46.202Z",
+      "description": "Set variable next to myArray[1]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.202Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 0,
+      "secondPosition": 1,
+      "varName": "myArray",
+      "description": "Swapped values in position 0 and 1 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.202Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.202Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.202Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-14T18:22:46.202Z",
+      "description": "Set variable j to 1."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.202Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 1,
+        "result": 50
+      },
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable current to myArray[1]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 2,
+        "result": 30
+      },
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable next to myArray[2]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 1,
+      "secondPosition": 2,
+      "varName": "myArray",
+      "description": "Swapped values in position 1 and 2 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.203Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable j to 2."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 2,
+        "result": 50
+      },
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable current to myArray[2]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 3,
+        "result": 20
+      },
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable next to myArray[3]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 2,
+      "secondPosition": 3,
+      "varName": "myArray",
+      "description": "Swapped values in position 2 and 3 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.203Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable j to 3."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 3,
+        "result": 50
+      },
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable current to myArray[3]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 4,
+        "result": 10
+      },
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable next to myArray[4]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 3,
+      "secondPosition": 4,
+      "varName": "myArray",
+      "description": "Swapped values in position 3 and 4 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.203Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Set variable j to 4."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 3",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Checked if j <= 3."
+    },
+    {
+      "line": 12,
+      "operation": "loop_end",
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 13,
+      "operation": "if",
+      "condition": "!swapped",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "Checked if !swapped."
+    },
+    {
+      "line": 15,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.203Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable i to 1."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable swapped to false."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable j to 0."
+    },
+    {
+      "line": 5,
+      "operation": "loop_from_to",
+      "condition": "j <= 2",
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "loop from_to loop with condition j <= 2."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 2",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if j <= 2."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 0,
+        "result": 40
+      },
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable current to myArray[0]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 1,
+        "result": 30
+      },
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable next to myArray[1]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 0,
+      "secondPosition": 1,
+      "varName": "myArray",
+      "description": "Swapped values in position 0 and 1 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.204Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable j to 1."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 2",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if j <= 2."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 1,
+        "result": 40
+      },
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable current to myArray[1]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 2,
+        "result": 20
+      },
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable next to myArray[2]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 1,
+      "secondPosition": 2,
+      "varName": "myArray",
+      "description": "Swapped values in position 1 and 2 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.204Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable j to 2."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 2",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if j <= 2."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 2,
+        "result": 40
+      },
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable current to myArray[2]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 3,
+        "result": 10
+      },
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable next to myArray[3]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 2,
+      "secondPosition": 3,
+      "varName": "myArray",
+      "description": "Swapped values in position 2 and 3 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.204Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable j to 3."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 2",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if j <= 2."
+    },
+    {
+      "line": 12,
+      "operation": "loop_end",
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 13,
+      "operation": "if",
+      "condition": "!swapped",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if !swapped."
+    },
+    {
+      "line": 15,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable i to 2."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable swapped to false."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable j to 0."
+    },
+    {
+      "line": 5,
+      "operation": "loop_from_to",
+      "condition": "j <= 1",
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "loop from_to loop with condition j <= 1."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 1",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Checked if j <= 1."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 0,
+        "result": 30
+      },
+      "timestamp": "2024-09-14T18:22:46.204Z",
+      "description": "Set variable current to myArray[0]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 1,
+        "result": 20
+      },
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable next to myArray[1]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 0,
+      "secondPosition": 1,
+      "varName": "myArray",
+      "description": "Swapped values in position 0 and 1 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.205Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable j to 1."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 1",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if j <= 1."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 1,
+        "result": 30
+      },
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable current to myArray[1]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 2,
+        "result": 10
+      },
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable next to myArray[2]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 1,
+      "secondPosition": 2,
+      "varName": "myArray",
+      "description": "Swapped values in position 1 and 2 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.205Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 2,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable j to 2."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 1",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if j <= 1."
+    },
+    {
+      "line": 12,
+      "operation": "loop_end",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 13,
+      "operation": "if",
+      "condition": "!swapped",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if !swapped."
+    },
+    {
+      "line": 15,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 3,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable i to 3."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable swapped to false."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable j to 0."
+    },
+    {
+      "line": 5,
+      "operation": "loop_from_to",
+      "condition": "j <= 0",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "loop from_to loop with condition j <= 0."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 0",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if j <= 0."
+    },
+    {
+      "line": 6,
+      "operation": "set",
+      "varName": "current",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 0,
+        "result": 20
+      },
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable current to myArray[0]."
+    },
+    {
+      "line": 7,
+      "operation": "set",
+      "varName": "next",
+      "type": "number",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "myArray",
+        "index": 1,
+        "result": 10
+      },
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable next to myArray[1]."
+    },
+    {
+      "line": 8,
+      "operation": "if",
+      "condition": "current > next",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if current > next."
+    },
+    {
+      "line": 9,
+      "operation": "swap",
+      "dataStructure": "array",
+      "firstPosition": 0,
+      "secondPosition": 1,
+      "varName": "myArray",
+      "description": "Swapped values in position 0 and 1 in array myArray.",
+      "timestamp": "2024-09-14T18:22:46.205Z"
+    },
+    {
+      "line": 10,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable swapped to true."
+    },
+    {
+      "line": 11,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 1,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable j to 1."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= 0",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if j <= 0."
+    },
+    {
+      "line": 12,
+      "operation": "loop_end",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 13,
+      "operation": "if",
+      "condition": "!swapped",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if !swapped."
+    },
+    {
+      "line": 15,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 4,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable i to 4."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": true,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 4,
+      "operation": "set",
+      "varName": "swapped",
+      "type": "boolean",
+      "value": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable swapped to false."
+    },
+    {
+      "line": 5,
+      "operation": "set",
+      "varName": "j",
+      "type": "number",
+      "value": 0,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable j to 0."
+    },
+    {
+      "line": 5,
+      "operation": "loop_from_to",
+      "condition": "j <= -1",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "loop from_to loop with condition j <= -1."
+    },
+    {
+      "line": 5,
+      "operation": "if",
+      "condition": "j <= -1",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if j <= -1."
+    },
+    {
+      "line": 5,
+      "operation": "loop_end",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 6,
+      "operation": "if",
+      "condition": "!swapped",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if !swapped."
+    },
+    {
+      "line": 8,
+      "operation": "endif",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of if statement."
+    },
+    {
+      "line": 3,
+      "operation": "set",
+      "varName": "i",
+      "type": "number",
+      "value": 5,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Set variable i to 5."
+    },
+    {
+      "line": 3,
+      "operation": "if",
+      "condition": "i <= 4",
+      "result": false,
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "Checked if i <= 4."
+    },
+    {
+      "line": 16,
+      "operation": "loop_end",
+      "timestamp": "2024-09-14T18:22:46.205Z",
+      "description": "End of loop from_to loop"
+    },
+    {
+      "line": 17,
+      "operation": "print",
+      "isLiteral": false,
+      "varName": "myArray",
+      "literal": [
+        10,
+        20,
+        30,
+        40,
+        50
+      ],
+      "timestamp": "2024-09-14T18:22:46.206Z",
+      "description": "Printed myArray."
+    }
+  ]
+}
