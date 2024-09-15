@@ -1,21 +1,21 @@
+/**
+ * Author(s): Gregory Maselle
+ * Date: September 2024
+ * Description: This file describes an ArrayBlockComponent component for visualisation. Each ArrayComponent consists of many of these ArrayBlockComponents.
+ */
+
 import React, { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import "../styles/App.css";
 
 function ArrayBlockComponent({
   keyProp,
-  id,
   passedValue,
-  movements,
-  locations,
   speedState,
-  updateLocations,
-  indexState,
   inserted,
   removed,
   swapped,
   changed,
-  setSwappedState,
   got,
   followVisState
 }) {
@@ -33,7 +33,9 @@ function ArrayBlockComponent({
       });}
     }
   }, [inserted, removed, changed, swapped, got, keyProp]);
-
+ /*
+  Props are used here to trigger the various animations. Depending on the value of the states provided in the props, different animations occur.
+ */
   if (inserted) {
     return (
       <motion.div

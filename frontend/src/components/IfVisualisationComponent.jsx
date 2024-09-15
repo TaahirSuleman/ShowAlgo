@@ -1,3 +1,10 @@
+/**
+ * Author(s): Gregory Maselle
+ * Date: September 2024
+ * Description: This file describes an IfVisualisationComponent Component for visualisation. This component serves as a means to notify the user of an if statements
+ * occurence in the pseudocode while highlighting the condition in the if statement. 
+ */
+
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import "../styles/App.css";
@@ -8,29 +15,22 @@ function IfVisualisationComponent({
   indexState,
   setIndexState,
   pauseState,
-  setOutput,
-  bufferState,
-  setPauseState,
   followVisState,
 }) {
-  const [ifStatement, setIfStatement] = useState({
-    operation: "if",
-    condition: "This is the starter If",
-    result: false,
-    timestamp: "2024-07-09T12:02:00Z",
-    description: "Checked if x is greater than 5.",
-  });
+
+  // State variables
+  const [ifStatement, setIfStatement] = useState();
   const [resultColourState, setResultColourState] = useState("#4A5568");
   const [isActive, setIsActive] = useState(false);
+  // reference used for auto scrolling
   const ifRef = useRef();
-
-  const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
   useEffect(() => {
     const performOperations = () => {
       if (indexState > -1 && indexState < movements.length && !pauseState) {
         const movement = movements[indexState];
         if (movement.operation === "if") {
+          // navigate to animation within visualisation view
           if (followVisState) {
             ifRef.current.scrollIntoView({
               behavior: "smooth",
@@ -38,6 +38,7 @@ function IfVisualisationComponent({
               inline: "center",
             });
           }
+          // A number of nested timeouts are performed to manage the changing of colour and border radius of if visualisation component.
           setIsActive(true);
           setResultColourState("#6B46C1");
           setIfStatement(movement);
@@ -49,21 +50,19 @@ function IfVisualisationComponent({
             }
             const timeoutId2 = setTimeout(() => {
               setResultColourState("#4A5568");
-            }, (speedState * 1000) / 2);
-            setOutput((prev) => {
-              return [...prev, movements[indexState].description];
-            });
+            }, (speedState * 1000) / 2); // This should take half the total animation time
             const timeoutId3 = setTimeout(() => {
               setIndexState((prev) => prev + 1);
-            }, (speedState * 1000) / 2);
+            }, (speedState * 1000) / 2); // This should take half the total animation time
 
             return () => {
               clearTimeout(timeoutId2);
               clearTimeout(timeoutId3);
             };
-          }, (speedState * 1000) / 2);
+          }, (speedState * 1000) / 2); // This should take half the total animation time.
 
           return () => clearTimeout(timeoutId1);
+          // When code within an if loop ends, clear the if visualisation.
         } else if (movement.operation === "endif") {
           if (followVisState) {
             ifRef.current.scrollIntoView({
@@ -72,14 +71,12 @@ function IfVisualisationComponent({
               inline: "center",
             });
           }
-          setOutput((prev) => {
-            return [...prev, movements[indexState].description];
-          });
           const timeoutId4 = setTimeout(() => {
             setIsActive(false);
             setIndexState((prev) => prev + 1);
           }, speedState * 1000);
           return () => clearTimeout(timeoutId4);
+          // When a loop ends, clear the if visualisation as there is no explicit `end if` in pseudocode.
         } else if (movement.operation === "loop_end") {
           const timeoutId4 = setTimeout(() => {
             setIsActive(false);

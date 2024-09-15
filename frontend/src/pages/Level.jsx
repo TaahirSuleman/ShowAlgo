@@ -1,5 +1,5 @@
 /**
- * Author(s): Yusuf Kathrada
+ * Author(s): Yusuf Kathrada (Contributed to by Gregory Maselle)
  * Date: September 2024
  * Description: This file contains the Level page which includes the problem statement, run controls, code editor, output view and visualisation view
  */

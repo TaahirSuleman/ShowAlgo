@@ -1,3 +1,10 @@
+/**
+ * Author(s): Gregory Maselle
+ * Date: September 2024
+ * Description: This file describes an ArrayComponent Component for visualisation. This component consists of many ArrayBlockComponents to facilitate the visualisation of
+ * arrays and operations on arrays.
+ */
+
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import '../styles/App.css'
@@ -15,20 +22,23 @@ function ArrayComponent(
     indexState,
     setIndexState,
     pauseState,
-    setOutput,
-    bufferState,
-    setPauseState,
     followVisState
   }) {
+
+    // state variables
+    // These state variables are passed down to ArrayBlockComponents to trigger changes in individual blocks. States with such function are identified.
   const [values, setValues] = useState(arrayState.values);
-  const [removedState, setRemovedState] = useState(-1);
-  const [addedState, setAddedState] = useState("");
+  const [removedState, setRemovedState] = useState(-1); // This one
+  const [addedState, setAddedState] = useState(""); // This one
   const [locations, setLocations] = useState(arrayState.locations); // Location array to keep track of which values are where
-  const [swappedState, setSwappedState] = useState(["",""])
-  const [changedState, setChangedState] = useState("")
-  const [gotState, setGotState] = useState("")
-  const arrayRef = useRef();
+  const [swappedState, setSwappedState] = useState(["",""]) // This one
+  const [changedState, setChangedState] = useState("") // This one
+  const [gotState, setGotState] = useState("") // This one
   const [arrayUpdating, setArrayUpdating] = useState(false)
+
+  // reference for auto-scrolling
+  const arrayRef = useRef();
+  
 
   useEffect(() => {
     // Update component state whenever arrayState prop changes
@@ -45,7 +55,7 @@ function ArrayComponent(
     const performOperations = () => {
       if (indexState > -1 && indexState < movements.length && !pauseState) {
         switch (movements[indexState].operation){
-
+          // Actual array creation handling occurs in MainVisualisationView. This is for auto-navigation to the array in the visualisation view.
           case "create":
             if (movements[indexState].dataStructure === "array"){
               if (followVisState){
@@ -55,15 +65,13 @@ function ArrayComponent(
           break;
             // No index incremention here. Done in MainVisualisationwindow
 
+            // In the event two blocks are being swapped in an array
           case "swap":
             if (movements[indexState].varName != arrayState.name){
               return;
             }
-            console.log("Its a swap");
             let prevValues = [...values];
             [prevValues[movements[indexState].firstPosition], prevValues[movements[indexState].secondPosition]] = [prevValues[movements[indexState].secondPosition], prevValues[movements[indexState].firstPosition]];
-            console.log("swapping debug values "+values)
-            console.log("swapping debug prev values "+prevValues)
             setSwappedState([prevValues[movements[indexState].firstPosition],prevValues[movements[indexState].secondPosition]])
             setValues(prevValues);
             for (let i = 0; i<arraysState.length;i++){
@@ -77,30 +85,28 @@ function ArrayComponent(
                 setArraysState(tempArrState)
               }
             }
-            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId1 = setTimeout(()=> {
               setIndexState((i)=>{return i+1})
               setSwappedState(["",""])
             }, speedState*1000) // This controls the time between SWAPPING and the next movement.
             return () => clearTimeout(timeoutId1);
           break;
-
+            // In the event a block is being added/inserted into an array.
           case "add":
             if (movements[indexState].varName != arrayState.name){
               return;
             }
+            // navigate to block being added
             if (followVisState){
             arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
             addToArray(movements[indexState].value, movements[indexState].position);
-            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId2 = setTimeout(()=> {
-
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between INSERTING and the next movement.
             return () => clearTimeout(timeoutId2);
           break;
-
+            // In the event a block is being removed from the array
           case "remove":
             if (movements[indexState].varName != arrayState.name){
               return;
@@ -109,14 +115,12 @@ function ArrayComponent(
             arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
             removeFromArray((movements[indexState].positionToRemove))
-            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId3 = setTimeout(()=> {
-
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between POPPING and the next movement.
             return () => clearTimeout(timeoutId3);
           break;
-
+            // In the event a value in the array is being changed.
           case "set":
             if (typeof movements[indexState].value === "object"){
               let innerMovement = movements[indexState].value
@@ -124,10 +128,11 @@ function ArrayComponent(
                 if (followVisState){
                 arrayRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 }
+                // SetGotState -> triggers animation in ArrayBlock
                 setGotState(values[innerMovement.index]);
                 console.log(values[innerMovement.index] + " This is the got state ")
-                setOutput((prev) => {return [...prev, movements[indexState].description]});
                 const timeoutId4 = setTimeout(()=> {
+                  // setGotState -> returns block to "normal" status. Not undergoing changes.
                   setGotState("")
                   setIndexState((i)=>{return i+1})
                 }, speedState*1000) // This controls the time between POPPING and the next movement.
@@ -142,8 +147,8 @@ function ArrayComponent(
             }
             setValueInArray(movements[indexState].setValue, movements[indexState].index)
             console.log(values[movements[indexState].index] + " This is the changed state ")
-            setOutput((prev) => {return [...prev, movements[indexState].description]});
             const timeoutId5 = setTimeout(()=> {
+              // setChangedState -> returns block to "normal" status. Not undergoing changes.
               setChangedState("")
               setIndexState((i)=>{return i+1})
             }, speedState*1000) // This controls the time between POPPING and the next movement.
@@ -158,7 +163,7 @@ function ArrayComponent(
   }, [indexState, pauseState]);
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
-
+  // Called when a value is being changed within the array. Not insertion.
   const setValueInArray = async (value, location) => {
     let newEntry;
     if (arrayState.type === "string"){
@@ -171,8 +176,8 @@ function ArrayComponent(
     setChangedState(newEntry);
     setValues(newValues);
     let previousLocations = [... locations]; //
-    previousLocations.push(location); // This location stuff is deprecated and may not ever be used. This code may not make sense.
-    setLocations(previousLocations); //
+    previousLocations.push(location); // processing of locations is deprecated but is left included in the event more custom animations needs to be implemented in the future and use of layout prop proves to be insufficient
+    setLocations(previousLocations);  // 
     for (let i = 0; i<arraysState.length;i++){
       if (arraysState[i].name == arrayName){
         let tempArrState = [... arraysState]
@@ -188,7 +193,7 @@ function ArrayComponent(
     console.log(values)
     await delay(speedState*1000*0.66); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
     console.log("These are the locations: "+locations);
-    setChangedState("")
+    setChangedState("") // setChangedState -> returns block to "normal" status. Not undergoing changes.
   }
 
   const addToArray = async (value, location) => {
@@ -203,9 +208,9 @@ function ArrayComponent(
     let newValues = [... values.slice(0,location), newEntry, ...values.slice(location)];
     setAddedState(newEntry);
     setValues(newValues);
-    let previousLocations = [... locations];
-    previousLocations.push(location);
-    setLocations(previousLocations);
+    let previousLocations = [... locations];//
+    previousLocations.push(location);// // processing of locations is deprecated but is left included in the event more custom animations needs to be implemented in the future and use of layout prop proves to be insufficient
+    setLocations(previousLocations);//
     for (let i = 0; i<arraysState.length;i++){
       if (arraysState[i].name == arrayName){
         let tempArrState = [... arraysState]
@@ -221,16 +226,16 @@ function ArrayComponent(
     console.log(values)
     await delay(speedState*1000*0.75); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
     console.log("These are the locations: "+locations);
-    setAddedState("")
+    setAddedState("") // setAddedState -> returns block to "normal" status. Not undergoing changes.
   }
 
   const removeFromArray = async (position) => {
     let newValues = [... values]
     newValues.splice(position, 1);
-    let newLocations = [... locations]
-    for (let i = 0; i< locations.length;i++){
-      if (locations[i] == position){
-        let newLoc = [... locations];
+    let newLocations = [... locations] //
+    for (let i = 0; i< locations.length;i++){ //
+      if (locations[i] == position){ // // processing of locations is deprecated but is left included in the event more custom animations needs to be implemented in the future and use of layout prop proves to be insufficient
+        let newLoc = [... locations]; //
         newLoc[i]= -1;
         setLocations(newLoc);
       }
@@ -239,7 +244,7 @@ function ArrayComponent(
     setRemovedState(position)
     await delay(speedState*1000*0.75); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
     setLocations(newLocations);
-    setRemovedState(-1);
+    setRemovedState(-1); // setRemovedState -> returns block to "normal" status. Not undergoing changes.
     for (let i = 0; i<arraysState.length;i++){
       if (arraysState[i].name == arrayName){
         let tempArrState = [... arraysState]
@@ -254,31 +259,13 @@ function ArrayComponent(
     }
     setValues(newValues);
   }
-
-  const updateLocations = (index, newLocation, insert ) =>{
-    
-    if (insert ==  false){
-      setLocations((prevLocations) => {
-        let newLocations = [...prevLocations];
-        newLocations[index] = newLocation;
-        return newLocations;
-      })
-    }
-    else{
-      setLocations((prevLocations) => {
-        let newLocations = [...prevLocations];
-        newLocations.push(newLocation);
-        return newLocations;
-      })
-    }
-  }
     if (arrayName == "default"){
       return(
         <></>
       )
     }
     return (
-      <div ref={arrayRef} style={{ display: 'flex', flexDirection: 'column' }}>
+      <motion.div layout ref={arrayRef} style={{ display: 'flex', flexDirection: 'column' }}>
         <p style={{ fontWeight: "bold", fontSize: "larger" }}>{arrayName}</p>
         <motion.div
           className="array-container"
@@ -300,24 +287,18 @@ function ArrayComponent(
             <ArrayBlockComponent
               key={value}
               keyProp={value}
-              id={parseInt(value.substring(value.indexOf("-") + 1))}
               passedValue={value.substring(value.indexOf("++") + 2, value.indexOf("-"))}
-              movements={movements}
-              locations={locations}
               speedState={speedState}
-              updateLocations={updateLocations}
-              indexState={indexState}
               inserted={addedState === value}
               removed={removedState === index}
               swapped={swappedState}
               changed={changedState === value}
               got={gotState === value}
-              setSwappedState={setSwappedState}
               followVisState={followVisState}
             />
           ))}
         </motion.div>
-      </div>
+      </motion.div>
     );
   }
   
