@@ -1,6 +1,8 @@
 /**
- * JsonNodeConverterFactory is responsible for selecting the correct node conversion
+ * @class JsonNodeConverterFactory
+ * @description JsonNodeConverterFactory is responsible for selecting the correct node conversion
  * method for transforming intermediate representation (IR) nodes into JSON action frames.
+ * @author Taahir Suleman
  */
 class JsonNodeConverterFactory {
     /**
@@ -38,24 +40,14 @@ class JsonNodeConverterFactory {
                 );
             case "IfStatement":
                 return (node) => {
-                    //this.jsonConverter.ifDepth++;
                     const result =
                         this.jsonConverter.transformIfStatement(node);
-                    // if (this.jsonConverter.ifDepth === 1) {
-                    //     this.jsonConverter.nestedEndIf = 0;
-                    // }
-                    // this.jsonConverter.ifDepth--;
                     return result;
                 };
             case "OtherwiseIfStatement":
                 return (node) => {
-                    // this.jsonConverter.ifDepth++; // Increment the IF depth
                     const result =
                         this.jsonConverter.transformOtherwiseIfStatement(node);
-                    // if (this.jsonConverter.ifDepth === 1) {
-                    //     this.jsonConverter.nestedEndIf = 0; // Reset nestedEndIf if at top level
-                    // }
-                    // this.jsonConverter.ifDepth--; // Decrement the IF depth
                     return result;
                 };
 

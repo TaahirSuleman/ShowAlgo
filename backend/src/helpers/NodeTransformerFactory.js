@@ -1,10 +1,17 @@
+/**
+ * @class NodeTransformerFactory
+ * @description A factory class responsible for transforming Abstract Syntax Tree (AST) nodes into an intermediate representation (IR).
+ * This class processes various node types and ensures that the transformation is done using the appropriate logic for each node.
+ * @author Taahir Suleman
+ *
+ */
 class NodeTransformerFactory {
     /**
-     * Creates a transformed node based on the type.
-     * @param {string} type - The type of the node.
-     * @param {Object} transformer - The transformer instance to handle node transformation.
+     * Transforms a node based on its type.
+     * @param {string} type - The type of the AST node.
+     * @param {Object} transformer - The transformer instance responsible for transforming nodes.
      * @param {Object} node - The AST node to be transformed.
-     * @returns {Object} The transformed node.
+     * @returns {Object} The transformed node in the intermediate representation (IR).
      * @throws {Error} If the node type is unknown.
      */
     createTransformedNode(type, transformer, node) {
@@ -27,16 +34,18 @@ class NodeTransformerFactory {
                 let value = transformer.transformExpression(node.value);
                 let index = node.value.type.indexOf("Literal");
                 let typeVar = node.value.type.substring(0, index);
+
+                // Validating variable types against their expected types.
                 if (
                     node.varType === "boolean" &&
-                    node.value.type != "BooleanLiteral"
+                    node.value.type !== "BooleanLiteral"
                 ) {
                     throw new Error(
                         "Booleans can only be either true or false."
                     );
                 } else if (
                     node.varType === "string" &&
-                    node.value.type != "StringLiteral" &&
+                    node.value.type !== "StringLiteral" &&
                     !node.value.type.includes("Expression")
                 ) {
                     throw new Error(
@@ -44,7 +53,7 @@ class NodeTransformerFactory {
                     );
                 } else if (
                     node.varType === "number" &&
-                    node.value.type != "NumberLiteral" &&
+                    node.value.type !== "NumberLiteral" &&
                     !node.value.type.includes("Expression")
                 ) {
                     throw new Error(
@@ -138,32 +147,31 @@ class NodeTransformerFactory {
                         node.position.type === "Expression"
                             ? transformer.transformExpression(node.position)
                             : transformer.transformExpression(node.position)
-                                  .value, // New value to set
+                                  .value,
                 };
             case "ArraySetValue":
                 return {
                     type: "ArraySetValue",
                     line: node.line,
                     varName: node.varName,
-                    index: transformer.transformExpression(node.position), // Position to set
+                    index: transformer.transformExpression(node.position),
                     setValue:
                         node.newValue.type === "IndexExpression"
                             ? transformer.transformExpression(node.newValue)
                             : transformer.transformExpression(node.newValue)
-                                  .value, // New value to set
+                                  .value,
                 };
-            case "SwapOperation": // Refactored SwapOperation
+            case "SwapOperation":
                 return {
                     type: "SwapOperation",
                     line: node.line,
                     varName: node.varName,
                     firstPosition: transformer.transformExpression(
                         node.firstPosition
-                    ), // Transform first position
+                    ),
                     secondPosition: transformer.transformExpression(
                         node.secondPosition
-                    ), // Transform second position
-                    line: node.line,
+                    ),
                 };
             case "NumberLiteral":
             case "StringLiteral":
@@ -188,13 +196,13 @@ class NodeTransformerFactory {
                               )
                             : transformer.transformExpression(
                                   node.positionToRemove
-                              ).value, // New value to set,
+                              ).value,
                 };
             case "LengthExpression":
                 return {
                     type: "LengthExpression",
                     line: node.line,
-                    source: node.source.value, // Extract the variable name directly
+                    source: node.source.value,
                 };
             case "SubstringExpression":
                 return transformer.transformSubstringExpression(node);

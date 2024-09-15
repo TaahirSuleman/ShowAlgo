@@ -379,7 +379,7 @@ describe("JsonConverter", () => {
                     line: 2,
                     condition: {
                         left: "x",
-                        operator: ">",
+                        operator: "<=",
                         right: "5",
                     },
                     body: [
@@ -615,7 +615,7 @@ describe("JsonConverter", () => {
                     line: 2,
                     condition: {
                         left: "x",
-                        operator: ">",
+                        operator: "<=",
                         right: "5",
                     },
                     body: [

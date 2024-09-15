@@ -105,7 +105,6 @@ class JavaScriptGenerator extends Converter {
         let condition = this.generateCondition(node.condition);
         condition = condition.replace(/['"]+/g, "");
         const body = this.generateNodes(node.body);
-        console.log(`while (${condition})`);
         return `while (${condition}) {\n${body}\n}`;
     }
 
@@ -240,7 +239,6 @@ ${node.varName}[${node.secondPosition.value}] = temp;`;
                     expression.index
                 )}]`;
             case "LogicalOperator":
-                console.log(expression);
                 return this.generateCondition(expression);
 
             case "LengthExpression":

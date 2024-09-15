@@ -147,7 +147,7 @@ describe("PseudocodeProcessor", () => {
                 LOOP j FROM 0 TO LENGTH OF myArray - i - 2
                     SET current TO myArray[j]
                     SET next TO myArray[j + 1]
-                    IF current > next THEN
+                    IF current > next then
                         SWAP position j WITH position j + 1 IN myArray
                         SET swapped TO true
                     END IF
