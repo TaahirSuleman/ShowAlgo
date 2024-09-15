@@ -28,6 +28,8 @@ class JavaScriptNodeFactory {
                 return this.generator.generateReturnStatement(node);
             case "IfStatement":
                 return this.generator.generateIfStatement(node);
+            case "OtherwiseIfStatement":
+                return this.generator.generateIfStatement(node);
             case "ForLoop":
                 return this.generator.generateForLoop(node);
             case "WhileLoop":
