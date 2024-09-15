@@ -107,7 +107,10 @@ class JsonConverter extends Converter {
                 true
             );
 
-            if (!functionCallResult.returnValue) {
+            if (
+                !functionCallResult.returnValue &&
+                functionCallResult.returnValue != 0
+            ) {
                 throw new Error(
                     `Function ${node.value.name} does not return a value and cannot be used in a variable declaration.`
                 );
