@@ -105,6 +105,7 @@ const CodeEditorView = ({
   useEffect(() => {
     const performOperations = () => {
     if (
+      movementsState && // Check if movementsState is defined
       indexState < movementsState.length &&
       indexState > -1 &&
       !pauseState &&
