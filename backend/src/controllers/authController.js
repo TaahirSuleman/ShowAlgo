@@ -275,6 +275,14 @@ export const deleteLevel = async (req, res) => {
     await Sections.findByIdAndUpdate(level.section_id, {
       $pull: { levels: levelId },
     });
+
+    // Remove the level from all userProgress documents
+    await UserProgress.updateMany(
+      { "sections.levels.level_id": levelId },
+      {
+        $pull: { "sections.$.levels": { level_id: levelId } },
+      }
+    );
     res.json(level);
   } catch (error) {
     console.log(error);
