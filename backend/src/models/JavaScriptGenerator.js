@@ -1,79 +1,72 @@
 import Converter from "./Converter.js";
+import JavaScriptNodeFactory from "./JavaScriptNodeFactory.js";
+
+/**
+ * @class JavaScriptGenerator
+ * @description Converts IR into JavaScript code using a factory for node creation.
+ */
 class JavaScriptGenerator extends Converter {
+    /**
+     * @constructor
+     * @param {Object} ir - Intermediate representation (IR).
+     */
     constructor(ir) {
         super();
         this.ir = ir;
         this.jsCode = "";
         this.declaredVariables = new Set();
-        //this.variables = {};
+        this.nodeFactory = new JavaScriptNodeFactory(this); // Factory pattern
     }
 
+    /**
+     * @method convert
+     * @description Converts IR to JavaScript.
+     * @param {Object} ir - Intermediate representation of the code.
+     * @returns {string} JavaScript code.
+     */
     convert(ir) {
         this.ir = ir;
         return this.generate();
     }
 
+    /**
+     * @method generate
+     * @description Generates JavaScript from the IR.
+     * @returns {string} The generated JavaScript code.
+     */
     generate() {
         this.jsCode += "'use strict';\n";
         this.jsCode += this.generateNodes(this.ir.program);
         return this.jsCode;
     }
 
+    /**
+     * @method generateNodes
+     * @description Generates code for an array of IR nodes.
+     * @param {Array} nodes - Array of IR nodes.
+     * @returns {string} The generated code.
+     */
     generateNodes(nodes) {
-        return nodes.map((node) => this.generateNode(node)).join("\n");
+        return nodes
+            .map((node) => this.nodeFactory.createNode(node))
+            .join("\n");
     }
 
-    generateNode(node) {
-        switch (node.type) {
-            case "VariableDeclaration":
-                return this.generateVariableDeclaration(node);
-            case "FunctionDeclaration":
-                return this.generateFunctionDeclaration(node);
-            case "ReturnStatement":
-                return this.generateReturnStatement(node);
-            case "IfStatement":
-                return this.generateIfStatement(node);
-            case "SubstringExpression":
-                const string = this.generateExpression(expression.string);
-                const start = this.generateExpression(expression.start);
-                const end = this.generateExpression(expression.end);
-                return `${string}.substring(${start} - 1, ${end})`; // JS is 0-indexed, subtract 1 from start
-            case "LengthExpression":
-                const source = this.generateExpression(expression.source);
-                return `${source}.length`;
-
-            case "IndexExpression":
-                const stringVar = this.generateExpression(expression.source);
-                const index = this.generateExpression(expression.index);
-                return `${stringVar}.charAt(${index} - 1)`; // JS is 0-indexed, subtract 1 from index
-            case "ForLoop":
-                return this.generateForLoop(node);
-            case "WhileLoop":
-                return this.generateWhileLoop(node);
-            case "LoopUntil": // New case for LoopUntil
-                return this.generateLoopUntil(node);
-            case "LoopFromTo":
-                return this.generateLoopFromTo(node);
-            case "PrintStatement":
-                return this.generatePrintStatement(node);
-            case "ArrayCreation":
-                return this.generateArrayCreation(node);
-            case "ArrayInsertion":
-                return this.generateArrayInsertion(node);
-            default:
-                throw new Error(`Unknown node type: ${node.type}`);
-        }
-    }
-
+    /**
+     * @method generateVariableDeclaration
+     * @description Generates code for variable declarations.
+     * @param {Object} node - VariableDeclaration node.
+     * @returns {string} The JavaScript code for variable declaration.
+     */
     generateVariableDeclaration(node) {
         const declaration = this.declaredVariables.has(node.name)
             ? `${node.name}`
             : `let ${node.name}`;
         this.declaredVariables.add(node.name);
-        //this.variables[node.name] = this.generateExpression(node.value);
         return `${declaration} = ${this.generateExpression(node.value)};`;
     }
 
+    // Continue adding similar methods for function declarations, loops, etc.
     generateFunctionDeclaration(node) {
         const params = node.params.join(", ");
         for (const param of params) {
@@ -109,15 +102,15 @@ class JavaScriptGenerator extends Converter {
     }
 
     generateWhileLoop(node) {
-        const condition = this.generateCondition(node.condition);
-        //console.log("HI");
+        let condition = this.generateCondition(node.condition);
+        condition = condition.replace(/['"]+/g, "");
         const body = this.generateNodes(node.body);
+        console.log(`while (${condition})`);
         return `while (${condition}) {\n${body}\n}`;
     }
 
     generateLoopUntil(node) {
-        // New method for handling LoopUntil
-        const flippedCondition = this.flipCondition(
+        let flippedCondition = this.flipCondition(
             this.generateCondition(node.condition)
         );
         return this.generateWhileLoop({ ...node, condition: flippedCondition });
@@ -140,18 +133,85 @@ class JavaScriptGenerator extends Converter {
         }, 0, ${this.generateExpression(node.value)});`;
     }
 
-    generateExpression(expression) {
-        //console.log(expression);
-        //console.log(this.declaredVariables);
+    generateRemoveOperation(node) {
+        return `${node.varName}.splice(${node.positionToRemove}, 1);`;
+    }
+
+    generateArraySetValue(node) {
+        return `${node.varName}[${
+            node.index.value
+        }] = ${this.generateExpression(node.setValue)};`;
+    }
+
+    generateIndexExpression(node) {
+        return `${node.source.value}[${this.generateExpression(node.index)}]`;
+    }
+
+    generateLengthExpression(node) {
+        return `${node.source}.length`;
+    }
+
+    generateSwapOperation(node) {
+        return `let temp = ${node.varName}[${node.firstPosition.value}];
+${node.varName}[${node.firstPosition.value}] = ${node.varName}[${node.secondPosition.value}];
+${node.varName}[${node.secondPosition.value}] = temp;`;
+    }
+
+    generateExpression(expression, parentPrecedence = 0) {
+        const operatorPrecedence = {
+            "*": 2,
+            "/": 2,
+            "+": 1,
+            "-": 1,
+            and: 0, // Logical AND
+            or: 0, // Logical OR
+            not: 3, // Logical NOT (unary, higher precedence)
+        };
+
+        const getOperatorPrecedence = (operator) => {
+            return operatorPrecedence[operator] || 0;
+        };
+
         expression = this.ensureStructuredValue(expression); // Ensure it's structured
 
         switch (expression.type) {
-            case "Expression":
-                const left = this.generateExpression(expression.left);
-                const operator = expression.operator;
-                const right = this.generateExpression(expression.right);
-                return `${left} ${operator} ${right}`;
+            case "Expression": {
+                const currentOperator = expression.operator;
+                const currentPrecedence =
+                    getOperatorPrecedence(currentOperator);
 
+                // Generate left and right expressions
+                const left = this.generateExpression(
+                    expression.left,
+                    currentPrecedence
+                );
+                const right = this.generateExpression(
+                    expression.right,
+                    currentPrecedence
+                );
+
+                // Only add parentheses if the current precedence is lower than the parent
+                const needParenthesesForLeft =
+                    typeof expression.left === "object" &&
+                    expression.left.type === "Expression" &&
+                    getOperatorPrecedence(expression.left.operator) <
+                        currentPrecedence;
+
+                // Add parentheses for right when it's necessary to maintain precedence
+                const needParenthesesForRight =
+                    typeof expression.right === "object" &&
+                    expression.right.type === "Expression" &&
+                    getOperatorPrecedence(expression.right.operator) <=
+                        currentPrecedence;
+
+                // Adjust parentheses placement for nested expressions
+                const leftWrapped = needParenthesesForLeft ? `(${left})` : left;
+                const rightWrapped = needParenthesesForRight
+                    ? `(${right})`
+                    : right;
+
+                return `${leftWrapped} ${currentOperator} ${rightWrapped}`;
+            }
             case "Identifier":
                 return expression.value;
 
@@ -160,14 +220,8 @@ class JavaScriptGenerator extends Converter {
 
             case "StringLiteral":
                 return `"${expression.value}"`;
-
-            // Exclude ArrayLiteral as per your suggestion, unless needed later
-            /*
-            case "ArrayLiteral":
-                return `[${expression.value
-                    .map((v) => this.generateExpression(v))
-                    .join(", ")}]`;
-            */
+            case "BooleanLiteral": // Add this case
+                return expression.value;
 
             case "FunctionCall":
                 const args = expression.arguments
@@ -175,19 +229,49 @@ class JavaScriptGenerator extends Converter {
                     .join(", ");
                 return `${expression.callee}(${args})`;
 
+            case "SubstringExpression":
+                const string = expression.string;
+                const start = this.generateExpression(expression.start);
+                const end = this.generateExpression(expression.end);
+                return `${string}.substring(${start}, ${end})`;
+
+            case "IndexExpression":
+                return `${expression.source}[${this.generateExpression(
+                    expression.index
+                )}]`;
+            case "LogicalOperator":
+                console.log(expression);
+                return this.generateCondition(expression);
+
+            case "LengthExpression":
+                return `${expression.source}.length`;
+
             default:
                 throw new Error(`Unknown expression type: ${expression.type}`);
         }
     }
 
     generateCondition(condition) {
-        if (typeof condition != "object" && condition !== null) {
-            return condition; // Already a structured object
+        // If the condition is not an object and not null, treat it as a primitive value
+        if (typeof condition !== "object" || condition === null) {
+            return this.generateExpression(condition); // Handle as a simple value
         }
-        //console.log(condition.left);
-        const left = this.generateExpression(condition.left);
-        const operator = this.getOperator(condition.operator);
-        const right = this.generateExpression(condition.right);
+
+        // Recursively process the left side of the condition if it's an expression
+        const left =
+            condition.left.type === "Expression"
+                ? this.generateCondition(condition.left) // Recurse for nested expressions
+                : this.generateExpression(condition.left); // Generate for simple expressions
+
+        const operator = this.getOperator(condition.operator); // Map operator (e.g., 'greater' to '>')
+
+        // Recursively process the right side of the condition if it's an expression
+        const right =
+            condition.right.type === "Expression"
+                ? this.generateCondition(condition.right) // Recurse for nested expressions
+                : this.generateExpression(condition.right); // Generate for simple expressions
+
+        // Return the condition as a proper JavaScript expression without quotes
         return `${left} ${operator} ${right}`;
     }
 
@@ -199,57 +283,50 @@ class JavaScriptGenerator extends Converter {
                 return "<";
             case "equal":
                 return "==";
+            case "and":
+                return "&&";
+            case "or":
+                return "||";
+            case "not":
+                return "!";
             case ">":
-                return ">";
             case "<":
-                return "<";
             case "==":
-                return "==";
             case "!=":
-                return "!=";
             case ">=":
-                return ">=";
             case "<=":
-                return "<=";
+                return operator;
             default:
                 throw new Error(`Unknown operator: ${operator}`);
         }
     }
 
     flipCondition(condition) {
-        if (condition.includes(">=")) {
-            return condition.replace(">=", "<");
-        } else if (condition.includes(">")) {
-            return condition.replace(">", "<=");
-        } else if (condition.includes("<=")) {
-            return condition.replace("<=", ">");
-        } else if (condition.includes("<")) {
-            return condition.replace("<", ">=");
-        } else if (condition.includes("==")) {
-            return condition.replace("==", "!=");
-        } else if (condition.includes("!=")) {
-            return condition.replace("!=", "==");
-        }
+        if (condition.includes(">=")) return condition.replace(">=", "<");
+        if (condition.includes(">")) return condition.replace(">", "<=");
+        if (condition.includes("<=")) return condition.replace("<=", ">");
+        if (condition.includes("<")) return condition.replace("<", ">=");
+        if (condition.includes("==")) return condition.replace("==", "!=");
+        if (condition.includes("!=")) return condition.replace("!=", "==");
         throw new Error("Unsupported condition operator for flipping");
     }
 
     ensureStructuredValue(value) {
-        if (typeof value === "object" && value !== null) {
-            return value; // Already a structured object
-        }
-        //console.log(value);
-        if (this.declaredVariables.has(value)) {
-            // If the value is in declaredVariables, treat it as an Identifier
-            return { type: "Identifier", value: value };
-        } else if (!isNaN(value)) {
-            // If the value is a number, treat it as a NumberLiteral
+        if (typeof value === "object" && value !== null) return value;
+        if (this.declaredVariables.has(value))
+            return { type: "Identifier", value };
+        if (!isNaN(value))
             return { type: "NumberLiteral", value: value.toString() };
-        } else if (typeof value === "string") {
-            // If it's a string, treat it as a StringLiteral
-            return { type: "StringLiteral", value: value };
-        } else {
-            throw new Error(`Unsupported value type: ${typeof value}`);
-        }
+        if (typeof value === "string") return { type: "StringLiteral", value };
+        throw new Error(`Unsupported value type: ${typeof value}`);
+    }
+
+    needsParentheses(expression, currentPrecedence) {
+        return (
+            typeof expression === "object" &&
+            expression.type === "Expression" &&
+            this.getOperatorPrecedence(expression.operator) < currentPrecedence
+        );
     }
 
     generateLoopFromTo(node) {
@@ -258,9 +335,7 @@ class JavaScriptGenerator extends Converter {
         const endValue = this.generateExpression(node.range.end);
 
         this.declaredVariables.add(loopVariable);
-
         const body = this.generateNodes(node.body);
-
         return `for (let ${loopVariable} = ${startValue}; ${loopVariable} <= ${endValue}; ${loopVariable}++) {\n${body}\n}`;
     }
 }

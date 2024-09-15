@@ -1,5 +1,8 @@
 {
-  "require": ["esm"],
-  "extension": ["js"],
-  "spec": "src/helpers/**/*.test.js"
+    "require": ["esm"],
+    "extension": ["js"],
+    "spec": "src/helpers/**/*.test.js",
+    "diff": true,
+    "inlineDiffs": true,
+    "maxDiffSize": 10000
 }

@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 # debugging txt files
-jsOutput.txt
-output.txt
+*.txt

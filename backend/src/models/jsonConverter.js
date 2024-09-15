@@ -39,19 +39,17 @@ class JsonConverter extends Converter {
      * @returns {Object|Array} The transformed node, or an array of transformed nodes.
      */
     transformNode(node) {
-        const nodeWithLine = {
-            ...node,
-            line:
-                node.type === "OtherwiseIfStatement"
-                    ? node.line
-                    : this.currentLine++,
-        };
+        // const nodeWithLine = {
+        //     ...node,
+        //     line:
+        //         node.type === "OtherwiseIfStatement"
+        //             ? node.line
+        //             : this.currentLine++,
+        // };
 
         // Use the factory to get the appropriate converter for the node type
-        const converter = this.nodeConverterFactory.getConverter(
-            nodeWithLine.type
-        );
-        return converter(nodeWithLine);
+        const converter = this.nodeConverterFactory.getConverter(node.type);
+        return converter(node);
     }
 
     transformVariableDeclaration(node) {
@@ -60,31 +58,42 @@ class JsonConverter extends Converter {
         }
 
         if (node.value.type === "IndexExpression") {
-            console.log("hello");
             return this.transformIndexExpression(node);
         }
 
         let frames = []; // Collect frames for movements
         let value = this.expressionEvaluator.evaluateExpression(node.value);
-
+        if (
+            typeof node.name === "object" ||
+            node.name == null ||
+            node.name == undefined
+        )
+            throw new Error(
+                `Please ensure that variable name at ${node.line} is correctly written as a single word and not an operation or expression.`
+            );
         // Check if the value is a function call
         if (node.value.type === "FunctionCall") {
             const lineNum = node.value.line;
             // Process the function call and retrieve the frames and return value
-            const functionCallResult = this.transformFunctionCall(node.value);
+            const functionCallResult = this.transformFunctionCall(
+                node.value,
+                true
+            );
 
             // Add the function call frames first
+            if (!functionCallResult.returnValue) {
+                throw new Error(
+                    `Function ${node.value.name} does not return a value and cannot be used in a variable declaration.`
+                );
+            }
             frames = [...functionCallResult.frames];
 
             // Set the return value from the function call as the value of the variable
             value = functionCallResult.returnValue;
-
             // Assign the value from the function return to the variable
             this.variables[node.name] = value;
             this.declaredVariables.add(node.name);
-
             const varType = this.determineType(value);
-
             // Add the variable declaration movement after function call and body
             frames.push({
                 line: lineNum,
@@ -95,7 +104,7 @@ class JsonConverter extends Converter {
                 timestamp: new Date().toISOString(),
                 description: `Set variable ${node.name} to function return value ${value}.`,
             });
-            this.currentLine = lineNum + 1;
+            //this.currentLine = lineNum + 1;
             return frames; // Return all frames including the function call and variable assignment
         }
 
@@ -111,6 +120,9 @@ class JsonConverter extends Converter {
         if (node.value.type === "BooleanLiteral") {
             typeBool = true;
             value = value.value;
+            if (value != true && value != false) {
+                throw new Error("Booleans can only be true or false");
+            }
         }
 
         this.variables[node.name] = value;
@@ -118,10 +130,20 @@ class JsonConverter extends Converter {
 
         const varType = typeBool
             ? "boolean"
-            : node.type === "StringLiteral"
+            : node.value.type === "StringLiteral"
             ? "string"
             : this.determineType(value);
 
+        const operatorPrecedence = {
+            "+": 1,
+            "-": 1,
+            "*": 2,
+            "/": 2,
+        };
+        if (typeof value != "string" && varType === "string") {
+            value = String(value);
+            this.variables[node.name] = value;
+        }
         const buildExpressionString = (expr) => {
             if (expr.type === "Expression") {
                 if (expr.operator === "-" && expr.left.value === 0) {
@@ -158,6 +180,7 @@ class JsonConverter extends Converter {
             returnVal = value;
         }
 
+        // let result = eval(returnVal);
         return {
             line: node.line,
             operation: "set",
@@ -171,7 +194,6 @@ class JsonConverter extends Converter {
 
     transformIndexExpression(node) {
         const { varName, value } = node;
-        console.log("in here" + value);
         const source = value.source;
         const index = this.expressionEvaluator.evaluateExpression(value.index);
 
@@ -212,7 +234,6 @@ class JsonConverter extends Converter {
 
         this.variables[node.name] = result;
         this.declaredVariables.add(node.name);
-        //console.log(this.variables);
         return {
             line: node.line,
             operation: "set",
@@ -305,7 +326,7 @@ class JsonConverter extends Converter {
         }
 
         // Perform the swap in the array stored in this.variables
-        const array = this.variables[node.varName];
+        const array = this.expressionEvaluator.getVariableValue(node.varName);
         const temp = array[firstPosition];
         array[firstPosition] = array[secondPosition];
         array[secondPosition] = temp;
@@ -357,13 +378,16 @@ class JsonConverter extends Converter {
             varName: node.name,
             params: node.params,
             timestamp: new Date().toISOString(),
-            description: `Defined function ${
-                node.name
-            } with parameters ${node.params.join(", ")}.`,
+            description:
+                node.params.length == 0
+                    ? `Defined function ${node.name} with no parameters.`
+                    : `Defined function ${
+                          node.name
+                      } with parameters ${node.params.join(", ")}.`,
         };
     }
 
-    transformFunctionCall(node) {
+    transformFunctionCall(node, varDecl = false) {
         const frames = [];
         const functionName = node.name;
 
@@ -374,18 +398,22 @@ class JsonConverter extends Converter {
 
         // Retrieve the function's full IR
         const functionIR = this.functionMap.get(functionName);
-        //console.log(functionIR);
-        // Check argument count match between the call and definition
-        const params = functionIR.params;
-        const args = node.args;
 
+        // Ensure params and args are defined, defaulting to an empty array if no params exist
+        const params = functionIR.params || [];
+        const args = node.args || [];
+
+        // Check argument count match between the call and definition
         if (params.length !== args.length) {
             throw new Error(
                 `Argument count mismatch in function ${functionName}. Expected ${params.length} but got ${args.length}.`
             );
         }
+
+        // Store the current line number
         let prevLine = node.line;
-        this.currentLine = functionIR.startLine + 1;
+        //this.currentLine = functionIR.startLine + 1;
+
         // Map arguments to function parameters
         const previousVariables = { ...this.variables }; // Save the current variables state
         for (let i = 0; i < params.length; i++) {
@@ -393,18 +421,23 @@ class JsonConverter extends Converter {
                 this.expressionEvaluator.evaluateExpression(args[i]);
             this.declaredVariables.add(params[i]);
         }
-        //console.log(this.variables);
+
+        // Prepare the frame for the function call
         let frameArgs = args.map((arg) =>
             this.expressionEvaluator.evaluateExpression(arg)
         );
-        // Output the function call movement object
+
+        // Add the function call frame
         frames.push({
-            line: node.line,
+            line: node.callLine ? node.callLine : node.line,
             operation: "function_call",
             varName: functionName,
             arguments: frameArgs,
             timestamp: new Date().toISOString(),
-            description: `Called function ${functionName} with arguments ${frameArgs}.`,
+            description:
+                frameArgs.length === 0
+                    ? `Called function ${functionName} with no arguments.`
+                    : `Called function ${functionName} with arguments ${frameArgs}.`,
         });
 
         // Process the function body and retrieve the return value
@@ -417,37 +450,45 @@ class JsonConverter extends Converter {
                 returnValue = this.expressionEvaluator.evaluateExpression(
                     statement.value
                 );
-                //console.log("Hello " + returnValue);
             }
 
-            // If bodyFrame is an array, loop through each element and push them to frames
+            // Flatten the frames directly into the main frames array
             if (Array.isArray(bodyFrame)) {
-                bodyFrame.forEach((frame) => frames.push(frame));
+                frames.push(...bodyFrame); // Spread array if multiple frames
             } else {
-                frames.push(bodyFrame); // If it's a single frame, just push it directly
+                frames.push(bodyFrame); // Push single frame directly
             }
         });
 
         // Restore the previous variable state
-        this.variables = previousVariables;
-        this.currentLine = prevLine;
+        //this.variables = previousVariables;
+        //this.currentLine = prevLine;
         node.line = prevLine;
 
-        return {
-            frames,
-            returnValue, // Return the final result of the function, if any
-        };
+        return returnValue !== null && varDecl
+            ? { frames, returnValue }
+            : frames;
     }
 
     transformPrintStatement(node) {
-        const value = node.value;
+        const value = node.value.type
+            ? this.expressionEvaluator.evaluateExpression(node.value)
+            : node.value;
         const isLiteral = !this.declaredVariables.has(value);
+        let printVal = isLiteral ? value : this.variables[value];
+        if (
+            (typeof printVal === "object" && !Array.isArray(printVal)) ||
+            printVal == undefined
+        )
+            throw new Error(
+                "Nesting other operations or expressions within print statements is not allowed. Please assign this to a variable first then try again."
+            );
         return {
             line: node.line,
             operation: "print",
             isLiteral: isLiteral,
             varName: isLiteral ? null : value,
-            literal: isLiteral ? value : this.variables[value],
+            literal: printVal,
             timestamp: new Date().toISOString(),
             description: `Printed ${value}.`,
         };
@@ -459,7 +500,11 @@ class JsonConverter extends Converter {
             node.condition
         );
         const conditionString = this.convertConditionToString(node.condition);
-
+        if (conditionResult != true && conditionResult != false) {
+            throw new Error(
+                "Please ensure that only booleans and conditional expressions are used in conditions."
+            );
+        }
         // Start with the IF statement
         let frames = [
             {
@@ -478,65 +523,69 @@ class JsonConverter extends Converter {
             frames = frames.concat(this.transformNodes(node.consequent));
             consequentLineCount = frames.length;
             // Adjust currentLine to account for alternate block length + 1
-            if (node.alternate && node.alternate.length > 0) {
-                this.currentLine = Math.max(
-                    this.currentLine,
-                    this.currentLine + node.alternate.length + 1
-                );
-            } else {
-                this.currentLine = node.line + node.consequent.length + 1;
-            }
+            //     if (node.alternate && node.alternate.length > 0) {
+            //         this.currentLine = Math.max(
+            //             this.currentLine,
+            //             this.currentLine + node.alternate.length + 1
+            //         );
+            //     } else {
+            //         this.currentLine = node.line + node.consequent.length + 1;
+            //     }
         } else {
-            // Handle the false condition (alternate)
-            if (node.alternate && node.alternate.length > 0) {
-                this.currentLine = Math.max(
-                    this.currentLine,
-                    this.currentLine + node.consequent.length + 1
-                );
-            } else {
-                this.currentLine = node.line + node.consequent.length + 1;
-            }
+            //     // Handle the false condition (alternate)
+            //     if (node.alternate && node.alternate.length > 0) {
+            //         this.currentLine = Math.max(
+            //             this.currentLine,
+            //             this.currentLine + node.consequent.length + 1
+            //         );
+            //     } else {
+            //         this.currentLine = node.line + node.consequent.length + 1;
+            //     }
             frames = frames.concat(this.transformNodes(node.alternate || []));
         }
-        // Add the "End If" movement object
-        if (node.alternate && node.alternate.length > 0) {
-            this.currentLine = Math.max(
-                this.currentLine,
-                node.line + node.consequent.length + node.alternate.length + 2
-            );
-        } else {
-            this.currentLine = Math.max(
-                this.currentLine,
-                node.line + node.consequent.length + 1
-            );
-        }
-        if (this.nestedEndIf > 0 && !node.alternate) {
-            this.currentLine = this.nestedEndIf + 1;
-            frames.push({
-                line: this.currentLine,
-                operation: "endif",
-                timestamp: new Date().toISOString(),
-                description: "End of if statement.",
-            });
-        } else {
-            frames.push({
-                line: this.currentLine,
-                operation: "endif",
-                timestamp: new Date().toISOString(),
-                description: "End of if statement.",
-            });
-        }
+        // // Add the "End If" movement object
+        // if (node.alternate && node.alternate.length > 0) {
+        //     this.currentLine = Math.max(
+        //         this.currentLine,
+        //         node.line + node.consequent.length + node.alternate.length + 2
+        //     );
+        // } else {
+        //     this.currentLine = Math.max(
+        //         this.currentLine,
+        //         node.line + node.consequent.length + 1
+        //     );
+        // }
+        // if (this.nestedEndIf > 0 && !node.alternate) {
+        //     this.currentLine = this.nestedEndIf + 1;
+        //     frames.push({
+        //         line: null,
+        //         operation: "endif",
+        //         timestamp: new Date().toISOString(),
+        //         description: "End of if statement.",
+        //     });
+        // } else {
+        //     frames.push({
+        //         line: null,
+        //         operation: "endif",
+        //         timestamp: new Date().toISOString(),
+        //         description: "End of if statement.",
+        //     });
+        // }
+        frames.push({
+            line: null,
+            operation: "endif",
+            timestamp: new Date().toISOString(),
+            description: "End of if statement.",
+        });
         this.ifDepth--; // Exiting an IF statement, decrement depth
-        this.nestedEndIf = this.currentLine;
-        this.currentLine++;
+        // this.nestedEndIf = this.currentLine;
+        // this.currentLine++;
         return frames;
     }
 
     transformOtherwiseIfStatement(node) {
         // Entering an Otherwise If statement, increment depth
         //this.ifDepth++;
-        this.currentLine = node.line;
-        //console.log(node.line);
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
@@ -544,7 +593,7 @@ class JsonConverter extends Converter {
 
         let frames = [
             {
-                line: this.currentLine++,
+                line: node.line,
                 operation: "if", // Transform Otherwise If as an If in JSON
                 condition: conditionString,
                 result: conditionResult,
@@ -557,12 +606,12 @@ class JsonConverter extends Converter {
             frames = frames.concat(this.transformNodes(node.consequent));
         } else if (node.alternate) {
             if (node.alternate.type != "OtherwiseIfStatement")
-                this.currentLine = node.otherwiseLine;
-            // Recursively handle nested Otherwise If or Otherwise
-            //this.currentLine = node.line;
-            frames = frames.concat(this.transformNodes(node.alternate));
+                //this.currentLine = node.otherwiseLine;
+                // Recursively handle nested Otherwise If or Otherwise
+                //this.currentLine = node.line;
+                frames = frames.concat(this.transformNodes(node.alternate));
         }
-        this.currentLine = node.endLine;
+        //this.currentLine = node.endLine;
 
         return frames;
     }
@@ -600,7 +649,8 @@ class JsonConverter extends Converter {
 
         // Set the initial index to 0
         const startValue = 0;
-        const endValue = this.variables[arrayName].length - 1; // Length of the array minus one
+        const endValue =
+            this.expressionEvaluator.getVariableValue(arrayName).length - 1;
 
         this.variables[iterator] = null; // Initialize the iterator
         const conditionString = `${iterator} in ${arrayName}`; // New condition format
@@ -630,7 +680,9 @@ class JsonConverter extends Converter {
             const arrayName = node.collection; // The array to iterate over
             const iterator = node.iterator; // The iterator variable (e.g., 'num')
             let index = 0; // Start with index 0
-            ifCondition = `Checked if index < ${this.variables[arrayName].length}`;
+            ifCondition = `index < ${
+                this.expressionEvaluator.getVariableValue(arrayName).length
+            }`;
 
             // While the index is within the array bounds
             while (index < this.variables[arrayName].length) {
@@ -640,7 +692,7 @@ class JsonConverter extends Converter {
                     condition: ifCondition,
                     result: true,
                     timestamp: new Date().toISOString(),
-                    description: ifCondition,
+                    description: `Checked if ${ifCondition}`,
                 });
 
                 // Set the iterator variable to the value at the current index
@@ -662,7 +714,7 @@ class JsonConverter extends Converter {
                 });
                 this.declaredVariables.add(iterator);
                 this.variables[iterator] = arrayValue;
-                this.currentLine = bodyLineStart + 1;
+                //this.currentLine = bodyLineStart + 1;
                 // Transform the loop body (processing the body of the loop)
                 const bodyFrames = this.transformNodes(node.body).map(
                     (frame) => ({
@@ -675,16 +727,16 @@ class JsonConverter extends Converter {
 
                 // Increment the index
                 index += 1;
-                bodyLineCount = Math.max(
-                    bodyLineCount,
-                    this.currentLine - bodyLineStart
-                );
-                this.currentLine = node.endLine;
+                // bodyLineCount = Math.max(
+                //     bodyLineCount,
+                //     this.currentLine - bodyLineStart
+                // );
+                //this.currentLine = node.endLine;
             }
         } else {
             while (this.expressionEvaluator.evaluateCondition(node.condition)) {
                 let z = 0;
-                this.currentLine = node.line + 1;
+                //this.currentLine = node.line + 1;
                 if (this.variables["x"] == 0) {
                     z += 1;
                 }
@@ -705,10 +757,10 @@ class JsonConverter extends Converter {
                 );
 
                 actionFrames.push(...bodyFrames);
-                bodyLineCount = Math.max(
-                    bodyLineCount,
-                    this.currentLine - bodyLineStart
-                );
+                // bodyLineCount = Math.max(
+                //     bodyLineCount,
+                //     this.currentLine - bodyLineStart
+                // );
                 // For loop_from_to, update the loop variable and add the set movement object
                 if (loopType === "loop_from_to") {
                     const updateFrame = this.updateLoopVariable(
@@ -728,9 +780,9 @@ class JsonConverter extends Converter {
             description: `Checked if ${conditionString}.`,
         });
 
-        this.currentLine = bodyLineStart + bodyLineCount;
+        //this.currentLine = bodyLineStart + bodyLineCount;
         actionFrames.push({
-            line: this.currentLine++,
+            line: null,
             operation: "loop_end",
             timestamp: new Date().toISOString(),
             description: `End of ${loopType.replace("_", " ")} loop`,
@@ -768,9 +820,10 @@ class JsonConverter extends Converter {
         let { left, operator, right } = node.condition;
 
         if (
-            typeof left === "undefined" ||
-            typeof operator === "undefined" ||
-            typeof right === "undefined"
+            node.condition === "Expression" &&
+            (typeof left === "undefined" ||
+                typeof operator === "undefined" ||
+                typeof right === "undefined")
         ) {
             console.error(`${loopType} condition components are undefined.`, {
                 left,
@@ -812,6 +865,16 @@ class JsonConverter extends Converter {
 
         const operatorMapped = operatorsMap[operator];
         const flipMap = {
+            and: "&&",
+            or: "||",
+            greater: ">",
+            less: "<",
+            equal: "==",
+            "&&": "&&",
+            "||": "||",
+            ">": ">",
+            "<": "<",
+            "==": "==",
             ">": "<=",
             "<": ">=",
             ">=": "<",
@@ -822,26 +885,40 @@ class JsonConverter extends Converter {
 
         if (flipMap[operatorMapped]) {
             return flipMap[operatorMapped];
-        }
+        } else if (
+            typeof this.expressionEvaluator.getVariableValue(operator) ===
+            "boolean"
+        )
+            return operator;
 
         throw new Error(`Unsupported operator for flipping: ${operator}`);
     }
 
     flipCondition(condition) {
         if (condition.includes(">=")) {
-            return condition.replace(">=", "<");
+            return condition.replaceAll(">=", "<");
         } else if (condition.includes(">")) {
-            return condition.replace(">", "<=");
+            return condition.replaceAll(">", "<=");
         } else if (condition.includes("<=")) {
-            return condition.replace("<=", ">");
+            return condition.replaceAll("<=", ">");
         } else if (condition.includes("<")) {
-            return condition.replace("<", ">=");
+            return condition.replaceAll("<", ">=");
         } else if (condition.includes("==")) {
-            return condition.replace("==", "!=");
+            return condition.replaceAll("==", "!=");
         } else if (condition.includes("!=")) {
-            return condition.replace("!=", "==");
-        }
-        throw new Error("Unsupported condition operator for flipping");
+            return condition.replaceAll("!=", "==");
+        } else if (condition.type === "Identifier") return condition.value;
+
+        // else if (
+        //     typeof this.expressionEvaluator.getVariableValue(condition) ===
+        //     "boolean"
+        // ) {
+        //     console.log("in flip condition " + condition);
+        //     console.log(this.variables);
+        //     return condition;
+        // }
+        return condition;
+        //throw new Error("Unsupported condition operator for flipping");
     }
 
     transformLoopFromTo(node) {
@@ -855,7 +932,7 @@ class JsonConverter extends Converter {
 
         const actionFrames = [
             {
-                line: this.currentLine - 1,
+                line: node.line,
                 operation: "set",
                 varName: loopVariable,
                 type: "number",
@@ -916,6 +993,7 @@ class JsonConverter extends Converter {
             return `!${right}`;
         } else if (condition.operator === "not") {
             const right = this.convertConditionToString(condition.right);
+            console.log(`!${right}`);
             return `!${right}`;
         }
 
@@ -970,11 +1048,22 @@ class JsonConverter extends Converter {
         } else if (expression.type === "Expression") {
             const left = this.transformExpression(expression.left);
             const right = this.transformExpression(expression.right);
-            return {
+
+            // Handle parentheses based on operator precedence
+            const wrapInParentheses = (expr) => {
+                return expr.operator &&
+                    (expr.operator === "+" || expr.operator === "-")
+                    ? `(${expr.left} ${expr.operator} ${expr.right})`
+                    : `${expr.left} ${expr.operator} ${expr.right}`;
+            };
+
+            const transformedExpression = {
                 left: left.value || left,
                 operator: expression.operator,
                 right: right.value || right,
             };
+
+            return wrapInParentheses(transformedExpression);
         } else if (this.declaredVariables.has(expression)) {
             return {
                 value: this.variables[expression] || expression,
@@ -993,7 +1082,7 @@ class JsonConverter extends Converter {
 
     transformArrayCreation(node) {
         let elements;
-        if (node.dsType === "boolean")
+        if (node.dsType === "boolean" && !node.unInitialised)
             elements = (node.values || []).map((el) => el.value);
         else
             elements = (node.values || []).map((el) =>
@@ -1050,6 +1139,18 @@ class JsonConverter extends Converter {
         const position = this.expressionEvaluator.evaluateExpression(
             node.positionToRemove
         );
+        if (typeof position != "number")
+            throw new Error(
+                `Error at line ${node.line}: Position to remove must be a number.`
+            );
+        const arrayLength = this.variables[node.varName].length;
+        if (position < 0 || position >= arrayLength) {
+            throw new Error(
+                `Error at line ${node.line}: Position ${position} is out of bounds for array ${node.varName}.`
+            );
+        }
+        const removedValue = this.variables[node.varName].splice(position, 1);
+        console.log(this.variables[node.varName]);
 
         return {
             line: line,
@@ -1074,7 +1175,18 @@ class JsonConverter extends Converter {
                     this.initializedArrays[node.varName]
                 }.`
             );
-        this.variables[node.varName][position] = value;
+        console.log(position);
+        if (
+            position < 0 ||
+            position > this.variables[node.varName].length ||
+            isNaN(position)
+        ) {
+            throw new Error(
+                `Index is out of bounds for array insertion at line ${node.line}`
+            );
+        }
+        this.variables[node.varName].splice(position, 0, value);
+        console.log(this.variables[node.varName]);
         return {
             line: node.line,
             operation: "add",
@@ -1089,7 +1201,6 @@ class JsonConverter extends Converter {
     transformArraySetValue(node) {
         const varName = node.varName;
         const index = this.expressionEvaluator.evaluateExpression(node.index);
-        console.log("set");
         const setValue =
             node.setValue.type === "IndexExpression"
                 ? this.transformIndexExpression(node.setValue)

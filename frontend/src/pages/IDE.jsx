@@ -5,35 +5,35 @@
  */
 
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  Heading,
-  HStack,
-  IconButton,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Text,
-  useBreakpointValue,
-  useDisclosure,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverBody,
-  useToast,
+    AlertDialog,
+    AlertDialogBody,
+    AlertDialogContent,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogOverlay,
+    Box,
+    Button,
+    Grid,
+    GridItem,
+    Heading,
+    HStack,
+    IconButton,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Text,
+    useBreakpointValue,
+    useDisclosure,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverArrow,
+    PopoverBody,
+    useToast,
 } from "@chakra-ui/react";
 import React, { useRef, useState, useEffect } from "react";
 import CodeEditorView from "../components/CodeEditorView";
@@ -48,42 +48,42 @@ import DocumentationComponent from "../components/DocumentationComponent";
 import IDEComponent from "../components/IDEComponent";
 
 function IDE() {
-  const [value, setValue] = useState("");
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = React.useRef(null);
-  const editorRef = useRef();
-  const [output, setOutput] = useState([]);
-  const [isRunLoading, setIsRunLoading] = useState(false);
-  const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
-  const [isClearLoading, setIsClearLoading] = useState(false);
-  const [isClearOutputLoading, setIsClearOutputLoading] = useState(false);
-  const cancelClearRef = useRef();
-  const [speedState, setSpeedState] = useState(2);
-  const [movementsState, setMovementsState] = useState([]);
-  const [highlightState, setHighlightState] = useState();
-  const [indexState, setIndexState] = useState(-1);
-  const [pauseState, setPauseState] = useState(false);
-  const [savedIndexState, setSavedIndexState] = useState(-1);
-  const [bufferState, setBufferState] = useState(false);
-  const [key, setKey] = useState(0);
-  const [killState, setKillState] = useState(-2);
-  const [isRestarting, setIsRestarting] = useState(false);
-  const toast = useToast();
-  const [isError, setIsError] = useState(false);
-  const [isRunning, setIsRunning] = useState(false);
-  const [errorData, setErrorData] = useState({
-    error: "",
-    message: "",
-    errorLine: 0,
-  });
-  const [followOutputState, setFollowOutputState] = useState(true);
-  const [followVisState, setFollowVisState] = useState(true);
+    const [value, setValue] = useState("");
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const btnRef = React.useRef(null);
+    const editorRef = useRef();
+    const [output, setOutput] = useState([]);
+    const [isRunLoading, setIsRunLoading] = useState(false);
+    const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
+    const [isClearLoading, setIsClearLoading] = useState(false);
+    const [isClearOutputLoading, setIsClearOutputLoading] = useState(false);
+    const cancelClearRef = useRef();
+    const [speedState, setSpeedState] = useState(2);
+    const [movementsState, setMovementsState] = useState([]);
+    const [highlightState, setHighlightState] = useState();
+    const [indexState, setIndexState] = useState(-1);
+    const [pauseState, setPauseState] = useState(false);
+    const [savedIndexState, setSavedIndexState] = useState(-1);
+    const [bufferState, setBufferState] = useState(false);
+    const [key, setKey] = useState(0);
+    const [killState, setKillState] = useState(-2);
+    const [isRestarting, setIsRestarting] = useState(false);
+    const toast = useToast();
+    const [isError, setIsError] = useState(false);
+    const [isRunning, setIsRunning] = useState(false);
+    const [errorData, setErrorData] = useState({
+        error: "",
+        message: "",
+        errorLine: 0,
+    });
+    const [followOutputState, setFollowOutputState] = useState(true);
+    const [followVisState, setFollowVisState] = useState(true);
 
-  let savedIndex = -1;
+    let savedIndex = -1;
 
-  const pauseAnimation = () => {
-    setPauseState(!pauseState);
-  };
+    const pauseAnimation = () => {
+        setPauseState(!pauseState);
+    };
 
   // Function to find error in the code and display it
   const findError = (e) => {
@@ -94,27 +94,27 @@ function IDE() {
       errorLine = 0;
     }
 
-    const newErrorData = {
-      error: e.error,
-      message: e.message,
-      errorLine: errorLine,
+        const newErrorData = {
+            error: e.error,
+            message: e.message,
+            errorLine: errorLine,
+        };
+        setErrorData(newErrorData);
+        console.log(newErrorData);
+
+        setOutput((prev) => [
+            ...prev,
+            `colourRed__ERROR: ${newErrorData.message}. ${newErrorData.error}`,
+        ]);
+
+        toast({
+            title: `${newErrorData.message}`,
+            description: `${newErrorData.error}`,
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+        });
     };
-    setErrorData(newErrorData);
-    console.log(newErrorData);
-
-    setOutput((prev) => [
-      ...prev,
-      `colourRed__ERROR: ${newErrorData.message}. ${newErrorData.error}`,
-    ]);
-
-    toast({
-      title: `${newErrorData.message}`,
-      description: `${newErrorData.error}`,
-      status: "error",
-      duration: 3000,
-      isClosable: true,
-    });
-  };
 
   // Function to run the code
   const runCode = async () => {
@@ -171,57 +171,57 @@ function IDE() {
     return () => timeoutSetKey;
   };
 
-  return (
-    <Box>
-      <Box display="flex" justifyContent="center">
-        <RunControls
-          isClearLoading={isClearLoading}
-          isRunLoading={isRunLoading}
-          runCode={runCode}
-          stopCode={stopCode}
-          value={value}
-          pauseAnimation={pauseAnimation}
-          pauseState={pauseState}
-          setPauseState={setPauseState}
-          speedState={speedState}
-          setSpeedState={setSpeedState}
-          killState={killState}
-          indexState={indexState}
-          setOutput={setOutput}
-          setHighlightState={setHighlightState}
-          isRestarting={isRestarting} 
-          isRunning = {isRunning}
-          setIsRunning ={setIsRunning}
-        />
-      </Box>
+    return (
+        <Box>
+            <Box display="flex" justifyContent="center">
+                <RunControls
+                    isClearLoading={isClearLoading}
+                    isRunLoading={isRunLoading}
+                    runCode={runCode}
+                    stopCode={stopCode}
+                    value={value}
+                    pauseAnimation={pauseAnimation}
+                    pauseState={pauseState}
+                    setPauseState={setPauseState}
+                    speedState={speedState}
+                    setSpeedState={setSpeedState}
+                    killState={killState}
+                    indexState={indexState}
+                    setOutput={setOutput}
+                    setHighlightState={setHighlightState}
+                    isRestarting={isRestarting}
+                    isRunning={isRunning}
+                    setIsRunning={setIsRunning}
+                />
+            </Box>
 
-      <IDEComponent
-        value={value}
-        setValue={setValue}
-        output={output}
-        setOutput={setOutput}
-        speedState={speedState}
-        movementsState={movementsState}
-        highlightState={highlightState}
-        setHighlightState={setHighlightState}
-        indexState={indexState}
-        setIndexState={setIndexState}
-        pauseState={pauseState}
-        setPauseState={setPauseState}
-        bufferState={bufferState}
-        keyValue={key}
-        isClearLoading={isClearLoading}
-        isClearOutputLoading={isClearOutputLoading}
-        setIsClearOutputLoading={setIsClearOutputLoading}
-        setIsClearLoading={setIsClearLoading}
-        isError={isError}
-        followOutputState={followOutputState}
-        followVisState={followVisState}
-        setFollowOutputState={setFollowOutputState}
-        setFollowVisState={setFollowVisState}
-      />
-    </Box>
-  );
+            <IDEComponent
+                value={value}
+                setValue={setValue}
+                output={output}
+                setOutput={setOutput}
+                speedState={speedState}
+                movementsState={movementsState}
+                highlightState={highlightState}
+                setHighlightState={setHighlightState}
+                indexState={indexState}
+                setIndexState={setIndexState}
+                pauseState={pauseState}
+                setPauseState={setPauseState}
+                bufferState={bufferState}
+                keyValue={key}
+                isClearLoading={isClearLoading}
+                isClearOutputLoading={isClearOutputLoading}
+                setIsClearOutputLoading={setIsClearOutputLoading}
+                setIsClearLoading={setIsClearLoading}
+                isError={isError}
+                followOutputState={followOutputState}
+                followVisState={followVisState}
+                setFollowOutputState={setFollowOutputState}
+                setFollowVisState={setFollowVisState}
+            />
+        </Box>
+    );
 }
 
 export default IDE;

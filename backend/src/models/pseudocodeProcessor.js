@@ -1,7 +1,7 @@
 import fs from "fs";
-import Tokenizer from "../helpers/tokenizer.js";
-import Parser from "./parser.js";
-import Transformer from "../helpers/transformer.js";
+import Tokenizer from "../helpers/Tokenizer.js";
+import Parser from "./Parser.js";
+import Transformer from "../helpers/Transformer.js";
 import JsonConverter from "./JsonConverter.js";
 
 class PseudocodeProcessor {
