@@ -9,19 +9,16 @@ const CodeEditorView = ({
   defaultValue,
   height,
   width,
-  speedState,
   movementsState,
   highlightState,
-  setHighlightState,
   pauseState,
+  indexState
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [editor, setEditor] = useState(null);
   const [decorations, setDecorations] = useState([]);
   const monaco = useMonaco();
   const timerRefs = useRef([]); // Ref to store timeout IDs
-  const currentLineIndex = useRef(0); // Ref to store the current line index being highlighted
-  const currentSpeed = useRef(speedState); // Ref to track the current speed state for ongoing highlights
 
   useEffect(() => {
     if (monaco) {
@@ -689,21 +686,29 @@ const CodeEditorView = ({
     }
   }, [monaco]);
 
-  useEffect(() => {
-    if (editor) {
-      if (highlightState && !pauseState) {
-        // Begin or continue highlighting
-        startHighlighting();
-      } else {
-        // Pause or clear highlights
-        clearTimers(); // Clear ongoing timers
-        if (!highlightState) {
-          clearHighlights(editor); // Clear decorations if highlightState is false
-          currentLineIndex.current = 0; // Reset current line index if highlightState is false
-        }
+  useEffect(()=>{
+    if (indexState < movementsState.length && indexState > -1 && !pauseState && editor){
+      console.log("The highlight state: "+highlightState)
+      let lineNo = movementsState[indexState].line;
+      if (lineNo !== null){
+        setDecorations((oldDecorations) =>
+          editor.deltaDecorations(oldDecorations, [
+            {
+              range: new monaco.Range(lineNo, 1, lineNo, 1),
+              options: {
+                isWholeLine: true,
+                className: "myLineHighlight",
+              },
+            },
+          ])
+        );
+        editor.revealLine(lineNo);
       }
     }
-  }, [highlightState, pauseState, editor]); // Removed speedState from dependencies
+    else if (!highlightState && editor){
+      clearHighlights(editor)
+    }
+  }, [indexState, highlightState])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -728,46 +733,6 @@ const CodeEditorView = ({
       editor.deltaDecorations(oldDecorations, [])
     );
   };
-
-  // Start highlighting lines with speed and pause control
-  const startHighlighting = () => {
-    clearTimers(); // Clear existing timers before starting new ones
-
-    const highlightNextLine = () => {
-      if (currentLineIndex.current < movementsState.length && !pauseState) {
-        const { line } = movementsState[currentLineIndex.current];
-        setDecorations((oldDecorations) =>
-          editor.deltaDecorations(oldDecorations, [
-            {
-              range: new monaco.Range(line, 1, line, 1),
-              options: {
-                isWholeLine: true,
-                className: "myLineHighlight",
-              },
-            },
-          ])
-        );
-
-        editor.revealLine(line);
-
-        currentLineIndex.current += 1; // Move to the next line
-
-        if (currentLineIndex.current < movementsState.length) {
-          const delay = currentSpeed.current * 1000; // Use current speed for all subsequent lines
-          const timerId = setTimeout(highlightNextLine, delay);
-          timerRefs.current.push(timerId);
-        }
-      }
-    };
-
-    // Start highlighting from the current position
-    highlightNextLine();
-  };
-
-  // Update current speed when speedState changes
-  useEffect(() => {
-    currentSpeed.current = speedState; // Update the ref to reflect the new speedState
-  }, [speedState]);
 
   const loadingComponent = (
     <Box
