@@ -33,7 +33,7 @@ class JavaScriptNodeFactory {
             case "WhileLoop":
                 return this.generator.generateWhileLoop(node);
             case "LoopUntil":
-                return this.generator.generateLoopUntil(node);
+                return this.generator.generateWhileLoop(node);
             case "LoopFromTo":
                 return this.generator.generateLoopFromTo(node);
             case "PrintStatement":

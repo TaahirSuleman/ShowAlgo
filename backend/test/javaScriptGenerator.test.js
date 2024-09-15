@@ -360,7 +360,7 @@ x = x - 1;
                         type: "LoopUntil",
                         condition: {
                             left: { type: "Identifier", value: "x" },
-                            operator: ">",
+                            operator: "<=",
                             right: { type: "NumberLiteral", value: "5" },
                         },
                         body: [
@@ -404,7 +404,7 @@ x = x + 1;
                         type: "LoopUntil",
                         condition: {
                             left: { type: "Identifier", value: "counter" },
-                            operator: "==",
+                            operator: "!=",
                             right: { type: "NumberLiteral", value: "0" },
                         },
                         body: [
