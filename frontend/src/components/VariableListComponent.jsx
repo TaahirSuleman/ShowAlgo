@@ -20,6 +20,7 @@ function VariableListComponent({
   variablesState,
   setVariablesState,
   followVisState,
+  setOutput
 }) {
   // state variables
   let [updating, setUpdating] = useState("");
@@ -67,7 +68,18 @@ function VariableListComponent({
           } else {
             // In the event set is related to some pre-existing string or array
             let innerMovement = movements[indexState].value;
-            switch (movements[indexState].value.operation) {
+            if (innerMovement.operation == null){
+              setOutput((prev) => {
+                return [...prev, "The function returned array with values: "+ innerMovement];
+              });
+              const timeoutId2 = setTimeout(() => {
+                setIndexState((i) => {
+                  return i + 1;
+                });
+              }, speedState * 1000);
+              return () => clearTimeout(timeoutId2);
+            }
+            switch (innerMovement.operation) {
               // Substring operation is occuring.
               case "substring":
                 updateVariablesState(
