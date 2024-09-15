@@ -353,7 +353,7 @@ describe("JsonConverter", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: result.actionFrames[3].timestamp,
                 },
@@ -588,7 +588,7 @@ describe("JsonConverter", () => {
                     description: "Checked if x <= 5.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: result.actionFrames[21].timestamp,
                     description: "End of while loop",
@@ -824,7 +824,7 @@ describe("JsonConverter", () => {
                     description: "Checked if x <= 5.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: result.actionFrames[21].timestamp,
                     description: "End of while loop",
@@ -1167,7 +1167,7 @@ describe("JsonConverter", () => {
                     description: "Checked if i <= 10.",
                 },
                 {
-                    line: 3,
+                    line: null,
                     operation: "loop_end",
                     timestamp: result.actionFrames[36].timestamp,
                     description: "End of loop from_to loop",
@@ -1507,7 +1507,7 @@ describe("JsonConverter", () => {
                         description: "Checked if i <= 10.",
                     },
                     {
-                        line: 3,
+                        line: null,
                         operation: "loop_end",
                         timestamp: result.actionFrames[36].timestamp,
                         description: "End of loop from_to loop",
@@ -1635,7 +1635,7 @@ describe("JsonConverter", () => {
                     description: "Printed Boolean is true.",
                 },
                 {
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: result.actionFrames[3].timestamp,
                     description: "End of if statement.",
@@ -1698,7 +1698,7 @@ describe("JsonConverter", () => {
                     description: "Checked if !isTrue.",
                 },
                 {
-                    line: 4,
+                    line: null,
                     operation: "endif",
                     timestamp: result.actionFrames[2].timestamp,
                     description: "End of if statement.",

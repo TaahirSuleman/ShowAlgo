@@ -1,7 +1,7 @@
 import fs from "fs";
-import Tokenizer from "../helpers/tokenizer.js";
-import Parser from "./parser.js";
-import Transformer from "../helpers/transformer.js";
+import Tokenizer from "../helpers/Tokenizer.js";
+import Parser from "./Parser.js";
+import Transformer from "../helpers/Transformer.js";
 import Converter from "./Converter.js"; // Import the Converter base class
 
 class Processor {
@@ -24,6 +24,7 @@ class Processor {
 
         const parser = new Parser(tokens);
         const ast = parser.parse();
+
         Processor.writeToFile(
             outputFile,
             "AST: " + JSON.stringify(ast, null, 2)

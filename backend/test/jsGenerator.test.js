@@ -10,15 +10,178 @@ describe("Processor with JavaScriptGenerator", () => {
         const jsGenerator = new JavaScriptGenerator();
         processor = new Processor(jsGenerator);
     });
-
-    it("should correctly process complex nested parentheses with mixed operators", () => {
+    it("should correctly process boolean variables with OR operation in IF condition", () => {
         const pseudocode = `
-            SET result TO 5 * (2 + (3 - 1) / 2) + 4;
+            SET isTrue TO boolean true;
+            SET isFalse TO boolean false;
+            IF isTrue OR isFalse THEN
+                PRINT "Condition Met";
+            OTHERWISE
+                PRINT "Condition Not Met";
+            END IF;
         `;
 
         const expectedJavaScript = `
             'use strict';
-    let result = 5 * (2 + (3 - 1) / 2) + 4;
+let isTrue = true;
+let isFalse = false;
+if (isTrue || isFalse) {
+console.log("Condition Met");
+} else {
+console.log("Condition Not Met");
+}
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process multiple conditions with AND and comparison in IF statement", () => {
+        const pseudocode = `
+            SET x TO number 10;
+            SET y TO number 15;
+            IF x > 5 AND y > 10 AND x > y THEN
+                PRINT "Condition Met";
+            OTHERWISE
+                PRINT "Condition Not Met";
+            END IF;
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let x = 10;
+let y = 15;
+if (x > 5 && y > 10 && x > y) {
+console.log("Condition Met");
+} else {
+console.log("Condition Not Met");
+}
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process nested operations with multiplication and subtraction", () => {
+        const pseudocode = `
+            SET result TO (6 * (3 + 1) - (10 / 2)) * 4;
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = (6 * (3 + 1) - 10 / 2) * 4;
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process multiple operators with division and subtraction", () => {
+        const pseudocode = `
+            SET result TO (20 / (5 + 5)) - (4 - 2);
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = 20 / (5 + 5) - (4 - 2);
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process complex parentheses with addition and multiplication", () => {
+        const pseudocode = `
+            SET result TO (4 * (3 + 2) - (8 / 4)) + 10;
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = 4 * (3 + 2) - 8 / 4 + 10;
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process multiple divisions and mixed operator precedence", () => {
+        const pseudocode = `
+            SET result TO 16 / (2 * 4 / 2);
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = 16 / (2 * 4 / 2);
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process simple operations without parentheses", () => {
+        const pseudocode = `
+            SET result TO 10 - 2 + 4 * 3;
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = 10 - 2 + 4 * 3;
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process complex nested parentheses with subtraction and division", () => {
+        const pseudocode = `
+            SET result TO 8 - (5 / (3 - 1)) + 2;
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = 8 - 5 / (3 - 1) + 2;
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process multiple levels of nested parentheses with mixed operators", () => {
+        const pseudocode = `
+            SET result TO (2 + (3 * (4 - 2))) / 2;
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = (2 + 3 * (4 - 2)) / 2;
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process nested parentheses with division and addition", () => {
+        const pseudocode = `
+            SET result TO (10 / (2 + 3)) + 5;
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = 10 / (2 + 3) + 5;
+        `.trim();
+
+        const result = processor.process(pseudocode).trim();
+        expect(result).to.equal(expectedJavaScript);
+    });
+
+    it("should correctly process addition and multiplication with no operator precedence", () => {
+        const pseudocode = `
+            SET result TO 3 + 5 * 4;
+        `;
+
+        const expectedJavaScript = `
+            'use strict';
+let result = 3 + 5 * 4;
         `.trim();
 
         const result = processor.process(pseudocode).trim();

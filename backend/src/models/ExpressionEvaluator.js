@@ -58,7 +58,11 @@ class ExpressionEvaluator {
 
             return result;
         } else if (this.declaredVariables.has(expression)) {
-            return this.variables[expression];
+            if (typeof this.variables[expression] === "boolean")
+                throw new Error(
+                    "Booleans cannot be used in numeric expressions"
+                );
+            else return this.variables[expression];
         } else if (
             expression.type === "NumberLiteral" ||
             expression.type === "StringLiteral"
@@ -84,7 +88,11 @@ class ExpressionEvaluator {
             case "*":
                 return left * right;
             case "/":
+                if (right == 0)
+                    throw new Error("Division by zero is not allowed");
                 return left / right;
+            case "%":
+                return left % right;
             default:
                 throw new Error(`Unknown operator: ${operator}`);
         }
@@ -176,6 +184,11 @@ class ExpressionEvaluator {
             greater: ">",
             less: "<",
             equal: "==",
+            "&&": "&&",
+            "||": "||",
+            ">": ">",
+            "<": "<",
+            "==": "==",
             ">": ">",
             "<": "<",
             "==": "==",
@@ -192,23 +205,55 @@ class ExpressionEvaluator {
 
         switch (operator) {
             case "&&":
+                if (typeof left != "boolean" || typeof right != "boolean")
+                    throw new Error(
+                        "Cannot use 'and' with non boolean expressions on either side."
+                    );
                 return left && right;
             case "||":
+                if (typeof left != "boolean" || typeof right != "boolean")
+                    throw new Error(
+                        "Cannot use 'or' with non boolean expressions on either side."
+                    );
                 return left || right;
             case ">":
+                if (typeof left != typeof right)
+                    throw new Error(
+                        "Using comparison operators with different value types on either side is not allowed."
+                    );
                 return left > right;
             case "<":
+                if (typeof left != typeof right)
+                    throw new Error(
+                        "Using comparison operators with different value types on either side is not allowed."
+                    );
                 return left < right;
             case "==":
+                if (typeof left != typeof right)
+                    throw new Error(
+                        "Using comparison operators with different value types on either side is not allowed."
+                    );
                 return left === right;
             case "!=":
+                if (typeof left != typeof right)
+                    throw new Error(
+                        "Using comparison operators with different value types on either side is not allowed."
+                    );
                 return left !== right;
             case ">=":
+                if (typeof left != typeof right)
+                    throw new Error(
+                        "Using comparison operators with different value types on either side is not allowed."
+                    );
                 return left >= right;
             case "<=":
+                if (typeof left != typeof right)
+                    throw new Error(
+                        "Using comparison operators with different value types on either side is not allowed."
+                    );
                 return left <= right;
             default:
-                throw new Error(`Unhandled operator: ${operator}`);
+                throw new Error(`The operator ${operator} is not allowed.`);
         }
     }
 }

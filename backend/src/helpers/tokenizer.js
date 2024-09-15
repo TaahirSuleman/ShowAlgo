@@ -62,7 +62,7 @@ class Tokenizer {
                     tokens.push(this.strategies.boolean.apply(this));
                 } else if (["and", "or", "not"].includes(lookahead)) {
                     // Check for logical operators
-                    tokens.push(this.strategies.logicalOperator.apply(this)); // Use the new strategy
+                    tokens.push(this.strategies.logicalOperator.apply(this));
                 } else {
                     tokens.push(this.strategies.letter.apply(this));
                 }
@@ -222,6 +222,7 @@ class Tokenizer {
             "than",
             "length",
             "character",
+            "element",
             "otherwiseif",
             "remove",
             "delete",
@@ -231,7 +232,10 @@ class Tokenizer {
             if (
                 String(this.pseudocodeLines[this.line - 1])
                     .toLowerCase()
-                    .includes("set element")
+                    .includes("set element") &&
+                !/set element\s+to/i.test(
+                    String(this.pseudocodeLines[this.line - 1])
+                )
             )
                 value = "set_array";
         } else if (value.toLowerCase() === "element") {
@@ -241,7 +245,10 @@ class Tokenizer {
                     .includes("element at") &&
                 !String(this.pseudocodeLines[this.line - 1])
                     .toLowerCase()
-                    .includes("set element")
+                    .includes("set element") &&
+                !/set element\s+to/i.test(
+                    String(this.pseudocodeLines[this.line - 1])
+                )
             )
                 value = "character"; // treat array indexing the same as substring - making it transparent for the subsequent stages while allowing differentiation within the SPL between 'ELEMENT AT' for arrays and 'CHARACTER AT' for strings.
         }

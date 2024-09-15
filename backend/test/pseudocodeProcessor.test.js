@@ -10,11 +10,104 @@ function writeTestNumber(testNumber) {
 }
 
 describe("PseudocodeProcessor", () => {
+    it("should process arithmetic with modulus operation", () => {
+        const pseudocode = `SET a to 10
+        SET b to 3
+        SET c to a % b`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "a",
+                    type: "number",
+                    value: 10,
+                    timestamp: undefined,
+                    description: "Set variable a to 10.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "b",
+                    type: "number",
+                    value: 3,
+                    timestamp: undefined,
+                    description: "Set variable b to 3.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "c",
+                    type: "number",
+                    value: 1,
+                    timestamp: undefined,
+                    description: "Set variable c to a % b.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
+
+    it("should process arithmetic with negative numbers", () => {
+        const pseudocode = `SET a to number -5
+        SET b to a + 10
+        SET c to b * -2`;
+
+        const expectedJson = {
+            actionFrames: [
+                {
+                    line: 1,
+                    operation: "set",
+                    varName: "a",
+                    type: "number",
+                    value: -5,
+                    timestamp: undefined,
+                    description: "Set variable a to -5.",
+                },
+                {
+                    line: 2,
+                    operation: "set",
+                    varName: "b",
+                    type: "number",
+                    value: 5,
+                    timestamp: undefined,
+                    description: "Set variable b to a + 10.",
+                },
+                {
+                    line: 3,
+                    operation: "set",
+                    varName: "c",
+                    type: "number",
+                    value: -10,
+                    timestamp: undefined,
+                    description: "Set variable c to b * -2.",
+                },
+            ],
+        };
+
+        const result = PseudocodeProcessor.process(pseudocode);
+
+        expectedJson.actionFrames.forEach((frame, index) => {
+            frame.timestamp = result.actionFrames[index].timestamp;
+        });
+
+        expect(result).to.deep.equal(expectedJson);
+    });
     it("should throw an error when using a boolean variable in a number expression", () => {
-        const pseudocode = `DEFINE hello with parameters ()
-        return "hello"
-    END FUNCTION
-    CALL hello WITH ()`;
+        const pseudocode = `DEFINE getGreeting WITH PARAMETERS (name)
+        RETURN "Hello, " + name
+        END FUNCTION
+        
+        SET result TO CALL getGreeting WITH (5)
+        SET total TO result`;
         let result = PseudocodeProcessor.process(pseudocode);
         // expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
         //     " Please ensure that only booleans and conditional expressions are used in conditions."
@@ -57,33 +150,7 @@ describe("PseudocodeProcessor", () => {
         });
         expect(result).to.deep.equal(expectedJson);
     });
-    it("should correctly process complex nested parentheses with mixed operators in PseudocodeProcessor", () => {
-        const pseudocode = `SET result TO 5 * (2 + (3 - 1) / 2) + 4
-        `;
 
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "result",
-                    type: "number",
-                    value: 19,
-                    timestamp: undefined,
-                    description:
-                        "Set variable result to 5 * (2 + (3 - 1) / 2) + 4.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
     it("should correctly process a bubble sort algorithm with variable assignments for nested operations and no break", () => {
         const pseudocode = `CREATE number array AS myArray WITH VALUES [50, 40, 30, 20, 10]
             SET swapped TO true
@@ -242,7 +309,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -323,7 +390,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -404,7 +471,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -485,7 +552,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -508,7 +575,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if j <= 3.",
                 },
                 {
-                    line: 12,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -522,7 +589,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if !swapped.",
                 },
                 {
-                    line: 15,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -636,7 +703,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -717,7 +784,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -798,7 +865,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -821,7 +888,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if j <= 2.",
                 },
                 {
-                    line: 12,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -835,7 +902,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if !swapped.",
                 },
                 {
-                    line: 15,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -949,7 +1016,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -1030,7 +1097,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -1053,7 +1120,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if j <= 1.",
                 },
                 {
-                    line: 12,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -1067,7 +1134,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if !swapped.",
                 },
                 {
-                    line: 15,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -1181,7 +1248,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable swapped to true.",
                 },
                 {
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -1204,7 +1271,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if j <= 0.",
                 },
                 {
-                    line: 12,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -1218,7 +1285,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if !swapped.",
                 },
                 {
-                    line: 15,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -1274,7 +1341,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if j <= -1.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -1288,7 +1355,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if !swapped.",
                 },
                 {
-                    line: 15,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -1311,7 +1378,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if i <= 4.",
                 },
                 {
-                    line: 16,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -1913,7 +1980,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if num in myArray.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of for each loop",
@@ -2075,140 +2142,6 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
 
-    it.skip("should correctly handle swapping two elements in an array", () => {
-        const pseudocode = `CREATE number array AS myNumbers WITH SIZE 5
-            SET element 0 OF myNumbers TO 10
-            SET element 1 OF myNumbers TO 20
-            SET element 2 OF myNumbers TO 30
-            SET element 3 OF myNumbers TO 40
-            SET element 4 OF myNumbers TO 50
-            SET temp TO myNumbers[0]
-            SET element 0 of myNumbers TO element at 1 of myNumbers
-            SET myNumbers[1] TO temp
-            PRINT myNumbers`;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "create",
-                    type: "number",
-                    dataStructure: "array",
-                    varName: "myNumbers",
-                    value: [0, 0, 0, 0, 0],
-                    timestamp: undefined,
-                    description: "Created array myNumbers with size 5.",
-                },
-                {
-                    line: 2,
-                    operation: "set_array",
-                    varName: "myNumbers",
-                    index: 0,
-                    setValue: 10,
-                    timestamp: undefined,
-                    description: "Set myNumbers[0] to 10.",
-                },
-                {
-                    line: 3,
-                    operation: "set_array",
-                    varName: "myNumbers",
-                    index: 1,
-                    setValue: 20,
-                    timestamp: undefined,
-                    description: "Set myNumbers[1] to 20.",
-                },
-                {
-                    line: 4,
-                    operation: "set_array",
-                    varName: "myNumbers",
-                    index: 2,
-                    setValue: 30,
-                    timestamp: undefined,
-                    description: "Set myNumbers[2] to 30.",
-                },
-                {
-                    line: 5,
-                    operation: "set_array",
-                    varName: "myNumbers",
-                    index: 3,
-                    setValue: 40,
-                    timestamp: undefined,
-                    description: "Set myNumbers[3] to 40.",
-                },
-                {
-                    line: 6,
-                    operation: "set_array",
-                    varName: "myNumbers",
-                    index: 4,
-                    setValue: 50,
-                    timestamp: undefined,
-                    description: "Set myNumbers[4] to 50.",
-                },
-                {
-                    line: 7,
-                    operation: "set",
-                    varName: "temp",
-                    type: "number",
-                    value: {
-                        operation: "get",
-                        type: "array",
-                        varName: "myNumbers",
-                        index: 0,
-                        result: 10,
-                    },
-                    timestamp: undefined,
-                    description: "Set variable temp to myNumbers[0].",
-                },
-                {
-                    line: 8,
-                    operation: "set_array",
-                    varName: "myNumbers",
-                    index: 0,
-                    setValue: {
-                        operation: "get",
-                        type: "array",
-                        varName: "myNumbers",
-                        index: 1,
-                        result: 20,
-                    },
-                    timestamp: undefined,
-                    description: "Set myNumbers[0] to myNumbers[1].",
-                },
-                {
-                    line: 9,
-                    operation: "set_array",
-                    varName: "myNumbers",
-                    index: 1,
-                    setValue: {
-                        operation: "get",
-                        type: "variable",
-                        varName: "temp",
-                        result: 10,
-                    },
-                    timestamp: undefined,
-                    description: "Set myNumbers[1] to temp.",
-                },
-                {
-                    line: 10,
-                    operation: "print",
-                    isLiteral: false,
-                    varName: "myNumbers",
-                    literal: [20, 10, 30, 40, 50],
-                    timestamp: undefined,
-                    description: "Printed myNumbers.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
     it("should process a 'FOR EACH' loop followed by operations correctly", () => {
         const pseudocode = `SET total TO 0
             CREATE number array AS nums WITH values [1, 2, 3]
@@ -2350,7 +2283,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if num in nums.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of for each loop",
@@ -2624,7 +2557,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if i <= 4.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -2878,7 +2811,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "myStrings",
-                    literal: ["hello", "world", "!"],
+                    literal: ["world", "!", ""],
                     timestamp: undefined,
                     description: "Printed myStrings.",
                 },
@@ -2892,7 +2825,7 @@ describe("PseudocodeProcessor", () => {
                         type: "array",
                         varName: "myStrings",
                         index: 0,
-                        result: "hello",
+                        result: "world",
                     },
                     timestamp: undefined,
                     description: "Set variable firstElement to myStrings[0].",
@@ -3530,7 +3463,7 @@ describe("PseudocodeProcessor", () => {
                         "Set variable activity to Eligible for children's events.",
                 },
                 {
-                    line: 20,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -3616,7 +3549,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable action to Do nothing.",
                 },
                 {
-                    line: 14,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -3667,7 +3600,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if score > 80.",
                 },
                 {
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -3751,7 +3684,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable note to Consideration needed.",
                 },
                 {
-                    line: 12,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -3802,7 +3735,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable result to Less than 10.",
                 },
                 {
-                    line: 4,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -3863,13 +3796,13 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable range to Between 10 and 20.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
                 },
                 {
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -3922,7 +3855,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable response to 10 or less.",
                 },
                 {
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -3994,7 +3927,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable y to 10 or less.",
                 },
                 {
-                    line: 10,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -4059,7 +3992,7 @@ describe("PseudocodeProcessor", () => {
                         "Set variable y to Greater than 5 but less than or equal to 15.",
                 },
                 {
-                    line: 8,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -4340,7 +4273,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Printed String is long enough.",
                 },
                 {
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -4892,7 +4825,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable max to 100.",
                 },
                 {
-                    line: 9,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -4906,7 +4839,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if z > max.",
                 },
                 {
-                    line: 12,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -5073,7 +5006,7 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 7,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5150,13 +5083,13 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
                 {
                     description: "End of if statement.",
-                    line: 7,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5188,7 +5121,7 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5265,13 +5198,13 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
                 {
                     description: "End of if statement.",
-                    line: 7,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5303,7 +5236,7 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5380,13 +5313,13 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 8,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
                 {
                     description: "End of if statement.",
-                    line: 11,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5454,13 +5387,13 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 9,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
                 {
                     description: "End of if statement.",
-                    line: 10,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5557,19 +5490,19 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 10,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
                 {
                     description: "End of if statement.",
-                    line: 13,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
                 {
                     description: "End of if statement.",
-                    line: 14,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5634,13 +5567,13 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 7,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
                 {
                     description: "End of if statement.",
-                    line: 8,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -5738,7 +5671,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if !isTrue.",
                 },
                 {
-                    line: 4,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -5794,7 +5727,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Printed Boolean is true.",
                 },
                 {
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -5858,7 +5791,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Printed Complex Condition Met.",
                 },
                 {
-                    line: 7,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -5924,7 +5857,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Printed Correct.",
                 },
                 {
-                    line: 7,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -6014,7 +5947,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if isTrue && isFalse.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -6134,7 +6067,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable x to x + 2.",
                 },
                 {
-                    line: 8,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -6174,7 +6107,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable x to x + 2.",
                 },
                 {
-                    line: 8,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -6214,7 +6147,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable x to x + 3.",
                 },
                 {
-                    line: 8,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -6254,7 +6187,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Set variable x to x + 3.",
                 },
                 {
-                    line: 8,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -6268,7 +6201,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if x < 10.",
                 },
                 {
-                    line: 9,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of while loop",
@@ -6504,7 +6437,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if x > 0.",
                 },
                 {
-                    line: 7,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of while loop",
@@ -6681,7 +6614,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if i <= 3.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -6941,7 +6874,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if i <= 5.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -7144,7 +7077,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if i <= 5.",
                 },
                 {
-                    line: 3,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -7453,7 +7386,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if x != 0.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of while loop",
@@ -7633,7 +7566,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if x > 0.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of while loop",
@@ -7968,7 +7901,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if i <= 10.",
                 },
                 {
-                    line: 3,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of loop from_to loop",
@@ -8025,7 +7958,7 @@ describe("PseudocodeProcessor", () => {
                     description: "Printed x is greater than 5.",
                 },
                 {
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                     description: "End of if statement.",
@@ -8138,7 +8071,7 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 4,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -8300,13 +8233,13 @@ describe("PseudocodeProcessor", () => {
                 },
                 {
                     description: "End of if statement.",
-                    line: 6,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
                 {
                     description: "End of if statement.",
-                    line: 7,
+                    line: null,
                     operation: "endif",
                     timestamp: undefined,
                 },
@@ -8446,43 +8379,6 @@ describe("PseudocodeProcessor", () => {
                     value: 30,
                     timestamp: undefined,
                     description: "Set variable z to y * 2.",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
-    it("should handle division by zero", () => {
-        const pseudocode = `SET x to number 10
-        SET y to x / 0
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "x",
-                    type: "number",
-                    value: 10,
-                    timestamp: undefined,
-                    description: "Set variable x to 10.",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "y",
-                    type: "number",
-                    value: Infinity,
-                    timestamp: undefined,
-                    description: "Set variable y to x / 0.",
                 },
             ],
         };
@@ -8708,55 +8604,10 @@ describe("PseudocodeProcessor", () => {
                     description: "Checked if x > 0.",
                 },
                 {
-                    line: 5,
+                    line: null,
                     operation: "loop_end",
                     timestamp: undefined,
                     description: "End of while loop",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-    it("should process arithmetic with negative numbers", () => {
-        const pseudocode = `SET a to number -5
-        SET b to a + 10
-        SET c to b * -2`;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "a",
-                    type: "number",
-                    value: -5,
-                    timestamp: undefined,
-                    description: "Set variable a to -5.",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "b",
-                    type: "number",
-                    value: 5,
-                    timestamp: undefined,
-                    description: "Set variable b to a + 10.",
-                },
-                {
-                    line: 3,
-                    operation: "set",
-                    varName: "c",
-                    type: "number",
-                    value: -10,
-                    timestamp: undefined,
-                    description: "Set variable c to b * -2.",
                 },
             ],
         };

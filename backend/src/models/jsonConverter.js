@@ -39,13 +39,13 @@ class JsonConverter extends Converter {
      * @returns {Object|Array} The transformed node, or an array of transformed nodes.
      */
     transformNode(node) {
-        const nodeWithLine = {
-            ...node,
-            line:
-                node.type === "OtherwiseIfStatement"
-                    ? node.line
-                    : this.currentLine++,
-        };
+        // const nodeWithLine = {
+        //     ...node,
+        //     line:
+        //         node.type === "OtherwiseIfStatement"
+        //             ? node.line
+        //             : this.currentLine++,
+        // };
 
         // Use the factory to get the appropriate converter for the node type
         const converter = this.nodeConverterFactory.getConverter(node.type);
@@ -63,7 +63,14 @@ class JsonConverter extends Converter {
 
         let frames = []; // Collect frames for movements
         let value = this.expressionEvaluator.evaluateExpression(node.value);
-
+        if (
+            typeof node.name === "object" ||
+            node.name == null ||
+            node.name == undefined
+        )
+            throw new Error(
+                `Please ensure that variable name at ${node.line} is correctly written as a single word and not an operation or expression.`
+            );
         // Check if the value is a function call
         if (node.value.type === "FunctionCall") {
             const lineNum = node.value.line;
@@ -83,13 +90,10 @@ class JsonConverter extends Converter {
 
             // Set the return value from the function call as the value of the variable
             value = functionCallResult.returnValue;
-
             // Assign the value from the function return to the variable
             this.variables[node.name] = value;
             this.declaredVariables.add(node.name);
-
             const varType = this.determineType(value);
-
             // Add the variable declaration movement after function call and body
             frames.push({
                 line: lineNum,
@@ -100,7 +104,7 @@ class JsonConverter extends Converter {
                 timestamp: new Date().toISOString(),
                 description: `Set variable ${node.name} to function return value ${value}.`,
             });
-            this.currentLine = lineNum + 1;
+            //this.currentLine = lineNum + 1;
             return frames; // Return all frames including the function call and variable assignment
         }
 
@@ -408,7 +412,7 @@ class JsonConverter extends Converter {
 
         // Store the current line number
         let prevLine = node.line;
-        this.currentLine = functionIR.startLine + 1;
+        //this.currentLine = functionIR.startLine + 1;
 
         // Map arguments to function parameters
         const previousVariables = { ...this.variables }; // Save the current variables state
@@ -457,8 +461,8 @@ class JsonConverter extends Converter {
         });
 
         // Restore the previous variable state
-        this.variables = previousVariables;
-        this.currentLine = prevLine;
+        //this.variables = previousVariables;
+        //this.currentLine = prevLine;
         node.line = prevLine;
 
         return returnValue !== null && varDecl
@@ -471,12 +475,20 @@ class JsonConverter extends Converter {
             ? this.expressionEvaluator.evaluateExpression(node.value)
             : node.value;
         const isLiteral = !this.declaredVariables.has(value);
+        let printVal = isLiteral ? value : this.variables[value];
+        if (
+            (typeof printVal === "object" && !Array.isArray(printVal)) ||
+            printVal == undefined
+        )
+            throw new Error(
+                "Nesting other operations or expressions within print statements is not allowed. Please assign this to a variable first then try again."
+            );
         return {
             line: node.line,
             operation: "print",
             isLiteral: isLiteral,
             varName: isLiteral ? null : value,
-            literal: isLiteral ? value : this.variables[value],
+            literal: printVal,
             timestamp: new Date().toISOString(),
             description: `Printed ${value}.`,
         };
@@ -511,64 +523,69 @@ class JsonConverter extends Converter {
             frames = frames.concat(this.transformNodes(node.consequent));
             consequentLineCount = frames.length;
             // Adjust currentLine to account for alternate block length + 1
-            if (node.alternate && node.alternate.length > 0) {
-                this.currentLine = Math.max(
-                    this.currentLine,
-                    this.currentLine + node.alternate.length + 1
-                );
-            } else {
-                this.currentLine = node.line + node.consequent.length + 1;
-            }
+            //     if (node.alternate && node.alternate.length > 0) {
+            //         this.currentLine = Math.max(
+            //             this.currentLine,
+            //             this.currentLine + node.alternate.length + 1
+            //         );
+            //     } else {
+            //         this.currentLine = node.line + node.consequent.length + 1;
+            //     }
         } else {
-            // Handle the false condition (alternate)
-            if (node.alternate && node.alternate.length > 0) {
-                this.currentLine = Math.max(
-                    this.currentLine,
-                    this.currentLine + node.consequent.length + 1
-                );
-            } else {
-                this.currentLine = node.line + node.consequent.length + 1;
-            }
+            //     // Handle the false condition (alternate)
+            //     if (node.alternate && node.alternate.length > 0) {
+            //         this.currentLine = Math.max(
+            //             this.currentLine,
+            //             this.currentLine + node.consequent.length + 1
+            //         );
+            //     } else {
+            //         this.currentLine = node.line + node.consequent.length + 1;
+            //     }
             frames = frames.concat(this.transformNodes(node.alternate || []));
         }
-        // Add the "End If" movement object
-        if (node.alternate && node.alternate.length > 0) {
-            this.currentLine = Math.max(
-                this.currentLine,
-                node.line + node.consequent.length + node.alternate.length + 2
-            );
-        } else {
-            this.currentLine = Math.max(
-                this.currentLine,
-                node.line + node.consequent.length + 1
-            );
-        }
-        if (this.nestedEndIf > 0 && !node.alternate) {
-            this.currentLine = this.nestedEndIf + 1;
-            frames.push({
-                line: this.currentLine,
-                operation: "endif",
-                timestamp: new Date().toISOString(),
-                description: "End of if statement.",
-            });
-        } else {
-            frames.push({
-                line: this.currentLine,
-                operation: "endif",
-                timestamp: new Date().toISOString(),
-                description: "End of if statement.",
-            });
-        }
+        // // Add the "End If" movement object
+        // if (node.alternate && node.alternate.length > 0) {
+        //     this.currentLine = Math.max(
+        //         this.currentLine,
+        //         node.line + node.consequent.length + node.alternate.length + 2
+        //     );
+        // } else {
+        //     this.currentLine = Math.max(
+        //         this.currentLine,
+        //         node.line + node.consequent.length + 1
+        //     );
+        // }
+        // if (this.nestedEndIf > 0 && !node.alternate) {
+        //     this.currentLine = this.nestedEndIf + 1;
+        //     frames.push({
+        //         line: null,
+        //         operation: "endif",
+        //         timestamp: new Date().toISOString(),
+        //         description: "End of if statement.",
+        //     });
+        // } else {
+        //     frames.push({
+        //         line: null,
+        //         operation: "endif",
+        //         timestamp: new Date().toISOString(),
+        //         description: "End of if statement.",
+        //     });
+        // }
+        frames.push({
+            line: null,
+            operation: "endif",
+            timestamp: new Date().toISOString(),
+            description: "End of if statement.",
+        });
         this.ifDepth--; // Exiting an IF statement, decrement depth
-        this.nestedEndIf = this.currentLine;
-        this.currentLine++;
+        // this.nestedEndIf = this.currentLine;
+        // this.currentLine++;
         return frames;
     }
 
     transformOtherwiseIfStatement(node) {
         // Entering an Otherwise If statement, increment depth
         //this.ifDepth++;
-        this.currentLine = node.line;
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
@@ -576,7 +593,7 @@ class JsonConverter extends Converter {
 
         let frames = [
             {
-                line: this.currentLine++,
+                line: node.line,
                 operation: "if", // Transform Otherwise If as an If in JSON
                 condition: conditionString,
                 result: conditionResult,
@@ -589,12 +606,12 @@ class JsonConverter extends Converter {
             frames = frames.concat(this.transformNodes(node.consequent));
         } else if (node.alternate) {
             if (node.alternate.type != "OtherwiseIfStatement")
-                this.currentLine = node.otherwiseLine;
-            // Recursively handle nested Otherwise If or Otherwise
-            //this.currentLine = node.line;
-            frames = frames.concat(this.transformNodes(node.alternate));
+                //this.currentLine = node.otherwiseLine;
+                // Recursively handle nested Otherwise If or Otherwise
+                //this.currentLine = node.line;
+                frames = frames.concat(this.transformNodes(node.alternate));
         }
-        this.currentLine = node.endLine;
+        //this.currentLine = node.endLine;
 
         return frames;
     }
@@ -697,7 +714,7 @@ class JsonConverter extends Converter {
                 });
                 this.declaredVariables.add(iterator);
                 this.variables[iterator] = arrayValue;
-                this.currentLine = bodyLineStart + 1;
+                //this.currentLine = bodyLineStart + 1;
                 // Transform the loop body (processing the body of the loop)
                 const bodyFrames = this.transformNodes(node.body).map(
                     (frame) => ({
@@ -710,16 +727,16 @@ class JsonConverter extends Converter {
 
                 // Increment the index
                 index += 1;
-                bodyLineCount = Math.max(
-                    bodyLineCount,
-                    this.currentLine - bodyLineStart
-                );
-                this.currentLine = node.endLine;
+                // bodyLineCount = Math.max(
+                //     bodyLineCount,
+                //     this.currentLine - bodyLineStart
+                // );
+                //this.currentLine = node.endLine;
             }
         } else {
             while (this.expressionEvaluator.evaluateCondition(node.condition)) {
                 let z = 0;
-                this.currentLine = node.line + 1;
+                //this.currentLine = node.line + 1;
                 if (this.variables["x"] == 0) {
                     z += 1;
                 }
@@ -740,10 +757,10 @@ class JsonConverter extends Converter {
                 );
 
                 actionFrames.push(...bodyFrames);
-                bodyLineCount = Math.max(
-                    bodyLineCount,
-                    this.currentLine - bodyLineStart
-                );
+                // bodyLineCount = Math.max(
+                //     bodyLineCount,
+                //     this.currentLine - bodyLineStart
+                // );
                 // For loop_from_to, update the loop variable and add the set movement object
                 if (loopType === "loop_from_to") {
                     const updateFrame = this.updateLoopVariable(
@@ -763,9 +780,9 @@ class JsonConverter extends Converter {
             description: `Checked if ${conditionString}.`,
         });
 
-        this.currentLine = bodyLineStart + bodyLineCount;
+        //this.currentLine = bodyLineStart + bodyLineCount;
         actionFrames.push({
-            line: this.currentLine++,
+            line: null,
             operation: "loop_end",
             timestamp: new Date().toISOString(),
             description: `End of ${loopType.replace("_", " ")} loop`,
@@ -803,9 +820,10 @@ class JsonConverter extends Converter {
         let { left, operator, right } = node.condition;
 
         if (
-            typeof left === "undefined" ||
-            typeof operator === "undefined" ||
-            typeof right === "undefined"
+            node.condition === "Expression" &&
+            (typeof left === "undefined" ||
+                typeof operator === "undefined" ||
+                typeof right === "undefined")
         ) {
             console.error(`${loopType} condition components are undefined.`, {
                 left,
@@ -847,6 +865,16 @@ class JsonConverter extends Converter {
 
         const operatorMapped = operatorsMap[operator];
         const flipMap = {
+            and: "&&",
+            or: "||",
+            greater: ">",
+            less: "<",
+            equal: "==",
+            "&&": "&&",
+            "||": "||",
+            ">": ">",
+            "<": "<",
+            "==": "==",
             ">": "<=",
             "<": ">=",
             ">=": "<",
@@ -857,26 +885,40 @@ class JsonConverter extends Converter {
 
         if (flipMap[operatorMapped]) {
             return flipMap[operatorMapped];
-        }
+        } else if (
+            typeof this.expressionEvaluator.getVariableValue(operator) ===
+            "boolean"
+        )
+            return operator;
 
         throw new Error(`Unsupported operator for flipping: ${operator}`);
     }
 
     flipCondition(condition) {
         if (condition.includes(">=")) {
-            return condition.replace(">=", "<");
+            return condition.replaceAll(">=", "<");
         } else if (condition.includes(">")) {
-            return condition.replace(">", "<=");
+            return condition.replaceAll(">", "<=");
         } else if (condition.includes("<=")) {
-            return condition.replace("<=", ">");
+            return condition.replaceAll("<=", ">");
         } else if (condition.includes("<")) {
-            return condition.replace("<", ">=");
+            return condition.replaceAll("<", ">=");
         } else if (condition.includes("==")) {
-            return condition.replace("==", "!=");
+            return condition.replaceAll("==", "!=");
         } else if (condition.includes("!=")) {
-            return condition.replace("!=", "==");
-        }
-        throw new Error("Unsupported condition operator for flipping");
+            return condition.replaceAll("!=", "==");
+        } else if (condition.type === "Identifier") return condition.value;
+
+        // else if (
+        //     typeof this.expressionEvaluator.getVariableValue(condition) ===
+        //     "boolean"
+        // ) {
+        //     console.log("in flip condition " + condition);
+        //     console.log(this.variables);
+        //     return condition;
+        // }
+        return condition;
+        //throw new Error("Unsupported condition operator for flipping");
     }
 
     transformLoopFromTo(node) {
@@ -890,7 +932,7 @@ class JsonConverter extends Converter {
 
         const actionFrames = [
             {
-                line: this.currentLine - 1,
+                line: node.line,
                 operation: "set",
                 varName: loopVariable,
                 type: "number",
@@ -951,6 +993,7 @@ class JsonConverter extends Converter {
             return `!${right}`;
         } else if (condition.operator === "not") {
             const right = this.convertConditionToString(condition.right);
+            console.log(`!${right}`);
             return `!${right}`;
         }
 
@@ -1039,7 +1082,7 @@ class JsonConverter extends Converter {
 
     transformArrayCreation(node) {
         let elements;
-        if (node.dsType === "boolean")
+        if (node.dsType === "boolean" && !node.unInitialised)
             elements = (node.values || []).map((el) => el.value);
         else
             elements = (node.values || []).map((el) =>
@@ -1096,6 +1139,18 @@ class JsonConverter extends Converter {
         const position = this.expressionEvaluator.evaluateExpression(
             node.positionToRemove
         );
+        if (typeof position != "number")
+            throw new Error(
+                `Error at line ${node.line}: Position to remove must be a number.`
+            );
+        const arrayLength = this.variables[node.varName].length;
+        if (position < 0 || position >= arrayLength) {
+            throw new Error(
+                `Error at line ${node.line}: Position ${position} is out of bounds for array ${node.varName}.`
+            );
+        }
+        const removedValue = this.variables[node.varName].splice(position, 1);
+        console.log(this.variables[node.varName]);
 
         return {
             line: line,
@@ -1120,7 +1175,18 @@ class JsonConverter extends Converter {
                     this.initializedArrays[node.varName]
                 }.`
             );
-        this.variables[node.varName][position] = value;
+        console.log(position);
+        if (
+            position < 0 ||
+            position > this.variables[node.varName].length ||
+            isNaN(position)
+        ) {
+            throw new Error(
+                `Index is out of bounds for array insertion at line ${node.line}`
+            );
+        }
+        this.variables[node.varName].splice(position, 0, value);
+        console.log(this.variables[node.varName]);
         return {
             line: node.line,
             operation: "add",

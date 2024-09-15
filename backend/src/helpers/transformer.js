@@ -227,12 +227,18 @@ class Transformer {
             return {
                 type: "Expression",
                 line: expression.line,
-                left: expression.left.value,
+                left:
+                    expression.left.type === "Expression"
+                        ? this.transformReturnValue(expression.left) // Recursively transform nested left expression
+                        : expression.left.value, // If it's not an expression, it's a literal value
                 operator: expression.operator,
-                right: expression.right.value,
+                right:
+                    expression.right.type === "Expression"
+                        ? this.transformReturnValue(expression.right) // Recursively transform nested right expression
+                        : expression.right.value, // If it's not an expression, it's a literal value
             };
         } else {
-            return this.transformExpression(expression);
+            return this.transformExpression(expression); // Handle other cases as usual
         }
     }
 
