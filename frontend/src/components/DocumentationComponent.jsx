@@ -409,6 +409,10 @@ const DocumentationComponent = ({ admin = false }) => {
 
                           <FormControl id="content">
                             <FormLabel>Content</FormLabel>
+                            <FormHelperText mb={2}>
+                              Wrap text in '{"<>"}' to create a code snippet and
+                              '{"<<>>"}' to create a code block.
+                            </FormHelperText>
                             <Textarea
                               type="text"
                               value={newSection.content}
@@ -507,6 +511,10 @@ const DocumentationComponent = ({ admin = false }) => {
 
                     <FormControl id="content">
                       <FormLabel>Content</FormLabel>
+                      <FormHelperText mb={2}>
+                        Wrap text in '{"<>"}' to create a code snippet and '
+                        {"<<>>"}' to create a code block.
+                      </FormHelperText>
                       <Textarea
                         type="text"
                         value={newSection.content}
@@ -613,6 +621,10 @@ const DocumentationComponent = ({ admin = false }) => {
 
                   <FormControl id="content">
                     <FormLabel>Content</FormLabel>
+                    <FormHelperText mb={2}>
+                      Wrap text in '{"<>"}' to create a code snippet and '
+                      {"<<>>"}' to create a code block.
+                    </FormHelperText>
                     <Textarea
                       type="text"
                       value={sectionBeingEdited?.content || ""}
@@ -674,7 +686,7 @@ const CodeBlock = ({ code }) => {
   const { hasCopied, onCopy } = useClipboard(code);
 
   return (
-    <Box position="relative" mt={1} >
+    <Box position="relative" mt={1}>
       <Code p={4} display="block" whiteSpace="pre-wrap">
         {code}
       </Code>
