@@ -38,24 +38,24 @@ class JsonNodeConverterFactory {
                 );
             case "IfStatement":
                 return (node) => {
-                    this.jsonConverter.ifDepth++;
+                    //this.jsonConverter.ifDepth++;
                     const result =
                         this.jsonConverter.transformIfStatement(node);
-                    if (this.jsonConverter.ifDepth === 1) {
-                        this.jsonConverter.nestedEndIf = 0;
-                    }
-                    this.jsonConverter.ifDepth--;
+                    // if (this.jsonConverter.ifDepth === 1) {
+                    //     this.jsonConverter.nestedEndIf = 0;
+                    // }
+                    // this.jsonConverter.ifDepth--;
                     return result;
                 };
             case "OtherwiseIfStatement":
                 return (node) => {
-                    this.jsonConverter.ifDepth++; // Increment the IF depth
+                    // this.jsonConverter.ifDepth++; // Increment the IF depth
                     const result =
                         this.jsonConverter.transformOtherwiseIfStatement(node);
-                    if (this.jsonConverter.ifDepth === 1) {
-                        this.jsonConverter.nestedEndIf = 0; // Reset nestedEndIf if at top level
-                    }
-                    this.jsonConverter.ifDepth--; // Decrement the IF depth
+                    // if (this.jsonConverter.ifDepth === 1) {
+                    //     this.jsonConverter.nestedEndIf = 0; // Reset nestedEndIf if at top level
+                    // }
+                    // this.jsonConverter.ifDepth--; // Decrement the IF depth
                     return result;
                 };
 

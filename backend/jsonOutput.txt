@@ -113824,3 +113824,608 @@ Final Output: {
     }
   ]
 }
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "arrType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "isTrue",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "boolArray",
+          "line": 2
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "dsType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "line": 1,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "isTrue",
+      "value": {
+        "type": "IndexExpression",
+        "line": 2,
+        "source": "boolArray",
+        "index": "0"
+      }
+    }
+  ]
+}
+Final Output: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "boolean",
+      "varName": "boolArray",
+      "value": [
+        true,
+        false,
+        true
+      ],
+      "timestamp": "2024-09-15T09:52:28.960Z",
+      "description": "Created array boolArray with values [true,false,true]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "isTrue",
+      "type": "boolean",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "boolArray",
+        "index": 0,
+        "result": true
+      },
+      "timestamp": "2024-09-15T09:52:28.960Z",
+      "description": "Set variable isTrue to boolArray[0]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "arrType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "isTrue",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "boolArray",
+          "line": 2
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "dsType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "line": 1,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "isTrue",
+      "value": {
+        "type": "IndexExpression",
+        "line": 2,
+        "source": "boolArray",
+        "index": "0"
+      }
+    }
+  ]
+}
+Final Output: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "boolean",
+      "varName": "boolArray",
+      "value": [
+        true,
+        false,
+        true
+      ],
+      "timestamp": "2024-09-15T10:08:37.100Z",
+      "description": "Created array boolArray with values [true,false,true]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "isTrue",
+      "type": "boolean",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "boolArray",
+        "index": 0,
+        "result": true
+      },
+      "timestamp": "2024-09-15T10:08:37.100Z",
+      "description": "Set variable isTrue to boolArray[0]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "arrType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "isTrue",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "boolArray",
+          "line": 2
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "dsType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "line": 1,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "isTrue",
+      "value": {
+        "type": "IndexExpression",
+        "line": 2,
+        "source": "boolArray",
+        "index": "0"
+      }
+    }
+  ]
+}
+Final Output: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "boolean",
+      "varName": "boolArray",
+      "value": [
+        true,
+        false,
+        true
+      ],
+      "timestamp": "2024-09-15T10:09:04.365Z",
+      "description": "Created array boolArray with values [true,false,true]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "isTrue",
+      "type": "boolean",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "boolArray",
+        "index": 0,
+        "result": true
+      },
+      "timestamp": "2024-09-15T10:09:04.365Z",
+      "description": "Set variable isTrue to boolArray[0]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "arrType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "isTrue",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "boolArray",
+          "line": 2
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "dsType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "line": 1,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "isTrue",
+      "value": {
+        "type": "IndexExpression",
+        "line": 2,
+        "source": "boolArray",
+        "index": "0"
+      }
+    }
+  ]
+}
+Final Output: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "boolean",
+      "varName": "boolArray",
+      "value": [
+        true,
+        false,
+        true
+      ],
+      "timestamp": "2024-09-15T10:10:58.947Z",
+      "description": "Created array boolArray with values [true,false,true]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "isTrue",
+      "type": "boolean",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "boolArray",
+        "index": 0,
+        "result": true
+      },
+      "timestamp": "2024-09-15T10:10:58.947Z",
+      "description": "Set variable isTrue to boolArray[0]."
+    }
+  ]
+}
+AST: {
+  "type": "Program",
+  "body": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "arrType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "unInitialised": false,
+      "line": 1
+    },
+    {
+      "type": "VariableDeclaration",
+      "varName": "isTrue",
+      "varType": null,
+      "value": {
+        "type": "IndexExpression",
+        "source": {
+          "type": "Identifier",
+          "value": "boolArray",
+          "line": 2
+        },
+        "index": {
+          "type": "NumberLiteral",
+          "value": "0",
+          "line": 2
+        },
+        "line": 2
+      },
+      "line": 2
+    }
+  ]
+}
+Intermediate Representation: {
+  "program": [
+    {
+      "type": "ArrayCreation",
+      "varName": "boolArray",
+      "dsType": "boolean",
+      "values": [
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": false,
+          "line": 1
+        },
+        {
+          "type": "BooleanLiteral",
+          "value": true,
+          "line": 1
+        }
+      ],
+      "line": 1,
+      "unInitialised": false
+    },
+    {
+      "type": "VariableDeclaration",
+      "line": 2,
+      "name": "isTrue",
+      "value": {
+        "type": "IndexExpression",
+        "line": 2,
+        "source": "boolArray",
+        "index": "0"
+      }
+    }
+  ]
+}
+Final Output: {
+  "actionFrames": [
+    {
+      "line": 1,
+      "operation": "create",
+      "dataStructure": "array",
+      "type": "boolean",
+      "varName": "boolArray",
+      "value": [
+        true,
+        false,
+        true
+      ],
+      "timestamp": "2024-09-15T10:52:55.388Z",
+      "description": "Created array boolArray with values [true,false,true]."
+    },
+    {
+      "line": 2,
+      "operation": "set",
+      "varName": "isTrue",
+      "type": "boolean",
+      "value": {
+        "operation": "get",
+        "type": "array",
+        "varName": "boolArray",
+        "index": 0,
+        "result": true
+      },
+      "timestamp": "2024-09-15T10:52:55.388Z",
+      "description": "Set variable isTrue to boolArray[0]."
+    }
+  ]
+}

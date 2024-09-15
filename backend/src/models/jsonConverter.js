@@ -8,7 +8,7 @@ class JsonConverter extends Converter {
         this.variables = {};
         this.declaredVariables = new Set();
         this.initializedArrays = {};
-        this.currentLine = 1;
+        // this.currentLine = 1;
         this.nestedEndIf = 0;
         this.ifDepth = 0; // Track the depth of nested IF statements
         this.nodeConverterFactory = new JsonNodeConverterFactory(this);
@@ -495,7 +495,7 @@ class JsonConverter extends Converter {
     }
 
     transformIfStatement(node) {
-        this.ifDepth++; // Entering an IF statement, increment depth
+        // this.ifDepth++; // Entering an IF statement, increment depth
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
@@ -516,12 +516,12 @@ class JsonConverter extends Converter {
                 description: `Checked if ${conditionString}.`,
             },
         ];
-        let consequentLineCount = 0;
-        let alternateLineCount = 0;
+        // let consequentLineCount = 0;
+        // let alternateLineCount = 0;
         if (conditionResult) {
             // Handle the true condition (consequent)
             frames = frames.concat(this.transformNodes(node.consequent));
-            consequentLineCount = frames.length;
+            // consequentLineCount = frames.length;
             // Adjust currentLine to account for alternate block length + 1
             //     if (node.alternate && node.alternate.length > 0) {
             //         this.currentLine = Math.max(
@@ -577,7 +577,7 @@ class JsonConverter extends Converter {
             timestamp: new Date().toISOString(),
             description: "End of if statement.",
         });
-        this.ifDepth--; // Exiting an IF statement, decrement depth
+        // this.ifDepth--; // Exiting an IF statement, decrement depth
         // this.nestedEndIf = this.currentLine;
         // this.currentLine++;
         return frames;
@@ -840,6 +840,7 @@ class JsonConverter extends Converter {
         if (loopType === "loop_until") {
             // Flip the condition for `loop_until`
             conditionString = this.flipCondition(conditionString);
+            console.log(conditionString);
 
             // Flip the operator in node.condition as well
             node.condition.operator = this.flipOperator(operator);
@@ -849,6 +850,7 @@ class JsonConverter extends Converter {
     }
 
     flipOperator(operator) {
+        console.log(operator);
         const operatorsMap = {
             and: "&&",
             or: "||",
@@ -869,12 +871,12 @@ class JsonConverter extends Converter {
             or: "||",
             greater: ">",
             less: "<",
-            equal: "==",
+            equal: "!=",
             "&&": "&&",
             "||": "||",
             ">": ">",
             "<": "<",
-            "==": "==",
+            "==": "!=",
             ">": "<=",
             "<": ">=",
             ">=": "<",
@@ -917,6 +919,7 @@ class JsonConverter extends Converter {
         //     console.log(this.variables);
         //     return condition;
         // }
+
         return condition;
         //throw new Error("Unsupported condition operator for flipping");
     }
