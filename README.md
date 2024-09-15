@@ -41,7 +41,7 @@
 ###
 
 ```
-npm install-all
+npm run install-all
 ```
 
 ###
