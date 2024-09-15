@@ -1,6 +1,7 @@
 class LengthExpression {
     /**
      * Constructs a new LengthExpression node.
+     * @author Taahir Suleman
      * @param {ASTNode} source - The source from which to calculate the length (string or array).
      * @param {number} line - The line number where this expression occurs in the source code.
      */

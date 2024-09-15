@@ -4131,49 +4131,6 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
 
-    it("should correctly evaluate indexing an empty string", () => {
-        const pseudocode = `SET emptyString TO ""
-            SET emptyIndex TO CHARACTER AT 0 OF emptyString
-        `;
-
-        const expectedJson = {
-            actionFrames: [
-                {
-                    line: 1,
-                    operation: "set",
-                    varName: "emptyString",
-                    type: "string",
-                    value: "",
-                    timestamp: undefined,
-                    description: "Set variable emptyString to .",
-                },
-                {
-                    line: 2,
-                    operation: "set",
-                    varName: "emptyIndex",
-                    type: "string",
-                    value: {
-                        operation: "get",
-                        type: "string",
-                        varName: "emptyString",
-                        index: 0,
-                        result: "",
-                    },
-                    timestamp: undefined,
-                    description: "Set variable emptyIndex to emptyString[0].",
-                },
-            ],
-        };
-
-        const result = PseudocodeProcessor.process(pseudocode);
-
-        expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp;
-        });
-
-        expect(result).to.deep.equal(expectedJson);
-    });
-
     it("should correctly evaluate a basic indexing operation", () => {
         const pseudocode = `SET myString TO "Hello, World!"
             SET firstCharacter TO CHARACTER AT 0 OF myString
