@@ -24,10 +24,20 @@ import IndexExpression from "./ast/IndexExpression.js";
 import RemoveOperation from "./ast/RemoveOperation.js";
 import ArraySetValue from "./ast/ArraySetValue.js";
 import SwapOperation from "./ast/SwapOperation.js";
+
 /**
- * ASTNodeFactory class responsible for creating instances of AST nodes.
+ * @class ASTNodeFactory
+ * @description Factory class responsible for creating Abstract Syntax Tree (AST) node instances.
+ * It maps various node types to their corresponding classes and dynamically creates instances
+ * based on the provided node type and constructor arguments.
+ *
+ * @author Taahir Suleman
  */
 class ASTNodeFactory {
+    /**
+     * @constructor
+     * Initializes the node types mapping, linking node type names to their corresponding classes.
+     */
     constructor() {
         this.nodeTypes = {
             Program,
@@ -61,10 +71,12 @@ class ASTNodeFactory {
 
     /**
      * Creates an instance of an AST node based on the provided type and arguments.
-     * @param {string} type - The type of AST node to create.
-     * @param  {...any} args - The arguments to pass to the AST node constructor.
+     *
+     * @param {string} type - The type of AST node to create, corresponding to the class name.
+     * @param {...any} args - The arguments to pass to the AST node's constructor.
+     *
      * @returns {ASTNode} An instance of the requested AST node.
-     * @throws {Error} If the node type is unknown.
+     * @throws {Error} Throws an error if the provided node type is not recognized.
      */
     createNode(type, ...args) {
         const NodeClass = this.nodeTypes[type];

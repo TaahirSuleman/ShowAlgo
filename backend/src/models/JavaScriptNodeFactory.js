@@ -1,6 +1,7 @@
 /**
  * @class JavaScriptNodeFactory
  * @description Factory class for generating JavaScript code from IR nodes.
+ * @author Taahir Suleman
  */
 class JavaScriptNodeFactory {
     /**
