@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the About page containing information and a walkthrough of the ShowAlgo IDE
+ */
+
 import React, { useEffect, useRef } from "react";
 import {
   Box,
@@ -20,10 +26,12 @@ function About() {
   const iframeBoxRef = useRef(null);
   const navigate = useNavigate();
 
+  // Scroll to iframe box
   const handleScrollToIframe = () => {
     iframeBoxRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Check if user is on mobile
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (

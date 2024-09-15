@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the AdminLevel page which allows an admin to view and interact with the created level, as a user would
+ */
+
 import {
   Accordion,
   AccordionButton,
@@ -42,21 +48,13 @@ import {
   CloseIcon,
   WarningIcon,
   MinusIcon,
-  InfoIcon,
   ArrowBackIcon,
 } from "@chakra-ui/icons";
 import PropTypes from "prop-types";
-import { FaPlay, FaCloudUploadAlt } from "react-icons/fa";
-import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import CodeEditorView from "../components/CodeEditorView";
-import OutputView from "../components/OutputView";
-import { IoMdHome } from "react-icons/io";
+import { useNavigate, useParams } from "react-router-dom";
 import RunControls from "../components/RunControls";
-import MainVisualisationWindow from "../components/MainVisualisationWindow";
-import DocumentationComponent from "../components/DocumentationComponent";
 import IDEComponent from "../components/IDEComponent";
 import CustomToast from "../components/CustomToast";
 
@@ -207,19 +205,7 @@ function AdminLevel() {
     return () => timeoutSetKey;
   };
 
-  const handleClearClick = () => {
-    setIsClearDialogOpen(true);
-  };
-
-  const handleClearConfirm = () => {
-    setIsClearDialogOpen(false);
-    clearCode();
-  };
-
-  const handleClearCancel = () => {
-    setIsClearDialogOpen(false);
-  };
-
+  // Clear code
   const clearCode = () => {
     setIsClearLoading(true);
     setTimeout(() => {
@@ -227,24 +213,6 @@ function AdminLevel() {
       setIsClearLoading(false);
     }, 1000);
   };
-
-  const clearOutput = () => {
-    setIsClearOutputLoading(true);
-    setTimeout(() => {
-      setOutput([]);
-      setIsClearOutputLoading(false);
-    }, 1000);
-  };
-
-  const gridTemplateColumns = useBreakpointValue({
-    base: "1fr", // Single column layout for small screens
-    md: "1fr 1fr", // Two columns layout for medium and larger screens
-  });
-
-  const gridTemplateRows = useBreakpointValue({
-    base: "auto", // Single row layout for small screens
-    md: "1fr 1fr", // Two rows layout for medium and larger screens
-  });
 
   // Level functions
   useEffect(() => {
@@ -301,6 +269,7 @@ function AdminLevel() {
     setShowTestCaseStatus(!showTestCaseStatus);
   };
 
+  // function to check test cases and display results
   const checkTestCases = async (code, cases) => {
     try {
       console.log("code:", code);
@@ -326,6 +295,7 @@ function AdminLevel() {
     }
   };
 
+  // function that determines the status icon based on the test results
   const getStatusIcon = (status) => {
     if (!submitClicked) {
       return (
@@ -376,6 +346,7 @@ function AdminLevel() {
     }
   };
 
+  // function to find and display error
   const findError = (e) => {
     let errorLine = 0;
     try {
@@ -406,9 +377,9 @@ function AdminLevel() {
     });
   };
 
+  // function to submit code
   const submitCode = async () => {
     setSubmitClicked(true);
-
     try {
       let response = await axios.post(
         "http://localhost:8000/api/pseudocode/run",

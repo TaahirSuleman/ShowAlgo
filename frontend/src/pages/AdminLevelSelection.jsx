@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the AdminLevelSelection page which allows the admin to view, add, edit, and delete levels for a section
+ */
+
 import {
   Box,
   Button,
@@ -133,6 +139,7 @@ function AdminLevelSelection() {
     onAlertOpen();
   };
 
+  // Confirm and delete the level
   const handleDeleteConfirm = async (levelId) => {
     try {
       await axios.delete(`/delete-level/${levelId}`);
@@ -175,6 +182,7 @@ function AdminLevelSelection() {
     setFormData({ ...formData, [name]: value });
   };
 
+  // Submit the form to create a new level
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -230,6 +238,7 @@ function AdminLevelSelection() {
     }
   };
 
+  // Handle changes in test cases
   const handleTestCaseChange = (testCaseIndex, inputIndex, e) => {
     const { name, value } = e.target;
     const updatedTestCases = [...formData.test_cases];
@@ -241,6 +250,7 @@ function AdminLevelSelection() {
     setFormData({ ...formData, test_cases: updatedTestCases });
   };
 
+  // Add test cases
   const addTestCase = () => {
     setFormData({
       ...formData,
@@ -248,17 +258,20 @@ function AdminLevelSelection() {
     });
   };
 
+  // Remove a test case
   const removeTestCase = (index) => {
     const updatedTestCases = formData.test_cases.filter((_, i) => i !== index);
     setFormData({ ...formData, test_cases: updatedTestCases });
   };
 
+  // Add input field to a test case
   const addInputField = (testCaseIndex) => {
     const updatedTestCases = [...formData.test_cases];
     updatedTestCases[testCaseIndex].inputs.push("");
     setFormData({ ...formData, test_cases: updatedTestCases });
   };
 
+  // Remove input field from a test case
   const removeInputField = (testCaseIndex, inputIndex) => {
     const updatedTestCases = [...formData.test_cases];
     updatedTestCases[testCaseIndex].inputs = updatedTestCases[
@@ -267,11 +280,13 @@ function AdminLevelSelection() {
     setFormData({ ...formData, test_cases: updatedTestCases });
   };
 
+  // Handle changes in editing form
   const handleEditInputChange = (e) => {
     const { name, value } = e.target;
     setSelectedLevel({ ...selectedLevel, [name]: value });
   };
 
+  // Handle changes in test cases for editing
   const handleEditTestCaseChange = (index, e) => {
     const { name, value } = e.target;
     const updatedTestCases = selectedLevel.test_cases.map((testCase, i) =>
@@ -280,6 +295,7 @@ function AdminLevelSelection() {
     setSelectedLevel({ ...selectedLevel, test_cases: updatedTestCases });
   };
 
+  // Add test case for editing
   const addEditTestCase = () => {
     setSelectedLevel({
       ...selectedLevel,
@@ -287,6 +303,7 @@ function AdminLevelSelection() {
     });
   };
 
+  // Remove test case for editing
   const removeEditTestCase = (index) => {
     const updatedTestCases = selectedLevel.test_cases.filter(
       (_, i) => i !== index
@@ -294,6 +311,7 @@ function AdminLevelSelection() {
     setSelectedLevel({ ...selectedLevel, test_cases: updatedTestCases });
   };
 
+  // Add input field to a test case for editing
   const removeEditTestCaseInput = (testCaseIndex, inputIndex) => {
     setSelectedLevel((prevSelectedLevel) => {
       const updatedTestCases = [...prevSelectedLevel.test_cases];
@@ -302,6 +320,7 @@ function AdminLevelSelection() {
     });
   };
 
+  // Remove input field from a test case for editing
   const addEditTestCaseInput = (testCaseIndex) => {
     setSelectedLevel((prevSelectedLevel) => {
       const updatedTestCases = [...prevSelectedLevel.test_cases];
@@ -313,6 +332,7 @@ function AdminLevelSelection() {
     });
   };
 
+  // Submit the form to edit a level
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
     try {

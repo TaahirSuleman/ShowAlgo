@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the documentation component
+ */
+
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -103,10 +109,12 @@ const DocumentationComponent = ({ admin = false }) => {
     fetchDocumentation();
   }, []);
 
+  // Filter the sections based on the search term
   const filteredSections = documentation.filter((section) =>
     section.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Handle the submission of a new section
   const handleNewSectionSubmit = () => {
     if (!newSection.title || !newSection.content) {
       toast({
@@ -170,11 +178,13 @@ const DocumentationComponent = ({ admin = false }) => {
     }, 1000);
   };
 
+  // Handle the deletion of a section
   const handleDeleteClick = (section) => {
     setSectionToDelete(section);
     setIsAlertOpen(true);
   };
 
+  // Handle confirming the deletion of a section
   const confirmDelete = async () => {
     try {
       const response = await axios.delete(
@@ -217,12 +227,14 @@ const DocumentationComponent = ({ admin = false }) => {
     }
   };
 
+  // Handle editing a section
   const handleEditClick = (section) => {
     setSectionBeingEdited({ ...section });
     setIsEditing(true);
     onEditSectionOpen();
   };
 
+  // Handle saving the edited section
   const handleEditSave = async () => {
     try {
       const response = await axios.put(
@@ -284,12 +296,14 @@ const DocumentationComponent = ({ admin = false }) => {
     }
   };
 
+  // Handle cancelling the edit
   const handleEditCancel = () => {
     setIsEditing(false);
     setSectionBeingEdited(null);
     onEditSectionClose();
   };
 
+  // Parse the content of a section to display text and code snippets
   const parseContent = (content) => {
     // Split the content by the CodeBlock delimiters
     const codeBlockParts = content.split(/<<|>>/);
@@ -331,7 +345,7 @@ const DocumentationComponent = ({ admin = false }) => {
         bg="blackAlpha.500"
         borderRadius={10}
       >
-        {/* Sidebar */}
+        {/* Sidebar for mobile*/}
         {isMobile ? (
           <>
             <IconButton

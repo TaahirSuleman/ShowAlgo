@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the LearningMode page which displays the user's progress, daily streak and modules
+ */
+
 import {
   Box,
   Divider,
@@ -158,10 +164,12 @@ function LearningMode() {
     setCompletedLevels(completedLvls);
   };
 
+  // function to handle when a section is selected
   const handleSectionSelect = (sectionHeading) => {
     navigate(`/learning-mode/${sectionHeading}`);
   };
 
+  // Array of gradients for Module Cards
   const gradients = [
     "linear(to-br, #ec0958, #f573b2)", // pink
     "linear(to-br, #1203fa, #00e1fd)", // blue

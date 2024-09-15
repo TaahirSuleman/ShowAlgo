@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the main App component which houses the routing logic of the application
+ */
+
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";

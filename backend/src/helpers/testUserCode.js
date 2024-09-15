@@ -1,5 +1,12 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains a helper function to test user code against test cases
+ */
+
 import JSGenerator from "../models/jsGenerator.js";
 
+// Function to test user code against test cases
 function testUserCode(userSPLCode, testCases) {
   console.log("userSPLCode:", userSPLCode);
 

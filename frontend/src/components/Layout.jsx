@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains a Layout component that wraps the application
+ */
+
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import NavBar from "./NavBar";
@@ -9,6 +15,7 @@ import { FaArrowUp } from "react-icons/fa";
 const Layout = ({ navBar = "normal" }) => {
   const [showScrollButton, setShowScrollButton] = useState(false);
 
+  // Show "back to menu" button when user scrolls down
   useEffect(() => {
     const handleScroll = () => {
       const navBarHeight = document.querySelector("nav")?.offsetHeight || 0;
@@ -25,6 +32,7 @@ const Layout = ({ navBar = "normal" }) => {
     };
   }, []);
 
+  // Scroll to top of the page
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

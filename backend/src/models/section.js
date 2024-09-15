@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the model for the section (also referred to as modules) used in the database
+ */
+
 import mongoose from "mongoose";
 
 // Define the schema for the section model

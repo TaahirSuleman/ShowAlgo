@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the IDE component consisting of the code editor, output view and visualisation view
+ */
+
 import React, { useRef, useState } from "react";
 import {
   AlertDialog,
@@ -69,15 +75,18 @@ function IDEComponent({
   const cancelClearRef = useRef();
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
 
+  // Clear code on confirm
   const handleClearConfirm = () => {
     setIsClearDialogOpen(false);
     clearCode();
   };
 
+  // Cancel clear code
   const handleClearCancel = () => {
     setIsClearDialogOpen(false);
   };
 
+  // Clear code
   const clearCode = () => {
     setIsClearLoading(true);
     setTimeout(() => {
@@ -86,6 +95,7 @@ function IDEComponent({
     }, 1000);
   };
 
+  // Clear output
   const clearOutput = () => {
     setIsClearOutputLoading(true);
     setTimeout(() => {
@@ -94,19 +104,23 @@ function IDEComponent({
     }, 1000);
   };
 
+  // Handle checkbox change for auto-scrolling output
   const handleCheckboxChangeOutput = (e) => {
     setFollowOutputState(e.target.checked);
   };
 
+  // Handle checkbox change for auto-scrolling visualisation
   const handleCheckboxChangeVis = (e) => {
     setFollowVisState(e.target.checked);
   };
 
+  // Responsive grid layout
   const gridTemplateColumns = useBreakpointValue({
     base: "1fr",
     md: "0.5fr 1fr",
   });
 
+  // Responsive grid layout
   const gridTemplateRows = useBreakpointValue({
     base: "auto",
     md: "1fr 1fr",
@@ -122,6 +136,7 @@ function IDEComponent({
       p={4}
       overflow="auto"
     >
+      {/* Responsive Grid layout*/}
       <GridItem colSpan={{ base: 1, md: 1 }} rowSpan={{ base: 1, md: 2 }}>
         <Box
           width={{ base: "94dvw", md: "40dvw" }}

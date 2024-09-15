@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the Register page which allows users to create an account
+ */
+
 import { useState } from "react";
 import axios from "axios";
 import {
@@ -32,7 +38,7 @@ function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-
+  // function to validate the input fields
   const validateInput = () => {
     const { username, password, confirmPassword } = data;
     if (username.length < 6) {
@@ -68,6 +74,7 @@ function Register() {
     return true;
   };
 
+  // function to register the user
   const registerUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
 

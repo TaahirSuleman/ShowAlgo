@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the navigation bar for the guest user
+ */
+
 import {
   Button,
   IconButton,
@@ -10,13 +16,11 @@ import {
   Heading,
   Box,
 } from "@chakra-ui/react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 
 export default function GuestNavBar() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null); // access the user state from the UserContext
   const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
   const cancelRef = useRef();
 
@@ -30,15 +34,18 @@ export default function GuestNavBar() {
       }
     };
 
+  // Closes the dialog
   const handleExitClick = () => {
     setIsExitDialogOpen(true);
   };
 
+  // Confirm exit by redirecting to home page
   const handleExitConfirm = () => {
     setIsExitDialogOpen(false);
     Exit();
   };
 
+  // Cancel exit
   const handleExitCancel = () => {
     setIsExitDialogOpen(false);
   };

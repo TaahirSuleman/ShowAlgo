@@ -1,5 +1,8 @@
-// This file is the entry point of the backend application.
-// It will be used to start the server and connect to the database.
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the entry point for the backend application. It starts the server and connects to the database.
+ */
 
 import express from "express";
 import dotenv from "dotenv";
@@ -12,7 +15,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 dotenv.config();
 
-// Configure CORS (you may need to adjust the origins depending on your environment)
+// Configure CORS
 app.use(
     cors({
         origin: ["http://localhost:5173"], // Frontend server address

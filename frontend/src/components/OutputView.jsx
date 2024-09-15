@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the OutputView component
+ */
+
 import { Box, Text } from "@chakra-ui/react";
 import { React, useState, useEffect, useRef } from "react";
 

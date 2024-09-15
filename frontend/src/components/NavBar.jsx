@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the navigation bar for the authenticated user
+ */
+
 import {
   Button,
   Tab,

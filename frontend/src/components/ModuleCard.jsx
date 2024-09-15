@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains a ModuleCard component
+ */
+
 import {
   Box,
   Button,
@@ -50,6 +56,7 @@ function ModuleCard({
     onClose();
   };
 
+  // Get color based on percentage for progress bar
   const getColorByPercentage = (percentage) => {
     if (percentage <= 25) {
       return "red.400";

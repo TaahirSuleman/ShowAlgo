@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the Login page which authenticates the user
+ */
+
 import { useState } from "react";
 import axios from "axios";
 import {
@@ -29,6 +35,7 @@ function Login() {
   });
   const [showPassword, setShowPassword] = useState(false);
 
+  // function to validate the input fields
   const validateInput = () => {
     const { username, password } = data;
     if (username.length < 6) {
@@ -54,6 +61,7 @@ function Login() {
     return true;
   };
 
+  // function to login the user
   const loginUser = async (e) => {
     e.preventDefault(); // such that page does not auto-reload
 
@@ -61,7 +69,9 @@ function Login() {
       return; // Stop execution if validation fails
     }
 
+    // extract the data from the state
     const { username, password, role } = data;
+    // send the data to the server
     try {
       const { data } = await axios.post("/login", {
         username,

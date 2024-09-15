@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains a CodeEditorView component
+ */
+
 import { Box, Fade, Spinner } from "@chakra-ui/react";
 import { Editor, useMonaco } from "@monaco-editor/react";
 import { useEffect, useState, useRef } from "react";
@@ -13,7 +19,7 @@ const CodeEditorView = ({
   movementsState,
   highlightState,
   pauseState,
-  indexState
+  indexState,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [editor, setEditor] = useState(null);
@@ -21,8 +27,14 @@ const CodeEditorView = ({
   const monaco = useMonaco();
   const timerRefs = useRef([]); // Ref to store timeout IDs
 
+  // Check if Monaco has been initialized to ensure the language is only registered once
   useEffect(() => {
-    if (monaco && !monaco.languages.getLanguages().some(lang => lang.id === 'customLanguage')) {
+    if (
+      monaco &&
+      !monaco.languages
+        .getLanguages()
+        .some((lang) => lang.id === "customLanguage")
+    ) {
       // Register and define your custom language
       monaco.languages.register({ id: "customLanguage" });
 
@@ -38,38 +50,37 @@ const CodeEditorView = ({
         rules: [
           {
             token: "keyword",
-            foreground: "C678DD", // Purple, commonly used for keywords in One Dark Pro
+            foreground: "C678DD", // Purple
           },
           {
             token: "keyword.control",
-            foreground: "E06C75", // A soft red, often used for control structures
+            foreground: "E06C75", // Soft red
           },
           {
             token: "keyword.methods",
-            foreground: "61AFEF", // A light blue for method names
+            foreground: "61AFEF", // Light blue
           },
           {
             token: "type",
-            foreground: "E5C07B", // A warm yellow, often used for types and classes
+            foreground: "E5C07B", // Warm yellow
           },
           {
             token: "keyword.boolean",
-            foreground: "D19A66", // A warm orange for boolean values
+            foreground: "D19A66", // Warm orange
           },
           {
             token: "keyword.operator",
-            foreground: "56B6C2",
+            foreground: "56B6C2", // Light green
           },
           {
             token: "keyword.function",
-            foreground: "61AFEF",
+            foreground: "61AFEF", // Light blue
           },
           {
             token: "string",
-            foreground: "98C379", // A green color for strings, typical in One Dark Pro
+            foreground: "98C379", // Green color
           },
-
-          // { token: "comment", foreground: "808080", fontStyle: "italic" },
+          { token: "comment", foreground: "808080", fontStyle: "italic" },
         ],
         colors: {
           "editor.foreground": "#FFFFFF",
@@ -88,11 +99,16 @@ const CodeEditorView = ({
     }
   }, [monaco]);
 
-  useEffect(()=>{
-    if (indexState < movementsState.length && indexState > -1 && !pauseState && editor){
-      console.log("The highlight state: "+highlightState)
+  useEffect(() => {
+    if (
+      indexState < movementsState.length &&
+      indexState > -1 &&
+      !pauseState &&
+      editor
+    ) {
+      console.log("The highlight state: " + highlightState);
       let lineNo = movementsState[indexState].line;
-      if (lineNo !== null){
+      if (lineNo !== null) {
         setDecorations((oldDecorations) =>
           editor.deltaDecorations(oldDecorations, [
             {
@@ -106,12 +122,12 @@ const CodeEditorView = ({
         );
         editor.revealLine(lineNo);
       }
+    } else if (!highlightState && editor) {
+      clearHighlights(editor);
     }
-    else if (!highlightState && editor){
-      clearHighlights(editor)
-    }
-  }, [indexState, highlightState])
+  }, [indexState, highlightState]);
 
+  // Set a timer to simulate loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
@@ -120,6 +136,7 @@ const CodeEditorView = ({
     return () => clearTimeout(timer);
   }, []);
 
+  // Set the editor instance
   const handleEditorDidMount = (editorInstance) => {
     setEditor(editorInstance);
   };
@@ -136,6 +153,7 @@ const CodeEditorView = ({
     );
   };
 
+  // Loading component to display while the editor is loading
   const loadingComponent = (
     <Box
       display="flex"
@@ -151,6 +169,7 @@ const CodeEditorView = ({
 
   return (
     <Box overflow="hidden">
+      {/* Display the loading component while the editor is loading */}
       {isLoading ? (
         loadingComponent
       ) : (

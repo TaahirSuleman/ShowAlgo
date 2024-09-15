@@ -1,8 +1,16 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the configuration for the SPL language in the Monaco editor
+ */
+
 // Explicitly define case-insensitive keywords
 export const keywords = [
   [/\bset\b|\bSET\b/i, "keyword"],
   [/".*?"/, "string"], // String literals
   [/\bto\b|\bTO\b|\bup\b|\bUP\b/i, "keyword"],
+  // add comments
+  [/\/\/.*/, "comment"],
   [
     /\bnumber\b|\bNUMBER\b|\bstring\b|\bSTRING\b|\bboolean\b|\bBOOLEAN\b/i,
     "type",

@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains a Card component
+ */
+
 import React from 'react';
 import { Box, Text, Heading } from '@chakra-ui/react';
 

@@ -1,3 +1,10 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the controller functions for authentication and to interact with the database.
+ */
+
+
 import User from "../models/user.js";
 import Sections from "../models/section.js";
 import Levels from "../models/level.js";

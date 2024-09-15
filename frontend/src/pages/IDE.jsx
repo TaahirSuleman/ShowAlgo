@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the IDE page which contains the run controls, code editor, output view and visualisation view
+ */
+
 import {
     AlertDialog,
     AlertDialogBody,
@@ -79,13 +85,14 @@ function IDE() {
         setPauseState(!pauseState);
     };
 
-    const findError = (e) => {
-        let errorLine = 0;
-        try {
-            errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
-        } catch (error) {
-            errorLine = 0;
-        }
+  // Function to find error in the code and display it
+  const findError = (e) => {
+    let errorLine = 0;
+    try {
+      errorLine = parseInt(e.error.split("line ")[1].split(",")[0]);
+    } catch (error) {
+      errorLine = 0;
+    }
 
         const newErrorData = {
             error: e.error,
@@ -109,62 +116,60 @@ function IDE() {
         });
     };
 
-    const runCode = async () => {
-        setIsRunLoading(true); // To show loading state on the button
-        let code = value; // Get code from the editor
-        try {
-            let response = await axios.post(
-                "http://localhost:8000/api/pseudocode/run",
-                { code }
-            );
-            console.log(response.data.result);
-            let actionFrames = response.data.result.actionFrames;
-            setIsError(false); // Reset error state
-            setKillState(actionFrames.length);
-            //setOutput(response.data.result); // Assuming the response has the execution result
-            setMovementsState(actionFrames);
-            setOutput((prev) => [...prev, `colourYellow__RUN STARTING.`]);
-            setIndexState(0);
-            setHighlightState(true);
-        } catch (error) {
-            setHighlightState(false);
-            setIsRunning(false);
-            console.error("Failed to run code:", error);
-            setIsError(true);
-            let errorTimeout = setTimeout(() => {
-                setIsError(false);
-            }, 2000);
-            //setIsError(true); // Handle error state
-            findError(error.response.data);
-            setIsRunLoading(false);
-            return () => {
-                clearTimeout(errorTimeout);
-            };
-        }
-        setIsRunLoading(false);
-    };
+  // Function to run the code
+  const runCode = async () => {
+    setIsRunLoading(true); // To show loading state on the button
+    let code = value; // Get code from the editor
+    try {
+      let response = await axios.post(
+        "http://localhost:8000/api/pseudocode/run",
+        { code }
+      );
+      console.log(response.data.result);
+      let actionFrames = response.data.result.actionFrames;
+      setIsError(false); // Reset error state
+      setKillState(actionFrames.length);
+      //setOutput(response.data.result); // Assuming the response has the execution result
+      setMovementsState(actionFrames);
+      setOutput((prev) => [...prev, `colourYellow__RUN STARTING.`]);
+      setIndexState(0);
+      setHighlightState(true);
+    } catch (error) {
+      setHighlightState(false);
+      setIsRunning(false);
+      console.error("Failed to run code:", error);
+      setIsError(true)
+      let errorTimeout = setTimeout(()=>{
+        setIsError(false)
+      }, 2000)
+      //setIsError(true); // Handle error state
+      findError(error.response.data);
+      setIsRunLoading(false);
+      return () => {clearTimeout(errorTimeout)}
+    }
+    setIsRunLoading(false);
+  };
 
-    const stopCode = () => {
-        setPauseState(true);
-        let time = speedState * 1000 + 1000;
-        if (killState == indexState) {
-            time = 1000;
-        }
-        console.log("time: " + time);
-        const timeoutSetKey = setTimeout(() => {
-            setIndexState(-1);
-            setHighlightState(false);
-            setKey((prevKey) => prevKey + 1);
-            setPauseState(false);
-            setOutput((prev) => [
-                ...prev,
-                `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
-            ]);
-            setIsRestarting(false);
-        }, time);
-        setIsRestarting(true);
-        return () => timeoutSetKey;
-    };
+  // Function to stop the code
+  const stopCode = () => {
+    setPauseState(true);
+    let time = speedState*1000 + 1000
+    if (killState == indexState){ time = 1000;} 
+    console.log("time: "+time)
+    const timeoutSetKey = setTimeout(() => {
+      setIndexState(-1);
+      setHighlightState(false);
+      setKey((prevKey) => prevKey + 1);
+      setPauseState(false);
+      setOutput((prev) => [
+        ...prev,
+        `colourYellow__PREVIOUS RUN TERMINATED OR COMPLETED. NEXT RUN OUTPUT WILL APPEAR BELOW.`,
+      ]);
+      setIsRestarting(false);
+    }, time);
+    setIsRestarting(true)
+    return () => timeoutSetKey;
+  };
 
     return (
         <Box>

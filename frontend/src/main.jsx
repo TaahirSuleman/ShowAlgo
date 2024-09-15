@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the main entry point of the application
+ */
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";

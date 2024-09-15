@@ -1,5 +1,8 @@
-// This file allows the app to access the state throughout the app.
-
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains a UserContextProvider component that provides user data throughout the entire app
+ */
 import axios from 'axios';
 import { createContext, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
