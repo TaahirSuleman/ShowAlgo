@@ -90,41 +90,40 @@ function VariableListComponent({
                       return newArrs; 
                     })
                   }
-                  let arrayCheck = arraysState.find(
-                    (obj) => obj.name === innerMovement.varName
-                  );
-                  updateVariablesState(
-                    arrayCheck.type,
-                    innerMovement.result,
-                    movements[indexState].varName
-                  );
-                  //Index updating is in ArrayComponent for animation duration management for future.
-                }
+                  else if (innerMovement.type === "array"){
+                    let arrayCheck = arraysState.find((obj) => obj.name === innerMovement.varName);
+                    updateVariablesState(
+                      arrayCheck.type,
+                      innerMovement.result,
+                      movements[indexState].varName
+                    )
+                    //Index updating is in ArrayComponent for animation duration management for future.
+                  }
+              }
             }
-          }
-        }
-      }
-    };
-    performOperations();
-  }, [indexState, pauseState]);
+          } 
+         }
+      };
+      performOperations();
+    }, [indexState, pauseState]);
 
-  let updateVariablesState = async (type, value, name) => {
-    setVariablesState((prevVariablesState) => {
-      let variables = [...prevVariablesState];
-      const index = variables.findIndex((variable) => variable.name === name);
-      if (index !== -1) {
-        variables[index] = {
-          type: type,
-          value: type === "string" ? "'" + value + "'" : value,
-          name: name
-        };
-      } else {
-        variables.push({
-          type: type,
-          value: type === "string" ? "'" + value + "'" : value,
-          name: name,
-        });
-      }
+    let updateVariablesState = async (type , value , name) => {
+        setVariablesState((prevVariablesState) => {
+            let variables = [...prevVariablesState];
+            const index = variables.findIndex(variable => variable.name === name);
+            if (index !== -1) {
+                variables[index] = {
+                    type: type,
+                    value: (type === "string" ? "'"+value+"'" : value),
+                    name: name
+                };                
+            } else {
+                variables.push({
+                    type: type,
+                    value: (type === "string" ? "'"+value+"'" : value),
+                    name: name,
+                });
+            }
 
       setUpdating(name);
       setCounter((c) => c + 1);

@@ -1,6 +1,6 @@
 import fs from "fs";
 import Tokenizer from "../helpers/tokenizer.js";
-import Parser from "./parser.js";
+import Parser from "./Parser.js";
 import Transformer from "../helpers/transformer.js";
 import JavaScriptGenerator from "./JavaScriptGenerator.js"; // Corrected import
 

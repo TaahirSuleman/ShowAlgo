@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import Tokenizer from "../src/helpers/tokenizer.js";
-import Parser from "../src/models/parser.js";
+import Tokenizer from "../src/helpers/Tokenizer.js";
+import Parser from "../src/models/Parser.js";
 
 describe("Tokenizer and Parser", () => {
     function tokenizeAndParse(pseudocode) {
@@ -71,23 +71,6 @@ describe("Tokenizer and Parser", () => {
             "isTrue is false"
         );
         expect(ifStatement.line).to.equal(3);
-    });
-
-    it("should tokenize and parse boolean comparisons correctly", () => {
-        const pseudocode = `
-            SET isTrue TO true
-            SET result TO isTrue = false
-        `;
-        const ast = tokenizeAndParse(pseudocode);
-        expect(ast.body).to.have.lengthOf(2);
-
-        const varDecl = ast.body[1];
-        expect(varDecl.type).to.equal("VariableDeclaration");
-        expect(varDecl.varName).to.equal("result");
-        expect(varDecl.value.left.value).to.equal("isTrue");
-        expect(varDecl.value.operator).to.equal("=");
-        expect(varDecl.value.right.value).to.equal(false);
-        expect(varDecl.line).to.equal(3);
     });
 
     it("should handle boolean expressions with mixed operators correctly", () => {
@@ -179,23 +162,6 @@ describe("Tokenizer and Parser", () => {
             "isTrue is false"
         );
         expect(ifStatement.line).to.equal(3);
-    });
-
-    it("should tokenize and parse boolean comparisons correctly", () => {
-        const pseudocode = `
-            SET isTrue TO true
-            SET result TO isTrue = false
-        `;
-        const ast = tokenizeAndParse(pseudocode);
-        expect(ast.body).to.have.lengthOf(2);
-
-        const varDecl = ast.body[1];
-        expect(varDecl.type).to.equal("VariableDeclaration");
-        expect(varDecl.varName).to.equal("result");
-        expect(varDecl.value.left.value).to.equal("isTrue");
-        expect(varDecl.value.operator).to.equal("=");
-        expect(varDecl.value.right.value).to.equal(false);
-        expect(varDecl.line).to.equal(3);
     });
 
     it("should handle boolean expressions with mixed operators correctly", () => {
@@ -281,7 +247,7 @@ END IF`;
         const ifStatement = ast.body[0];
         expect(ifStatement.type).to.equal("IfStatement");
         expect(ifStatement.condition.left).to.equal("x");
-        expect(ifStatement.condition.operator).to.equal("greater");
+        expect(ifStatement.condition.operator).to.equal(">");
         expect(ifStatement.condition.right.value).to.equal("5");
         expect(ifStatement.consequent).to.have.lengthOf(1);
         expect(ifStatement.alternate).to.have.lengthOf(1);

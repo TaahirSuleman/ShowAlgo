@@ -1,51 +1,58 @@
-import {
-    VariableDeclarationStrategy,
-    FunctionDeclarationStrategy,
-    ReturnStatementStrategy,
-    IfStatementStrategy,
-    ForLoopStrategy,
-    WhileLoopStrategy,
-    LoopFromToStrategy,
-    LoopUntilStrategy,
-    PrintStatementStrategy,
-    ArrayCreationStrategy,
-    ArrayInsertionStrategy,
-    SubstringExpressionStrategy,
-    LengthExpressionStrategy,
-    IndexExpressionStrategy,
-} from "./JavaScriptStrategies.js";
-
+/**
+ * @class JavaScriptNodeFactory
+ * @description Factory class for generating JavaScript code from IR nodes.
+ */
 class JavaScriptNodeFactory {
-    static createNodeGenerator(node, generator) {
+    /**
+     * @constructor
+     * @param {JavaScriptGenerator} generator - The main JavaScriptGenerator instance.
+     */
+    constructor(generator) {
+        this.generator = generator;
+    }
+
+    /**
+     * @method createNode
+     * @description Generates code for a specific IR node type.
+     * @param {Object} node - The IR node to generate code for.
+     * @returns {string} The generated code for the node.
+     */
+    createNode(node) {
         switch (node.type) {
             case "VariableDeclaration":
-                return new VariableDeclarationStrategy(node, generator);
+                return this.generator.generateVariableDeclaration(node);
             case "FunctionDeclaration":
-                return new FunctionDeclarationStrategy(node, generator);
+                return this.generator.generateFunctionDeclaration(node);
             case "ReturnStatement":
-                return new ReturnStatementStrategy(node, generator);
+                return this.generator.generateReturnStatement(node);
             case "IfStatement":
-                return new IfStatementStrategy(node, generator);
+                return this.generator.generateIfStatement(node);
             case "ForLoop":
-                return new ForLoopStrategy(node, generator);
+                return this.generator.generateForLoop(node);
             case "WhileLoop":
-                return new WhileLoopStrategy(node, generator);
-            case "LoopFromTo":
-                return new LoopFromToStrategy(node, generator);
+                return this.generator.generateWhileLoop(node);
             case "LoopUntil":
-                return new LoopUntilStrategy(node, generator);
+                return this.generator.generateLoopUntil(node);
+            case "LoopFromTo":
+                return this.generator.generateLoopFromTo(node);
             case "PrintStatement":
-                return new PrintStatementStrategy(node, generator);
+                return this.generator.generatePrintStatement(node);
             case "ArrayCreation":
-                return new ArrayCreationStrategy(node, generator);
+                return this.generator.generateArrayCreation(node);
             case "ArrayInsertion":
-                return new ArrayInsertionStrategy(node, generator);
+                return this.generator.generateArrayInsertion(node);
+            case "RemoveOperation":
+                return this.generator.generateRemoveOperation(node);
+            case "ArraySetValue":
+                return this.generator.generateArraySetValue(node);
+            case "SwapOperation":
+                return this.generator.generateSwapOperation(node);
             case "SubstringExpression":
-                return new SubstringExpressionStrategy(node, generator);
+                return this.generator.generateSubstringExpression(node);
             case "LengthExpression":
-                return new LengthExpressionStrategy(node, generator);
+                return this.generator.generateLengthExpression(node);
             case "IndexExpression":
-                return new IndexExpressionStrategy(node, generator);
+                return this.generator.generateIndexExpression(node);
             default:
                 throw new Error(`Unknown node type: ${node.type}`);
         }

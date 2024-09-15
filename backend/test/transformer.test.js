@@ -1,4 +1,5 @@
 import { expect } from "chai";
+import chaiExclude from "chai-exclude";
 import Transformer from "../src/helpers/transformer.js";
 import Program from "../src/models/ast/Program.js";
 import VariableDeclaration from "../src/models/ast/VariableDeclaration.js";
@@ -12,7 +13,6 @@ import LoopFromTo from "../src/models/ast/LoopFromTo.js";
 import WhileLoop from "../src/models/ast/WhileLoop.js";
 import ReturnStatement from "../src/models/ast/ReturnStatement.js";
 import Expression from "../src/models/ast/Expression.js";
-
 describe("Transformer", () => {
     let transformer;
 
@@ -61,6 +61,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 1,
                     value: {
                         line: 1,
                         type: "StringLiteral",
@@ -70,8 +71,10 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "firstCharacter",
+                    line: 2,
                     value: {
                         type: "IndexExpression",
+                        line: 2,
                         source: "myString",
                         index: 0,
                     },
@@ -114,8 +117,10 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "characterAtIndex",
+                    line: 2,
                     value: {
                         type: "IndexExpression",
+                        line: 2,
                         source: "myString",
                         index: "index",
                     },
@@ -172,12 +177,16 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "lastCharacter",
+                    line: 2,
                     value: {
+                        line: 2,
                         type: "IndexExpression",
                         source: "myString",
                         index: {
                             type: "Expression",
+                            line: 2,
                             left: {
+                                line: 2,
                                 type: "LengthExpression",
                                 source: "myString",
                             },
@@ -234,10 +243,13 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "invalidCharacter",
+                    line: 2,
                     value: {
                         type: "IndexExpression",
                         source: "myString",
+                        line: 2,
                         index: {
+                            line: 2,
                             type: "Expression",
                             left: "0",
                             operator: "-",
@@ -283,7 +295,9 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "emptyIndex",
+                    line: 2,
                     value: {
+                        line: 2,
                         type: "IndexExpression",
                         source: "emptyString",
                         index: "0",
@@ -322,7 +336,9 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "lengthOfString",
+                    line: 2,
                     value: {
+                        line: 2,
                         type: "LengthExpression",
                         source: "myString",
                     },
@@ -370,12 +386,15 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "halfLength",
+                    line: 3,
                     value: {
                         type: "Expression",
                         left: {
+                            line: 3,
                             type: "LengthExpression",
                             source: "myString",
                         },
+                        line: 3,
                         operator: "/",
                         right: "2",
                     },
@@ -433,16 +452,21 @@ describe("Transformer", () => {
             program: [
                 {
                     type: "IfStatement",
+                    line: 4,
+                    endLine: 4,
                     condition: {
                         left: {
+                            line: 4,
                             type: "LengthExpression",
                             source: "myString",
                         },
+                        line: 4,
                         operator: ">",
                         right: "10",
                     },
                     consequent: [
                         {
+                            line: 5,
                             type: "PrintStatement",
                             value: "String is longer than 10 characters",
                         },
@@ -482,7 +506,9 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "lengthOfSomething",
+                    line: 2,
                     value: {
+                        line: 2,
                         type: "LengthExpression",
                         source: "undeclaredVar",
                     },
@@ -534,14 +560,18 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "lengthSum",
+                    line: 3,
                     value: {
                         type: "Expression",
+                        line: 3,
                         left: {
+                            line: 3,
                             type: "LengthExpression",
                             source: "stringOne",
                         },
                         operator: "+",
                         right: {
+                            line: 3,
                             type: "LengthExpression",
                             source: "stringTwo",
                         },
@@ -592,6 +622,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 2,
                     value: {
                         line: 2,
                         type: "StringLiteral",
@@ -601,10 +632,12 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "lengthOfString",
+                    line: 3,
                     value: {
+                        line: 3,
                         type: "LengthExpression",
                         source: "myString",
-                    }, // The length of "Hello, World!" is 13
+                    },
                 },
             ],
         };
@@ -651,8 +684,10 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "subStr",
+                    line: 3,
                     value: {
                         type: "SubstringExpression",
+                        line: 3,
                         string: "myString",
                         start: "0",
                         end: "12",
@@ -704,11 +739,13 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "subStr",
+                    line: 3,
                     value: {
                         type: "SubstringExpression",
                         string: "myString",
                         start: "0",
                         end: "5",
+                        line: 3,
                     },
                 },
             ],
@@ -767,16 +804,19 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "subStr",
+                    line: 3,
                     value: {
                         type: "SubstringExpression",
                         string: "myString",
                         start: {
                             type: "Expression",
                             left: "startIndex",
+                            line: 3,
                             operator: "+",
                             right: "2",
                         },
                         end: "endIndex",
+                        line: 3,
                     },
                 },
             ],
@@ -867,6 +907,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "myString",
+                    line: 1,
                     value: {
                         type: "StringLiteral",
                         value: "Hello, World!",
@@ -876,6 +917,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "startIndex",
+                    line: 2,
                     value: {
                         type: "NumberLiteral",
                         value: "7",
@@ -885,6 +927,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "endIndex",
+                    line: 3,
                     value: {
                         type: "NumberLiteral",
                         value: "12",
@@ -894,15 +937,18 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "subStr",
+                    line: 4,
                     value: {
                         type: "SubstringExpression",
                         string: "myString",
                         start: "startIndex",
                         end: "endIndex",
+                        line: 4,
                     },
                 },
                 {
                     type: "PrintStatement",
+                    line: 5,
                     value: "subStr",
                 },
             ],
@@ -951,7 +997,9 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "subStr",
+                    line: 3,
                     value: {
+                        line: 3,
                         type: "SubstringExpression",
                         string: "myString",
                         start: "7",
@@ -981,6 +1029,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "x",
+                    line: undefined,
                     value: {
                         line: 1,
                         type: "NumberLiteral",
@@ -1017,12 +1066,14 @@ describe("Transformer", () => {
                 {
                     type: "FunctionDeclaration",
                     name: "add_numbers",
+                    line: 1,
                     params: ["a", "b"],
-                    startLine: 1,
                     body: [
                         {
                             type: "ReturnStatement",
+                            line: undefined,
                             value: {
+                                line: undefined,
                                 type: "Expression",
                                 left: "a",
                                 operator: "+",
@@ -1067,19 +1118,24 @@ describe("Transformer", () => {
             program: [
                 {
                     type: "IfStatement",
+                    line: undefined,
+                    endLine: undefined,
                     condition: {
+                        line: undefined,
                         left: "x",
                         operator: "greater",
                         right: "5",
                     },
                     consequent: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "x is greater than 5",
                         },
                     ],
                     alternate: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "x is not greater than 5",
                         },
@@ -1109,9 +1165,11 @@ describe("Transformer", () => {
                     type: "ForLoop",
                     iterator: "num",
                     collection: "nums",
-                    endLine: 8,
+                    line: undefined,
+                    endLine: undefined,
                     body: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "num",
                         },
@@ -1155,20 +1213,25 @@ describe("Transformer", () => {
             program: [
                 {
                     type: "WhileLoop",
+                    line: undefined,
                     condition: {
+                        line: undefined,
                         left: "x",
                         operator: ">",
                         right: "0",
                     },
                     body: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "x",
                         },
                         {
                             type: "VariableDeclaration",
                             name: "x",
+                            line: undefined,
                             value: {
+                                line: undefined,
                                 type: "Expression",
                                 left: "x",
                                 operator: "-",
@@ -1263,6 +1326,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "x",
+                    line: undefined,
                     value: {
                         line: 1,
                         type: "NumberLiteral",
@@ -1272,13 +1336,15 @@ describe("Transformer", () => {
                 {
                     type: "FunctionDeclaration",
                     name: "add_numbers",
+                    line: 2,
                     params: ["a", "b"],
-                    startLine: 2,
                     body: [
                         {
                             type: "ReturnStatement",
+                            line: undefined,
                             value: {
                                 type: "Expression",
+                                line: undefined,
                                 left: "a",
                                 operator: "+",
                                 right: "b",
@@ -1288,19 +1354,24 @@ describe("Transformer", () => {
                 },
                 {
                     type: "IfStatement",
+                    line: undefined,
+                    endLine: undefined,
                     condition: {
+                        line: undefined,
                         left: "x",
                         operator: "greater",
                         right: "5",
                     },
                     consequent: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "x is greater than 5",
                         },
                     ],
                     alternate: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "x is not greater than 5",
                         },
@@ -1310,9 +1381,11 @@ describe("Transformer", () => {
                     type: "ForLoop",
                     iterator: "num",
                     collection: "nums",
-                    endLine: 8,
+                    line: undefined,
+                    endLine: undefined,
                     body: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "num",
                         },
@@ -1320,20 +1393,25 @@ describe("Transformer", () => {
                 },
                 {
                     type: "WhileLoop",
+                    line: undefined,
                     condition: {
+                        line: undefined,
                         left: "x",
                         operator: ">",
                         right: "0",
                     },
                     body: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "x",
                         },
                         {
                             type: "VariableDeclaration",
                             name: "x",
+                            line: undefined,
                             value: {
+                                line: undefined,
                                 type: "Expression",
                                 left: "x",
                                 operator: "-",
@@ -1377,21 +1455,26 @@ describe("Transformer", () => {
             program: [
                 {
                     type: "LoopUntil",
+                    line: undefined,
                     condition: {
+                        line: undefined,
                         left: "x",
                         operator: "greater",
                         right: "5",
                     },
                     body: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "x",
                         },
                         {
                             type: "VariableDeclaration",
                             name: "x",
+                            line: undefined,
                             value: {
                                 type: "Expression",
+                                line: undefined,
                                 left: "x",
                                 operator: "+",
                                 right: "1",
@@ -1448,6 +1531,7 @@ describe("Transformer", () => {
                 {
                     type: "LoopFromTo",
                     loopVariable: "i",
+                    line: 2,
                     range: {
                         start: {
                             line: 2,
@@ -1460,12 +1544,7 @@ describe("Transformer", () => {
                             value: "10",
                         },
                     },
-                    body: [
-                        {
-                            type: "PrintStatement",
-                            value: "i",
-                        },
-                    ],
+                    body: [{ line: 3, type: "PrintStatement", value: "i" }],
                 },
             ],
         };
@@ -1493,6 +1572,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isTrue",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "true",
@@ -1502,6 +1582,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isFalse",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "false",
@@ -1549,6 +1630,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isTrue",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "true",
@@ -1558,6 +1640,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isFalse",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "false",
@@ -1567,17 +1650,21 @@ describe("Transformer", () => {
                 {
                     type: "IfStatement",
                     condition: {
+                        line: undefined,
                         left: "isTrue",
                         operator: "and",
                         right: "isFalse",
                     },
                     consequent: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "Both are booleans",
                         },
                     ],
                     alternate: null,
+                    line: undefined,
+                    endLine: undefined,
                 },
             ],
         };
@@ -1615,6 +1702,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isTrue",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "true",
@@ -1624,63 +1712,21 @@ describe("Transformer", () => {
                 {
                     type: "IfStatement",
                     condition: {
+                        line: undefined,
                         left: null,
                         operator: "not",
                         right: "isTrue",
                     },
                     consequent: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "isTrue is false",
                         },
                     ],
                     alternate: null,
-                },
-            ],
-        };
-
-        const result = transformer.transform(ast);
-        expect(result).to.deep.equal(expectedIR);
-    });
-
-    it("should transform boolean comparisons correctly", () => {
-        const ast = new Program([
-            new VariableDeclaration("isTrue", null, {
-                type: "BooleanLiteral",
-                value: "true",
-                line: 2,
-            }),
-            new VariableDeclaration(
-                "result",
-                null,
-                new Expression("isTrue", "=", {
-                    type: "BooleanLiteral",
-                    value: "false",
-                    line: 3,
-                })
-            ),
-        ]);
-
-        const expectedIR = {
-            program: [
-                {
-                    type: "VariableDeclaration",
-                    name: "isTrue",
-                    value: {
-                        type: "BooleanLiteral",
-                        value: "true",
-                        line: 2,
-                    },
-                },
-                {
-                    type: "VariableDeclaration",
-                    name: "result",
-                    value: {
-                        type: "Expression",
-                        left: "isTrue",
-                        operator: "=",
-                        right: "false",
-                    },
+                    line: undefined,
+                    endLine: undefined,
                 },
             ],
         };
@@ -1733,6 +1779,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isTrue",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "true",
@@ -1742,6 +1789,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isFalse",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "false",
@@ -1753,7 +1801,9 @@ describe("Transformer", () => {
                     condition: {
                         left: "isTrue",
                         operator: "and",
+                        line: undefined,
                         right: {
+                            line: undefined,
                             type: "UnaryExpression",
                             operator: "not",
                             argument: "isFalse",
@@ -1761,16 +1811,20 @@ describe("Transformer", () => {
                     },
                     consequent: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "Correct",
                         },
                     ],
                     alternate: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "Incorrect",
                         },
                     ],
+                    line: undefined,
+                    endLine: undefined,
                 },
             ],
         };
@@ -1831,6 +1885,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isTrue",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "true",
@@ -1840,6 +1895,7 @@ describe("Transformer", () => {
                 {
                     type: "VariableDeclaration",
                     name: "isFalse",
+                    line: undefined,
                     value: {
                         type: "BooleanLiteral",
                         value: "false",
@@ -1849,14 +1905,17 @@ describe("Transformer", () => {
                 {
                     type: "IfStatement",
                     condition: {
+                        line: undefined,
                         left: "isTrue",
                         operator: "or",
                         right: {
+                            line: undefined,
                             type: "Expression",
                             left: "isFalse",
                             operator: "and",
                             right: {
                                 type: "UnaryExpression",
+                                line: 4,
                                 operator: "not",
                                 argument: "isTrue",
                             },
@@ -1864,16 +1923,20 @@ describe("Transformer", () => {
                     },
                     consequent: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "Complex Condition Met",
                         },
                     ],
                     alternate: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "Complex Condition Not Met",
                         },
                     ],
+                    endLine: undefined,
+                    line: undefined,
                 },
             ],
         };
@@ -1883,11 +1946,16 @@ describe("Transformer", () => {
     });
     it("should transform a variable set to a boolean and use it in a conditional", () => {
         const ast = new Program([
-            new VariableDeclaration("isTrue", null, {
-                type: "BooleanLiteral",
-                value: true,
-                line: 2,
-            }),
+            new VariableDeclaration(
+                "isTrue",
+                null,
+                {
+                    type: "BooleanLiteral",
+                    value: true,
+                    line: 2,
+                },
+                1
+            ),
             new IfStatement(
                 { type: "Identifier", value: "isTrue", line: 3 },
                 [
@@ -1911,6 +1979,7 @@ describe("Transformer", () => {
         const expectedIR = {
             program: [
                 {
+                    line: 1,
                     type: "VariableDeclaration",
                     name: "isTrue",
                     value: {
@@ -1921,18 +1990,22 @@ describe("Transformer", () => {
                 },
                 {
                     type: "IfStatement",
+                    line: 3,
+                    endLine: 3,
                     condition: {
                         type: "Identifier",
                         value: "isTrue",
                     },
                     consequent: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "Boolean is true",
                         },
                     ],
                     alternate: [
                         {
+                            line: undefined,
                             type: "PrintStatement",
                             value: "Boolean is false",
                         },

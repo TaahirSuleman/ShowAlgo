@@ -15,7 +15,6 @@ class Parser {
         this.factory = new ASTNodeFactory();
         this.bools = new Set();
     }
-
     /**
      * @method parse
      * @description Parses the entire token array into an AST.
@@ -72,7 +71,7 @@ class Parser {
                 );
             default:
                 throw new Error(
-                    `Unexpected token: ${token.value} at line ${token.line}`
+                    `Unexpected token: ${token.value} at line ${token.line}. Hint: If you are performing multiple operations within a single operation, such as printing the result of a boolean expression, break this up into separate operations and try again`
                 );
         }
     }
@@ -107,15 +106,15 @@ class Parser {
         }
 
         let varType = null;
+
+        this.expect("Keyword", "to");
         if (
             this.currentToken().value.toLowerCase() === "number" ||
-            this.currentToken().value.toLowerCase() === "string"
+            this.currentToken().value.toLowerCase() === "string" ||
+            this.currentToken().value.toLowerCase() === "boolean"
         ) {
             varType = this.consume("Keyword").value;
         }
-
-        this.expect("Keyword", "to");
-
         let value;
         // Check if the next token indicates a function call
         if (
@@ -254,7 +253,6 @@ class Parser {
      * @returns {ArraySetValue} The AST node representing the array set value operation.
      */
     parseArraySetValue() {
-        console.log("Hello");
         const line = this.currentToken().line;
         this.expect("Identifier", "set_array"); // Expect the 'set_array' identifier
         this.expect("Keyword", "element");
@@ -263,7 +261,6 @@ class Parser {
         const varName = this.consume("Identifier").value; // The array variable name
         this.expect("Keyword", "to");
         const newValue = this.parseExpression(); // The new value to set
-        console.log("Bye");
         return this.factory.createNode(
             "ArraySetValue",
             varName,
@@ -330,7 +327,6 @@ class Parser {
             this.peekNextToken().value === "then"
                 ? this.parseBool(line)
                 : this.parseCondition();
-        //console.log(this.currentToken().value);
         while (this.currentToken().value != "then") this.parseCondition();
         this.expect("Keyword", "then");
         const consequent = [];
@@ -558,7 +554,8 @@ class Parser {
      */
     parseLoopUntil(line) {
         this.expect("Keyword", "until");
-        const condition = this.parseCondition();
+
+        const condition = this.parseCondition(true);
         const body = [];
         while (
             !(
@@ -631,7 +628,7 @@ class Parser {
     parseWhileLoop() {
         const line = this.currentToken().line;
         this.expect("Keyword", "while");
-        const condition = this.parseCondition();
+        const condition = this.parseCondition(true);
         const body = [];
         while (
             !(
@@ -663,7 +660,7 @@ class Parser {
      * @description Parses a condition for control structures.
      * @returns {Expression} The AST node representing the condition.
      */
-    parseCondition() {
+    parseCondition(isLoopUntil = false) {
         const line = this.currentToken().line;
         let left;
 
@@ -673,9 +670,9 @@ class Parser {
             this.currentToken().value.toLowerCase() === "not"
         ) {
             const operator = this.consume("LogicalOperator").value;
-            //console.log(`next token is ${this.peekNextToken().value}`);
             const right =
-                this.peekNextToken().value.toLowerCase() === "then"
+                this.peekNextToken().value.toLowerCase() === "then" &&
+                !isLoopUntil
                     ? this.parseValue()
                     : this.parseCondition();
             return this.factory.createNode(
@@ -685,7 +682,33 @@ class Parser {
                 right,
                 line
             );
+        } else if (this.currentToken().type === "LogicalOperator") {
+            const operator = this.consume("LogicalOperator").value;
+            const right = this.parseExpression();
+            let expressionNode = this.factory.createNode(
+                "Expression",
+                left,
+                operator,
+                right,
+                line
+            );
+
+            // Now check if the next token is a LogicalOperator like 'and' or 'or'
+            while (this.currentToken().type === "LogicalOperator") {
+                const logicalOperator = this.consume("LogicalOperator").value;
+                const nextCondition = this.parseCondition(); // Parse the next condition (right-hand side)
+                expressionNode = this.factory.createNode(
+                    "Expression",
+                    expressionNode, // Left becomes the previously parsed expression
+                    logicalOperator,
+                    nextCondition, // Right is the new condition
+                    line
+                );
+            }
+
+            return expressionNode; // Return the combined expression node
         }
+
         if (
             this.currentToken().type === "Keyword" &&
             this.currentToken().value.toLowerCase() === "length"
@@ -695,27 +718,70 @@ class Parser {
             this.currentToken().type === "Delimiter" &&
             this.currentToken().value === "("
         ) {
-            // Parse the left side of the condition
+            // Consume the opening parenthesis
             this.consume("Delimiter");
-            left = this.parseCondition(); // Recursively parse the inner condition
+            // Recursively parse the expression inside the parentheses
+            left = this.parseCondition(isLoopUntil);
+            // Ensure the closing parenthesis is found
             this.expect("Delimiter", ")");
+        } else if (
+            this.currentToken().type === "Keyword" &&
+            this.currentToken().value.toLowerCase() === "is"
+        ) {
+            // This is the point where we expect "is" keyword
+            // Add the logic explained above here to handle 'is' and comparison keywords
+            this.consume("Keyword"); // Consume 'is'
+
+            // Handle comparison keywords after 'is' (greater, less, equal)
+            const operator = this.consume("Keyword").value;
+
+            operator.toLowerCase() === "equal"
+                ? this.expect("Keyword", "to")
+                : this.expect("Keyword", "than");
+
+            const right = this.parseExpression();
+            return this.factory.createNode(
+                "Expression",
+                left, // e.g., x
+                operator, // e.g., greater
+                right, // e.g., 5
+                line
+            );
         } else {
             left = this.consume("Identifier").value;
         }
 
         if (this.currentToken().type === "ComparisonOperator") {
+            // Initially create an expression node with the parsed comparison
             const operator = this.consume("ComparisonOperator").value;
             const right = this.parseExpression();
-            return this.factory.createNode(
+            let expressionNode = this.factory.createNode(
                 "Expression",
                 left,
                 operator,
                 right,
                 line
             );
+
+            // Now check if the next token is a LogicalOperator (e.g., 'and', 'or')
+            while (this.currentToken().type === "LogicalOperator") {
+                const logicalOperator = this.consume("LogicalOperator").value;
+                const nextCondition = this.parseCondition(); // Parse the next condition recursively
+                expressionNode = this.factory.createNode(
+                    "Expression",
+                    expressionNode, // The previously parsed expression becomes the left side
+                    logicalOperator, // The logical operator (and/or)
+                    nextCondition, // The right side (next condition)
+                    line
+                );
+            }
+
+            // Finally, return the full combined expression node
+            return expressionNode;
         } else if (this.currentToken().type === "LogicalOperator") {
             const operator = this.consume("LogicalOperator").value;
-
+            console.log("in first logic");
+            console.log(this.currentToken().value);
             // Specific case: handle "NOT" after a logical operator
             if (
                 operator.toLowerCase() !== "not" &&
@@ -746,8 +812,10 @@ class Parser {
                 this.currentToken().value === "("
             ) {
                 this.consume("Delimiter");
-                right = this.parseCondition(); // Recursively parse the inner condition
+                right = this.parseCondition(isLoopUntil); // Recursively parse the inner condition
                 this.expect("Delimiter", ")");
+            } else if (this.currentToken().type === "LogicalOperator") {
+                console.log("in logic");
             } else {
                 right = this.parseExpression();
             }
@@ -761,35 +829,76 @@ class Parser {
             );
         } else if (
             this.currentToken.type === "Identifier" &&
-            this.peekNextToken().value.toLowerCase() === "then"
+            this.peekNextToken().value.toLowerCase() === "then" &&
+            !isLoopUntil
         ) {
             left = this.consume(this.currentToken()).value;
             return this.factory.createNode("Identifier", left, line);
-        } else {
-            this.expect("Keyword", "is");
-            const operator = this.consume("Keyword").value;
-            if (
-                operator.toLowerCase() !== "greater" &&
-                operator.toLowerCase() !== "less" &&
-                operator.toLowerCase() !== "equal"
-            ) {
+        } else if (this.peekNextToken().value.toLowerCase() === "then") return;
+        else {
+            // Skip "then" if it's a LoopUntil condition
+            if (!isLoopUntil) {
+                this.expect("Keyword", "is");
+            } else if (this.currentToken().value !== "is") {
+                return this.factory.createNode(
+                    "Expression",
+                    this.factory.createNode("Identifier", left, line),
+                    "and",
+                    this.factory.createNode("Identifier", left, line),
+                    line
+                );
+            } else this.expect("Keyword", "is");
+
+            // Consume and process the comparison keyword (greater, less, equal)
+            let operator = this.consume("Keyword").value.toLowerCase();
+
+            // Handle "equal to" or "greater than" and "less than"
+            if (operator === "equal") {
+                this.expect("Keyword", "to");
+                operator = "=="; // Translate to actual comparison operator
+            } else if (operator === "greater") {
+                this.expect("Keyword", "than");
+                operator = ">"; // Translate to actual comparison operator
+            } else if (operator === "less") {
+                this.expect("Keyword", "than");
+                operator = "<"; // Translate to actual comparison operator
+            } else {
                 throw new Error(
-                    `Expected 'greater', 'less' or 'equal', but found '${operator}' at line ${
+                    `Expected 'greater', 'less', or 'equal', but found '${operator}' at line ${
                         this.currentToken().line
                     }`
                 );
             }
-            operator.toLowerCase() == "equal"
-                ? this.expect("Keyword", "to")
-                : this.expect("Keyword", "than");
+
+            // Parse the right-hand side of the comparison
             const right = this.parseExpression();
-            return this.factory.createNode(
+
+            // Create the initial comparison expression
+            let expressionNode = this.factory.createNode(
                 "Expression",
                 left,
                 operator,
                 right,
                 line
             );
+
+            // Now handle logical operators ('and', 'or') after comparison
+            while (this.currentToken().type === "LogicalOperator") {
+                const logicalOperator = this.consume("LogicalOperator").value;
+                const nextCondition = this.parseCondition(); // Recursively parse the next condition
+
+                // Combine the current expression with the next condition using the logical operator
+                expressionNode = this.factory.createNode(
+                    "Expression",
+                    expressionNode, // Previous comparison becomes the left side
+                    logicalOperator, // Logical operator (e.g., 'and', 'or')
+                    nextCondition, // Next condition becomes the right side
+                    line
+                );
+            }
+
+            // Return the full combined expression
+            return expressionNode;
         }
     }
 
@@ -798,16 +907,16 @@ class Parser {
      * @description Parses an expression, potentially with operators.
      * @returns {Expression|ASTNode} The AST node representing the expression.
      */
-    parseExpression() {
+    parseExpression(precedence = 0) {
         let left;
-
+        // Handle expressions that start with a parenthesis
         if (
             this.currentToken().type === "Delimiter" &&
             this.currentToken().value === "("
         ) {
-            this.consume("Delimiter");
-            left = this.parseExpression();
-            this.expect("Delimiter", ")");
+            this.consume("Delimiter"); // Consume the opening parenthesis
+            left = this.parseExpression(); // Parse the expression inside the parentheses
+            this.expect("Delimiter", ")"); // Ensure closing parenthesis
         } else if (
             this.currentToken().type === "Keyword" &&
             this.currentToken().value.toLowerCase() === "substring"
@@ -827,26 +936,51 @@ class Parser {
         ) {
             left = this.parseIndexExpression(); // Handle high-level syntax
         } else {
-            left = this.parseValue();
+            left = this.parseValue(); // Parse basic values like numbers, strings, booleans
         }
 
+        // Operator precedence table
+        const operatorPrecedence = {
+            "*": 2,
+            "/": 2,
+            "%": 2,
+            "+": 1,
+            "-": 1,
+        };
+
+        // Handle operators and enforce precedence
         while (
             this.currentToken().type === "Operator" ||
             this.currentToken().type === "ComparisonOperator" ||
-            this.currentToken().type === "LogicalOperator" // Handle logical operators
+            this.currentToken().type === "LogicalOperator"
         ) {
-            const operator = this.consume(this.currentToken().type).value;
-            let right;
+            const currentOperator = this.currentToken().value;
+            const currentPrecedence = operatorPrecedence[currentOperator] || 0;
 
+            // If the current precedence is less than or equal to the parent, stop parsing to handle nesting correctly
+            if (currentPrecedence <= precedence) {
+                break;
+            }
+
+            // Consume the operator
+            const operator = this.consume(this.currentToken().type).value;
+
+            // Parse the right-hand side with appropriate precedence
+            let right;
             if (
                 this.currentToken().type === "Delimiter" &&
                 this.currentToken().value === "("
             ) {
-                right = this.parseExpression();
+                // If parentheses are encountered, handle the expression inside them with the lowest precedence
+                this.consume("Delimiter"); // Consume the opening parenthesis
+                right = this.parseExpression(0); // Reset precedence inside parentheses
+                this.expect("Delimiter", ")"); // Ensure balanced parentheses
             } else {
-                right = this.parseValue();
+                // Recursively parse right-hand side with the correct precedence
+                right = this.parseExpression(currentPrecedence);
             }
 
+            // Wrap the left and right expressions if necessary to enforce precedence
             left = this.factory.createNode(
                 "Expression",
                 left,
@@ -875,13 +1009,10 @@ class Parser {
             this.consume("Identifier").value,
             line
         );
-        //console.log(stringIdentifier);
         this.expect("Keyword", "from");
         const startIndex = this.parseExpression();
-        //console.log(startIndex);
         this.expect("Keyword", "to");
         const endIndex = this.parseExpression();
-        //console.log(endIndex);
 
         // Create the SubstringExpression node with correct structure
         return this.factory.createNode(
@@ -1091,11 +1222,14 @@ class Parser {
      */
     parseArgumentList() {
         const args = [];
+        // Add support for 'String', 'Boolean', and other literal types
         while (
             this.currentToken().type === "Number" ||
-            this.currentToken().type === "Identifier"
+            this.currentToken().type === "Identifier" ||
+            this.currentToken().type === "String" || // Now supports string literals
+            this.currentToken().type === "Boolean"
         ) {
-            args.push(this.parseValue());
+            args.push(this.parseValue()); // Use parseValue() to handle different types of values
             if (this.currentToken().value === ",") {
                 this.consume("Delimiter", ",");
             }
@@ -1117,7 +1251,7 @@ class Parser {
             token.value.toLowerCase() !== value.toLowerCase()
         ) {
             throw new Error(
-                `Expected ${type} '${value}', but found ${token.type} '${token.value}' at line ${token.line}`
+                `Expected ${type} '${value}', but found ${token.type} '${token.value}' at line ${token.line}. Hint: If you are performing multiple operations within a single operation, such as array indexing within if statements, break this up into separate operations and try again`
             );
         }
         this.currentIndex++;
@@ -1133,8 +1267,9 @@ class Parser {
     consume(type) {
         const token = this.currentToken();
         if (token.type !== type) {
+            if (token.value === "character") token.value = "character/element";
             throw new Error(
-                `Expected ${type}, but found ${token.type} (${token.value}) at line ${token.line}`
+                `Expected ${type}, but found ${token.type} (${token.value}) at line ${token.line}. Hint: If you are performing multiple operations within a single operation, such as array indexing within if statements, break this up into separate operations and try again`
             );
         }
         this.currentIndex++;
@@ -1167,7 +1302,7 @@ class Parser {
         if (this.currentIndex + 1 < this.tokens.length) {
             return this.tokens[this.currentIndex + 1];
         } else {
-            return null;
+            return {};
         }
     }
 }
