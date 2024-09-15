@@ -2,34 +2,59 @@ import Converter from "./Converter.js";
 import JsonNodeConverterFactory from "./JsonNodeConverterFactory.js";
 import ExpressionEvaluator from "./ExpressionEvaluator.js";
 
+/**
+ * @class JsonConverter
+ * @extends Converter
+ * @description Converts the intermediate representation (IR) to JSON format. Handles variable declarations, arrays, and nested control structures.
+ */
 class JsonConverter extends Converter {
+    /**
+     * @constructor
+     * Initializes the JsonConverter with variables, declared variables, and other utility objects for managing state during conversion.
+     */
     constructor() {
         super();
-        this.variables = {};
-        this.declaredVariables = new Set();
-        this.initializedArrays = {};
-        this.nestedEndIf = 0;
-        this.ifDepth = 0; // Track the depth of nested IF statements
-        this.nodeConverterFactory = new JsonNodeConverterFactory(this);
+        this.variables = {}; // Store declared variables and their values
+        this.declaredVariables = new Set(); // Track declared variable names
+        this.initializedArrays = {}; // Keep track of initialized arrays
+        this.nodeConverterFactory = new JsonNodeConverterFactory(this); // Factory for node conversion
         this.expressionEvaluator = new ExpressionEvaluator(
             this.variables,
             this.declaredVariables
-        );
-        this.functionMap = new Map(); // This will store function names mapped to their IR for transformation when the function is called.
+        ); // Evaluates expressions in the conversion process
+        this.functionMap = new Map(); // Store function definitions mapped to their IR
     }
 
+    /**
+     * @method convert
+     * @description Converts the intermediate representation (IR) into final JSON format.
+     * @param {Object} ir - The intermediate representation to convert.
+     * @returns {Object} The transformed JSON object.
+     */
     convert(ir) {
         return this.transformToFinalJSON(ir);
     }
 
+    /**
+     * @method transformToFinalJSON
+     * @description Transforms the intermediate representation (IR) into the final JSON structure.
+     * @param {Object} ir - The intermediate representation containing the program nodes.
+     * @returns {Object} The JSON object containing action frames.
+     */
     transformToFinalJSON(ir) {
         return {
-            actionFrames: this.transformNodes(ir.program),
+            actionFrames: this.transformNodes(ir.program), // Convert program nodes into action frames
         };
     }
 
+    /**
+     * @method transformNodes
+     * @description Transforms an array of IR nodes into the corresponding JSON representation.
+     * @param {Array} nodes - Array of IR nodes.
+     * @returns {Array} The transformed array of JSON action frames.
+     */
     transformNodes(nodes) {
-        return nodes.flatMap((node) => this.transformNode(node));
+        return nodes.flatMap((node) => this.transformNode(node)); // Flatten and transform all nodes
     }
 
     /**
@@ -43,6 +68,15 @@ class JsonConverter extends Converter {
         return converter(node);
     }
 
+    /**
+     * @method transformVariableDeclaration
+     * @description Transforms a variable declaration node into the appropriate frames for execution,
+     * handling various cases such as function calls, substring expressions, index expressions, and boolean literals.
+     * It also checks the validity of the variable name, evaluates expressions, and manages the declared variables.
+     * @param {Object} node - The AST node representing the variable declaration.
+     * @returns {Object|Array} A frame representing the variable declaration or an array of frames if the value is derived from a function call.
+     * @throws {Error} If the variable name is invalid, if the function doesn't return a value, or if the boolean value is invalid.
+     */
     transformVariableDeclaration(node) {
         if (node.value.type === "SubstringExpression") {
             return this.handleSubstringExpression(node);
@@ -54,6 +88,8 @@ class JsonConverter extends Converter {
 
         let frames = []; // Collect frames for movements
         let value = this.expressionEvaluator.evaluateExpression(node.value);
+
+        // Ensure the variable name is valid
         if (
             typeof node.name === "object" ||
             node.name == null ||
@@ -62,30 +98,31 @@ class JsonConverter extends Converter {
             throw new Error(
                 `Please ensure that variable name at ${node.line} is correctly written as a single word and not an operation or expression.`
             );
-        // Check if the value is a function call
+
+        // Handle function call within variable declaration
         if (node.value.type === "FunctionCall") {
             const lineNum = node.value.line;
-            // Process the function call and retrieve the frames and return value
             const functionCallResult = this.transformFunctionCall(
                 node.value,
                 true
             );
 
-            // Add the function call frames first
             if (!functionCallResult.returnValue) {
                 throw new Error(
                     `Function ${node.value.name} does not return a value and cannot be used in a variable declaration.`
                 );
             }
+
+            // Add function call frames
             frames = [...functionCallResult.frames];
 
-            // Set the return value from the function call as the value of the variable
             value = functionCallResult.returnValue;
-            // Assign the value from the function return to the variable
+            if (value.type === "BooleanLiteral") value = value.value;
             this.variables[node.name] = value;
             this.declaredVariables.add(node.name);
             const varType = this.determineType(value);
-            // Add the variable declaration movement after function call and body
+
+            // Frame for setting the variable to the function return value
             frames.push({
                 line: lineNum,
                 operation: "set",
@@ -95,12 +132,12 @@ class JsonConverter extends Converter {
                 timestamp: new Date().toISOString(),
                 description: `Set variable ${node.name} to function return value ${value}.`,
             });
-            return frames; // Return all frames including the function call and variable assignment
+
+            return frames; // Return all frames, including the function call and variable assignment
         }
 
-        // For non-function-call values, proceed as usual
+        // Handle boolean literals and length expressions
         let typeBool = false;
-
         if (node.value.type === "LengthExpression") {
             value = this.expressionEvaluator.evaluateLengthExpression(
                 node.value
@@ -130,10 +167,14 @@ class JsonConverter extends Converter {
             "*": 2,
             "/": 2,
         };
+
+        // Convert non-string values to strings if needed
         if (typeof value != "string" && varType === "string") {
             value = String(value);
             this.variables[node.name] = value;
         }
+
+        // Function to build the expression string
         const buildExpressionString = (expr) => {
             if (expr.type === "Expression") {
                 if (expr.operator === "-" && expr.left.value === 0) {
@@ -150,6 +191,7 @@ class JsonConverter extends Converter {
             }
         };
 
+        // Build the return value for the variable
         let returnVal =
             node.value.type === "Expression"
                 ? buildExpressionString(node.value)
@@ -170,7 +212,7 @@ class JsonConverter extends Converter {
             returnVal = value;
         }
 
-        // let result = eval(returnVal);
+        // Return the frame representing the variable assignment
         return {
             line: node.line,
             operation: "set",
@@ -182,11 +224,21 @@ class JsonConverter extends Converter {
         };
     }
 
+    /**
+     * @method transformIndexExpression
+     * @description Transforms an index expression node, handling array and string indexing.
+     * It evaluates the index and checks for out-of-bounds errors, then retrieves the value from the source variable
+     * and assigns it to the target variable. It also manages type checks and error handling for unsupported types.
+     * @param {Object} node - The AST node representing the index expression.
+     * @returns {Object} A frame representing the variable assignment from the indexed value.
+     * @throws {Error} If the index is negative, out of bounds, or the source type is unsupported for indexing.
+     */
     transformIndexExpression(node) {
         const { varName, value } = node;
         const source = value.source;
         const index = this.expressionEvaluator.evaluateExpression(value.index);
 
+        // Ensure the index is not negative
         if (index < 0) {
             throw new Error(
                 `Invalid index operation: index (${index}) cannot be negative.`
@@ -198,32 +250,41 @@ class JsonConverter extends Converter {
         let result;
         let getType;
         let varType;
+
+        // Handle indexing for strings
         if (typeof sourceValue === "string") {
-            if (index > sourceValue.length) {
+            if (index >= sourceValue.length) {
                 throw new Error(
                     `Index out of bounds: string length is ${sourceValue.length}, but index is ${index}.`
                 );
             }
             getType = "string";
             varType = "string";
-            result = sourceValue.charAt(index);
-        } else if (Array.isArray(sourceValue)) {
+            result = sourceValue.charAt(index); // Retrieve the character at the specified index
+        }
+        // Handle indexing for arrays
+        else if (Array.isArray(sourceValue)) {
             getType = "array";
-            if (index > sourceValue.length) {
+            if (index >= sourceValue.length) {
                 throw new Error(
                     `Index out of bounds: array length is ${sourceValue.length}, but index is ${index}.`
                 );
             }
-            varType = this.initializedArrays[source];
-            result = sourceValue[index];
-        } else {
+            varType = this.initializedArrays[source]; // Retrieve the array's data type
+            result = sourceValue[index]; // Retrieve the element at the specified index
+        }
+        // Throw error if the source type is unsupported for indexing
+        else {
             throw new Error(
                 `Unsupported type for indexing: ${typeof sourceValue}`
             );
         }
 
+        // Assign the result to the target variable
         this.variables[node.name] = result;
         this.declaredVariables.add(node.name);
+
+        // Return the frame for setting the variable to the indexed value
         return {
             line: node.line,
             operation: "set",
@@ -241,12 +302,23 @@ class JsonConverter extends Converter {
         };
     }
 
+    /**
+     * @method handleSubstringExpression
+     * @description Handles a substring operation by evaluating the start and end indices, performing validation,
+     * and extracting the substring from the source string. It then stores the result in the target variable.
+     * @param {Object} node - The AST node representing the substring operation.
+     * @returns {Object} A frame representing the substring operation.
+     * @throws {Error} If the start index is greater than the end index or the start index is negative.
+     */
     handleSubstringExpression(node) {
         const { name, value } = node;
         const source = value.string;
 
+        // Evaluate the start and end expressions
         const start = this.expressionEvaluator.evaluateExpression(value.start);
         const end = this.expressionEvaluator.evaluateExpression(value.end);
+
+        // Validate the start and end indices
         if (start > end) {
             throw new Error(
                 `Invalid substring operation: 'start' index (${start}) cannot be greater than 'end' index (${end}).`
@@ -256,12 +328,16 @@ class JsonConverter extends Converter {
             throw new Error(
                 "Invalid substring operation: 'start' index cannot be negative."
             );
+
+        // Retrieve the source value and extract the substring
         const sourceValue = this.expressionEvaluator.getVariableValue(source);
         const finalValue = sourceValue.substring(start, end);
 
+        // Store the substring result in the target variable
         this.variables[name] = finalValue;
         this.declaredVariables.add(name);
 
+        // Return the frame for the substring operation
         return {
             line: node.line,
             operation: "set",
@@ -283,11 +359,15 @@ class JsonConverter extends Converter {
     }
 
     /**
-     * Transforms a SwapOperation node into a final JSON action frame.
-     * @param {Object} node - The SwapOperation node to transform.
-     * @returns {Object} The transformed action frame for the swap operation.
+     * @method transformSwapOperation
+     * @description Transforms a SwapOperation node by evaluating the positions to swap, validating the array bounds,
+     * and performing the swap operation. The result is stored back in the array.
+     * @param {Object} node - The AST node representing the swap operation.
+     * @returns {Object} A frame representing the swap operation.
+     * @throws {Error} If the array is not initialized or the swap positions are out of bounds.
      */
     transformSwapOperation(node) {
+        // Evaluate the positions to swap
         const firstPosition = this.expressionEvaluator.evaluateExpression(
             node.firstPosition
         );
@@ -302,7 +382,7 @@ class JsonConverter extends Converter {
             );
         }
 
-        // Ensure firstPosition and secondPosition are within array bounds
+        // Validate the positions are within the bounds of the array
         const arrayLength = this.variables[node.varName].length;
         if (
             firstPosition < 0 ||
@@ -315,7 +395,7 @@ class JsonConverter extends Converter {
             );
         }
 
-        // Perform the swap in the array stored in this.variables
+        // Perform the swap operation in the array
         const array = this.expressionEvaluator.getVariableValue(node.varName);
         const temp = array[firstPosition];
         array[firstPosition] = array[secondPosition];
@@ -324,6 +404,7 @@ class JsonConverter extends Converter {
         // Update the array in this.variables after the swap
         this.variables[node.varName] = array;
 
+        // Return the frame for the swap operation
         return {
             line: node.line,
             operation: "swap",
@@ -336,20 +417,36 @@ class JsonConverter extends Converter {
         };
     }
 
+    /**
+     * @method determineType
+     * @description Determines the type of a given value by attempting to convert it to a number and checking its original type.
+     * @param {any} value - The value to determine the type of.
+     * @returns {string} The type of the value, either "number", "string", or the original type.
+     */
     determineType(value) {
         // Try to convert the value to a number
         const convertedValue = Number(value);
+
+        // Check if the value is a string and handle empty strings
         if (typeof value === "string") {
             if (value.trim() === "") return "string";
         }
+
         // Check if the conversion is successful and the result is not NaN
         if (!isNaN(convertedValue)) {
             return "number";
         } else {
+            // Return the original type if the conversion is not valid
             return typeof value;
         }
     }
 
+    /**
+     * @method transformFunctionDeclaration
+     * @description Transforms a function declaration node by storing the function's intermediate representation (IR) and returning a movement object representing the function definition.
+     * @param {Object} node - The AST node representing the function declaration.
+     * @returns {Object} A movement object representing the function definition.
+     */
     transformFunctionDeclaration(node) {
         // Store the entire IR (body, params) in the functionMap for later processing
         const functionIR = {
@@ -359,6 +456,7 @@ class JsonConverter extends Converter {
             body: node.body,
         };
 
+        // Add the function to the functionMap
         this.functionMap.set(node.name, functionIR);
 
         // Return a movement object for the function definition
@@ -377,6 +475,14 @@ class JsonConverter extends Converter {
         };
     }
 
+    /**
+     * @method transformFunctionCall
+     * @description Transforms a function call node by evaluating the arguments, mapping them to parameters, and processing the function body to generate the corresponding action frames.
+     * @param {Object} node - The AST node representing the function call.
+     * @param {boolean} varDecl - A flag to indicate whether the call is part of a variable declaration.
+     * @returns {Array|Object} The frames generated from the function call. If varDecl is true, returns an object containing frames and the return value.
+     * @throws {Error} Throws an error if the function is not defined or if the argument count does not match the function definition.
+     */
     transformFunctionCall(node, varDecl = false) {
         const frames = [];
         const functionName = node.name;
@@ -455,12 +561,21 @@ class JsonConverter extends Converter {
             : frames;
     }
 
+    /**
+     * @method transformPrintStatement
+     * @description Transforms a print statement node into a JSON action frame for printing a value.
+     * @param {Object} node - The AST node representing the print statement.
+     * @returns {Object} The action frame representing the print operation.
+     * @throws {Error} Throws an error if the print statement includes nested operations or if the value to print is undefined.
+     */
     transformPrintStatement(node) {
         const value = node.value.type
             ? this.expressionEvaluator.evaluateExpression(node.value)
             : node.value;
         const isLiteral = !this.declaredVariables.has(value);
         let printVal = isLiteral ? value : this.variables[value];
+
+        // Ensure the value is not an object or undefined
         if (
             (typeof printVal === "object" && !Array.isArray(printVal)) ||
             printVal == undefined
@@ -468,6 +583,7 @@ class JsonConverter extends Converter {
             throw new Error(
                 "Nesting other operations or expressions within print statements is not allowed. Please assign this to a variable first then try again."
             );
+
         return {
             line: node.line,
             operation: "print",
@@ -479,17 +595,29 @@ class JsonConverter extends Converter {
         };
     }
 
+    /**
+     * @method transformIfStatement
+     * @description Transforms an if statement node into a series of JSON action frames. Evaluates the condition and processes the consequent or alternate block accordingly.
+     * @param {Object} node - The AST node representing the if statement.
+     * @returns {Array} An array of action frames representing the if statement and its execution.
+     * @throws {Error} Throws an error if the condition does not evaluate to a boolean value.
+     */
     transformIfStatement(node) {
+        // Evaluate the condition of the if statement
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
+        // Convert the condition to a string representation for JSON output
         const conditionString = this.convertConditionToString(node.condition);
+
+        // Ensure the condition result is a boolean (true/false)
         if (conditionResult != true && conditionResult != false) {
             throw new Error(
                 "Please ensure that only booleans and conditional expressions are used in conditions."
             );
         }
-        // Start with the IF statement
+
+        // Create the initial frame for the if statement
         let frames = [
             {
                 line: node.line,
@@ -500,28 +628,42 @@ class JsonConverter extends Converter {
                 description: `Checked if ${conditionString}.`,
             },
         ];
+
+        // If the condition is true, process the consequent block
         if (conditionResult) {
-            // Handle the true condition (consequent)
             frames = frames.concat(this.transformNodes(node.consequent));
         } else {
+            // Otherwise, process the alternate block (else clause, if present)
             frames = frames.concat(this.transformNodes(node.alternate || []));
         }
+
+        // Add an end frame for the if statement
         frames.push({
             line: null,
             operation: "endif",
             timestamp: new Date().toISOString(),
             description: "End of if statement.",
         });
+
+        // Return the array of action frames representing the if statement
         return frames;
     }
 
+    /**
+     * @method transformOtherwiseIfStatement
+     * @description Transforms an otherwise if statement node into a series of JSON action frames, treating it as an if statement in JSON format. Evaluates the condition and processes the consequent or alternate block accordingly.
+     * @param {Object} node - The AST node representing the otherwise if statement.
+     * @returns {Array} An array of action frames representing the otherwise if statement.
+     */
     transformOtherwiseIfStatement(node) {
-        // Entering an Otherwise If statement, increment depth
+        // Evaluate the condition for the otherwise if statement
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
+        // Convert the condition to a string for the JSON output
         const conditionString = this.convertConditionToString(node.condition);
 
+        // Create the frame for the otherwise if statement (treated as an if)
         let frames = [
             {
                 line: node.line,
@@ -533,43 +675,26 @@ class JsonConverter extends Converter {
             },
         ];
 
+        // If the condition is true, process the consequent block
         if (conditionResult) {
             frames = frames.concat(this.transformNodes(node.consequent));
         } else if (node.alternate) {
-            if (node.alternate.type != "OtherwiseIfStatement")
+            // Otherwise, process the alternate block, if not another OtherwiseIfStatement
+            if (node.alternate.type != "OtherwiseIfStatement") {
                 frames = frames.concat(this.transformNodes(node.alternate));
+            }
         }
 
+        // Return the array of action frames representing the otherwise if statement
         return frames;
     }
 
-    calculateEndIfLine(node) {
-        let maxLine = node.line;
-
-        const updateMaxLine = (nodes) => {
-            for (const subNode of nodes) {
-                if (subNode.type === "IfStatement") {
-                    maxLine = Math.max(
-                        maxLine,
-                        this.calculateEndIfLine(subNode)
-                    );
-                } else if (subNode.line) {
-                    maxLine = Math.max(maxLine, subNode.line);
-                }
-            }
-        };
-
-        if (node.consequent && node.consequent.length > 0) {
-            updateMaxLine(node.consequent);
-        }
-
-        if (node.alternate && node.alternate.length > 0) {
-            updateMaxLine(node.alternate);
-        }
-
-        return maxLine + 1; // Adding 1 to represent the 'End If' line
-    }
-
+    /**
+     * @method transformForEachLoop
+     * @description Transforms a for-each loop node into a series of JSON action frames, iterating over an array or collection. Evaluates the collection and processes each iteration.
+     * @param {Object} node - The AST node representing the for-each loop.
+     * @returns {Array} An array of action frames representing the for-each loop execution.
+     */
     transformForEachLoop(node) {
         const arrayName = node.collection;
         const iterator = node.iterator;
@@ -585,44 +710,57 @@ class JsonConverter extends Converter {
         return this.transformGenericLoop(node, "for_each", conditionString);
     }
 
+    /**
+     * @method transformGenericLoop
+     * @description Transforms a generic loop (such as for_each or loop_from_to) into a series of JSON action frames. It handles conditions, iterators, and loop body execution.
+     * @param {Object} node - The AST node representing the loop.
+     * @param {string} loopType - The type of loop (e.g., 'for_each', 'loop_from_to').
+     * @param {string} conditionString - The string representing the loop condition.
+     * @returns {Array} An array of action frames representing the loop and its execution.
+     */
     transformGenericLoop(node, loopType, conditionString) {
-        const loopLine = node.line;
+        const loopLine = node.line; // Store the line where the loop starts
         const actionFrames = [
             {
                 line: node.line,
-                operation: loopType,
+                operation: loopType, // The type of loop (for_each, loop_from_to)
                 condition: conditionString,
                 timestamp: new Date().toISOString(),
                 description: `${loopType.replace(
                     "_",
                     " "
-                )} loop with condition ${conditionString}.`,
+                )} loop with condition ${conditionString}.`, // Description for the loop
             },
         ];
+
         let ifCondition;
-        let bodyLineStart = node.line; // Line where loop body starts
+        let bodyLineStart = node.line; // Track where the loop body starts
         let bodyLineCount = 0; // Track the number of lines in the loop body
+
         if (loopType === "for_each") {
-            // Handle the special case for the for_each loop
+            // Handle special case for 'for_each' loops
+
             const arrayName = node.collection; // The array to iterate over
-            const iterator = node.iterator; // The iterator variable (e.g., 'num')
-            let index = 0; // Start with index 0
+            const iterator = node.iterator; // Iterator variable (e.g., 'num')
+            let index = 0; // Initialize index at 0
+
+            // Set the loop condition for array bounds
             ifCondition = `index < ${
                 this.expressionEvaluator.getVariableValue(arrayName).length
             }`;
 
-            // While the index is within the array bounds
+            // Iterate through the array
             while (index < this.variables[arrayName].length) {
                 actionFrames.push({
                     line: node.line,
-                    operation: "if",
+                    operation: "if", // Check the loop condition
                     condition: ifCondition,
-                    result: true,
+                    result: true, // Always true until the end of the array
                     timestamp: new Date().toISOString(),
-                    description: `Checked if ${ifCondition}`,
+                    description: `Checked if ${ifCondition}`, // Condition description
                 });
 
-                // Set the iterator variable to the value at the current index
+                // Set the iterator variable to the current array value
                 const arrayValue = this.variables[arrayName][index];
                 actionFrames.push({
                     line: node.line,
@@ -639,72 +777,89 @@ class JsonConverter extends Converter {
                     timestamp: new Date().toISOString(),
                     description: `Set variable ${iterator} to ${arrayName}[${index}].`,
                 });
+
+                // Add the iterator to declared variables and set its value
                 this.declaredVariables.add(iterator);
                 this.variables[iterator] = arrayValue;
-                // Transform the loop body (processing the body of the loop)
+
+                // Transform the loop body (process the loop body)
                 const bodyFrames = this.transformNodes(node.body).map(
                     (frame) => ({
                         ...frame,
-                        line: frame.line,
+                        line: frame.line, // Ensure each frame retains its original line number
                     })
                 );
 
-                actionFrames.push(...bodyFrames);
+                actionFrames.push(...bodyFrames); // Append body frames to the actionFrames
 
-                // Increment the index
+                // Increment the index after each iteration
                 index += 1;
             }
         } else {
+            // For other loop types, such as 'loop_from_to'
+
+            // Continue looping while the condition is true
             while (this.expressionEvaluator.evaluateCondition(node.condition)) {
-                let z = 0;
-                if (this.variables["x"] == 0) {
-                    z += 1;
-                }
                 actionFrames.push({
                     line: node.line,
                     operation: "if",
                     condition: conditionString,
                     result: true,
                     timestamp: new Date().toISOString(),
-                    description: `Checked if ${conditionString}.`,
+                    description: `Checked if ${conditionString}.`, // Log the condition check
                 });
 
+                // Transform the loop body
                 const bodyFrames = this.transformNodes(node.body).map(
                     (frame) => ({
                         ...frame,
-                        line: frame.line,
+                        line: frame.line, // Ensure the line number is preserved
                     })
                 );
 
-                actionFrames.push(...bodyFrames);
-                // For loop_from_to, update the loop variable and add the set movement object
+                actionFrames.push(...bodyFrames); // Append body frames to actionFrames
+
+                // If it's a loop_from_to, update the loop variable
                 if (loopType === "loop_from_to") {
                     const updateFrame = this.updateLoopVariable(
                         node.loopVariable,
                         loopLine
                     );
-                    actionFrames.push(updateFrame);
+                    actionFrames.push(updateFrame); // Append the update frame for the loop variable
                 }
             }
         }
+
+        // After the loop ends, check the condition one final time (false result)
         actionFrames.push({
             line: node.line,
             operation: "if",
             condition: loopType === "for_each" ? ifCondition : conditionString,
-            result: false,
+            result: false, // The loop condition is false, so the loop ends
             timestamp: new Date().toISOString(),
-            description: `Checked if ${conditionString}.`,
+            description: `Checked if ${conditionString}.`, // Log the final condition check
         });
 
+        // Add the final frame marking the end of the loop
         actionFrames.push({
             line: null,
             operation: "loop_end",
             timestamp: new Date().toISOString(),
-            description: `End of ${loopType.replace("_", " ")} loop`,
+            description: `End of ${loopType.replace("_", " ")} loop`, // Log the loop ending
         });
+
+        // Return all the action frames representing the loop execution
         return actionFrames;
     }
 
+    /**
+     * @method updateLoopVariable
+     * @description Increments the value of the loop variable by 1. Used to simulate the progress of loop variables in loops.
+     * @param {string} loopVariableName - The name of the loop variable to be updated.
+     * @param {number} loopLine - The line number where the loop occurs.
+     * @returns {Object} A JSON action frame representing the update of the loop variable.
+     * @throws {Error} Throws an error if the loop variable is not declared.
+     */
     updateLoopVariable(loopVariableName, loopLine) {
         if (!this.variables.hasOwnProperty(loopVariableName)) {
             throw new Error(
@@ -712,28 +867,37 @@ class JsonConverter extends Converter {
             );
         }
 
-        // Increment the loop variable
+        // Increment the loop variable by 1
         this.variables[loopVariableName] += 1;
 
-        // Return the frame representing this update
+        // Return the frame representing this update in the loop variable
         return {
             line: loopLine,
-            operation: "set",
-            varName: loopVariableName,
-            type: "number",
-            value: this.variables[loopVariableName],
+            operation: "set", // The operation is to set the variable's value
+            varName: loopVariableName, // The name of the loop variable
+            type: "number", // Type is always a number in this case
+            value: this.variables[loopVariableName], // New value of the loop variable
             timestamp: new Date().toISOString(),
-            description: `Set variable ${loopVariableName} to ${this.variables[loopVariableName]}.`,
+            description: `Set variable ${loopVariableName} to ${this.variables[loopVariableName]}.`, // Description of the update
         };
     }
 
+    /**
+     * @method transformWhileOrLoopUntil
+     * @description Transforms a while or loop-until loop into a series of JSON action frames. It validates the loop condition and transforms the loop body.
+     * @param {Object} node - The AST node representing the loop.
+     * @param {string} loopType - The type of loop, either 'while' or 'until'.
+     * @returns {Array} An array of action frames representing the loop and its execution.
+     * @throws {Error} Throws an error if the loop condition is malformed or missing.
+     */
     transformWhileOrLoopUntil(node, loopType) {
         if (!node.condition || typeof node.condition !== "object") {
             throw new Error(`${loopType} condition is malformed or missing.`);
         }
 
-        let { left, operator, right } = node.condition;
+        let { left, operator, right } = node.condition; // Extract the components of the condition
 
+        // Ensure all components of the condition are defined
         if (
             node.condition === "Expression" &&
             (typeof left === "undefined" ||
@@ -750,109 +914,21 @@ class JsonConverter extends Converter {
             );
         }
 
+        // Convert the condition to a string for JSON representation
         let conditionString = this.convertConditionToString(node.condition);
 
+        // Transform the loop as a generic loop with the given condition
         return this.transformGenericLoop(node, "while", conditionString);
     }
 
-    applyFlipOperatorRecursively(conditionNode) {
-        // Ensure the node is an object and has an operator
-        if (
-            !conditionNode ||
-            typeof conditionNode !== "object" ||
-            !conditionNode.operator
-        ) {
-            return;
-        }
-
-        // Flip the operator of the current node
-        conditionNode.operator = this.flipOperator(conditionNode.operator);
-
-        // Recursively handle the left side if it's an expression
-        if (
-            typeof conditionNode.left === "object" &&
-            conditionNode.left !== null &&
-            conditionNode.left.type === "Expression"
-        ) {
-            this.applyFlipOperatorRecursively(conditionNode.left);
-        }
-
-        // Recursively handle the right side if it's an expression
-        if (
-            typeof conditionNode.right === "object" &&
-            conditionNode.right !== null &&
-            conditionNode.right.type === "Expression"
-        ) {
-            this.applyFlipOperatorRecursively(conditionNode.right);
-        }
-    }
-
-    flipOperator(operator) {
-        const operatorsMap = {
-            and: "&&",
-            or: "||",
-            greater: ">",
-            less: "<",
-            equal: "==",
-            "&&": "&&",
-            "||": "||",
-            ">": ">",
-            "<": "<",
-            "==": "==",
-            "!=": "!=",
-            ">=": ">=",
-            "<=": "<=",
-        };
-
-        const operatorMapped = operatorsMap[operator];
-        const flipMap = {
-            and: "&&",
-            or: "||",
-            greater: ">",
-            less: "<",
-            equal: "!=",
-            "&&": "&&",
-            "||": "||",
-            ">": ">",
-            "<": "<",
-            "==": "!=",
-            ">": "<=",
-            "<": ">=",
-            ">=": "<",
-            "<=": ">",
-            "==": "!=",
-            "!=": "==",
-        };
-
-        if (flipMap[operatorMapped]) {
-            return flipMap[operatorMapped];
-        } else if (
-            typeof this.expressionEvaluator.getVariableValue(operator) ===
-            "boolean"
-        )
-            return operator;
-
-        throw new Error(`Unsupported operator for flipping: ${operator}`);
-    }
-
-    flipCondition(condition) {
-        if (condition.includes(">=")) {
-            return condition.replaceAll(">=", "<");
-        } else if (condition.includes(">")) {
-            return condition.replaceAll(">", "<=");
-        } else if (condition.includes("<=")) {
-            return condition.replaceAll("<=", ">");
-        } else if (condition.includes("<")) {
-            return condition.replaceAll("<", ">=");
-        } else if (condition.includes("==")) {
-            return condition.replaceAll("==", "!=");
-        } else if (condition.includes("!=")) {
-            return condition.replaceAll("!=", "==");
-        } else if (condition.type === "Identifier") return condition.value;
-        return condition;
-    }
-
+    /**
+     * @method transformLoopFromTo
+     * @description Transforms a loop-from-to loop into a series of JSON action frames. It sets the initial loop variable and processes the loop body.
+     * @param {Object} node - The AST node representing the loop-from-to.
+     * @returns {Array} An array of action frames representing the loop and its execution.
+     */
     transformLoopFromTo(node) {
+        // Evaluate the start and end values of the loop range
         const startValue = this.expressionEvaluator.evaluateExpression(
             node.range.start
         );
@@ -861,19 +937,24 @@ class JsonConverter extends Converter {
         );
         const loopVariable = node.loopVariable;
 
+        // Action frame for setting the initial loop variable
         const actionFrames = [
             {
                 line: node.line,
-                operation: "set",
-                varName: loopVariable,
-                type: "number",
-                value: startValue,
+                operation: "set", // Set the initial value of the loop variable
+                varName: loopVariable, // Name of the loop variable
+                type: "number", // The type is a number
+                value: startValue, // Initial value for the loop variable
                 timestamp: new Date().toISOString(),
-                description: `Set variable ${loopVariable} to ${startValue}.`,
+                description: `Set variable ${loopVariable} to ${startValue}.`, // Log the initial setting
             },
         ];
+
+        // Store the loop variable in the current variable state
         this.variables[loopVariable] = startValue;
         this.declaredVariables.add(loopVariable);
+
+        // Construct the condition for the loop (loopVariable <= endValue)
         const conditionString = `${loopVariable} <= ${endValue}`;
         node.condition = {
             left: loopVariable,
@@ -881,68 +962,87 @@ class JsonConverter extends Converter {
             right: endValue,
         };
 
+        // Transform the loop body using the generic loop transformer
         actionFrames.push(
             ...this.transformGenericLoop(node, "loop_from_to", conditionString)
         );
 
+        // Return the full set of action frames for the loop
         return actionFrames;
     }
 
+    /**
+     * @method convertConditionToString
+     * @description Converts a condition into its string representation for use in JSON action frames. Handles various types of conditions, including booleans, numbers, strings, and expressions.
+     * @param {Object|boolean|number|string} condition - The condition to convert into a string.
+     * @returns {string} The string representation of the condition.
+     * @throws {Error} Throws an error if the condition is malformed or the operator is unknown.
+     */
     convertConditionToString(condition) {
+        // Handle primitive types (boolean, number, string) directly
         if (
             typeof condition === "boolean" ||
             typeof condition === "number" ||
             typeof condition === "string"
         ) {
-            return condition.toString();
+            return condition.toString(); // Convert the primitive value to a string
         }
 
+        // Handle conditions that are declared variables
         if (this.declaredVariables.has(condition)) {
-            return condition;
+            return condition; // Return the condition directly if it is a declared variable
         }
 
+        // Handle identifiers
         if (
             condition.type === "Identifier" ||
             this.declaredVariables.has(condition)
         ) {
-            return condition.value;
+            return condition.value; // Return the value of the identifier
         }
 
+        // Handle length expressions by evaluating them
         if (condition.type === "LengthExpression")
             return this.expressionEvaluator.evaluateLengthExpression(condition);
 
+        // If condition or operator is missing, log the error and throw an exception
         if (!condition || !condition.operator) {
             console.error("Condition is malformed or undefined:", condition);
             throw new Error("Condition is malformed or undefined.");
         }
 
+        // Handle NOT operator in unary expressions (e.g., !condition)
         if (
             condition.operator === "not" &&
             condition.type === "UnaryExpression"
         ) {
-            const right = this.convertConditionToString(condition.argument);
-            return `!${right}`;
+            const right = this.convertConditionToString(condition.argument); // Convert the argument of the NOT expression
+            return `!${right}`; // Return the negated condition as a string
         } else if (condition.operator === "not") {
-            const right = this.convertConditionToString(condition.right);
-            return `!${right}`;
+            // Handle NOT operator in binary expressions
+            const right = this.convertConditionToString(condition.right); // Convert the right side of the NOT expression
+            return `!${right}`; // Return the negated condition
         }
 
+        // Recursively handle the left side of the condition if it's an object
         const left =
             condition.left && typeof condition.left === "object"
                 ? this.convertConditionToString(condition.left)
                 : condition.left;
 
+        // Recursively handle the right side of the condition if it's an object
         const right =
             condition.right && typeof condition.right === "object"
                 ? this.convertConditionToString(condition.right)
                 : condition.right;
 
+        // Map logical and comparison operators to their JavaScript equivalents
         const operatorsMap = {
-            and: "&&",
-            or: "||",
-            greater: ">",
-            less: "<",
-            equal: "==",
+            and: "&&", // Logical AND
+            or: "||", // Logical OR
+            greater: ">", // Greater than
+            less: "<", // Less than
+            equal: "==", // Equality check
             ">": ">",
             "<": "<",
             "==": "==",
@@ -951,90 +1051,138 @@ class JsonConverter extends Converter {
             "<=": "<=",
         };
 
-        const operator = operatorsMap[condition.operator];
+        const operator = operatorsMap[condition.operator]; // Map the condition's operator
 
+        // Throw an error if the operator is not recognized
         if (!operator) {
             throw new Error(`Unknown operator: ${condition.operator}`);
         }
 
+        // Return the full condition as a string (e.g., "x > 5")
         return `${left} ${operator} ${right}`;
     }
 
+    /**
+     * @method transformReturnStatement
+     * @description Transforms a return statement node into a JSON action frame. Evaluates the return value and constructs the appropriate frame.
+     * @param {Object} node - The AST node representing the return statement.
+     * @returns {Object} A JSON object representing the return action frame.
+     */
     transformReturnStatement(node) {
+        // Evaluate the expression or value being returned
         const transformedReturnValue =
             this.expressionEvaluator.evaluateExpression(node.value);
+
+        // Return the action frame for the return statement
         return {
             line: node.line,
             operation: "return",
             value: transformedReturnValue,
             timestamp: new Date().toISOString(),
-            description: `Returned ${transformedReturnValue}.`,
+            description: `Returned ${transformedReturnValue}.`, // Log the returned value in the description
         };
     }
 
+    /**
+     * @method transformExpression
+     * @description Transforms an expression node into a string or object for use in JSON action frames. Handles index expressions, binary expressions, and literals.
+     * @param {Object} expression - The AST node representing the expression.
+     * @returns {Object|string} A transformed expression, either as a string for binary operations or as an object for literals and index expressions.
+     */
     transformExpression(expression) {
+        // Handle index expressions (e.g., array[index])
         if (expression.type === "IndexExpression") {
             return this.transformIndexExpression(expression);
-        } else if (expression.type === "Expression") {
-            const left = this.transformExpression(expression.left);
-            const right = this.transformExpression(expression.right);
+        }
+        // Handle binary expressions (e.g., a + b, a - b)
+        else if (expression.type === "Expression") {
+            const left = this.transformExpression(expression.left); // Recursively transform the left side
+            const right = this.transformExpression(expression.right); // Recursively transform the right side
 
-            // Handle parentheses based on operator precedence
+            // Function to wrap expressions with parentheses when needed (for operator precedence)
             const wrapInParentheses = (expr) => {
                 return expr.operator &&
                     (expr.operator === "+" || expr.operator === "-")
-                    ? `(${expr.left} ${expr.operator} ${expr.right})`
-                    : `${expr.left} ${expr.operator} ${expr.right}`;
+                    ? `(${expr.left} ${expr.operator} ${expr.right})` // Add parentheses for + and - operations
+                    : `${expr.left} ${expr.operator} ${expr.right}`; // Return without parentheses for higher precedence operators
             };
 
+            // Create the transformed expression object
             const transformedExpression = {
-                left: left.value || left,
-                operator: expression.operator,
-                right: right.value || right,
+                left: left.value || left, // Use the value if available, otherwise use the transformed left expression
+                operator: expression.operator, // The operator between the left and right expressions
+                right: right.value || right, // Use the value if available, otherwise use the transformed right expression
             };
 
+            // Return the transformed expression, wrapped in parentheses if necessary
             return wrapInParentheses(transformedExpression);
-        } else if (this.declaredVariables.has(expression)) {
+        }
+        // Handle cases where the expression is a declared variable
+        else if (this.declaredVariables.has(expression)) {
             return {
-                value: this.variables[expression] || expression,
+                value: this.variables[expression] || expression, // Return the variable's value if it exists, otherwise return the expression itself
             };
-        } else if (
+        }
+        // Handle number and string literals (e.g., 5, "hello")
+        else if (
             expression.type === "NumberLiteral" ||
             expression.type === "StringLiteral"
         ) {
             return {
-                value: expression.value,
+                value: expression.value, // Return the value of the literal
             };
-        } else {
+        }
+        // For any other type of expression, return it as is
+        else {
             return expression;
         }
     }
 
+    /**
+     * @method transformArrayCreation
+     * @description Transforms an array creation node into a JSON action frame. Initializes the array with values or as uninitialized, depending on the node definition.
+     * @param {Object} node - The AST node representing the array creation.
+     * @returns {Object} A JSON object representing the array creation action frame.
+     */
     transformArrayCreation(node) {
         let elements;
+
+        // If the array is of boolean type and initialized, extract values directly
         if (node.dsType === "boolean" && !node.unInitialised)
             elements = (node.values || []).map((el) => el.value);
+        // Otherwise, evaluate each element in the array using the expression evaluator
         else
             elements = (node.values || []).map((el) =>
                 this.expressionEvaluator.evaluateExpression(el)
             );
+
+        // Store the created array in the variables map
         this.variables[node.varName] = elements;
+
+        // Keep track of the initialized array and its type
         this.initializedArrays[node.varName] = node.dsType;
         this.declaredVariables.add(node.varName);
+
+        // Determine if the array is uninitialized
         const unInitialised = node.unInitialised;
         let value;
+
+        // If the array is of boolean type, store the boolean values directly
         if (node.dsType === "boolean") value = elements.map((el) => el);
+        // Otherwise, convert the evaluated elements into the correct type
         else
             value = elements.map((el) =>
                 this.expressionEvaluator.convertValue(el)
             );
+
+        // Return the JSON frame for array creation
         return {
             line: node.line,
             operation: "create",
             dataStructure: "array",
             type: node.dsType,
             varName: node.varName,
-            value: value,
+            value: value, // Store the evaluated array elements or size
             timestamp: new Date().toISOString(),
             description: unInitialised
                 ? `Created array ${node.varName} with size ${elements.length}.`
@@ -1043,38 +1191,49 @@ class JsonConverter extends Converter {
     }
 
     /**
-     * Transforms a RemoveOperation node into an action frame.
-     * @param {Object} node - The RemoveOperation node.
-     * @returns {Object} The transformed action frame.
+     * @method transformRemoveOperation
+     * @description Transforms a remove operation node into a JSON action frame. Evaluates the position to remove and modifies the array.
+     * @param {Object} node - The AST node representing the remove operation.
+     * @returns {Object} A JSON object representing the remove action frame.
+     * @throws {Error} Throws an error if the array is not initialized or if the position is invalid.
      */
     transformRemoveOperation(node) {
         const line = node.line;
 
-        // Ensure the variable is an initialized array
+        // Ensure the target variable is an initialized array
         if (!this.initializedArrays.hasOwnProperty(node.varName)) {
             throw new Error(
                 `Variable ${node.varName} is not an initialized array.`
             );
         }
 
-        // Determine the data structure type (currently supporting only arrays)
+        // Determine the data structure type (currently only arrays are supported)
         const dsType = this.initializedArrays[node.varName];
 
-        // Evaluate the position to remove
+        // Evaluate the position from which the element should be removed
         const position = this.expressionEvaluator.evaluateExpression(
             node.positionToRemove
         );
-        if (typeof position != "number")
+
+        // Ensure the position is a valid number
+        if (typeof position != "number") {
             throw new Error(
                 `Error at line ${node.line}: Position to remove must be a number.`
             );
+        }
+
+        // Check if the position is within array bounds
         const arrayLength = this.variables[node.varName].length;
         if (position < 0 || position >= arrayLength) {
             throw new Error(
                 `Error at line ${node.line}: Position ${position} is out of bounds for array ${node.varName}.`
             );
         }
+
+        // Remove the value at the specified position
         const removedValue = this.variables[node.varName].splice(position, 1);
+
+        // Return the JSON frame for the remove operation
         return {
             line: line,
             operation: "remove",
@@ -1086,18 +1245,34 @@ class JsonConverter extends Converter {
         };
     }
 
+    /**
+     * @method transformArrayInsertion
+     * @description Transforms an array insertion node into a JSON action frame. Inserts a value at a specified position within the array, ensuring the value type matches the array type.
+     * @param {Object} node - The AST node representing the array insertion.
+     * @returns {Object} A JSON object representing the insertion action frame.
+     * @throws {Error} Throws an error if the array is not initialized, if the position is out of bounds, or if the value type does not match the array type.
+     */
     transformArrayInsertion(node) {
+        // Ensure the array has been initialized
         if (!this.variables[node.varName]) {
             throw new Error(`Array ${node.varName} not initialized.`);
         }
+
+        // Evaluate the value to be inserted
         const value = this.expressionEvaluator.evaluateExpression(node.value);
+
+        // Parse the insertion position
         const position = parseInt(node.position);
+
+        // Ensure the value type matches the array's initialized type
         if (typeof value != this.initializedArrays[node.varName])
             throw new Error(
-                `Array type mismtach: cannot insert value of type ${typeof value} into array of type ${
+                `Array type mismatch: cannot insert value of type ${typeof value} into array of type ${
                     this.initializedArrays[node.varName]
                 }.`
             );
+
+        // Ensure the position is within the bounds of the array
         if (
             position < 0 ||
             position > this.variables[node.varName].length ||
@@ -1107,7 +1282,11 @@ class JsonConverter extends Converter {
                 `Index is out of bounds for array insertion at line ${node.line}`
             );
         }
+
+        // Insert the value into the array at the specified position
         this.variables[node.varName].splice(position, 0, value);
+
+        // Return the JSON frame for the array insertion
         return {
             line: node.line,
             operation: "add",
@@ -1119,32 +1298,45 @@ class JsonConverter extends Converter {
         };
     }
 
+    /**
+     * @method transformArraySetValue
+     * @description Transforms an array set value node into a JSON action frame. Sets a value at a specified index in the array, ensuring the value type matches the array type.
+     * @param {Object} node - The AST node representing the array set value operation.
+     * @returns {Object} A JSON object representing the set array action frame.
+     * @throws {Error} Throws an error if the array is not initialized, if the index is out of bounds, or if the value type does not match the array type.
+     */
     transformArraySetValue(node) {
         const varName = node.varName;
+
+        // Evaluate the index to set the value at
         const index = this.expressionEvaluator.evaluateExpression(node.index);
+
+        // Evaluate the value to be set, handle index expressions if present
         const setValue =
             node.setValue.type === "IndexExpression"
                 ? this.transformIndexExpression(node.setValue)
                 : this.expressionEvaluator.evaluateExpression(node.setValue);
 
-        // Ensure the array has been initialized before proceeding
+        // Ensure the array is initialized before setting a value
         if (!this.initializedArrays[varName]) {
             if (this.declaredVariables.has(varName))
                 throw new Error(`Variable '${varName}' is not an array.`);
             else throw new Error(`Array '${varName}' is not initialized.`);
         }
 
-        // Perform the actual setting of the value in the array
+        // Ensure the target variable is an array
         if (!Array.isArray(this.variables[varName])) {
             throw new Error(`Variable '${varName}' is not an array.`);
         }
 
+        // Ensure the index is within the array bounds
         if (index < 0 || index >= this.variables[varName].length) {
             throw new Error(
                 `Index ${index} is out of bounds for array '${varName}'.`
             );
         }
 
+        // Ensure the value type matches the array's type
         if (typeof setValue != this.initializedArrays[varName])
             throw new Error(
                 `Type mismatch at line ${
@@ -1157,6 +1349,7 @@ class JsonConverter extends Converter {
         // Set the value at the specified index
         this.variables[varName][index] = setValue;
 
+        // Return the JSON frame for setting the array value
         return {
             line: node.line,
             operation: "set_array",
