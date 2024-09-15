@@ -143,7 +143,6 @@ function ArrayBlockComponent({
       </motion.div>
     );
   } else if (swapped[0] === keyProp || swapped[1] === keyProp) {
-    console.log("SWAP SUCCESS at values" + passedValue);
     return (
       <motion.div
         className="square"

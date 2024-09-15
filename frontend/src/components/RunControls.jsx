@@ -58,7 +58,6 @@ function RunControls({
       setHighlightState(false)
       setOutput((prev) => [...prev, `colourYellow__RUN COMPLETE.`]);
     }
-    console.log("kill "+killState)
   },[indexState])
   
   const handlePauseResume = () => {
@@ -68,19 +67,15 @@ function RunControls({
   const handleRunStop = async () => {
     if (isRunning) { // Stopping in the middle of an animation
       stopCode();
-      console.log("RAW STOP")
     } else if (isFinished) { //restarting after a run has completed.
-      console.log("FINISHED STOP AND START")
       stopCode();
       setIsFinished(false);
       setIsRunning(true)
       const timeout = setTimeout(() => {
         runCode();
-        console.log("runCode called")
       }, 2000);
       return () => timeout;
     } else { // The first start for the application.
-      console.log("FROM THE BENINGING")
       runCode();
     }
     setIsRunning(!isRunning);

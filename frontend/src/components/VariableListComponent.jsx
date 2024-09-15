@@ -54,7 +54,6 @@ function VariableListComponent({
               setArraysState((arrState) => {
                 let newArrs = [...arrState];
                 newArrs.splice(arrayIndexCheck, 1);
-                console.log(newArrs); // Logging the updated array after deletion
                 return newArrs;
               });
             }
@@ -106,7 +105,6 @@ function VariableListComponent({
                     setArraysState((arrState) => {
                       let newArrs = [...arrState];
                       newArrs.splice(arrayIndexCheck, 1);
-                      console.log(newArrs); // Logging the updated array after deletion
                       return newArrs;
                     });
                   }

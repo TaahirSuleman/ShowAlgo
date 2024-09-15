@@ -130,7 +130,6 @@ function ArrayComponent(
                 }
                 // SetGotState -> triggers animation in ArrayBlock
                 setGotState(values[innerMovement.index]);
-                console.log(values[innerMovement.index] + " This is the got state ")
                 const timeoutId4 = setTimeout(()=> {
                   // setGotState -> returns block to "normal" status. Not undergoing changes.
                   setGotState("")
@@ -146,7 +145,6 @@ function ArrayComponent(
               return;
             }
             setValueInArray(movements[indexState].setValue, movements[indexState].index)
-            console.log(values[movements[indexState].index] + " This is the changed state ")
             const timeoutId5 = setTimeout(()=> {
               // setChangedState -> returns block to "normal" status. Not undergoing changes.
               setChangedState("")
@@ -190,9 +188,7 @@ function ArrayComponent(
         setArraysState(tempArrState)
       }
     }
-    console.log(values)
     await delay(speedState*1000*0.66); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
-    console.log("These are the locations: "+locations);
     setChangedState("") // setChangedState -> returns block to "normal" status. Not undergoing changes.
   }
 
@@ -223,9 +219,7 @@ function ArrayComponent(
         setArraysState(tempArrState)
       }
     }
-    console.log(values)
     await delay(speedState*1000*0.75); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
-    console.log("These are the locations: "+locations);
     setAddedState("") // setAddedState -> returns block to "normal" status. Not undergoing changes.
   }
 
@@ -240,7 +234,6 @@ function ArrayComponent(
         setLocations(newLoc);
       }
     }
-    console.log("removed element at "+position)
     setRemovedState(position)
     await delay(speedState*1000*0.75); // Change argument here to determine how long to wait for highlighting to happen. This should be half the total animation time.
     setLocations(newLocations);

@@ -111,7 +111,6 @@ const CodeEditorView = ({
       editor
     ) {
       let lineNo = movementsState[indexState].line;
-      console.log("The lineNo " + lineNo);
       if (lineNo !== null) { // lineNo can be null in instances where a movement object does not warrant a line highlight (end if, for example)
         // Set the decoration of the target line AKA highlight the relevent line
         setDecorations((oldDecorations) =>

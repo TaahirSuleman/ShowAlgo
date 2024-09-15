@@ -64,7 +64,6 @@ function MainVisualisationWindow({
                                 let newVars = [...varState];
                                 // Remove the element at the found index
                                 newVars.splice(varCheck, 1);
-                                console.log(newVars); // Logging the updated array after deletion
                                 return newVars;
                             });
                         }
