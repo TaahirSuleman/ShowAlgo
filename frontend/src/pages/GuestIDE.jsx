@@ -155,7 +155,6 @@ function GuestIDE() {
     setPauseState(true);
     let time = speedState*1000 + 1000
     if (killState == indexState){ time = 1000;} 
-    console.log("time: "+time)
     const timeoutSetKey = setTimeout(() => {
       setIndexState(-1);
       setHighlightState(false);
