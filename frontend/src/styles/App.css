@@ -1,3 +1,9 @@
+/**
+ * Author(s): Gregory Maselle
+ * Date: September 2024
+ * Description: This is a styling file for visualisation components present within the visualisation view.
+ */
+
 .list-items {
   list-style: none;
   padding: 0;
@@ -30,6 +36,7 @@
 .App {
   text-align: center;
 }
+
 .square {
   /*flex: 1;  /*Allow the blocks to grow and shrink evenly */
   background-color: #1A365D;
@@ -45,7 +52,6 @@
   border-radius: 2px;
   flex-shrink: 0; /* Prevent the squares from shrinking */
 }
-
 
 .array-container {
   display: flex;
@@ -69,27 +75,6 @@
   margin-right: 20px; /* Add space between the two components */
 }
 
-.focused-variable {
-  padding: 2px;
-  background-color: rgb(0, 0, 0); /* Optional: for visibility */
-  border-radius: 10px;
-  border: 1px solid blue;
-  margin-left: 10px;
-  align-self: flex-start; /* Align the focused variable to the top */
-  width: 300px;
-  height: fit-content;
-}
-
-.in-focus-text {
-  font-size: 20px; /* Make text larger */
-  text-align: center;
-  justify-content: center;
-  color: white;
-  height: fit-content;
-  font-weight: bold; /* This makes the text bold */
-  font-family: 'Arial', sans-serif;
-}
-
 .notification-blurb {
   flex: 1;
   width: 215px;
@@ -110,41 +95,11 @@
   align-items: flex-start;
 }
 
-.for-loop-container {
-  display: flex;
-  flex-direction: column;
-  height: fit-content;
-  width: 300px;
-  border: 3px solid yellow;
-  align-items: center;
-  justify-content: center;
-}
-
-.MainVisualisationWindow{
+.main-visualisation-window{
   display: flex;
   flex-direction: row;
   align-items: flex-start; /* Align children at the top */
   width: 100%;
-}
-
-.IfVisualisationComponent{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px;
-  border: 1px solid #ccc; /* Matching border for both components */
-  border-radius: 10px; /* Matching border-radius */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
-  text-align: center;
-  height: 150px;
-}
-
-.ArrayComponent {
-  width: 100%; /* Take full width of the container */
-  border: 1px solid blue; /* Optional: for visual debugging */
-  padding: 10px;
-  box-sizing: border-box;
 }
 
 .if-array-container {
@@ -156,9 +111,6 @@
 
 .myLineHighlight {
   background-color: rgba(255, 255, 0, 0.167); /* Light yellow background */
-}
-.myLineLowlight {
-  background-color: rgba(0,0,0,0); /* No background */
 }
 
 .loop-notification {
@@ -173,16 +125,6 @@
   white-space: normal;
   box-sizing: border-box;
   background-color: #2D3748;
-}
-
-.IfVisualisationComponent {
-  flex: 2; /* Take twice the space of LoopNotificationComponent */
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  height: 150px;
 }
 
 .top-row {
@@ -206,10 +148,4 @@
   width: 100%;
   box-sizing: border-box;
   white-space: wrap;
-}
-
-.string-visualisation-text {
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
 }

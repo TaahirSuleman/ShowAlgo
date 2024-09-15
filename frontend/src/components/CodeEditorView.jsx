@@ -1,5 +1,5 @@
 /**
- * Author(s): Yusuf Kathrada
+ * Author(s): Yusuf Kathrada, Gregory Maselle
  * Date: September 2024
  * Description: This file contains a CodeEditorView component
  */
@@ -21,11 +21,12 @@ const CodeEditorView = ({
   pauseState,
   indexState,
 }) => {
+  // state variables
   const [isLoading, setIsLoading] = useState(true);
   const [editor, setEditor] = useState(null);
   const [decorations, setDecorations] = useState([]);
+
   const monaco = useMonaco();
-  const timerRefs = useRef([]); // Ref to store timeout IDs
 
   // Check if Monaco has been initialized to ensure the language is only registered once
   useEffect(() => {
@@ -99,16 +100,19 @@ const CodeEditorView = ({
     }
   }, [monaco]);
 
+  // This works similar to visualisation components. Line highlighting proceeds to the relevant line as the objects are processed.
+  // This gives an implicit way of synchronising line highlighting with the visualisation view.
   useEffect(() => {
+    const performOperations = () => {
     if (
       indexState < movementsState.length &&
       indexState > -1 &&
       !pauseState &&
       editor
     ) {
-      console.log("The highlight state: " + highlightState);
       let lineNo = movementsState[indexState].line;
-      if (lineNo !== null) {
+      if (lineNo !== null) { // lineNo can be null in instances where a movement object does not warrant a line highlight (end if, for example)
+        // Set the decoration of the target line AKA highlight the relevent line
         setDecorations((oldDecorations) =>
           editor.deltaDecorations(oldDecorations, [
             {
@@ -122,10 +126,13 @@ const CodeEditorView = ({
         );
         editor.revealLine(lineNo);
       }
+      // clear the highlights from the code editor
     } else if (!highlightState && editor) {
       clearHighlights(editor);
     }
-  }, [indexState, highlightState]);
+    };
+    performOperations();
+  }, [indexState, highlightState, pauseState]);
 
   // Set a timer to simulate loading
   useEffect(() => {
@@ -139,12 +146,6 @@ const CodeEditorView = ({
   // Set the editor instance
   const handleEditorDidMount = (editorInstance) => {
     setEditor(editorInstance);
-  };
-
-  // Clear all active timers
-  const clearTimers = () => {
-    timerRefs.current.forEach((id) => clearTimeout(id));
-    timerRefs.current = [];
   };
 
   const clearHighlights = (editor) => {

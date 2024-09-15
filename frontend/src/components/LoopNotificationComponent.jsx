@@ -1,3 +1,10 @@
+/**
+ * Author(s): Gregory Maselle
+ * Date: September 2024
+ * Description: This file describes a LoopNotificationComponent Component for visualisation. This component notifies the user that a loop has started,
+ * supplying the user with the type of loop, and what to focus on to understand the loops functioning. 
+ */
+
 import {React, useEffect, useState, useRef} from 'react';
 import { motion } from 'framer-motion';
 import '../styles/App.css';
@@ -9,27 +16,27 @@ speedState,
 indexState,
 setIndexState,
 pauseState,
-setOutput,
-bufferState,
-setPauseState,
-arraysState,
 followVisState
 }
 ) {
+  // state variables
   const [loopNotificationState, setLoopNotificationState] = useState();
   const [isAnimated, setIsAnimated] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  // reference used for auto scrolling
   const loopNotifRef = useRef();
 
   useEffect(() => {
     const performOperations = () => {
       if (indexState > -1 && indexState < movements.length && !pauseState) {
         console.log(movements[indexState].operation);
+        // catering for 3 currently available loop types: for loops, while loops, and for each loops.
         if (
           movements[indexState].operation == "loop_from_to" ||
           movements[indexState].operation == "while" ||
           movements[indexState].operation == "for_each"
         ) {
+          // navigate to the visualisation within visualisation view.
           if (followVisState){
           loopNotifRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
           }
@@ -45,25 +52,22 @@ followVisState
                 : "For Loop",
           };
           setLoopNotificationState(loopObj);
-          setOutput((prev) => {
-            return [...prev, movements[indexState].description];
-          });
+          // move on to next movement Object after speedState seconds.
           const timeoutId3 = setTimeout(() => {
+            console.log("HERE HERE HERE LOOK HERE")
             setIndexState((prev) => prev + 1);
             setIsAnimated(false);
           }, speedState * 1000);
-          return timeoutId3;
+          return () => clearTimeout(timeoutId3);
+          // When a loop ends, clear the loop notification.
         } else if (movements[indexState].operation == "loop_end") {
           setIsActive(false);
           setLoopNotificationState({});
-          setOutput((prev) => {
-            return [...prev, movements[indexState].description];
-          });
           const timeoutId3 = setTimeout(() => {
             setIndexState((prev) => prev + 1);
             setIsAnimated(false);
           }, speedState * 1000);
-          return timeoutId3;
+          return () => clearTimeout(timeoutId3);
         }
       }
     };

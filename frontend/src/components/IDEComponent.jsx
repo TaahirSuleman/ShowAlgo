@@ -387,14 +387,11 @@ function IDEComponent({
           <MainVisualisationWindow
             key={keyValue}
             movementsState={movementsState}
-            output={output}
             setOutput={setOutput}
             speedState={speedState}
             indexState={indexState}
             setIndexState={setIndexState}
             pauseState={pauseState}
-            setPauseState={setPauseState}
-            bufferState={bufferState}
             followOutputState={followOutputState}
             followVisState={followVisState}
           />

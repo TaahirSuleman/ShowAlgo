@@ -1,5 +1,5 @@
 /**
- * Author(s): Yusuf Kathrada
+ * Author(s): Yusuf Kathrada, Gregory Maselle
  * Date: September 2024
  * Description: This file contains the IDE page which contains the run controls, code editor, output view and visualisation view
  */
@@ -129,7 +129,6 @@ function IDE() {
       let actionFrames = response.data.result.actionFrames;
       setIsError(false); // Reset error state
       setKillState(actionFrames.length);
-      //setOutput(response.data.result); // Assuming the response has the execution result
       setMovementsState(actionFrames);
       setOutput((prev) => [...prev, `colourYellow__RUN STARTING.`]);
       setIndexState(0);
@@ -142,7 +141,6 @@ function IDE() {
       let errorTimeout = setTimeout(()=>{
         setIsError(false)
       }, 2000)
-      //setIsError(true); // Handle error state
       findError(error.response.data);
       setIsRunLoading(false);
       return () => {clearTimeout(errorTimeout)}
