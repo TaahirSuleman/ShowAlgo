@@ -1,3 +1,11 @@
+/**
+ * Author(s): Gregory Maselle
+ * Date: September 2024
+ * Description: This file describes the MainVisualisationWindow Component. This is the parent component of all components present within the visualisation view.
+ * It is also responsible for handling pseudocode operations that do not necessarily fall under the responsibilities of a specific component.
+ * One such example is the handling of print statements.
+ */
+
 import VariableListComponent from "./VariableListComponent";
 import IfVisualisationComponent from "./IfVisualisationComponent";
 import LoopNotificationComponent from "./LoopNotificationComponent";
@@ -8,23 +16,18 @@ import "../styles/App.css";
 import { Box } from "@chakra-ui/react";
 import { AnimatePresence, motion } from "framer-motion";
 function MainVisualisationWindow({
-    output,
     setOutput,
     movementsState,
     speedState,
     indexState,
     setIndexState,
     pauseState,
-    bufferState,
-    setPauseState,
     followVisState,
 }) {
-    useEffect(() => {
-        console.log(indexState);
-        console.log("ACTUAL SPEED STATE: " + speedState);
-    }, [indexState, speedState]);
+    // State variables
     const [arraysState, setArraysState] = useState([]); // {name, values, locations, type}
     const [variablesState, setVariablesState] = useState([]);
+
     const genericOperations = [
         "else",
         "print",
@@ -32,32 +35,40 @@ function MainVisualisationWindow({
         "function_call",
         "return",
     ];
-
+    // This method is called for each re-render caused by changes in states IndexState and PauseState. 
+    // Changes in these states represent the processing of the next movement object and pausing/resuming, respectively.
     useEffect(() => {
+        // Perform operations function is a necessity to ensure atomicity of visualisations.
         const performOperations = () => {
+            // If the movement Objects array is still being processed.
             if (
                 indexState > -1 &&
                 indexState < movementsState.length &&
                 !pauseState
             ) {
+                
                 const movement = movementsState[indexState];
+                setOutput((prev) => {
+                    return [...prev, movement.description];
+                  });
+                // Array creation is handled here due to management of states. Should be abstracted to a different class in the future.
                 if (movement.operation === "create") {
                     // Future switch case here for different data structure types. For now just one if.
                     if (movement.dataStructure === "array") {
                         let varCheck = variablesState.findIndex(
                             (obj) => obj.name === movement.varName
                         );
-                        console.log(varCheck + " THE VAR CHECK");
+                        // if a variable exists with the newly created arrays name, remove it from the list of variables. It has been reassigned.
                         if (varCheck != -1) {
                             setVariablesState((varState) => {
                                 let newVars = [...varState];
                                 // Remove the element at the found index
                                 newVars.splice(varCheck, 1);
-                                console.log(newVars); // Logging the updated array after deletion
                                 return newVars;
                             });
                         }
                         let valuesArr;
+                        // Manages different data types for data structures (number, boolean, string)
                         switch (movement.type) {
                             case "string":
                                 valuesArr = movement.value.map(
@@ -79,6 +90,8 @@ function MainVisualisationWindow({
                                         }++${value.toString()}-${i}`
                                 );
                         }
+                        // locationsArr implemented for future cases where customisation of swapping animations may need to be more intricate and implemented
+                        // in a fully custom manner (without using layout property)
                         const locationsArr = movement.value.map((_, i) => i);
                         setArraysState((prevArr) => {
                             const updatedArray = {
@@ -106,21 +119,19 @@ function MainVisualisationWindow({
                             }
                         });
                     }
-                    setOutput((prev) => [...prev, movement.description]);
                     const timeoutId = setTimeout(() => {
                         setIndexState((i) => i + 1);
                     }, speedState * 1000);
 
                     return () => clearTimeout(timeoutId);
                 }
-
+                // generic operations with no explicit class bearing that functions responsibility are handled here. Examples are returns, prints, etc.
                 if (genericOperations.includes(movement.operation)) {
                     if (movement.operation === "print") {
                         setOutput((prev) => [
                             ...prev,
                             `colourRed__(OUTPUT) ${movement.literal}`,
                         ]);
-                        setOutput((prev) => [...prev, movement.description]);
 
                         const timeoutId1 = setTimeout(() => {
                             setIndexState((prev) => prev + 1);
@@ -128,25 +139,20 @@ function MainVisualisationWindow({
 
                         return () => clearTimeout(timeoutId1);
                     } else {
-                        setOutput((prev) => [...prev, movement.description]);
-
                         const timeoutId2 = setTimeout(() => {
                             setIndexState((prev) => prev + 1);
                         }, speedState * 1000);
-
                         return () => clearTimeout(timeoutId2);
                     }
                 }
             }
         };
-
-        // Execute the operations function
         performOperations();
     }, [indexState, pauseState]);
 
     return (
         <Box
-            className="MainVisualisationWindow"
+            className="main-visualisation-window"
             width="100%"
             overflow="auto"
             height="100%"
@@ -157,11 +163,9 @@ function MainVisualisationWindow({
                 indexState={indexState}
                 setIndexState={setIndexState}
                 pauseState={pauseState}
-                setPauseState={setPauseState}
                 arraysState={arraysState}
                 setArraysState={setArraysState}
                 setOutput={setOutput}
-                bufferState={bufferState}
                 variablesState={variablesState}
                 setVariablesState={setVariablesState}
                 followVisState={followVisState}
@@ -174,9 +178,7 @@ function MainVisualisationWindow({
                         indexState={indexState}
                         setIndexState={setIndexState}
                         pauseState={pauseState}
-                        setPauseState={setPauseState}
                         setOutput={setOutput}
-                        bufferState={bufferState}
                         followVisState={followVisState}
                     />
                     <LoopNotificationComponent
@@ -185,10 +187,7 @@ function MainVisualisationWindow({
                         indexState={indexState}
                         setIndexState={setIndexState}
                         pauseState={pauseState}
-                        setPauseState={setPauseState}
-                        arraysState={arraysState}
                         setOutput={setOutput}
-                        bufferState={bufferState}
                         followVisState={followVisState}
                     />
                 </div>
@@ -198,11 +197,9 @@ function MainVisualisationWindow({
                     indexState={indexState}
                     setIndexState={setIndexState}
                     pauseState={pauseState}
-                    setPauseState={setPauseState}
                     arraysState={arraysState}
                     setOutput={setOutput}
                     variablesState={variablesState}
-                    setVariablesState={setVariablesState}
                     followVisState={followVisState}
                 />
                 <AnimatePresence>
@@ -218,9 +215,7 @@ function MainVisualisationWindow({
                             indexState={indexState}
                             setIndexState={setIndexState}
                             pauseState={pauseState}
-                            setPauseState={setPauseState}
                             setOutput={setOutput}
-                            bufferState={bufferState}
                             followVisState={followVisState}
                         />
                     ))}

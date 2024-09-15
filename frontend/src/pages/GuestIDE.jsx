@@ -1,5 +1,5 @@
 /**
- * Author(s): Yusuf Kathrada
+ * Author(s): Yusuf Kathrada, Gregory Maselle
  * Date: September 2024
  * Description: This file contains the GuestIDE page which is the main page for the guest user to interact with the IDE
  */

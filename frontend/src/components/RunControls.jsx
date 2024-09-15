@@ -1,5 +1,5 @@
 /**
- * Author(s): Yusuf Kathrada
+ * Author(s): Yusuf Kathrada, Gregory Maselle
  * Date: September 2024
  * Description: This file contains the RunControls component that provides controls for running, pausing and submitting code
  */
@@ -45,10 +45,12 @@ function RunControls({
   isRunning,
   setIsRunning
 }) {
+  // state variables
   const [speed, setSpeed] = useState(1);
   const speedOptions = [0.25, 0.5, 0.75, 1, 1.5, 2];
   const [isFinished, setIsFinished] = useState(false)
 
+  // If the visualisation of all pseudocode has completed, unhighlight Code Editor, append to output view.
   useEffect(()=>{
     if (killState === indexState){
       setIsRunning(false)
@@ -56,30 +58,24 @@ function RunControls({
       setHighlightState(false)
       setOutput((prev) => [...prev, `colourYellow__RUN COMPLETE.`]);
     }
-    console.log("kill "+killState)
   },[indexState])
-
+  
   const handlePauseResume = () => {
     setPauseState(!pauseState);
   };
-
-
+  // Method used to handle stopping of a run.
   const handleRunStop = async () => {
     if (isRunning) { // Stopping in the middle of an animation
       stopCode();
-      console.log("RAW STOP")
     } else if (isFinished) { //restarting after a run has completed.
-      console.log("FINISHED STOP AND START")
       stopCode();
       setIsFinished(false);
       setIsRunning(true)
       const timeout = setTimeout(() => {
         runCode();
-        console.log("runCode called")
       }, 2000);
       return () => timeout;
     } else { // The first start for the application.
-      console.log("FROM THE BENINGING")
       runCode();
     }
     setIsRunning(!isRunning);

@@ -1,5 +1,5 @@
 /**
- * Author(s): Yusuf Kathrada
+ * Author(s): Yusuf Kathrada, Gregory Maselle
  * Date: September 2024
  * Description: This file contains the OutputView component
  */
@@ -17,7 +17,7 @@ const OutputView = ({
   followOutputState
 }) => {
   const boxRef = useRef(null); 
-
+  // Manages the `auto-scrolling` feature of output view.
   useEffect(() => {
     if (boxRef.current && followOutputState) {
       boxRef.current.scrollTop = boxRef.current.scrollHeight;

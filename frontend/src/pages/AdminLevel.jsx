@@ -1,5 +1,5 @@
 /**
- * Author(s): Yusuf Kathrada
+ * Author(s): Yusuf Kathrada (Contributed to by Gregory Maselle)
  * Date: September 2024
  * Description: This file contains the AdminLevel page which allows an admin to view and interact with the created level, as a user would
  */
