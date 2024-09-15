@@ -101,18 +101,6 @@ describe("PseudocodeProcessor", () => {
 
         expect(result).to.deep.equal(expectedJson);
     });
-    it("should throw an error when using a boolean variable in a number expression", () => {
-        const pseudocode = `DEFINE getGreeting WITH PARAMETERS (name)
-        RETURN "Hello, " + name
-        END FUNCTION
-        
-        SET result TO CALL getGreeting WITH (5)
-        SET total TO result`;
-        let result = PseudocodeProcessor.process(pseudocode);
-        // expect(() => PseudocodeProcessor.process(pseudocode)).to.throw(
-        //     " Please ensure that only booleans and conditional expressions are used in conditions."
-        // );
-    });
 
     it("should correctly ignore lines with comments", () => {
         const pseudocode = `// This is a comment
@@ -1596,7 +1584,6 @@ describe("PseudocodeProcessor", () => {
         END FUNCTION
         SET result TO CALL logMessage WITH ("Test message")`;
 
-        // We expect an error to be thrown
         expect(() => {
             PseudocodeProcessor.process(pseudocode);
         }).to.throw(
@@ -1776,8 +1763,8 @@ describe("PseudocodeProcessor", () => {
                     line: 2,
                     operation: "swap",
                     dataStructure: "array",
-                    firstPosition: 3, // LENGTH OF myArray - 1 = 3
-                    secondPosition: 0, // position 0
+                    firstPosition: 3,
+                    secondPosition: 0,
                     varName: "myArray",
                     description:
                         "Swapped values in position 3 and 0 in array myArray.",
@@ -1788,7 +1775,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "myArray",
-                    literal: [40, 20, 30, 10], // The swapped array
+                    literal: [40, 20, 30, 10],
                     timestamp: undefined,
                     description: "Printed myArray.",
                 },
@@ -1996,7 +1983,6 @@ describe("PseudocodeProcessor", () => {
 
         expect(result).to.deep.equal(expectedJson);
     });
-    // Test case 1: Basic swap operation
     it("should correctly handle swapping two elements in an array", () => {
         const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         SWAP position 1 WITH position 2 IN myArray
@@ -2038,7 +2024,6 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
 
-    // Test case 2: Swap elements and use the array after swap
     it("should correctly handle using an array after swapping elements", () => {
         const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30, 40, 50]
         SWAP position 0 WITH position 4 IN myArray
@@ -2090,7 +2075,6 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
 
-    // Test case 3: Swap with out-of-bounds positions
     it("should throw an error when trying to swap with out-of-bounds positions", () => {
         const pseudocode = `CREATE number array AS myArray WITH VALUES [10, 20, 30]
         SWAP position 0 WITH position 3 IN myArray
@@ -2122,8 +2106,8 @@ describe("PseudocodeProcessor", () => {
                     line: 2,
                     operation: "swap",
                     dataStructure: "array",
-                    firstPosition: 1, // Directly from pseudocode, no need to adjust for zero-based
-                    secondPosition: 2, // Directly from pseudocode, no need to adjust for zero-based
+                    firstPosition: 1,
+                    secondPosition: 2,
                     varName: "myArray",
                     timestamp: undefined,
                     description:
@@ -2134,7 +2118,6 @@ describe("PseudocodeProcessor", () => {
 
         const result = PseudocodeProcessor.process(pseudocode);
 
-        // Sync timestamps for comparison purposes
         result.actionFrames.forEach((frame, index) => {
             frame.timestamp = expectedJson.actionFrames[index].timestamp;
         });
@@ -2623,7 +2606,6 @@ describe("PseudocodeProcessor", () => {
             SET isTrue TO boolArray[0]
         `;
 
-        // Expected JSON output
         const expectedJson = {
             actionFrames: [
                 {
@@ -3178,7 +3160,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "set",
                     varName: "len",
                     type: "number",
-                    value: 2, // The length of "abc" is 3
+                    value: 2,
                     timestamp: undefined,
                     description: "Set variable len to 2.",
                 },
@@ -3220,7 +3202,7 @@ describe("PseudocodeProcessor", () => {
                         type: "array",
                         varName: "myArray",
                         index: 0,
-                        result: 10, // Assuming "H" is the result of myString[0]
+                        result: 10,
                     },
                     type: "number",
                     timestamp: undefined,
@@ -3265,7 +3247,7 @@ describe("PseudocodeProcessor", () => {
                         type: "array",
                         varName: "myArray",
                         index: 0,
-                        result: 10, // Assuming "H" is the result of myString[0]
+                        result: 10,
                     },
                     type: "number",
                     timestamp: undefined,
@@ -3304,7 +3286,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "set",
                     varName: "len",
                     type: "number",
-                    value: 3, // The length of "abc" is 3
+                    value: 3,
                     timestamp: undefined,
                     description: "Set variable len to 3.",
                 },
@@ -3342,7 +3324,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "set",
                     varName: "len",
                     type: "number",
-                    value: 10, // The length of "abc" is 3
+                    value: 10,
                     timestamp: undefined,
                     description: "Set variable len to 10.",
                 },
@@ -3938,7 +3920,7 @@ describe("PseudocodeProcessor", () => {
         const result = PseudocodeProcessor.process(pseudocode);
 
         expectedJson.actionFrames.forEach((frame, index) => {
-            frame.timestamp = result.actionFrames[index].timestamp; // Assigning timestamps from results to expected to match dynamically generated timestamps.
+            frame.timestamp = result.actionFrames[index].timestamp;
         });
 
         expect(result).to.deep.equal(expectedJson);
@@ -4035,7 +4017,7 @@ describe("PseudocodeProcessor", () => {
                         type: "string",
                         varName: "myString",
                         index: 0,
-                        result: "H", // Assuming "H" is the result of myString[0]
+                        result: "H",
                     },
                     timestamp: undefined,
                     description: "Set variable firstCharacter to myString[0].",
@@ -4088,7 +4070,7 @@ describe("PseudocodeProcessor", () => {
                         type: "string",
                         varName: "myString",
                         index: 0,
-                        result: "H", // Assuming "H" is the result of myString[index]
+                        result: "H",
                     },
                     timestamp: undefined,
                     description:
@@ -4132,7 +4114,7 @@ describe("PseudocodeProcessor", () => {
                         type: "string",
                         varName: "myString",
                         index: 12,
-                        result: "!", // Assuming "d" is the result of myString[length(myString) - 1]
+                        result: "!",
                     },
                     timestamp: undefined,
                     description: "Set variable lastCharacter to myString[12].",
@@ -4175,7 +4157,7 @@ describe("PseudocodeProcessor", () => {
                         type: "string",
                         varName: "emptyString",
                         index: 0,
-                        result: "", // Assuming "" is the result of emptyString[0]
+                        result: "",
                     },
                     timestamp: undefined,
                     description: "Set variable emptyIndex to emptyString[0].",
@@ -4218,7 +4200,7 @@ describe("PseudocodeProcessor", () => {
                         type: "string",
                         varName: "myString",
                         index: 0,
-                        result: "H", // Assuming "H" is the result of myString[0]
+                        result: "H",
                     },
                     timestamp: undefined,
                     description: "Set variable firstCharacter to myString[0].",
@@ -4319,7 +4301,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "set",
                     varName: "halfLength",
                     type: "number",
-                    value: 6.5, // The expected half length of the string
+                    value: 6.5,
                     timestamp: undefined,
                     description: "Set variable halfLength to 13 / 2.",
                 },
@@ -4356,7 +4338,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "set",
                     varName: "lengthOfString",
                     type: "number",
-                    value: 13, // The length of "Hello, World!" is 13
+                    value: 13,
                     timestamp: undefined,
                     description: "Set variable lengthOfString to 13.",
                 },
@@ -4394,7 +4376,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "set",
                     varName: "lengthOfString",
                     type: "number",
-                    value: 3, // The length of "abc" is 3
+                    value: 3,
                     timestamp: undefined,
                     description: "Set variable lengthOfString to 3.",
                 },
@@ -4949,7 +4931,6 @@ describe("PseudocodeProcessor", () => {
 
         const result = PseudocodeProcessor.process(pseudocode);
 
-        // Setting timestamps in the expected output to match the result for a fair comparison
         expectedJson.actionFrames.forEach((frame, index) => {
             frame.timestamp = result.actionFrames[index].timestamp;
         });
@@ -5777,7 +5758,7 @@ describe("PseudocodeProcessor", () => {
                     line: 3,
                     operation: "if",
                     condition: "isTrue || isFalse && !isTrue",
-                    result: true, // Assuming the condition evaluates to true
+                    result: true,
                     timestamp: undefined,
                     description: "Checked if isTrue || isFalse && !isTrue.",
                 },
@@ -5801,7 +5782,6 @@ describe("PseudocodeProcessor", () => {
 
         const result = PseudocodeProcessor.process(pseudocode);
 
-        // Update timestamps in expectedJson to match those in the result
         expectedJson.actionFrames.forEach((frame, index) => {
             frame.timestamp = result.actionFrames[index].timestamp;
         });
@@ -7440,7 +7420,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 5, // Reflecting the value of x at this point
+                    literal: 5,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -7466,7 +7446,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 4, // Reflecting the value of x at this point
+                    literal: 4,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -7492,7 +7472,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 3, // Reflecting the value of x at this point
+                    literal: 3,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -7518,7 +7498,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 2, // Reflecting the value of x at this point
+                    literal: 2,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -7544,7 +7524,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 1, // Reflecting the value of x at this point
+                    literal: 1,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -8283,7 +8263,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "set",
                     varName: "y",
                     type: "number",
-                    value: 8, // Expected result of x + 3
+                    value: 8,
                     timestamp: undefined,
                     description: "Set variable y to x + 3.",
                 },
@@ -8478,7 +8458,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 5, // Reflecting the value of x at this point
+                    literal: 5,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -8504,7 +8484,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 4, // Reflecting the value of x at this point
+                    literal: 4,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -8530,7 +8510,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 3, // Reflecting the value of x at this point
+                    literal: 3,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -8556,7 +8536,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 2, // Reflecting the value of x at this point
+                    literal: 2,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
@@ -8582,7 +8562,7 @@ describe("PseudocodeProcessor", () => {
                     operation: "print",
                     isLiteral: false,
                     varName: "x",
-                    literal: 1, // Reflecting the value of x at this point
+                    literal: 1,
                     timestamp: undefined,
                     description: "Printed x.",
                 },
