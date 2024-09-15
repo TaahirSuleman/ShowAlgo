@@ -29,7 +29,6 @@ followVisState
   useEffect(() => {
     const performOperations = () => {
       if (indexState > -1 && indexState < movements.length && !pauseState) {
-        console.log(movements[indexState].operation);
         // catering for 3 currently available loop types: for loops, while loops, and for each loops.
         if (
           movements[indexState].operation == "loop_from_to" ||
@@ -54,7 +53,6 @@ followVisState
           setLoopNotificationState(loopObj);
           // move on to next movement Object after speedState seconds.
           const timeoutId3 = setTimeout(() => {
-            console.log("HERE HERE HERE LOOK HERE")
             setIndexState((prev) => prev + 1);
             setIsAnimated(false);
           }, speedState * 1000);
