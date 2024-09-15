@@ -8,7 +8,6 @@ class JsonConverter extends Converter {
         this.variables = {};
         this.declaredVariables = new Set();
         this.initializedArrays = {};
-        // this.currentLine = 1;
         this.nestedEndIf = 0;
         this.ifDepth = 0; // Track the depth of nested IF statements
         this.nodeConverterFactory = new JsonNodeConverterFactory(this);
@@ -39,14 +38,6 @@ class JsonConverter extends Converter {
      * @returns {Object|Array} The transformed node, or an array of transformed nodes.
      */
     transformNode(node) {
-        // const nodeWithLine = {
-        //     ...node,
-        //     line:
-        //         node.type === "OtherwiseIfStatement"
-        //             ? node.line
-        //             : this.currentLine++,
-        // };
-
         // Use the factory to get the appropriate converter for the node type
         const converter = this.nodeConverterFactory.getConverter(node.type);
         return converter(node);
@@ -104,7 +95,6 @@ class JsonConverter extends Converter {
                 timestamp: new Date().toISOString(),
                 description: `Set variable ${node.name} to function return value ${value}.`,
             });
-            //this.currentLine = lineNum + 1;
             return frames; // Return all frames including the function call and variable assignment
         }
 
@@ -412,7 +402,6 @@ class JsonConverter extends Converter {
 
         // Store the current line number
         let prevLine = node.line;
-        //this.currentLine = functionIR.startLine + 1;
 
         // Map arguments to function parameters
         const previousVariables = { ...this.variables }; // Save the current variables state
@@ -459,10 +448,6 @@ class JsonConverter extends Converter {
                 frames.push(bodyFrame); // Push single frame directly
             }
         });
-
-        // Restore the previous variable state
-        //this.variables = previousVariables;
-        //this.currentLine = prevLine;
         node.line = prevLine;
 
         return returnValue !== null && varDecl
@@ -495,7 +480,6 @@ class JsonConverter extends Converter {
     }
 
     transformIfStatement(node) {
-        // this.ifDepth++; // Entering an IF statement, increment depth
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
@@ -516,76 +500,23 @@ class JsonConverter extends Converter {
                 description: `Checked if ${conditionString}.`,
             },
         ];
-        // let consequentLineCount = 0;
-        // let alternateLineCount = 0;
         if (conditionResult) {
             // Handle the true condition (consequent)
             frames = frames.concat(this.transformNodes(node.consequent));
-            // consequentLineCount = frames.length;
-            // Adjust currentLine to account for alternate block length + 1
-            //     if (node.alternate && node.alternate.length > 0) {
-            //         this.currentLine = Math.max(
-            //             this.currentLine,
-            //             this.currentLine + node.alternate.length + 1
-            //         );
-            //     } else {
-            //         this.currentLine = node.line + node.consequent.length + 1;
-            //     }
         } else {
-            //     // Handle the false condition (alternate)
-            //     if (node.alternate && node.alternate.length > 0) {
-            //         this.currentLine = Math.max(
-            //             this.currentLine,
-            //             this.currentLine + node.consequent.length + 1
-            //         );
-            //     } else {
-            //         this.currentLine = node.line + node.consequent.length + 1;
-            //     }
             frames = frames.concat(this.transformNodes(node.alternate || []));
         }
-        // // Add the "End If" movement object
-        // if (node.alternate && node.alternate.length > 0) {
-        //     this.currentLine = Math.max(
-        //         this.currentLine,
-        //         node.line + node.consequent.length + node.alternate.length + 2
-        //     );
-        // } else {
-        //     this.currentLine = Math.max(
-        //         this.currentLine,
-        //         node.line + node.consequent.length + 1
-        //     );
-        // }
-        // if (this.nestedEndIf > 0 && !node.alternate) {
-        //     this.currentLine = this.nestedEndIf + 1;
-        //     frames.push({
-        //         line: null,
-        //         operation: "endif",
-        //         timestamp: new Date().toISOString(),
-        //         description: "End of if statement.",
-        //     });
-        // } else {
-        //     frames.push({
-        //         line: null,
-        //         operation: "endif",
-        //         timestamp: new Date().toISOString(),
-        //         description: "End of if statement.",
-        //     });
-        // }
         frames.push({
             line: null,
             operation: "endif",
             timestamp: new Date().toISOString(),
             description: "End of if statement.",
         });
-        // this.ifDepth--; // Exiting an IF statement, decrement depth
-        // this.nestedEndIf = this.currentLine;
-        // this.currentLine++;
         return frames;
     }
 
     transformOtherwiseIfStatement(node) {
         // Entering an Otherwise If statement, increment depth
-        //this.ifDepth++;
         const conditionResult = this.expressionEvaluator.evaluateCondition(
             node.condition
         );
@@ -606,12 +537,8 @@ class JsonConverter extends Converter {
             frames = frames.concat(this.transformNodes(node.consequent));
         } else if (node.alternate) {
             if (node.alternate.type != "OtherwiseIfStatement")
-                //this.currentLine = node.otherwiseLine;
-                // Recursively handle nested Otherwise If or Otherwise
-                //this.currentLine = node.line;
                 frames = frames.concat(this.transformNodes(node.alternate));
         }
-        //this.currentLine = node.endLine;
 
         return frames;
     }
@@ -714,7 +641,6 @@ class JsonConverter extends Converter {
                 });
                 this.declaredVariables.add(iterator);
                 this.variables[iterator] = arrayValue;
-                //this.currentLine = bodyLineStart + 1;
                 // Transform the loop body (processing the body of the loop)
                 const bodyFrames = this.transformNodes(node.body).map(
                     (frame) => ({
@@ -727,16 +653,10 @@ class JsonConverter extends Converter {
 
                 // Increment the index
                 index += 1;
-                // bodyLineCount = Math.max(
-                //     bodyLineCount,
-                //     this.currentLine - bodyLineStart
-                // );
-                //this.currentLine = node.endLine;
             }
         } else {
             while (this.expressionEvaluator.evaluateCondition(node.condition)) {
                 let z = 0;
-                //this.currentLine = node.line + 1;
                 if (this.variables["x"] == 0) {
                     z += 1;
                 }
@@ -757,10 +677,6 @@ class JsonConverter extends Converter {
                 );
 
                 actionFrames.push(...bodyFrames);
-                // bodyLineCount = Math.max(
-                //     bodyLineCount,
-                //     this.currentLine - bodyLineStart
-                // );
                 // For loop_from_to, update the loop variable and add the set movement object
                 if (loopType === "loop_from_to") {
                     const updateFrame = this.updateLoopVariable(
@@ -780,7 +696,6 @@ class JsonConverter extends Converter {
             description: `Checked if ${conditionString}.`,
         });
 
-        //this.currentLine = bodyLineStart + bodyLineCount;
         actionFrames.push({
             line: null,
             operation: "loop_end",
@@ -837,26 +752,50 @@ class JsonConverter extends Converter {
 
         let conditionString = this.convertConditionToString(node.condition);
 
-        if (loopType === "loop_until") {
-            // Flip the condition for `loop_until`
-            conditionString = this.flipCondition(conditionString);
-            console.log(conditionString);
-
-            // Flip the operator in node.condition as well
-            node.condition.operator = this.flipOperator(operator);
-        }
-
         return this.transformGenericLoop(node, "while", conditionString);
     }
 
+    applyFlipOperatorRecursively(conditionNode) {
+        // Ensure the node is an object and has an operator
+        if (
+            !conditionNode ||
+            typeof conditionNode !== "object" ||
+            !conditionNode.operator
+        ) {
+            return;
+        }
+
+        // Flip the operator of the current node
+        conditionNode.operator = this.flipOperator(conditionNode.operator);
+
+        // Recursively handle the left side if it's an expression
+        if (
+            typeof conditionNode.left === "object" &&
+            conditionNode.left !== null &&
+            conditionNode.left.type === "Expression"
+        ) {
+            this.applyFlipOperatorRecursively(conditionNode.left);
+        }
+
+        // Recursively handle the right side if it's an expression
+        if (
+            typeof conditionNode.right === "object" &&
+            conditionNode.right !== null &&
+            conditionNode.right.type === "Expression"
+        ) {
+            this.applyFlipOperatorRecursively(conditionNode.right);
+        }
+    }
+
     flipOperator(operator) {
-        console.log(operator);
         const operatorsMap = {
             and: "&&",
             or: "||",
             greater: ">",
             less: "<",
             equal: "==",
+            "&&": "&&",
+            "||": "||",
             ">": ">",
             "<": "<",
             "==": "==",
@@ -910,18 +849,7 @@ class JsonConverter extends Converter {
         } else if (condition.includes("!=")) {
             return condition.replaceAll("!=", "==");
         } else if (condition.type === "Identifier") return condition.value;
-
-        // else if (
-        //     typeof this.expressionEvaluator.getVariableValue(condition) ===
-        //     "boolean"
-        // ) {
-        //     console.log("in flip condition " + condition);
-        //     console.log(this.variables);
-        //     return condition;
-        // }
-
         return condition;
-        //throw new Error("Unsupported condition operator for flipping");
     }
 
     transformLoopFromTo(node) {
@@ -996,7 +924,6 @@ class JsonConverter extends Converter {
             return `!${right}`;
         } else if (condition.operator === "not") {
             const right = this.convertConditionToString(condition.right);
-            console.log(`!${right}`);
             return `!${right}`;
         }
 
@@ -1132,11 +1059,6 @@ class JsonConverter extends Converter {
 
         // Determine the data structure type (currently supporting only arrays)
         const dsType = this.initializedArrays[node.varName];
-        // if (dsType !== "array") {
-        //     throw new Error(
-        //         `Operation 'remove' is not supported for ${dsType} data structure.`
-        //     );
-        // }
 
         // Evaluate the position to remove
         const position = this.expressionEvaluator.evaluateExpression(
@@ -1153,8 +1075,6 @@ class JsonConverter extends Converter {
             );
         }
         const removedValue = this.variables[node.varName].splice(position, 1);
-        console.log(this.variables[node.varName]);
-
         return {
             line: line,
             operation: "remove",
@@ -1178,7 +1098,6 @@ class JsonConverter extends Converter {
                     this.initializedArrays[node.varName]
                 }.`
             );
-        console.log(position);
         if (
             position < 0 ||
             position > this.variables[node.varName].length ||
@@ -1189,7 +1108,6 @@ class JsonConverter extends Converter {
             );
         }
         this.variables[node.varName].splice(position, 0, value);
-        console.log(this.variables[node.varName]);
         return {
             line: node.line,
             operation: "add",
