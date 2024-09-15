@@ -16,7 +16,7 @@ export const keywords = [
     "type",
   ],
   [
-    /\bcreate\b|\bCREATE\b|\bas\b|\bAS\b|\bwith\b|\bWITH\b|\badd\b|\bADD\b|\binsert\b|\bINSERT\b|\bdelete\b|\bDELETE\b|\bremove\b|\bREMOVE\b|\binto\b|\bINTO\b|\bfrom\b|\bFROM\b|\barray\b|\bARRAY\b|\breturn\b|\bRETURN\b|\bvalues\b|\bVALUES\b|\bat\b|\bAT\b|\bof\b|\bOF\b|\bposition\b|\bPOSITION\b/i,
+    /\bcreate\b|\bCREATE\b|\bas\b|\bAS\b|\bwith\b|\bWITH\b|\badd\b|\bADD\b|\binsert\b|\bINSERT\b|\bdelete\b|\bDELETE\b|\bremove\b|\bREMOVE\b|\binto\b|\bINTO\b|\bfrom\b|\bFROM\b|\barray\b|\bARRAY\b|\breturn\b|\bRETURN\b|\bvalues\b|\bVALUES\b|\bat\b|\bAT\b|\bof\b|\bOF\b|\bposition\b|\bPOSITION\b|\bswap\b|\bSWAP\b/i,
     "keyword.methods",
   ],
   [
@@ -32,7 +32,7 @@ export const keywords = [
     "keyword.boolean",
   ],
   [
-    /\bdefine\b|\bDEFINE\b|\bparameters\b|\bPARAMETERS\b|\bend\s*function\b|\bEND\s*FUNCTION\b|\bsubstring\b|\bSUBSTRING\b|\blength\b|\bLENGTH\b|\bcharacter\b|\bCHARACTER\b/i,
+    /\bdefine\b|\bDEFINE\b|\bparameters\b|\bPARAMETERS\b|\bend\s*function\b|\bEND\s*FUNCTION\b|\bsubstring\b|\bSUBSTRING\b|\blength\b|\bLENGTH\b|\bcharacter\b|\bCHARACTER\b|\belement\b|\bELEMENT\b/i,
     "keyword.function",
   ],
   [/\bsize\b|\bSIZE\b/i, "keyword"],
@@ -653,4 +653,28 @@ export const getSuggestions = (monaco) => [
     insertText: "END FOR",
     detail: "Control structure: END FOR",
   },
+  {
+    label: "swap",
+    kind: monaco.languages.CompletionItemKind.Keyword,
+    insertText: "swap",
+    detail: "Keyword: swap",
+  },
+  {
+    label: "SWAP",
+    kind: monaco.languages.CompletionItemKind.Keyword,
+    insertText: "SWAP",
+    detail: "Keyword: SWAP",
+  },
+  {
+    label: "element",
+    kind: monaco.languages.CompletionItemKind.Keyword,
+    insertText: "element",
+    detail: "Function: element",
+  },
+  {
+    label: "ELEMENT",
+    kind: monaco.languages.CompletionItemKind.Keyword,
+    insertText: "ELEMENT",
+    detail: "Function: ELEMENT",
+  }
 ];
