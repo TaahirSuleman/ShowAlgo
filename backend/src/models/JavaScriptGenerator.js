@@ -99,17 +99,44 @@ class JavaScriptGenerator extends Converter {
 
     /**
      * @method generateIfStatement
-     * @description Generates the JavaScript code for an if-else statement.
+     * @description Generates the JavaScript code for an if-else or if-else if-else statement.
      * @param {Object} node - The AST node representing the if statement.
      * @returns {string} The generated JavaScript if-else statement code.
      */
     generateIfStatement(node) {
         const condition = this.generateCondition(node.condition);
         const consequent = this.generateNodes(node.consequent);
-        const alternate = node.alternate
-            ? `else {\n${this.generateNodes(node.alternate)}\n}`
-            : "";
+        let alternate = "";
+
+        // Check if the alternate is an OtherwiseIfStatement
+        if (node.alternate && node.alternate.type === "OtherwiseIfStatement") {
+            alternate = this.generateOtherwiseIfStatement(node.alternate);
+        } else if (node.alternate) {
+            alternate = `else {\n${this.generateNodes(node.alternate)}\n}`;
+        }
+
         return `if (${condition}) {\n${consequent}\n} ${alternate}`;
+    }
+
+    /**
+     * @method generateOtherwiseIfStatement
+     * @description Generates the JavaScript code for an else if block.
+     * @param {Object} node - The AST node representing the OtherwiseIfStatement.
+     * @returns {string} The generated JavaScript else if block code.
+     */
+    generateOtherwiseIfStatement(node) {
+        const condition = this.generateCondition(node.condition);
+        const consequent = this.generateNodes(node.consequent);
+        let alternate = "";
+
+        // Handle nested else if or else block
+        if (node.alternate && node.alternate.type === "OtherwiseIfStatement") {
+            alternate = this.generateOtherwiseIfStatement(node.alternate);
+        } else if (node.alternate) {
+            alternate = `else {\n${this.generateNodes(node.alternate)}\n}`;
+        }
+
+        return `else if (${condition}) {\n${consequent}\n} ${alternate}`;
     }
 
     /**

@@ -5,6 +5,7 @@ class SubstringExpression {
      * @param {ASTNode} start - The AST node representing the start index of the substring.
      * @param {ASTNode} end - The AST node representing the end index of the substring.
      * @param {number} line - The line number where this expression appears.
+     * @author Taahir Suleman
      */
     constructor(string, start, end, line) {
         this.type = "SubstringExpression";

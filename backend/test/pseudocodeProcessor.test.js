@@ -5,9 +5,9 @@ import JsonConverter from "../src/models/JsonConverter.js";
 
 import fs from "fs";
 
-function writeTestNumber(testNumber) {
-    fs.appendFileSync("output.txt", `Test case ${testNumber}\n\n`);
-}
+
+const jsonConverter = new JsonConverter();
+const processor = new Processor(jsonConverter);
 
 describe("PseudocodeProcessor", () => {
     it("should process arithmetic with modulus operation", () => {
@@ -2636,10 +2636,8 @@ describe("PseudocodeProcessor", () => {
                 },
             ],
         };
-        const jsonConverter = new JsonConverter();
-        const processor = new Processor(jsonConverter);
 
-        const result = processor.process(pseudocode, "jsonOutput.txt");
+        const result = processor.process(pseudocode);
 
         expectedJson.actionFrames.forEach((frame, index) => {
             frame.timestamp = result.actionFrames[index].timestamp;
@@ -5626,7 +5624,6 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should process setting a variable to a boolean and using it in a conditional", () => {
-        writeTestNumber(2);
 
         const pseudocode = `SET isTrue TO boolean true
         IF isTrue THEN
@@ -5902,7 +5899,6 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process setting a variable to a string and print it", () => {
-        writeTestNumber(1);
 
         const pseudocode = `SET myVar TO "Hello, World!"
         PRINT myVar
@@ -7520,7 +7516,6 @@ describe("PseudocodeProcessor", () => {
         expect(result).to.deep.equal(expectedJson);
     });
     it("should process a 'FOR LOOP FROM TO' with traditional syntax correctly", () => {
-        writeTestNumber(16);
         const pseudocode = `LOOP i FROM 0 TO 10
                 PRINT i
             END LOOP`;
@@ -7854,7 +7849,6 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process complex pseudocode with if-else, array creation, and array insertion", () => {
-        writeTestNumber(1);
         const pseudocode = `SET x to 10
         IF x is greater than 5 THEN
             PRINT "x is greater than 5"
@@ -7944,7 +7938,6 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a simple variable declaration", () => {
-        writeTestNumber(1);
         const pseudocode = `SET x to number 10
         `;
 
@@ -7972,7 +7965,6 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process a simple if statement with print", () => {
-        writeTestNumber(2);
         const pseudocode = `SET x to number 10
         IF x is greater than 5 THEN
             PRINT "x is greater than 5"
@@ -8025,7 +8017,6 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process array creation", () => {
-        writeTestNumber(3);
         const pseudocode = `CREATE number array as numbers with values [0]
         `;
 
@@ -8054,7 +8045,6 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process array operations correctly", () => {
-        writeTestNumber(4);
         const pseudocode = `CREATE number array as numbers with values [0]
         INSERT 1 TO numbers AT position 1
         INSERT 2 TO numbers AT position 2
@@ -8113,7 +8103,6 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process nested if statements correctly", () => {
-        writeTestNumber(7);
         const pseudocode = `SET x to number 10
         SET y to number 5
         IF x is greater than 5 THEN
@@ -8199,7 +8188,6 @@ describe("PseudocodeProcessor", () => {
     });
 
     it("should process variable declarations with arithmetic expressions", () => {
-        writeTestNumber(17);
         const pseudocode = `SET x to number 5
         SET y to x + 3
         `;
