@@ -1,3 +1,10 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the endpoints for the authentication and CRUD operations
+ */
+
+
 import express from "express";
 import cors from "cors";
 import {

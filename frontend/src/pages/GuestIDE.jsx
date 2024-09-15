@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the GuestIDE page which is the main page for the guest user to interact with the IDE
+ */
+
 import {
   AlertDialog,
   AlertDialogBody,
@@ -79,6 +85,7 @@ function GuestIDE() {
     setPauseState(!pauseState);
   };
 
+  // Function to find the error in the code
   const findError = (e) => {
     let errorLine = 0;
     try {
@@ -109,39 +116,7 @@ function GuestIDE() {
     });
   };
 
-  // const runCode = async () => {
-  //   setIsRunLoading(true); // To show loading state on the button
-  //   let code = value; // Get code from the editor
-  //     let actionFrames = [  {
-  //       line: 7,
-  //       operation: "create",
-  //       dataStructure: "array",
-  //       value: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-  //       length: 9,
-  //       id: "abcd",
-  //       type: "number",
-  //       varName: "nums",
-  //       timestamp: "2024-07-09T12:01:00Z",
-  //       description:
-  //         "Created an array named nums with initial values [1, 2, 3, 4].",
-  //     },{
-  //       line: 14,
-  //       operation: "swap",
-  //       dataStructure: "array",
-  //       firstPosition: 1,
-  //       secondPosition: 3,
-  //       varName: "nums",
-  //       description: "Swapped values in position 1 and 3 in array nums.",
-  //     },];
-  //     setIsError(false); // Reset error state
-  //     setKillState(actionFrames.length);
-  //     setMovementsState(actionFrames);
-  //     setOutput((prev) => [...prev, `colourYellow__RUN STARTING.`]);
-  //     setIndexState(0);
-  //     setHighlightState(true);
-  //   setIsRunLoading(false);
-  // };
-
+  // Function to run the code
   const runCode = async () => {
     setIsRunLoading(true); // To show loading state on the button
     let code = value; // Get code from the editor
@@ -175,6 +150,7 @@ function GuestIDE() {
     setIsRunLoading(false);
   };
 
+  // Function to stop the code
   const stopCode = () => {
     setPauseState(true);
     let time = speedState*1000 + 1000

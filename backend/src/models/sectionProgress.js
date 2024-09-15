@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the model for section progress used in the database
+ */
+
 import mongoose from 'mongoose';
 import levelProgressSchema from './levelProgress.js';
 

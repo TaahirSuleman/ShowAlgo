@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the Level page which includes the problem statement, run controls, code editor, output view and visualisation view
+ */
+
 import {
   Accordion,
   AccordionButton,
@@ -213,11 +219,12 @@ function Level() {
   }, [testResults]);
 
   // IDE functions
-
+  // Function to pause the animation
   const pauseAnimation = () => {
     setPauseState(!pauseState);
   };
 
+  // Function to run the code
   const runCode = async () => {
     setIsRunLoading(true); // To show loading state on the button
     let code = value; // Get code from the editor
@@ -255,6 +262,7 @@ function Level() {
     setIsRunLoading(false);
   };
 
+  // Function to stop the code
   const stopCode = () => {
     setPauseState(true);
     let time = speedState*1000 + 1000
@@ -322,14 +330,17 @@ function Level() {
     navigate(`/learning-mode/${sectionRoute}`);
   };
 
+  // Function to toggle hints
   const toggleHints = () => {
     setShowHints(!showHints);
   };
 
+  // Function to toggle test case status
   const toggleTestCaseStatus = () => {
     setShowTestCaseStatus(!showTestCaseStatus);
   };
 
+  // Function to check test cases and return results
   const checkTestCases = async (code, cases) => {
     try {
       console.log("code:", code);
@@ -355,6 +366,7 @@ function Level() {
     }
   };
 
+  // Function to get status icon based on test results
   const getStatusIcon = (status) => {
     if (!submitClicked) {
       return (
@@ -405,6 +417,7 @@ function Level() {
     }
   };
 
+  // Function to find the error in the code and display it
   const findError = (e) => {
     let errorLine = 0;
     try {
@@ -434,9 +447,9 @@ function Level() {
     });
   };
 
+  // Function to submit code
   const submitCode = async () => {
     setSubmitClicked(true);
-
     try {
       let response = await axios.post(
         "http://localhost:8000/api/pseudocode/run",

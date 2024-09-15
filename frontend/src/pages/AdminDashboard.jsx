@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the AdminDashboard page which contains the modules, user progress and documentation
+ */
+
 import {
   Box,
   Button,
@@ -126,6 +132,7 @@ function AdminDashboard() {
             };
           });
 
+          // Create data for the bar chart
           const barChartData = progressObject.map((module) => ({
             name: module.moduleName,
             Completed: module.completedLevels,
@@ -149,10 +156,12 @@ function AdminDashboard() {
     fetchAllUserProgress();
   }, [sections]);
 
+  // function to handle the selection of a section
   const handleSectionSelect = (sectionHeading) => {
     navigate(`/admin-dashboard/${sectionHeading}`);
   };
 
+  // function to handle the submission of a new section
   const handleNewSectionSubmit = async () => {
     if (!newModule.heading || !newModule.subheading) {
       toast({
@@ -215,6 +224,7 @@ function AdminDashboard() {
     }, 1000);
   };
 
+  // function to handle the deletion of a section
   const handleDeleteSection = async (sectionId) => {
     try {
       const response = await axios.delete(`/delete-section/${sectionId}`);
@@ -254,6 +264,7 @@ function AdminDashboard() {
     onEditModalOpen(); // Open the modal for editing
   };
 
+  // function to handle the saving of an edited section
   const handleEditSave = async (updatedModule) => {
     try {
       const response = await axios.put(
@@ -307,6 +318,7 @@ function AdminDashboard() {
     }
   };
 
+  // function to handle the cancellation of editing a section
   const handleEditCancel = () => {
     setIsEditing(false);
     setModuleBeingEdited(null);
@@ -327,6 +339,7 @@ function AdminDashboard() {
     return completedLevels;
   };
 
+  // function that calculates the overall completion of a section
   const calculateOverallCompletion = (sections = [], allSections = []) => {
     let totalLvls = 0;
     let completedLvls = 0;
@@ -346,20 +359,28 @@ function AdminDashboard() {
     return { overallProgress, progressObject, totalLvls, completedLvls };
   };
 
+  // function to handle the showing of more information for a user
   const handleShowMore = (userId) => {
     setExpandedUser(expandedUser === userId ? null : userId);
   };
 
+  // Calculate average progress
   const averageProgress = allUserProgress.length
     ? allUserProgress.reduce((acc, user) => acc + user.overallProgress, 0) /
       allUserProgress.length
     : 0;
 
+  // Pie chart data
   const pieChartData = [
     { name: "Completed", value: Math.round(averageProgress), fill: "#FFBB28" },
-    { name: "Remaining", value: Math.round(100 - averageProgress), fill: "#8884d8" },
+    {
+      name: "Remaining",
+      value: Math.round(100 - averageProgress),
+      fill: "#8884d8",
+    },
   ];
 
+  // Gradients for module cards
   const gradients = [
     "linear(to-br, #ec0958, #f573b2)", // pink
     "linear(to-br, #1203fa, #00e1fd)", // blue
@@ -374,6 +395,7 @@ function AdminDashboard() {
     "linear(to-br, #5a136e, #a90b84, #ff009c)", // pink
   ];
 
+  // Responsive design values
   const flexDirection = useBreakpointValue({ base: "column", md: "row" });
   const boxWidth = useBreakpointValue({ base: "100%", md: "25%" });
   const pieChartWidth = useBreakpointValue({ base: "100%", md: "50%" });
@@ -631,7 +653,9 @@ function AdminDashboard() {
                       onClick={() => handleShowMore(user.progress.user_id)}
                       colorScheme="blue"
                     >
-                      {expandedUser === user.progress.user_id ? "Show Less" : "Show More"}
+                      {expandedUser === user.progress.user_id
+                        ? "Show Less"
+                        : "Show More"}
                     </Button>
                   </Td>
                 </Tr>

@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the LevelSelection page which displays the levels for the selected section
+ */
+
 import {
   Box,
   Heading,
@@ -147,6 +153,7 @@ function LevelSelection() {
     }
   }, [sectionProgress]);
 
+  // Handle home button click
   const handleOnHomeClick = () => {
     navigate("/learning-mode");
   };

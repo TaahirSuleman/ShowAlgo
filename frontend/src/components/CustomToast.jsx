@@ -1,9 +1,15 @@
-// CustomToast.jsx
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains a custom toast component
+ */
+
 import React from "react";
 import { Box, Text, CloseButton } from "@chakra-ui/react";
 import ConfettiExplosion from "react-confetti-explosion";
 
 const CustomToast = ({ title, description, duration, onClose }) => {
+  // Close the toast after a set duration
   React.useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -20,6 +26,7 @@ const CustomToast = ({ title, description, duration, onClose }) => {
       transform="translate(-50%, -50%)"
       zIndex={1000}
     >
+      {/* Add confetti explosion effect when toast is displayed */}
       <ConfettiExplosion
         force={0.6}
         duration={4000}

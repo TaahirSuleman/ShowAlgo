@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the Home page which is the initial page for the user to interact with the application
+ */
+
 import { Box, Button, Center, Heading, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";

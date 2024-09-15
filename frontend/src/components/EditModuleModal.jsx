@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains a modal component for editing a module
+ */
+
 import {
   Button,
   FormControl,
@@ -19,6 +25,7 @@ const EditModuleModal = ({ isOpen, onClose, module, onSave }) => {
     subheading: module?.subheading || "",
   });
 
+  // Update the state when the module prop changes
   useEffect(() => {
     if (module) {
       setUpdatedModule({
@@ -28,6 +35,7 @@ const EditModuleModal = ({ isOpen, onClose, module, onSave }) => {
     }
   }, [module]);
 
+  // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUpdatedModule((prev) => ({
@@ -36,6 +44,7 @@ const EditModuleModal = ({ isOpen, onClose, module, onSave }) => {
     }));
   };
 
+  // Save the updated module
   const handleSave = () => {
     const updatedModuleWithRoute = {
       ...updatedModule,

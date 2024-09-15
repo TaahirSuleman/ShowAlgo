@@ -1,11 +1,13 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the RunControls component that provides controls for running, pausing and submitting code
+ */
+
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Text,
-  Heading,
-  ButtonGroup,
   Button,
-  Stack,
   SimpleGrid,
   useBreakpointValue,
   Menu,
@@ -13,7 +15,6 @@ import {
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
-import { IoClose } from "react-icons/io5";
 import {
   FaCloudUploadAlt,
   FaPause,
@@ -84,12 +85,14 @@ function RunControls({
     setIsRunning(!isRunning);
   };
 
+  // To handle the change in speed of the animation
   const handleSpeedChange = (option) => {
     setSpeed(option);
     setSpeedState(2/option) // THE HARD CODED VALUE HERE (2) IS THE STARTING SPEED STATE
     
   };
 
+  // Responsiveness of the buttons
   const columns = useBreakpointValue({
     base: 1, // Single column layout for small screens
     sm: 2, // Two columns layout for medium screens

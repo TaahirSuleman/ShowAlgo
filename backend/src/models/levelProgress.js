@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the model for level progress used in the database
+ */
+
 import mongoose from 'mongoose';
 
 // Define the schema for level progress

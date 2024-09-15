@@ -1,3 +1,9 @@
+/**
+ * Author(s): Yusuf Kathrada
+ * Date: September 2024
+ * Description: This file contains the IDE page which contains the run controls, code editor, output view and visualisation view
+ */
+
 import {
   AlertDialog,
   AlertDialogBody,
@@ -79,6 +85,7 @@ function IDE() {
     setPauseState(!pauseState);
   };
 
+  // Function to find error in the code and display it
   const findError = (e) => {
     let errorLine = 0;
     try {
@@ -109,6 +116,7 @@ function IDE() {
     });
   };
 
+  // Function to run the code
   const runCode = async () => {
     setIsRunLoading(true); // To show loading state on the button
     let code = value; // Get code from the editor
@@ -142,6 +150,7 @@ function IDE() {
     setIsRunLoading(false);
   };
 
+  // Function to stop the code
   const stopCode = () => {
     setPauseState(true);
     let time = speedState*1000 + 1000
